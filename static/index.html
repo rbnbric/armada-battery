@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Armada Battery</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header>
+    <div><span class="mark">AB</span><strong>Armada Battery</strong></div>
+    <div id="connection" class="quiet">Connecting…</div>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">Evidence-driven IRIS administration</p>
+      <h1>State the outcome. Prove the action.</h1>
+      <p>Battery turns an ordinary request into a bounded plan, checks current state and authority, then verifies the result with a fresh readback.</p>
+    </section>
+    <section class="layout">
+      <article class="panel">
+        <p class="eyebrow">Intent</p>
+        <h2>Choose the outcome</h2>
+        <label for="workflow">Request</label>
+        <select id="workflow">
+          <option value="run">Run an existing task once</option>
+          <option value="schedule">Schedule an existing task</option>
+          <option value="webapp">Create a REST application</option>
+          <option value="role">Give a user a reviewed role</option>
+        </select>
+        <div class="workflow-fields" data-workflow="run schedule">
+          <label for="task">Task</label><select id="task"></select>
+          <div id="task-detail" class="detail"></div>
+        </div>
+        <div class="workflow-fields" data-workflow="run">
+          <label class="check"><input id="reviewed" type="checkbox"> I reviewed this task definition and its described side effects.</label>
+        </div>
+        <div class="workflow-fields" data-workflow="schedule" hidden>
+          <label for="period">Period</label>
+          <select id="period"><option>Daily</option><option>Weekly</option><option>Monthly</option><option>On Demand</option></select>
+          <label for="start-time">Server-local start time</label><input id="start-time" value="02:30" placeholder="HH:MM">
+          <label for="every">Every</label><input id="every" value="1">
+          <label for="day">Day(s)</label><input id="day" placeholder="Weekly: 1–7, e.g. 27">
+        </div>
+        <div class="workflow-fields" data-workflow="webapp" hidden>
+          <label for="app-name">Application path</label><input id="app-name" value="/api/orders">
+          <label for="namespace">Namespace</label><select id="namespace"></select>
+          <label for="dispatch">Dispatch class</label><input id="dispatch" value="Demo.Orders">
+          <label for="resource">Access resource</label><select id="resource"></select>
+        </div>
+        <div class="workflow-fields" data-workflow="role" hidden>
+          <label for="username">User</label><select id="username"></select>
+          <label for="role-name">Role</label><select id="role-name"></select>
+          <label class="check"><input id="role-reviewed" type="checkbox"> I reviewed this role’s resources and inherited roles.</label>
+        </div>
+        <button id="prepare">Prepare action</button>
+      </article>
+      <article class="panel" aria-live="polite">
+        <p class="eyebrow">Instruction and warning</p>
+        <h2 id="finding-title">No action prepared</h2>
+        <p id="finding-copy" class="quiet">Choose a task and prepare the requested outcome.</p>
+        <div id="blockers"></div>
+        <details id="rule-box">
+          <summary>Why Battery believes this</summary>
+          <div id="rule"></div>
+        </details>
+      </article>
+      <article class="panel action-panel" aria-live="polite">
+        <p class="eyebrow">Action</p>
+        <h2 id="action-title">Waiting for affirmative evidence</h2>
+        <p id="action-copy" class="quiet">Preparation will establish whether execution is currently eligible.</p>
+        <button id="execute" disabled>Run once and verify</button>
+        <div id="receipt"></div>
+      </article>
+    </section>
+    <section class="coverage" aria-labelledby="coverage-title">
+      <p class="eyebrow">Current observations</p>
+      <h2 id="coverage-title">Management surface</h2>
+      <p class="quiet">Each card identifies its public API evidence. An unavailable area stays visible instead of being mistaken for a healthy empty result.</p>
+      <div id="observations" class="observation-grid" aria-live="polite"></div>
+    </section>
+    <section class="proof-grid" aria-label="Assurance and evidence">
+      <article class="proof-panel">
+        <p class="eyebrow">Assurance</p>
+        <h2 id="assurance-score">Checking scenarios…</h2>
+        <div id="assurance-list"></div>
+      </article>
+      <article class="proof-panel">
+        <p class="eyebrow">Sanitized evidence trail</p>
+        <h2 id="ledger-state">Checking ledger…</h2>
+        <div id="evidence-list"></div>
+      </article>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
