@@ -49,7 +49,7 @@ An OCI runtime such as Docker or Podman is required. Copy `.env.example` to
 `.env`, replace the sample password, and start the stack:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 cp .env.example .env
 # Set IRIS_PASSWORD in .env to a long local demo password.
