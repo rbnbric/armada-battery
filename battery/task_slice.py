@@ -987,26 +987,28 @@ class BatteryEngine(AdministrativeIntentMixin):
             history_before=cert.history_fingerprints,
             certificate_digest=_digest(token),
             verification_deadline=self.now() + timedelta(minutes=5),
-            explanation="Attempt recorded before sending the IRIS request.",
+            explanation="Attempt recorded before sending the adapter request.",
         )
         self.receipts[receipt.id] = receipt
         self.idempotency[idempotency_scope] = receipt.id
         self.ledger.append("action_attempted", to_data(receipt))
+        adapter_name = "Synthetic adapter" if self.adapter.synthetic else "IRIS"
         try:
             self.adapter.run_task(task_id)
-            receipt.transport_result = "IRIS accepted the run request"
+            receipt.transport_result = f"{adapter_name} accepted the run request"
         except AmbiguousTransport as exc:
             receipt.status = ReceiptStatus.OUTCOME_UNKNOWN
             receipt.transport_result = "response unavailable"
             receipt.explanation = (
-                "The request may have reached IRIS. Battery will not retry it automatically. "
+                f"The request may have reached the {adapter_name}. "
+                "Battery will not retry it automatically. "
                 f"Transport detail: {exc}"
             )
             self.ledger.append("action_outcome_unknown", to_data(receipt))
             return to_data(receipt)
         except AdapterError as exc:
             receipt.status = ReceiptStatus.VERIFIED_FAILURE
-            receipt.transport_result = "IRIS rejected or failed the request"
+            receipt.transport_result = f"{adapter_name} rejected or failed the request"
             receipt.explanation = str(exc)
             receipt.finished_at = self.now()
             self.ledger.append("action_failed", to_data(receipt))
