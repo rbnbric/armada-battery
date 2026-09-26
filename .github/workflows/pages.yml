@@ -1,0 +1,50 @@
+name: Publish credential-free walkthrough
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build static walkthrough
+        run: |
+          mkdir -p _site/static
+          cp static/app.css static/app.js _site/static/
+          cp static/index.html _site/index.html
+          cp docs/demo-api.js _site/static/demo-api.js
+          sed -i 's|href="/static/app.css"|href="./static/app.css"|' _site/index.html
+          sed -i 's|<script src="/static/app.js"></script>|<script src="./static/demo-api.js"></script><script src="./static/app.js"></script>|' _site/index.html
+          cat >> _site/static/app.css <<'CSS'
+          .demo-banner {
+            padding: .8rem 1.25rem;
+            color: #132229;
+            background: linear-gradient(90deg, #f6b64a, #ffd98a);
+            border-bottom: 1px solid #b97519;
+            font-size: .92rem;
+          }
+          CSS
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
