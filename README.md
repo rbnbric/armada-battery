@@ -12,6 +12,9 @@ Battery records the attempt durably before dispatch, verifies the resulting stat
 with fresh evidence, and never turns an uncertain transport outcome into permission
 to resend the change. Unresolved outcomes stay visible until reconciliation.
 
+**[Open the credential-free walkthrough](https://rbnbric.github.io/armada-battery/)**
+— a clearly labeled synthetic judge path that sends no request to IRIS.
+
 The working slice covers four ordinary requests: run an existing task, schedule
 an existing task, create a bounded REST application, and grant an existing
 reviewed role to an existing user. It runs against a bundled synthetic adapter
@@ -31,6 +34,11 @@ requires fresh readback before reporting verified success.
 ## Judge fast path
 
 No IRIS instance is required for the deterministic evaluation path:
+
+- **Hosted:** [open the synthetic walkthrough](https://rbnbric.github.io/armada-battery/),
+  choose **New request**, review the demonstration task, prepare it, and execute
+  it once.
+- **Local:** run the application and scenario suite below.
 
 ```bash
 python3 -m pip install -r requirements.txt
