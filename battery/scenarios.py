@@ -28,30 +28,43 @@ def _engine(adapter=None, **options) -> BatteryEngine:
 def _intentional_change() -> None:
     engine = _engine()
     plan = engine.prepare_create_web_app(
-        name="/api/orders", namespace="USER", dispatch_class="Demo.Orders",
-        resource="App.Reader", requested_by="judge",
+        name="/api/orders",
+        namespace="USER",
+        dispatch_class="Demo.Orders",
+        resource="App.Reader",
+        requested_by="judge",
     )
     receipt = engine.execute_admin(plan["certificate"]["token"], "scenario-create")
     assert receipt["status"] == "VERIFIED_SUCCESS"
 
 
 def _insufficient_privilege() -> None:
-    engine = _engine(SyntheticTaskAdapter(task_privilege=False, operate_privilege=False))
-    plan = engine.prepare_task_run(17, requested_by="judge", task_definition_reviewed=True)
+    engine = _engine(
+        SyntheticTaskAdapter(task_privilege=False, operate_privilege=False)
+    )
+    plan = engine.prepare_task_run(
+        17, requested_by="judge", task_definition_reviewed=True
+    )
     assert plan["certificate"] is None and plan["finding"]["state"] == "BLOCKED"
 
 
 def _failed_task_is_not_blindly_retried() -> None:
     engine = _engine(SyntheticTaskAdapter(prior_failure=True))
-    plan = engine.prepare_task_run(17, requested_by="judge", task_definition_reviewed=True)
+    plan = engine.prepare_task_run(
+        17, requested_by="judge", task_definition_reviewed=True
+    )
     assert plan["certificate"] is None
-    assert "failure alone does not prove" in " ".join(plan["finding"]["missing_evidence"])
+    assert "failure alone does not prove" in " ".join(
+        plan["finding"]["missing_evidence"]
+    )
 
 
 def _stale_evidence() -> None:
     clock = ScenarioClock()
     engine = _engine(now=clock)
-    plan = engine.prepare_task_run(17, requested_by="judge", task_definition_reviewed=True)
+    plan = engine.prepare_task_run(
+        17, requested_by="judge", task_definition_reviewed=True
+    )
     clock.advance(61)
     try:
         engine.execute_task_run(plan["certificate"]["token"], "scenario-stale")
@@ -64,7 +77,9 @@ def _stale_evidence() -> None:
 def _ambiguous_transport_without_retry() -> None:
     adapter = SyntheticTaskAdapter(ambiguous=True)
     engine = _engine(adapter)
-    plan = engine.prepare_task_run(17, requested_by="judge", task_definition_reviewed=True)
+    plan = engine.prepare_task_run(
+        17, requested_by="judge", task_definition_reviewed=True
+    )
     token = plan["certificate"]["token"]
     first = engine.execute_task_run(token, "scenario-ambiguous")
     repeated = engine.execute_task_run(token, "scenario-ambiguous")
@@ -78,17 +93,26 @@ def _ambiguous_transport_without_retry() -> None:
 def _wrong_rule_stays_blocked() -> None:
     engine = _engine(rule_validation=RuleValidation.DRAFT)
     plan = engine.prepare_grant_role(
-        username="alex", role_name="App.Reader", requested_by="judge", role_reviewed=True
+        username="alex",
+        role_name="App.Reader",
+        requested_by="judge",
+        role_reviewed=True,
     )
     assert plan["certificate"] is None
-    assert "execution requires SIMULATED" in " ".join(plan["finding"]["missing_evidence"])
+    assert "execution requires SIMULATED" in " ".join(
+        plan["finding"]["missing_evidence"]
+    )
 
 
 def _concurrent_change_invalidates_preflight() -> None:
     adapter = SyntheticTaskAdapter()
     engine = _engine(adapter)
     plan = engine.prepare_schedule_task(
-        task_id=17, period="Daily", start_time="03:00", every="1", day="",
+        task_id=17,
+        period="Daily",
+        start_time="03:00",
+        every="1",
+        day="",
         requested_by="judge",
     )
     adapter.tasks[17]["Description"] = "changed concurrently"

@@ -30,7 +30,9 @@ class DeferredWebAppAdapter(SyntheticTaskAdapter):
 
 class AdminSliceTests(unittest.TestCase):
     def engine(self, adapter=None, **kwargs):
-        return BatteryEngine(adapter or SyntheticTaskAdapter(), ledger=Ledger(), **kwargs)
+        return BatteryEngine(
+            adapter or SyntheticTaskAdapter(), ledger=Ledger(), **kwargs
+        )
 
     def test_create_web_app_executes_and_verifies(self):
         engine = self.engine()
@@ -45,7 +47,9 @@ class AdminSliceTests(unittest.TestCase):
         self.assertEqual(plan["plan_state"], "PLAN_READY")
         receipt = engine.execute_admin(plan["certificate"]["token"], "create-orders")
         self.assertEqual(receipt["status"], "VERIFIED_SUCCESS")
-        self.assertEqual(engine.adapter.get_web_app("/api/orders")["DispatchClass"], "Demo.Orders")
+        self.assertEqual(
+            engine.adapter.get_web_app("/api/orders")["DispatchClass"], "Demo.Orders"
+        )
 
     def test_duplicate_web_app_is_blocked_without_overwrite(self):
         engine = self.engine()
@@ -64,26 +68,35 @@ class AdminSliceTests(unittest.TestCase):
     def test_grant_reviewed_role_preserves_existing_roles(self):
         adapter = SyntheticTaskAdapter()
         adapter.roles["Audit.Reader"] = {
-            "Name": "Audit.Reader", "GrantedRoles": [],
+            "Name": "Audit.Reader",
+            "GrantedRoles": [],
             "Resources": [{"Name": "App.Reader", "Permissions": "R"}],
         }
         adapter.users["alex"]["Roles"] = ["Audit.Reader"]
         engine = self.engine(adapter)
         plan = engine.prepare_grant_role(
-            username="alex", role_name="App.Reader", requested_by="operator", role_reviewed=True
+            username="alex",
+            role_name="App.Reader",
+            requested_by="operator",
+            role_reviewed=True,
         )
 
         self.assertEqual(plan["plan_state"], "PLAN_READY")
         receipt = engine.execute_admin(plan["certificate"]["token"], "grant-reader")
         self.assertEqual(receipt["status"], "VERIFIED_SUCCESS")
-        self.assertEqual(adapter.get_user("alex")["Roles"], ["App.Reader", "Audit.Reader"])
+        self.assertEqual(
+            adapter.get_user("alex")["Roles"], ["App.Reader", "Audit.Reader"]
+        )
 
     def test_role_grant_needs_review_and_never_automates_all(self):
         adapter = SyntheticTaskAdapter()
         adapter.roles["%All"] = {"Name": "%All", "GrantedRoles": [], "Resources": []}
         engine = self.engine(adapter)
         plan = engine.prepare_grant_role(
-            username="alex", role_name="%All", requested_by="operator", role_reviewed=False
+            username="alex",
+            role_name="%All",
+            requested_by="operator",
+            role_reviewed=False,
         )
 
         blockers = " ".join(plan["finding"]["missing_evidence"])
@@ -96,7 +109,10 @@ class AdminSliceTests(unittest.TestCase):
         adapter.users["alex"]["Roles"] = ["App.Reader"]
         engine = self.engine(adapter)
         plan = engine.prepare_grant_role(
-            username="alex", role_name="App.Reader", requested_by="operator", role_reviewed=True
+            username="alex",
+            role_name="App.Reader",
+            requested_by="operator",
+            role_reviewed=True,
         )
 
         self.assertEqual(plan["plan_state"], "SATISFIED")
@@ -106,8 +122,12 @@ class AdminSliceTests(unittest.TestCase):
     def test_schedule_existing_task_executes_and_verifies(self):
         engine = self.engine()
         plan = engine.prepare_schedule_task(
-            task_id=17, period="Weekly", start_time="02:30", every="1",
-            day="27", requested_by="operator",
+            task_id=17,
+            period="Weekly",
+            start_time="02:30",
+            every="1",
+            day="27",
+            requested_by="operator",
         )
 
         self.assertEqual(plan["plan_state"], "PLAN_READY")
@@ -118,8 +138,12 @@ class AdminSliceTests(unittest.TestCase):
     def test_invalid_schedule_is_blocked(self):
         engine = self.engine()
         plan = engine.prepare_schedule_task(
-            task_id=17, period="Weekly", start_time="25:90", every="0",
-            day="08", requested_by="operator",
+            task_id=17,
+            period="Weekly",
+            start_time="25:90",
+            every="0",
+            day="08",
+            requested_by="operator",
         )
 
         blockers = " ".join(plan["finding"]["missing_evidence"])
@@ -130,8 +154,12 @@ class AdminSliceTests(unittest.TestCase):
     def test_invalid_monthly_schedule_is_blocked(self):
         engine = self.engine()
         plan = engine.prepare_schedule_task(
-            task_id=17, period="Monthly", start_time="02:30", every="13",
-            day="32", requested_by="operator",
+            task_id=17,
+            period="Monthly",
+            start_time="02:30",
+            every="13",
+            day="32",
+            requested_by="operator",
         )
         blockers = " ".join(plan["finding"]["missing_evidence"])
         self.assertIn("between 1 and 12", blockers)
@@ -140,17 +168,26 @@ class AdminSliceTests(unittest.TestCase):
     def test_draft_rule_cannot_execute(self):
         engine = self.engine(rule_validation=RuleValidation.DRAFT)
         plan = engine.prepare_create_web_app(
-            name="/api/orders", namespace="USER", dispatch_class="Demo.Orders",
-            resource="App.Reader", requested_by="operator",
+            name="/api/orders",
+            namespace="USER",
+            dispatch_class="Demo.Orders",
+            resource="App.Reader",
+            requested_by="operator",
         )
         self.assertEqual(plan["plan_state"], "NEEDS_EVIDENCE")
-        self.assertIn("execution requires SIMULATED", " ".join(plan["finding"]["missing_evidence"]))
+        self.assertIn(
+            "execution requires SIMULATED",
+            " ".join(plan["finding"]["missing_evidence"]),
+        )
 
     def test_changed_target_or_authority_invalidates_preflight(self):
         adapter = SyntheticTaskAdapter()
         engine = self.engine(adapter)
         plan = engine.prepare_grant_role(
-            username="alex", role_name="App.Reader", requested_by="operator", role_reviewed=True
+            username="alex",
+            role_name="App.Reader",
+            requested_by="operator",
+            role_reviewed=True,
         )
         adapter.users["alex"]["FullName"] = "Changed after preflight"
 
@@ -160,8 +197,11 @@ class AdminSliceTests(unittest.TestCase):
     def test_lost_response_can_be_proven_by_readback(self):
         engine = self.engine(AmbiguousWebAppAdapter())
         plan = engine.prepare_create_web_app(
-            name="/api/orders", namespace="USER", dispatch_class="Demo.Orders",
-            resource="App.Reader", requested_by="operator",
+            name="/api/orders",
+            namespace="USER",
+            dispatch_class="Demo.Orders",
+            resource="App.Reader",
+            requested_by="operator",
         )
         receipt = engine.execute_admin(plan["certificate"]["token"], "ambiguous-create")
         self.assertEqual(receipt["status"], "VERIFIED_SUCCESS")
@@ -170,8 +210,11 @@ class AdminSliceTests(unittest.TestCase):
         adapter = DeferredWebAppAdapter()
         engine = self.engine(adapter)
         plan = engine.prepare_create_web_app(
-            name="/api/orders", namespace="USER", dispatch_class="Demo.Orders",
-            resource="App.Reader", requested_by="operator",
+            name="/api/orders",
+            namespace="USER",
+            dispatch_class="Demo.Orders",
+            resource="App.Reader",
+            requested_by="operator",
         )
         receipt = engine.execute_admin(plan["certificate"]["token"], "deferred-create")
         self.assertEqual(receipt["status"], "OUTCOME_UNKNOWN")

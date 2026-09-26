@@ -52,18 +52,23 @@ class TaskSliceTests(unittest.TestCase):
         self.assertIsNone(result["certificate"])
         combined = " ".join(result["finding"]["missing_evidence"])
         self.assertIn("failure alone does not prove", combined)
-        self.assertIn("cause-specific remedy", result["finding"]["recommended_actions"][0])
+        self.assertIn(
+            "cause-specific remedy", result["finding"]["recommended_actions"][0]
+        )
 
     def test_latest_history_is_selected_by_time_not_response_order(self):
         adapter = SyntheticTaskAdapter(prior_failure=True)
-        adapter.history[17].insert(0, {
-            "TaskId": 17,
-            "LastStart": "2026-09-23T11:00:00+00:00",
-            "Completed": "2026-09-23T11:00:02+00:00",
-            "LogDatetime": "2026-09-23T11:00:02+00:00",
-            "Status": "Success",
-            "Result": "Success",
-        })
+        adapter.history[17].insert(
+            0,
+            {
+                "TaskId": 17,
+                "LastStart": "2026-09-23T11:00:00+00:00",
+                "Completed": "2026-09-23T11:00:02+00:00",
+                "LogDatetime": "2026-09-23T11:00:02+00:00",
+                "Status": "Success",
+                "Result": "Success",
+            },
+        )
         engine = self.engine(adapter)
 
         result = self.prepare(engine)
@@ -77,14 +82,19 @@ class TaskSliceTests(unittest.TestCase):
 
         self.assertEqual(result["finding"]["state"], "BLOCKED")
         self.assertIsNone(result["certificate"])
-        self.assertIn("execution requires SIMULATED", " ".join(result["finding"]["missing_evidence"]))
+        self.assertIn(
+            "execution requires SIMULATED",
+            " ".join(result["finding"]["missing_evidence"]),
+        )
 
     def test_missing_history_privilege_blocks_verification_and_execution(self):
         engine = self.engine(SyntheticTaskAdapter(operate_privilege=False))
         result = self.prepare(engine)
 
         self.assertEqual(result["finding"]["state"], "BLOCKED")
-        self.assertIn("%Admin_Operate:U", " ".join(result["finding"]["missing_evidence"]))
+        self.assertIn(
+            "%Admin_Operate:U", " ".join(result["finding"]["missing_evidence"])
+        )
 
     def test_success_requires_new_history_observation(self):
         engine = self.engine()
@@ -111,9 +121,13 @@ class TaskSliceTests(unittest.TestCase):
         engine = self.engine(adapter)
         prepared = self.prepare(engine)
 
-        receipt = engine.execute_task_run(prepared["certificate"]["token"], "ambiguous-1")
+        receipt = engine.execute_task_run(
+            prepared["certificate"]["token"], "ambiguous-1"
+        )
         self.assertEqual(receipt["status"], "OUTCOME_UNKNOWN")
-        repeated = engine.execute_task_run(prepared["certificate"]["token"], "ambiguous-1")
+        repeated = engine.execute_task_run(
+            prepared["certificate"]["token"], "ambiguous-1"
+        )
         self.assertEqual(repeated["id"], receipt["id"])
         self.assertEqual(adapter.run_calls, 1)
 
