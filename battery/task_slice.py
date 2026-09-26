@@ -440,7 +440,16 @@ class IrisTaskAdapter:
         runtime = self._request("GET", "/v1/task/info", query={"id": task_id})
         if not isinstance(definition, dict) or not isinstance(runtime, dict):
             raise AdapterError("Malformed task definition or runtime information")
-        return {**definition, **runtime, "Id": task_id}
+        # IRIS can return blank definition fields on the runtime-info surface.
+        # Preserve the configured definition unless runtime contributes a real value.
+        merged = dict(definition)
+        merged.update(
+            key_value
+            for key_value in runtime.items()
+            if key_value[1] not in (None, "") or key_value[0] not in merged
+        )
+        merged["Id"] = task_id
+        return merged
 
     def get_history(self, task_id: int) -> list[dict[str, Any]]:
         rows = self._request(

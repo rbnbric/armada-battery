@@ -38,7 +38,12 @@ class RecordingIrisAdapter(IrisTaskAdapter):
                 "TimePeriod": "On Demand",
             }
         if path == "/v1/task/info":
-            return {"Suspended": False, "Status": "1", "Error": "Success"}
+            return {
+                "Name": "",
+                "Suspended": False,
+                "Status": "1",
+                "Error": "Success",
+            }
         if path == "/v1/task/history/":
             return [{"Task": 7, "LastStarted": "1", "Error": "Success"}]
         if path == "/v1/web-app":
@@ -84,6 +89,7 @@ class V1PathTests(unittest.TestCase):
 
     def test_every_call_uses_the_v1_management_api(self):
         adapter = self.adapter()
+        task = adapter.get_task(7)
         calls = {(method, path): query for method, path, query, _body in adapter.calls}
 
         self.assertIn(("GET", "/v1/task/"), calls)
@@ -106,6 +112,8 @@ class V1PathTests(unittest.TestCase):
         self.assertEqual(calls[("GET", "/v1/security/role")], {"name": "App.Reader"})
         self.assertIn(("GET", "/v1/security/resource/"), calls)
         self.assertFalse([path for _m, path, _q, _b in adapter.calls if "v2" in path])
+        self.assertEqual(task["Name"], "Demo Task")
+        self.assertEqual(task["Status"], "1")
 
     def test_history_rows_carry_the_engine_contract_keys(self):
         adapter = RecordingIrisAdapter()
