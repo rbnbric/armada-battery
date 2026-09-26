@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loading Armada Battery walkthrough…</title>
+  </head>
+  <body>
+    <p>Loading the credential-free Armada Battery walkthrough…</p>
+    <script>
+      fetch("../../static/index.html")
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.text();
+        })
+        .then((html) => {
+          html = html
+            .replace('href="/static/app.css"', 'href="../../static/app.css"')
+            .replace(
+              '<script src="/static/app.js"></' + "script>",
+              '<script src="../demo-api.js"></' +
+                'script><script src="../../static/app.js"></' +
+                "script>",
+            )
+            .replace(
+              "</head>",
+              '<style>.demo-banner{padding:.8rem 1.25rem;color:#132229;background:linear-gradient(90deg,#f6b64a,#ffd98a);border-bottom:1px solid #b97519;font-size:.92rem}</style></head>',
+            );
+          document.open();
+          document.write(html);
+          document.close();
+        })
+        .catch((error) => {
+          document.body.textContent = `Walkthrough failed to load: ${error.message}`;
+        });
+    </script>
+  </body>
+</html>
