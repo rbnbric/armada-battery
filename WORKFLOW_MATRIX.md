@@ -8,8 +8,8 @@ IRIS behavior must be observed before Battery may promise or automate it.
 |---|---|---|---|---|---|
 | Capability | Establish product, version, namespaces, and effective access | `GET /info` | Any supported `%Admin` privilege | Current identity and capability snapshot | slice |
 | Tasks | List scheduled tasks | `GET /v1/task/` | `%Admin_Operate:U` or `%Admin_Task:U` | Complete response or explicit truncation/denial | slice |
-| Tasks | Inspect one task and recent results | `GET /v1/task/info?id=`, `GET /v1/task/history/` | Operate or Task; history requires Operate | Target and history are tied to the requested ID | slice |
-| Tasks | Run an existing task now | `POST /v1/task/run` | `%Admin_Task:U` | New terminal history row after the attempt | slice |
+| Tasks | Inspect one task and recent results | `GET /v1/task?id=`, `GET /v1/task/info?id=`, `GET /v1/task/history/` | Operate or Task; history requires Operate | Target and history are tied to the requested ID | slice |
+| Tasks | Run an existing task now | `POST /v1/task/run` | `%Admin_Task:U` | Synthetic correlated terminal row; live v1 attribution remains unverified | slice |
 | Tasks | Resume or suspend a task | `PUT /v1/task` with the `Suspended` field | `%Admin_Task:U` | Fresh task detail reports expected state | planned |
 | Tasks | Schedule an existing task | `PUT /v1/task` | Operate or Task | Readback matches normalized schedule fields | slice |
 | Tasks | Create or edit task definition | `POST /v1/task`, `PUT /v1/task` | Operate or Task | Readback matches normalized requested fields | planned |
@@ -50,3 +50,10 @@ container demonstrate:
     without automatically repeating the task.
 
 No row advances from `research` based only on the OpenAPI description.
+
+## Qualification note (2026-09-26)
+
+A `slice` row is implemented surface area, not live-mutation certification.
+See [implementation status](docs/IMPLEMENTATION_STATUS.md) for P0/P1 behavior,
+proof limits, and adversarial validation. Rule maturity is operator-configured;
+no per-rule validation-artifact gate is implemented yet.

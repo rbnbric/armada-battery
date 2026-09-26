@@ -7,3 +7,6 @@ var
 PRODUCT_SPEC.md
 WORKFLOW_MATRIX.md
 README.md
+
+.ruff_cache
+.pytest_cache

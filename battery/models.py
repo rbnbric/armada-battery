@@ -118,6 +118,7 @@ class PreflightCertificate:
     evidence_digest: str
     history_fingerprints: tuple[str, ...]
     used: bool = False
+    evidence_ids: tuple[str, ...] = ()
 
 
 @dataclass
@@ -135,6 +136,9 @@ class Receipt:
     before_evidence: tuple[str, ...] = field(default_factory=tuple)
     after_evidence: tuple[str, ...] = field(default_factory=tuple)
     explanation: str = ""
+    certificate_digest: str = ""
+    history_before: tuple[str, ...] = field(default_factory=tuple)
+    verification_deadline: datetime | None = None
 
 
 def to_data(value: Any) -> Any:

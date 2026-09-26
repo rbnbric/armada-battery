@@ -16,7 +16,9 @@ class StubIrisAdapter(IrisTaskAdapter):
         if path == "/v1/security/ssl-configuration/":
             raise AdapterError("IRIS returned HTTP 403: forbidden")
         if path in {
-            "/v1/process/", "/v1/security/audit/event/", "/v1/wallet/",
+            "/v1/process/",
+            "/v1/security/audit/event/",
+            "/v1/wallet/",
         }:
             return [{"Name": "synthetic"}]
         return {"Observed": True}
@@ -29,8 +31,14 @@ class RecordingIrisAdapter(IrisTaskAdapter):
 
     def _request(self, method, path, *, query=None, body=None):
         self.calls.append((method, path, query, body))
+        if path == "/v1/task" and method == "GET":
+            return {
+                "Name": "Demo Task",
+                "TaskClass": "Demo.Task",
+                "TimePeriod": "On Demand",
+            }
         if path == "/v1/task/info":
-            return {"Id": 7, "Name": "Demo Task", "Suspended": False}
+            return {"Suspended": False, "Status": "1", "Error": "Success"}
         if path == "/v1/task/history/":
             return [{"Task": 7, "LastStarted": "1", "Error": "Success"}]
         if path == "/v1/web-app":
@@ -80,6 +88,9 @@ class V1PathTests(unittest.TestCase):
 
         self.assertIn(("GET", "/v1/task/"), calls)
         self.assertEqual(calls[("GET", "/v1/task/info")], {"id": 7})
+        self.assertEqual(calls[("GET", "/v1/task")], {"id": 7})
+        run = next(c for c in adapter.calls if c[:2] == ("POST", "/v1/task/run"))
+        self.assertEqual(run[3], {"RunNow": True})
         self.assertEqual(
             calls[("GET", "/v1/task/history/")], {"id": 7, "name": "Demo Task"}
         )
@@ -99,7 +110,14 @@ class V1PathTests(unittest.TestCase):
     def test_history_rows_carry_the_engine_contract_keys(self):
         adapter = RecordingIrisAdapter()
         rows = adapter.get_history(7)
-        fingerprint_keys = {"TaskId", "LastStart", "Completed", "LogDatetime", "Status", "Result"}
+        fingerprint_keys = {
+            "TaskId",
+            "LastStart",
+            "Completed",
+            "LogDatetime",
+            "Status",
+            "Result",
+        }
         self.assertTrue(fingerprint_keys <= set(rows[0]))
         self.assertEqual(rows[0]["TaskId"], 7)
         self.assertEqual(rows[0]["Result"], "Success")

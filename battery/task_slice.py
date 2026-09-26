@@ -17,7 +17,7 @@ from typing import Any, Protocol
 
 from .admin_slice import AdministrativeIntentMixin
 from .errors import AdapterError, AmbiguousTransport
-from .ledger import Ledger
+from .ledger import Ledger, sanitize, serialized
 from .models import (
     Finding,
     FindingState,
@@ -25,7 +25,6 @@ from .models import (
     IntentKind,
     Observation,
     PreflightCertificate,
-    Quality,
     Receipt,
     ReceiptStatus,
     RuleSpec,
@@ -66,10 +65,19 @@ def _digest(value: Any) -> str:
 
 
 def _history_fingerprint(row: dict[str, Any]) -> str:
-    return _digest({
-        key: row.get(key)
-        for key in ("TaskId", "LastStart", "Completed", "LogDatetime", "Status", "Result")
-    })
+    return _digest(
+        {
+            key: row.get(key)
+            for key in (
+                "TaskId",
+                "LastStart",
+                "Completed",
+                "LogDatetime",
+                "Status",
+                "Result",
+            )
+        }
+    )
 
 
 _VALIDATION_ORDER = {
@@ -113,32 +121,49 @@ class SyntheticTaskAdapter:
         }
         self.history: dict[int, list[dict[str, Any]]] = {17: []}
         if prior_failure:
-            self.history[17].append({
-                "TaskId": 17,
-                "LastStart": "2026-09-22T10:00:00+00:00",
-                "Completed": "2026-09-22T10:00:02+00:00",
-                "LogDatetime": "2026-09-22T10:00:02+00:00",
-                "Status": "Failed",
-                "Result": "Synthetic failure",
-            })
+            self.history[17].append(
+                {
+                    "TaskId": 17,
+                    "LastStart": "2026-09-22T10:00:00+00:00",
+                    "Completed": "2026-09-22T10:00:02+00:00",
+                    "LogDatetime": "2026-09-22T10:00:02+00:00",
+                    "Status": "Failed",
+                    "Result": "Synthetic failure",
+                }
+            )
         self.pending_history: list[dict[str, Any]] = []
         self.web_apps = {
             "/api/existing": {
-                "Name": "/api/existing", "NameSpace": "USER", "Enabled": True,
-                "Type": 2, "Resource": "App.Reader", "DispatchClass": "Demo.Existing"
+                "Name": "/api/existing",
+                "NameSpace": "USER",
+                "Enabled": True,
+                "Type": 2,
+                "Resource": "App.Reader",
+                "DispatchClass": "Demo.Existing",
             }
         }
         self.users = {
-            "alex": {"Name": "alex", "FullName": "Alex Example", "Enabled": True, "Roles": []}
+            "alex": {
+                "Name": "alex",
+                "FullName": "Alex Example",
+                "Enabled": True,
+                "Roles": [],
+            }
         }
         self.roles = {
             "App.Reader": {
-                "Name": "App.Reader", "Description": "Read the demonstration application",
-                "GrantedRoles": [], "Resources": [{"Name": "App.Reader", "Permissions": "R"}],
+                "Name": "App.Reader",
+                "Description": "Read the demonstration application",
+                "GrantedRoles": [],
+                "Resources": [{"Name": "App.Reader", "Permissions": "R"}],
             }
         }
         self.resources = [
-            {"Name": "App.Reader", "Description": "Demonstration application", "PublicPermission": ""}
+            {
+                "Name": "App.Reader",
+                "Description": "Demonstration application",
+                "PublicPermission": "",
+            }
         ]
 
     def get_info(self) -> dict[str, Any]:
@@ -183,7 +208,9 @@ class SyntheticTaskAdapter:
         }
         if self.ambiguous:
             self.pending_history.append(row)
-            raise AmbiguousTransport("Connection ended before the response was received")
+            raise AmbiguousTransport(
+                "Connection ended before the response was received"
+            )
         self.history.setdefault(task_id, []).append(row)
 
     def reveal_pending(self) -> None:
@@ -285,7 +312,9 @@ class IrisTaskAdapter:
         "Result": ("Result", "Error"),
     }
 
-    def __init__(self, base_url: str, authorization: str, timeout: float = 15.0) -> None:
+    def __init__(
+        self, base_url: str, authorization: str, timeout: float = 15.0
+    ) -> None:
         self.base_url = base_url.rstrip("/")
         self.authorization = authorization
         self.timeout = timeout
@@ -300,7 +329,9 @@ class IrisTaskAdapter:
             user = os.environ.get("BATTERY_IRIS_USER", "")
             password = os.environ.get("BATTERY_IRIS_PASSWORD", "")
             if not user or not password:
-                raise RuntimeError("IRIS user and password or bearer token are required")
+                raise RuntimeError(
+                    "IRIS user and password or bearer token are required"
+                )
             token = base64.b64encode(f"{user}:{password}".encode()).decode()
             authorization = f"Basic {token}"
         return cls(base_url, authorization)
@@ -329,15 +360,36 @@ class IrisTaskAdapter:
         )
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                raw = response.read()
+                raw = response.read(2 * 1024 * 1024 + 1)
+                if len(raw) > 2 * 1024 * 1024:
+                    error = (
+                        AmbiguousTransport
+                        if method in {"POST", "PUT", "DELETE", "PATCH"}
+                        else AdapterError
+                    )
+                    raise error("IRIS response exceeded the 2 MiB collector limit")
         except urllib.error.HTTPError as exc:
-            detail = exc.read().decode(errors="replace")[:500]
-            raise AdapterError(f"IRIS returned HTTP {exc.code}: {detail}") from exc
+            error = (
+                AmbiguousTransport
+                if method in {"POST", "PUT", "DELETE", "PATCH"} and exc.code >= 500
+                else AdapterError
+            )
+            raise error(
+                f"IRIS returned HTTP {exc.code}; upstream body withheld"
+            ) from exc
         except (TimeoutError, urllib.error.URLError, ConnectionError) as exc:
             if method in {"POST", "PUT", "DELETE", "PATCH"}:
                 raise AmbiguousTransport(str(exc)) from exc
             raise AdapterError(str(exc)) from exc
-        payload = json.loads(raw or b"{}")
+        try:
+            payload = json.loads(raw or b"{}")
+        except (ValueError, UnicodeError) as exc:
+            error = (
+                AmbiguousTransport
+                if method in {"POST", "PUT", "DELETE", "PATCH"}
+                else AdapterError
+            )
+            raise error("Malformed IRIS response; outcome not established") from exc
         if isinstance(payload, dict) and "result" in payload:
             return payload["result"]
         return payload
@@ -349,7 +401,9 @@ class IrisTaskAdapter:
         return str(name)
 
     @classmethod
-    def _normalize_history_row(cls, row: dict[str, Any], task_id: int) -> dict[str, Any]:
+    def _normalize_history_row(
+        cls, row: dict[str, Any], task_id: int
+    ) -> dict[str, Any]:
         normalized = dict(row)
         for target, sources in cls._HISTORY_ALIASES.items():
             if target == "Status" and row.get("DisplayStatus") not in (None, ""):
@@ -382,7 +436,11 @@ class IrisTaskAdapter:
         return self._request("GET", "/v1/task/")
 
     def get_task(self, task_id: int) -> dict[str, Any]:
-        return self._request("GET", "/v1/task/info", query={"id": task_id})
+        definition = self._request("GET", "/v1/task", query={"id": task_id})
+        runtime = self._request("GET", "/v1/task/info", query={"id": task_id})
+        if not isinstance(definition, dict) or not isinstance(runtime, dict):
+            raise AdapterError("Malformed task definition or runtime information")
+        return {**definition, **runtime, "Id": task_id}
 
     def get_history(self, task_id: int) -> list[dict[str, Any]]:
         rows = self._request(
@@ -395,11 +453,15 @@ class IrisTaskAdapter:
                 (value for value in rows.values() if isinstance(value, list)), None
             )
         if not isinstance(rows, list):
-            raise AdapterError("Task history response did not contain a list of records")
+            raise AdapterError(
+                "Task history response did not contain a list of records"
+            )
         return [self._normalize_history_row(row, task_id) for row in rows]
 
     def run_task(self, task_id: int) -> None:
-        self._request("POST", "/v1/task/run", query={"id": task_id})
+        self._request(
+            "POST", "/v1/task/run", query={"id": task_id}, body={"RunNow": True}
+        )
 
     def put_task(self, task_id: int, payload: dict[str, Any]) -> None:
         self._request("PUT", "/v1/task", query={"id": task_id}, body=payload)
@@ -460,8 +522,12 @@ class IrisTaskAdapter:
             result[area] = {
                 "source": f"GET {path}",
                 "quality": "VALID",
+                "captured_at": _utcnow().isoformat(),
+                "count": count,
+                "complete": None,
+                "values": sanitize(value) if area in {"system", "license"} else None,
                 "summary": (
-                    f"{count} records observed"
+                    f"{count} {'record' if count == 1 else 'records'} observed"
                     if count is not None
                     else "Current aggregate state observed"
                 ),
@@ -530,7 +596,9 @@ class BatteryEngine(AdministrativeIntentMixin):
             RuleValidation.SIMULATED if adapter.synthetic else RuleValidation.DRAFT
         )
         minimum = (
-            RuleValidation.SIMULATED if adapter.synthetic else RuleValidation.LIVE_OBSERVED
+            RuleValidation.SIMULATED
+            if adapter.synthetic
+            else RuleValidation.LIVE_OBSERVED
         )
         self.rule = RuleSpec(
             id="task.intent.run-existing",
@@ -570,11 +638,97 @@ class BatteryEngine(AdministrativeIntentMixin):
         self.receipts: dict[str, Receipt] = {}
         self.idempotency: dict[str, str] = {}
         self._initialize_admin()
+        with self.ledger.locked():
+            self._restore_runtime()
+
+    def _restore_runtime(self):
+        self.certificates = {}
+        self.admin_certificates = {}
+        self.receipts = {}
+        self.idempotency = {}
+        for record in self.ledger.records:
+            data = dict(record["payload"])
+            if record["event_type"] == "preflight_issued":
+                key = data.get("certificate_digest")
+                if not key:
+                    continue  # Legacy authorizations are deliberately invalidated.
+                if data["action_id"] == "task.run-once":
+                    data.pop("certificate_digest", None)
+                    data["token"] = key
+                    for field in ("issued_at", "expires_at"):
+                        data[field] = datetime.fromisoformat(data[field])
+                    self.certificates[key] = PreflightCertificate(**data)
+                else:
+                    self.admin_certificates[key] = data
+            elif (
+                record["event_type"].startswith("action_") and "idempotency_key" in data
+            ):
+                for field in ("started_at", "finished_at", "verification_deadline"):
+                    if data.get(field):
+                        data[field] = datetime.fromisoformat(data[field])
+                data["status"] = ReceiptStatus(data["status"])
+                receipt = Receipt(**data)
+                if record["event_type"] == "action_attempted":
+                    receipt.status = ReceiptStatus.OUTCOME_UNKNOWN
+                    receipt.explanation = "Dispatch was reserved durably. Its outcome is unresolved; reconcile without resending."
+                self.receipts[receipt.id] = receipt
+                scope = "task-run" if receipt.action_id == "task.run-once" else "admin"
+                self.idempotency[f"{scope}:{receipt.idempotency_key}"] = receipt.id
+        for receipt in self.receipts.values():
+            for cert in self.certificates.values():
+                if cert.intent_id == receipt.intent_id:
+                    cert.used = True
+            for cert in self.admin_certificates.values():
+                if cert["intent_id"] == receipt.intent_id:
+                    cert["used"] = True
+
+    def _repeat(self, scope, token, operator):
+        receipt = self.receipts[self.idempotency[scope]]
+        if receipt.certificate_digest != _digest(token) or (
+            operator is not None and receipt.operator != operator
+        ):
+            raise ValueError(
+                "Execution key is already bound to another plan or operator"
+            )
+        return to_data(receipt)
+
+    def _observe(self, source, target, value):
+        data = to_data(
+            Observation(
+                str(uuid.uuid4()),
+                source,
+                target,
+                self.now(),
+                self.now() + timedelta(seconds=60),
+                sanitize(value),
+            )
+        )
+        self.ledger.append("observation", data)
+        return data
+
+    @serialized
+    def list_receipts(self, operator=None, execution_key=None):
+        return [
+            to_data(r)
+            for r in sorted(
+                self.receipts.values(), key=lambda r: r.started_at, reverse=True
+            )
+            if (operator is None or r.operator == operator)
+            and (execution_key is None or r.idempotency_key == execution_key)
+        ][:100]
+
+    @serialized
+    def get_receipt(self, receipt_id, operator=None):
+        receipt = self.receipts[receipt_id]
+        if operator is not None and receipt.operator != operator:
+            raise KeyError(receipt_id)
+        return to_data(receipt)
 
     def dashboard(self) -> dict[str, Any]:
         info = self.adapter.get_info()
         tasks = self.adapter.list_tasks()
         return {
+            "captured_at": self.now().isoformat(),
             "mode": "synthetic" if self.adapter.synthetic else "iris",
             "changes_enabled": self.allow_changes,
             "server": {
@@ -582,31 +736,42 @@ class BatteryEngine(AdministrativeIntentMixin):
                 "username": info.get("username"),
                 "system_mode": info.get("systemMode"),
             },
-            "tasks": tasks,
+            "tasks": sanitize(tasks),
             "rule": to_data(self.rule),
             "ledger_valid": self.ledger.verify(),
         }
 
     def observations(self) -> dict[str, Any]:
-        return {
-            "captured_at": self.now().isoformat(),
-            "areas": self.adapter.get_portal_inventory(),
-        }
+        areas = self.adapter.get_portal_inventory()
+        captured = self.now().isoformat()
+        for area in areas.values():
+            area.setdefault("captured_at", captured)
+            area.setdefault("freshness_seconds", 60)
+            area.setdefault("complete", None)
+        return {"captured_at": captured, "areas": sanitize(areas)}
 
     def audit_trail(self, limit: int = 20) -> dict[str, Any]:
-        records = []
-        for record in self.ledger.records[-max(1, min(limit, 100)):]:
-            payload = record.get("payload", {})
-            records.append({
-                "sequence": record["sequence"],
-                "recorded_at": record["recorded_at"],
-                "event_type": record["event_type"],
-                "target": payload.get("target"),
-                "status": payload.get("status") or payload.get("state"),
-                "digest": record["digest"][:12],
-            })
-        return {"valid": self.ledger.verify(), "records": records}
+        with self.ledger.locked():
+            records = []
+            for record in self.ledger.records[-max(1, min(limit, 100)) :]:
+                payload = record.get("payload", {})
+                records.append(
+                    {
+                        **record,
+                        "target": payload.get("target"),
+                        "status": payload.get("status") or payload.get("state"),
+                    }
+                )
+            return {
+                "valid": self.ledger.verify(),
+                "count": len(self.ledger.records),
+                "head": self.ledger.records[-1]["digest"]
+                if self.ledger.records
+                else None,
+                "records": sanitize(records),
+            }
 
+    @serialized
     def prepare_task_run(
         self,
         task_id: int,
@@ -630,9 +795,16 @@ class BatteryEngine(AdministrativeIntentMixin):
         history = self.adapter.get_history(task_id)
         expires = evaluated_at + timedelta(seconds=60)
         observations = (
-            Observation(str(uuid.uuid4()), "GET /info", "server", evaluated_at, expires, info),
             Observation(
-                str(uuid.uuid4()), "GET /v1/task/info", intent.target, evaluated_at, expires, task
+                str(uuid.uuid4()), "GET /info", "server", evaluated_at, expires, info
+            ),
+            Observation(
+                str(uuid.uuid4()),
+                "GET /v1/task/info",
+                intent.target,
+                evaluated_at,
+                expires,
+                task,
             ),
             Observation(
                 str(uuid.uuid4()),
@@ -661,16 +833,25 @@ class BatteryEngine(AdministrativeIntentMixin):
         if str(task.get("Status", "")).strip() == "-1":
             blockers.append("The selected task is already running.")
         if not task_definition_reviewed:
-            blockers.append("The task definition and its side effects have not been reviewed.")
+            blockers.append(
+                "The task definition and its side effects have not been reviewed."
+            )
         latest = self._latest_history(history)
+        if latest and self._history_outcome(latest) == "unknown":
+            blockers.append(
+                "Latest task history has no recognized terminal outcome. Inspect it before requesting another run."
+            )
         if latest and self._history_outcome(latest) == "failure":
             blockers.append(
                 "The latest run failed; failure alone does not prove that retrying is correct."
             )
-            alternatives.append("Inspect the previous failure and validate a cause-specific remedy.")
-        if _VALIDATION_ORDER[self.rule.validation] < _VALIDATION_ORDER[
-            self.rule.minimum_execution_validation
-        ]:
+            alternatives.append(
+                "Inspect the previous failure and validate a cause-specific remedy."
+            )
+        if (
+            _VALIDATION_ORDER[self.rule.validation]
+            < _VALIDATION_ORDER[self.rule.minimum_execution_validation]
+        ):
             blockers.append(
                 f"Rule validation is {self.rule.validation.value}; execution requires "
                 f"{self.rule.minimum_execution_validation.value}."
@@ -696,7 +877,9 @@ class BatteryEngine(AdministrativeIntentMixin):
             evidence_ids=tuple(item.id for item in observations),
             missing_evidence=tuple(blockers),
             recommended_actions=(
-                ("Run once and verify",) if not blockers else tuple(alternatives or ["Resolve blockers"])
+                ("Run once and verify",)
+                if not blockers
+                else tuple(alternatives or ["Resolve blockers"])
             ),
             evaluated_at=evaluated_at,
             inference="configured policy applied to current task, privilege, and history observations",
@@ -707,11 +890,13 @@ class BatteryEngine(AdministrativeIntentMixin):
         if not blockers:
             token = secrets.token_urlsafe(24)
             fingerprints = tuple(_history_fingerprint(row) for row in history)
-            evidence_digest = _digest({
-                "task": task,
-                "task_privilege": privileges.get("Task"),
-                "operate_privilege": privileges.get("Operate"),
-            })
+            evidence_digest = _digest(
+                {
+                    "task": task,
+                    "task_privilege": privileges.get("Task"),
+                    "operate_privilege": privileges.get("Operate"),
+                }
+            )
             cert = PreflightCertificate(
                 token=token,
                 intent_id=intent.id,
@@ -722,27 +907,40 @@ class BatteryEngine(AdministrativeIntentMixin):
                 expires_at=expires,
                 evidence_digest=evidence_digest,
                 history_fingerprints=fingerprints,
+                evidence_ids=tuple(item.id for item in observations),
             )
-            self.certificates[token] = cert
+            self.certificates[_digest(token)] = cert
             certificate = to_data(cert)
-            self.ledger.append("preflight_issued", certificate)
+            self.ledger.append(
+                "preflight_issued",
+                {
+                    **certificate,
+                    "token": "[REDACTED]",
+                    "certificate_digest": _digest(token),
+                },
+            )
 
         return {
             "intent": to_data(intent),
             "finding": to_data(finding),
             "rule": to_data(self.rule),
-            "task": task,
-            "history": history,
+            "task": sanitize(task),
+            "history": sanitize(history),
             "certificate": certificate,
         }
 
-    def execute_task_run(self, token: str, idempotency_key: str) -> dict[str, Any]:
+    @serialized
+    def execute_task_run(
+        self, token: str, idempotency_key: str, operator: str | None = None
+    ) -> dict[str, Any]:
         idempotency_scope = f"task-run:{idempotency_key}"
         if idempotency_scope in self.idempotency:
-            return to_data(self.receipts[self.idempotency[idempotency_scope]])
-        cert = self.certificates.get(token)
+            return self._repeat(idempotency_scope, token, operator)
+        cert = self.certificates.get(_digest(token))
         if not cert:
             raise ValueError("Unknown preflight certificate")
+        if operator is not None and operator != cert.operator:
+            raise ValueError("Preflight belongs to another operator")
         if cert.used:
             raise ValueError("Preflight certificate has already been used")
         if self.now() > cert.expires_at:
@@ -751,13 +949,21 @@ class BatteryEngine(AdministrativeIntentMixin):
         info = self.adapter.get_info()
         task = self.adapter.get_task(task_id)
         privileges = info.get("privileges", {})
-        current_digest = _digest({
-            "task": task,
-            "task_privilege": privileges.get("Task"),
-            "operate_privilege": privileges.get("Operate"),
-        })
+        current_digest = _digest(
+            {
+                "task": task,
+                "task_privilege": privileges.get("Task"),
+                "operate_privilege": privileges.get("Operate"),
+            }
+        )
         if current_digest != cert.evidence_digest:
-            raise ValueError("Target or privileges changed after preflight; prepare again")
+            raise ValueError(
+                "Target or privileges changed after preflight; prepare again"
+            )
+        if not self.allow_changes:
+            raise ValueError("Changes are disabled")
+        if self.now() > cert.expires_at:
+            raise ValueError("Preflight evidence expired during refresh")
         cert.used = True
         receipt = Receipt(
             id=str(uuid.uuid4()),
@@ -768,7 +974,10 @@ class BatteryEngine(AdministrativeIntentMixin):
             idempotency_key=idempotency_key,
             started_at=self.now(),
             status=ReceiptStatus.EXECUTED_UNVERIFIED,
-            before_evidence=cert.history_fingerprints,
+            before_evidence=cert.evidence_ids,
+            history_before=cert.history_fingerprints,
+            certificate_digest=_digest(token),
+            verification_deadline=self.now() + timedelta(minutes=5),
             explanation="Attempt recorded before sending the IRIS request.",
         )
         self.receipts[receipt.id] = receipt
@@ -795,47 +1004,102 @@ class BatteryEngine(AdministrativeIntentMixin):
             return to_data(receipt)
         return self._reconcile(receipt, task_id)
 
-    def reconcile(self, receipt_id: str) -> dict[str, Any]:
+    @serialized
+    def reconcile(self, receipt_id: str, operator: str | None = None) -> dict[str, Any]:
         receipt = self.receipts[receipt_id]
+        if operator is not None and operator != receipt.operator:
+            raise ValueError("Receipt belongs to another operator")
+        if receipt.status in {
+            ReceiptStatus.VERIFIED_SUCCESS,
+            ReceiptStatus.VERIFIED_FAILURE,
+        }:
+            return to_data(receipt)
         if receipt.action_id != "task.run-once":
             return self.reconcile_admin(receipt)
         task_id = int(receipt.target.split(":", 1)[1])
         return self._reconcile(receipt, task_id)
 
     def _reconcile(self, receipt: Receipt, task_id: int) -> dict[str, Any]:
-        history = self.adapter.get_history(task_id)
-        before = set(receipt.before_evidence)
-        new_rows = [row for row in history if _history_fingerprint(row) not in before]
-        receipt.after_evidence = tuple(_history_fingerprint(row) for row in new_rows)
-        if not new_rows:
-            receipt.status = (
-                ReceiptStatus.OUTCOME_UNKNOWN
-                if receipt.status == ReceiptStatus.OUTCOME_UNKNOWN
-                else ReceiptStatus.EXECUTED_UNVERIFIED
+        try:
+            history = self.adapter.get_history(task_id)
+        except AdapterError:
+            receipt.status = ReceiptStatus.OUTCOME_UNKNOWN
+            receipt.explanation = (
+                "Fresh task history is unavailable. The attempt will not be resent."
             )
-            receipt.explanation = "No new terminal task-history record is observable yet."
         else:
-            outcome = self._history_outcome(self._latest_history(new_rows) or new_rows[-1])
-            if outcome == "success":
-                receipt.status = ReceiptStatus.VERIFIED_SUCCESS
-                receipt.explanation = "A new successful task-history record was observed."
-                receipt.finished_at = self.now()
-            elif outcome == "failure":
-                receipt.status = ReceiptStatus.VERIFIED_FAILURE
-                receipt.explanation = "A new failed task-history record was observed."
-                receipt.finished_at = self.now()
+            before = set(receipt.history_before)
+            candidates = [r for r in history if _history_fingerprint(r) not in before]
+            observation = self._observe("task-history", receipt.target, history)
+            receipt.after_evidence = (observation["id"],)
+            # IRIS v1 does not return an execution identifier from run-now. Time
+            # proximity is insufficient to attribute a scheduled/other-user run.
+            if not self.adapter.synthetic:
+                receipt.status = (
+                    ReceiptStatus.EXECUTED_UNVERIFIED
+                    if receipt.transport_result == "IRIS accepted the run request"
+                    else ReceiptStatus.OUTCOME_UNKNOWN
+                )
+                receipt.explanation = "Fresh history collected, but IRIS v1 supplies no attempt correlation identifier. These rows cannot independently prove this run. No automatic retry."
             else:
-                receipt.status = ReceiptStatus.EXECUTED_UNVERIFIED
-                receipt.explanation = "A new history record exists, but its outcome is not terminal."
+                candidates = [
+                    r
+                    for r in candidates
+                    if str(r.get("TaskId")) == str(task_id)
+                    and self._after_attempt(r, receipt.started_at)
+                ]
+                outcome = (
+                    self._history_outcome(candidates[0])
+                    if len(candidates) == 1
+                    else "unknown"
+                )
+                if outcome in {"success", "failure"}:
+                    receipt.status = (
+                        ReceiptStatus.VERIFIED_SUCCESS
+                        if outcome == "success"
+                        else ReceiptStatus.VERIFIED_FAILURE
+                    )
+                    receipt.finished_at = self.now()
+                    receipt.explanation = "The isolated synthetic adapter's new terminal record establishes the outcome."
+                else:
+                    receipt.status = (
+                        ReceiptStatus.OUTCOME_UNKNOWN
+                        if receipt.status == ReceiptStatus.OUTCOME_UNKNOWN
+                        else ReceiptStatus.EXECUTED_UNVERIFIED
+                    )
+                    receipt.explanation = "No unique terminal record attributable to this attempt. Reconcile from fresh evidence; do not repeat the change."
         self.ledger.append("action_reconciled", to_data(receipt))
         return to_data(receipt)
 
     @staticmethod
+    def _after_attempt(row, started_at):
+        try:
+            observed = datetime.fromisoformat(
+                str(row.get("LastStart", "")).replace("Z", "+00:00")
+            )
+            return observed.tzinfo is not None and observed >= started_at
+        except ValueError:
+            return False
+
+    @staticmethod
     def _history_outcome(row: dict[str, Any]) -> str:
-        text = f"{row.get('Status', '')} {row.get('Result', '')}".casefold()
-        if any(word in text for word in ("failed", "failure", "error")):
+        values = {
+            str(row.get(key, "")).strip().casefold() for key in ("Status", "Result")
+        }
+        if values & {
+            "failed",
+            "failure",
+            "error",
+            "unsuccessful",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+        }:
             return "failure"
-        if any(word in text for word in ("success", "completed", "complete")):
+        if values & {"incomplete", "not completed", "running", "pending"}:
+            return "unknown"
+        if values & {"success", "succeeded", "completed", "complete"}:
             return "success"
         return "unknown"
 
@@ -858,6 +1122,10 @@ def engine_from_environment() -> BatteryEngine:
     if os.environ.get("BATTERY_IRIS_URL"):
         adapter: TaskAdapter = IrisTaskAdapter.from_environment()
         allowed = os.environ.get("BATTERY_ALLOW_CHANGES", "").casefold() == "true"
+        if allowed and len(os.environ.get("BATTERY_ACCESS_KEY", "")) < 32:
+            raise RuntimeError(
+                "Live changes require BATTERY_ACCESS_KEY of at least 32 characters"
+            )
         validation_name = os.environ.get(
             "BATTERY_RULE_VALIDATION",
             os.environ.get("BATTERY_TASK_RULE_VALIDATION", "DRAFT"),
