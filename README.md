@@ -1,6 +1,6 @@
 # Armada Battery
 
-<p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery AB mark"></p>
+<p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery industrial battery icon"></p>
 
 Armada Battery is an evidence-driven management portal for InterSystems IRIS.
 It prepares four bounded administrative requests, explains observed prerequisites,

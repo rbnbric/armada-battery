@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Armada Battery AB plus icon</title>
+  <desc id="desc">A squared industrial battery enclosure with a gray upper cell, orange identification band, white charge rail, and AB plus monogram.</desc>
+
+  <defs>
+    <clipPath id="case-clip">
+      <rect x="40" y="48" width="416" height="398" rx="21"/>
+    </clipPath>
+  </defs>
+
+  <!-- The tile is the battery enclosure. -->
+  <rect x="40" y="48" width="416" height="398" rx="21"
+        fill="#878787" stroke="#666B6D" stroke-width="10"/>
+
+  <g clip-path="url(#case-clip)">
+    <!-- Identification band -->
+    <rect x="40" y="278" width="416" height="168" fill="#FF7926"/>
+
+    <!-- Left internal bus -->
+    <path d="M74 62V275" fill="none" stroke="#111214" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Orange conductor across the upper cell -->
+    <path d="M43 89H366" fill="none" stroke="#FF7926" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Tall service / charge rail -->
+    <rect x="363" y="56" width="52" height="380" fill="#F7F7F4"/>
+    <rect x="372" y="66" width="33" height="212" fill="#B9B9B9"/>
+
+    <!-- Right terminal: it meets, but does not cross, the service rail -->
+    <path d="M417 89H449" fill="none" stroke="#111214" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- AB, converted to vector geometry -->
+    <g transform="translate(-114 32)" fill="#F7F7F4">
+      <path fill-rule="evenodd" d="M173 390l34-78h20l34 78h-20l-8-20h-34l-8 20h-18zm33-38h20l-10-25-10 25z"/>
+      <path fill-rule="evenodd" d="M270 312h37c25 0 39 10 39 27 0 9-5 16-14 21 12 4 18 11 18 22 0 19-16 28-44 28h-36v-78zm20 17v23h17c12 0 18-4 18-12 0-7-6-11-18-11h-17zm0 39v25h18c14 0 21-4 21-13 0-8-7-12-21-12h-18z"/>
+    </g>
+
+    <!-- Plus sign, deliberately separate like a cell polarity mark -->
+    <path d="M258 354v40M238 374h40" fill="none" stroke="#F7F7F4" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <!-- Orange gasket sits inside the structural gray rim. -->
+  <rect x="44" y="52" width="408" height="390" rx="17"
+        fill="none" stroke="#FF7926" stroke-width="5"/>
+</svg>
