@@ -2,10 +2,15 @@
 
 <p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery industrial battery icon"></p>
 
-Armada Battery is an evidence-driven management portal for InterSystems IRIS.
-It prepares four bounded administrative requests, explains observed prerequisites,
-records each attempt before dispatch, and retains fresh evidence for its outcome.
-Unresolved outcomes remain visible and are reconciled without resending changes.
+Armada Battery is an adversarially tested change-control engine for four
+consequential InterSystems IRIS administration workflows. It is built around the
+failure cases ordinary admin screens tend to hide: stale review state, replay,
+concurrent change, ambiguous dispatch, restart, and incomplete verification.
+
+Each request is bound to a short-lived, single-use authorization certificate.
+Battery records the attempt durably before dispatch, verifies the resulting state
+with fresh evidence, and never turns an uncertain transport outcome into permission
+to resend the change. Unresolved outcomes stay visible until reconciliation.
 
 The working slice covers four ordinary requests: run an existing task, schedule
 an existing task, create a bounded REST application, and grant an existing
@@ -22,6 +27,26 @@ Every flow separates preparation from execution. Preparation compares the
 request with current state, authority, and rule maturity. Execution uses a
 short-lived single-use certificate, records the attempt before transport, and
 requires fresh readback before reporting verified success.
+
+## Judge fast path
+
+No IRIS instance is required for the deterministic evaluation path:
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m uvicorn app:app --host 127.0.0.1 --port 8080 --no-access-log
+python3 scripts/run_scenarios.py
+```
+
+Open `http://127.0.0.1:8080`, prepare one of the four supported requests, inspect
+the certificate-bound review, authorize it, and open the resulting receipt. The
+scenario runner then demonstrates eight overlapping normal and adversarial
+behaviors. Start with ambiguous dispatch: Battery reconciles observed state and
+does not retry a request that may already have crossed the dispatch boundary.
+
+The complete local gate is 46 backend tests, four UI lifecycle tests, and all
+eight scenario demonstrations. The Docker Compose path below adds a real IRIS
+Community Edition instance and starts conservatively with changes disabled.
 
 The management surface also collects bounded, read-only observations for
 system resources, processes, databases, license usage, audit configuration,
