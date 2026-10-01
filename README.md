@@ -140,8 +140,8 @@ The first full-stack start initializes a fresh IRIS instance:
 `iris-init` prepares the durable storage and writes the password file, then IRIS
 starts and applies `IRIS_PASSWORD` to `_SYSTEM`. Initialization can take a
 couple of minutes; run the in-container verifier after it completes (the script
-itself waits and retries for up to three minutes). No host Python, manual
-preparation, `chown`, or manual first-login password change is required.
+itself waits and retries for up to three minutes). No host Python, host `chown`,
+or manual first-login password change is required.
 
 Battery is available at `http://127.0.0.1:8080`; the IRIS Management Portal is
 available at `http://127.0.0.1:52773/csp/sys/UtilHome.csp`.
