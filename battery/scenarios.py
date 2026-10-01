@@ -142,6 +142,17 @@ SCENARIOS: dict[str, Callable[[], None]] = {
     "sensitive_values_absent": _sensitive_values_absent,
 }
 
+SCENARIO_CLAIMS = {
+    "intentional_change": "A requested configuration change is applied and verified by fresh readback.",
+    "insufficient_privilege": "Missing authority blocks the request before dispatch.",
+    "failed_task_restraint": "A prior failure produces review evidence instead of an automatic retry.",
+    "stale_evidence": "Expired observations invalidate the authorization before execution.",
+    "ambiguous_transport": "A lost response is reconciled after one dispatch without resending the change.",
+    "wrong_rule_defense": "A draft rule cannot authorize a security-sensitive role grant.",
+    "concurrent_change": "A target changed after preflight is rejected before execution.",
+    "sensitive_values_absent": "Collected evidence excludes secret values and retains a valid ledger chain.",
+}
+
 
 def run_scenarios() -> dict[str, object]:
     results = []
@@ -151,7 +162,9 @@ def run_scenarios() -> dict[str, object]:
         except Exception as exc:  # scenario report must include every case
             results.append({"name": name, "passed": False, "detail": str(exc)})
         else:
-            results.append({"name": name, "passed": True, "detail": "proved"})
+            results.append(
+                {"name": name, "passed": True, "detail": SCENARIO_CLAIMS[name]}
+            )
     return {
         "passed": sum(1 for item in results if item["passed"]),
         "total": len(results),

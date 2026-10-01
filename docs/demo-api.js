@@ -36,6 +36,16 @@
     validation: "SIMULATED",
     minimum_execution_validation: "SIMULATED",
   };
+  const scenarios = [
+    ["intentional_change", "A requested configuration change is applied and verified by fresh readback."],
+    ["insufficient_privilege", "Missing authority blocks the request before dispatch."],
+    ["failed_task_restraint", "A prior failure produces review evidence instead of an automatic retry."],
+    ["stale_evidence", "Expired observations invalidate the authorization before execution."],
+    ["ambiguous_transport", "A lost response is reconciled after one dispatch without resending the change."],
+    ["wrong_rule_defense", "A draft rule cannot authorize a security-sensitive role grant."],
+    ["concurrent_change", "A target changed after preflight is rejected before execution."],
+    ["sensitive_values_absent", "Collected evidence excludes secret values and retains a valid ledger chain."],
+  ].map(([name, detail]) => ({ name, detail, passed: true }));
   const quality = () => ({ quality: "VALID", captured_at: now() });
   const observation = (source, summary, values = null) => ({
     source,
@@ -261,7 +271,7 @@
         available: true,
         passed: 8,
         total: 8,
-        scenarios: [],
+        scenarios,
       });
     if (path === "/api/evidence") {
       const records = ledger();
@@ -298,7 +308,7 @@
     banner.className = "demo-banner";
     banner.setAttribute("role", "note");
     banner.innerHTML =
-      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Choose <b>New request</b>, review the demonstration task, then prepare and execute it once.';
+      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Select <b>Try the one-dispatch proof</b>, review the demonstration task, then prepare and execute it once.';
     document.body.prepend(banner);
     document.querySelectorAll("#workflow option:not([value='run'])").forEach((option) => {
       option.disabled = true;

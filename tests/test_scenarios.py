@@ -11,6 +11,10 @@ class ScenarioTests(unittest.TestCase):
         failures = [item for item in report["scenarios"] if not item["passed"]]
         self.assertEqual(failures, [])
         self.assertEqual(report["passed"], report["total"])
+        self.assertTrue(
+            all(len(item["detail"]) > 30 for item in report["scenarios"]),
+            "every passing check should state the property it established",
+        )
 
 
 if __name__ == "__main__":

@@ -15,6 +15,25 @@ to resend the change. Unresolved outcomes stay visible until reconciliation.
 **[Open the credential-free walkthrough](https://rbnbric.github.io/armada-battery/)**
 — a clearly labeled synthetic judge path that sends no request to IRIS.
 
+## What the demonstration proves
+
+The concrete failure case is a task request whose transport response disappears.
+Battery records one dispatch, reports the outcome as unknown, and refuses to send
+the mutation again. When fresh correlated history arrives, it reconciles that same
+attempt to `VERIFIED_SUCCESS`.
+
+| Measured result | Outcome |
+|---|---:|
+| Adapter dispatches | **1** |
+| Automatic retries | **0** |
+| Deterministic failure-mode checks | **8/8 passed** |
+| Final state after fresh evidence | **VERIFIED_SUCCESS** |
+
+The checks also cover insufficient privilege, a previous failed task, stale
+authorization, an unqualified rule, concurrent target changes, intentional
+changes, and secret-free evidence. This is synthetic qualification of the engine;
+it does not claim that a live IRIS mutation has been qualified.
+
 The working slice covers four ordinary requests: run an existing task, schedule
 an existing task, create a bounded REST application, and grant an existing
 reviewed role to an existing user. It runs against a bundled synthetic adapter
@@ -33,27 +52,27 @@ requires fresh readback before reporting verified success.
 
 ## Judge fast path
 
-No IRIS instance is required for the deterministic evaluation path:
+No IRIS instance is required for the deterministic evaluation path. Open the
+[hosted synthetic walkthrough](https://rbnbric.github.io/armada-battery/), select
+**Try the one-dispatch proof**, review the demonstration task, prepare it, and
+choose **Run and verify**. The resulting receipt shows the original ambiguous
+dispatch reconciled without resend.
 
-- **Hosted:** [open the synthetic walkthrough](https://rbnbric.github.io/armada-battery/),
-  choose **New request**, review the demonstration task, prepare it, and execute
-  it once.
-- **Local:** run the application and scenario suite below.
+No installation, account, credentials, IRIS download, or local Python is required.
+The same proof can run entirely inside Docker:
 
 ```bash
-python3 -m pip install -r requirements.txt
-python3 -m uvicorn app:app --host 127.0.0.1 --port 8080 --no-access-log
-python3 scripts/run_scenarios.py
+git clone https://github.com/rbnbric/armada-battery.git
+cd armada-battery
+docker compose up -d
+docker compose run --rm proof
 ```
 
-Open `http://127.0.0.1:8080`, prepare one of the four supported requests, inspect
-the certificate-bound review, authorize it, and open the resulting receipt. The
-scenario runner then demonstrates eight overlapping normal and adversarial
-behaviors. Start with ambiguous dispatch: Battery reconciles observed state and
-does not retry a request that may already have crossed the dispatch boundary.
+Open `http://127.0.0.1:8080`. The default Compose path starts only the lightweight
+synthetic application; it does not download or wait for an IRIS image.
 
 The complete local gate is 46 backend tests, four UI lifecycle tests, and all
-eight scenario demonstrations. The Docker Compose path below adds a real IRIS
+eight scenario demonstrations. The optional Compose overlay below adds a real IRIS
 Community Edition instance and starts conservatively with changes disabled.
 
 The management surface also collects bounded, read-only observations for
@@ -86,7 +105,7 @@ log search, REST exploration, and security-object changes are not implemented.
 See [implementation and qualification notes](docs/IMPLEMENTATION_STATUS.md) for the
 P0/P1 design reconciliation and remaining work.
 
-## Run the synthetic demonstration
+## Run the synthetic demonstration with local Python
 
 ```bash
 python3 -m pip install -r requirements.txt
@@ -97,23 +116,31 @@ Open `http://127.0.0.1:8080`. No credentials or external services are required.
 
 ## Run Battery with IRIS Community Edition
 
-An OCI runtime such as Docker or Podman is required. Copy `.env.example` to
-`.env`, replace the sample password, and start the stack:
+An OCI runtime such as Docker or Podman is required. This path downloads the
+larger InterSystems image and therefore takes longer than the synthetic judge
+path. Copy `.env.example` to `.env`, replace the sample password, and start the
+IRIS overlay:
 
 ```bash
 git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 cp .env.example .env
 # Set IRIS_PASSWORD in .env to a long local demo password.
-docker compose up --build -d
-python3 scripts/verify_container.py
+docker compose -f compose.yaml -f compose.iris.yaml up -d
+docker compose -f compose.yaml -f compose.iris.yaml exec battery \
+  python scripts/verify_container.py
 ```
 
-The first `docker compose up --build -d` initializes a fresh IRIS instance:
+The overlay defaults to the InterSystems IRIS Community Edition `latest-cd`
+image (2026.2 at the time of this revision), replacing the older 2026.1
+extended-maintenance demonstration image. Set `IRIS_IMAGE` to reproduce a
+specific release.
+
+The first full-stack start initializes a fresh IRIS instance:
 `iris-init` prepares the durable storage and writes the password file, then IRIS
 starts and applies `IRIS_PASSWORD` to `_SYSTEM`. Initialization can take a
-couple of minutes; run `python3 scripts/verify_container.py` after it completes
-(the script itself waits and retries for up to three minutes). No host
+couple of minutes; run the in-container verifier after it completes (the script
+itself waits and retries for up to three minutes). No host Python, manual
 preparation, `chown`, or manual first-login password change is required.
 
 Battery is available at `http://127.0.0.1:8080`; the IRIS Management Portal is
@@ -127,15 +154,24 @@ is an operator assertion; the current implementation does not automatically
 qualify a rule from stored live tests. Stop the stack with:
 
 ```bash
-docker compose down
+docker compose -f compose.yaml -f compose.iris.yaml down
 ```
 
 Named volumes preserve IRIS and Battery state (IRIS durable instance data lives
-on the `iris-data` volume mounted at `/durable`). `docker compose down -v`
-deletes those volumes and is intentionally not part of the normal instructions;
-a later `docker compose up` would then initialize a fresh IRIS instance again.
+on the `iris-data` volume mounted at `/durable`). Running the same full-stack
+down command with `-v` deletes those volumes and is intentionally not part of
+the normal instructions; a later full-stack start would then initialize a fresh
+IRIS instance again.
 
 ## Run the tests
+
+The full backend suite can run without host Python:
+
+```bash
+docker compose run --build --rm test
+```
+
+For a local development environment:
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -161,7 +197,7 @@ The contest listing is
 <https://openexchange.intersystems.com/contest/48>.
 
 Judges can start with the synthetic demonstration and
-`python3 scripts/run_scenarios.py` for the eight deterministic behaviors, then
+`docker compose run --rm proof` for the eight deterministic behaviors, then
 run the composed stack to inspect a live IRIS Community Edition instance and
 its blocked preflight. Live outcome qualification remains separate.
 

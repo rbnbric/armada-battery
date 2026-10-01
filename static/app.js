@@ -52,6 +52,16 @@ const STATES = {
   UNKNOWN: ["?", "unknown"],
   CANCELLED: ["—", "unknown"],
 };
+const SCENARIO_LABELS = {
+  intentional_change: "Intentional change",
+  insufficient_privilege: "Insufficient privilege",
+  failed_task_restraint: "Failed-task restraint",
+  stale_evidence: "Stale evidence",
+  ambiguous_transport: "Lost response without retry",
+  wrong_rule_defense: "Unqualified rule",
+  concurrent_change: "Concurrent target change",
+  sensitive_values_absent: "Secret-free evidence",
+};
 function node(tag, content, cls = "") {
   const n = document.createElement(tag);
   if (content !== undefined) n.textContent = String(content);
@@ -342,14 +352,21 @@ async function load() {
     : "CONTEXT UNKNOWN";
   byId("adapter").className = "badge";
   byId("authority").textContent = server
-    ? server.changes_enabled
-      ? "CHANGES ENABLED"
-      : "OBSERVATION ONLY"
+    ? server.mode === "synthetic"
+      ? "FIXTURE ACTIONS ONLY"
+      : server.changes_enabled
+        ? "CHANGES ENABLED"
+        : "OBSERVATION ONLY"
     : "AUTHORITY UNKNOWN";
   byId("authority").className =
-    "badge " + (server?.changes_enabled ? "watch" : "unknown");
+    "badge " +
+    (server?.mode === "synthetic"
+      ? "safe"
+      : server?.changes_enabled
+        ? "watch"
+        : "unknown");
   byId("connection").textContent = server
-    ? `${server.server.version} · IRIS authority: ${server.server.username} · Battery operator: ${server.operator} · ${server.access_mode}`
+    ? `${server.server.version} · ${server.mode === "synthetic" ? "Fixture identity" : "IRIS authority"}: ${server.server.username} · Battery operator: ${server.operator} · ${server.access_mode}`
     : state.errors.server || "Connection unavailable";
   if (!server?.changes_enabled && state.certificate)
     invalidate("Changes are disabled or authority is unavailable.");
@@ -470,6 +487,69 @@ function collection(name) {
         : `${q?.quality || "UNKNOWN"}: ${q?.detail || "No usable collection."}`,
   };
 }
+function assuranceProof() {
+  const proof = node("section", undefined, "proof-result");
+  const available = state.assurance?.available;
+  const passed = state.assurance?.passed ?? 0;
+  const total = state.assurance?.total ?? 0;
+  proof.append(
+    node("p", "THE CONCRETE RESULT", "eyebrow"),
+    node(
+      "h2",
+      available
+        ? `${passed}/${total} failure-mode checks contained`
+        : "Live observations are separated from synthetic assurance",
+    ),
+    node(
+      "p",
+      available
+        ? "When a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again."
+        : state.assurance?.detail ||
+            state.errors.assurance ||
+            "Assurance evidence is unavailable.",
+      "proof-lede",
+    ),
+  );
+  if (available) {
+    const metrics = node("div", undefined, "proof-metrics");
+    [
+      ["1", "dispatch"],
+      ["0", "automatic retries"],
+      [`${passed}/${total}`, "checks passed"],
+    ].forEach(([value, label]) => {
+      const item = node("div");
+      item.append(node("strong", value), node("span", label));
+      metrics.append(item);
+    });
+    proof.append(metrics);
+    if (state.assurance.scenarios?.length) {
+      const list = node("ul", undefined, "proof-checks");
+      state.assurance.scenarios.forEach((scenario) => {
+        const item = node("li");
+        item.append(
+          badge(scenario.passed ? "VERIFIED_SUCCESS" : "VERIFIED_FAILURE"),
+          node("strong", SCENARIO_LABELS[scenario.name] || scenario.name),
+          node("span", scenario.detail),
+        );
+        list.append(item);
+      });
+      const disclosure = node("details", undefined, "proof-disclosure");
+      disclosure.append(node("summary", "Inspect all deterministic checks"), list);
+      proof.append(disclosure);
+    }
+    const actions = node("div", undefined, "proof-actions");
+    actions.append(
+      button("Try the one-dispatch proof", () => startRequest("run", 17)),
+      node(
+        "span",
+        "About one minute · synthetic target · no credentials required",
+        "quiet",
+      ),
+    );
+    proof.append(actions);
+  }
+  return proof;
+}
 function renderPage() {
   const root = byId("page-content");
   root.replaceChildren();
@@ -499,20 +579,11 @@ function renderPage() {
     observationDisclosure.open =
       !window.matchMedia("(max-width: 600px)").matches;
     root.append(
+      assuranceProof(),
       section("Operational evidence", summary, observationDisclosure),
       section("Recent attempts", receiptTable(state.receipts.slice(0, 5))),
-      section(
-        "Assurance",
-        empty(
-          state.assurance?.available
-            ? `${state.assurance.passed}/${state.assurance.total} synthetic scenarios passed. This does not qualify live IRIS changes.`
-            : state.assurance?.detail ||
-                state.errors.assurance ||
-                "Assurance unavailable.",
-        ),
-      ),
       empty(
-        "Readiness conditions, charge, coverage and scheduled assurance obligations are not calculated in this release.",
+        "The checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
       ),
     );
   } else if (state.page === "tasks") {
@@ -932,6 +1003,13 @@ async function renderReceipt(packet, target) {
   box.append(
     node("h2", "Attempt receipt"),
     badge(r.status),
+    node(
+      "p",
+      r.status === "VERIFIED_SUCCESS"
+        ? "Requested outcome established from fresh evidence after one bounded dispatch."
+        : r.explanation,
+      "receipt-verdict",
+    ),
     fields({
       "Receipt ID": r.id,
       "Started (UTC)": r.started_at,

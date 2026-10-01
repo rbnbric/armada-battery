@@ -1,0 +1,15 @@
+# Review response
+
+This revision follows the first public review of Armada Battery.
+
+| Review observation | Revision |
+|---|---|
+| Build was lengthy because it began with the older IRIS 2026.1 EM image | The default Compose path now starts the lightweight synthetic application; the optional live overlay uses the current `latest-cd` Community Edition image. |
+| Container startup took time | The credential-free hosted walkthrough remains immediate, and `docker compose up -d` no longer starts IRIS. |
+| Testing required local Python | `docker compose run --rm proof` runs all eight deterministic scenarios inside the application image. The full suite has a containerized test target. |
+| Results were not tangible | The portal and README now lead with the measured result: one dispatch, zero automatic retries, eight of eight checks passed, and verified reconciliation from fresh evidence. |
+| Video was not convincing | The replacement video is structured around a continuous before/after interaction and its receipt rather than a tour of implementation surfaces. |
+| Traditional portal was useful | The portal layout and operational navigation remain intact. |
+
+The quick path qualifies the synthetic engine. The optional IRIS path remains
+read-only by default and keeps live qualification separate.
