@@ -168,6 +168,14 @@ def observations():
     return engine.observations()
 
 
+@app.get("/api/findings/demonstration")
+def demonstration_finding():
+    try:
+        return engine.demonstration_finding()
+    except (AdapterError, ValueError) as exc:
+        raise HTTPException(status_code=502, detail=sanitize(str(exc))) from exc
+
+
 @app.get("/api/assurance")
 def assurance():
     if not engine.adapter.synthetic:

@@ -26,10 +26,16 @@ direction for this pass. Correctness findings take precedence over visual state.
 - P1: neutral graphite palette, semantic state colors, visible keyboard focus,
   native 16px checkboxes, one status region and one alert region. At 390px,
   navigation collapses and overview details start closed; tables become records.
-- P2 stays deferred: charge/coverage computations, a condition/finding queue,
+- P2 stays deferred: charge/coverage computations, a general condition/finding queue,
   scheduled assurance obligations, impact-scaled confirmation, alternatives,
   sanitized packet export, REST exploration and subsystem-log management. No
   score, graph, coverage percentage, or live metric is invented for this pass.
+
+The 2026-10-02 reviewer follow-up adds one synthetic demonstration finding:
+absence of a result for the bundled on-demand task. It opens the existing guarded
+request and resolves only against a verified Battery receipt. A failed or
+unattributed attempt remains for review. Live mode reports this finding as
+unavailable; it is not a live condition engine or general queue.
 
 A configured preflight result is not a claim that every prerequisite has been
 independently proven. Missing impact classification and automated rollback are
@@ -59,7 +65,7 @@ This does not implement multi-user permissions or prove least-privilege deployme
 
 ## Validation performed
 
-- 46 pytest cases (45 unittest cases plus the sandbox-verifier meta-test) passed,
+- 48 pytest cases (47 unittest cases plus the sandbox-verifier meta-test) passed,
   including concurrent thread/process submissions,
   restart-after-dispatch, failed readback, secret canaries and API access controls.
 - Four Node tests exercise the shipped handlers: input invalidation, late replies,

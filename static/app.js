@@ -12,6 +12,7 @@ const state = {
   trail: null,
   receipts: [],
   assurance: null,
+  demonstrationFinding: null,
   errors: {},
   warning30: false,
   pending: null,
@@ -331,6 +332,7 @@ async function load() {
     observations: "/api/observations",
     trail: "/api/evidence?limit=100",
     assurance: "/api/assurance",
+    demonstrationFinding: "/api/findings/demonstration",
     receipts: "/api/receipts",
   };
   const keys = Object.keys(sources);
@@ -550,6 +552,38 @@ function assuranceProof() {
   }
   return proof;
 }
+function findingCard() {
+  const finding = state.demonstrationFinding;
+  const card = node("section", undefined, "section finding-card");
+  card.append(node("p", "SYNTHETIC · OBSERVED TASK HISTORY", "eyebrow"));
+  if (!finding?.available) {
+    card.append(
+      node("h2", "Demonstration finding unavailable"),
+      empty(finding?.detail || state.errors.demonstrationFinding || "No finding observation returned."),
+    );
+    return card;
+  }
+  const heading = node("div", undefined, "finding-card-heading");
+  heading.append(
+    node("h2", finding.summary),
+    badge(finding.status === "RESOLVED" ? "VERIFIED_SUCCESS" : finding.status === "OPEN" ? "ACT" : "VERIFY"),
+  );
+  card.append(
+    heading,
+    node("p", finding.detail),
+    fields({
+      "Observed task": finding.task_name,
+      "History rows": finding.history_count,
+      "Observed at": finding.captured_at,
+      "Battery receipt": finding.receipt_id || "None recorded",
+    }),
+  );
+  if (finding.status === "OPEN")
+    card.append(button("Review this task", () => startRequest("run", finding.task_id)));
+  if (finding.receipt_id)
+    card.append(button("Inspect receipt", () => openReceipt(finding.receipt_id)));
+  return card;
+}
 function renderPage() {
   const root = byId("page-content");
   root.replaceChildren();
@@ -579,6 +613,7 @@ function renderPage() {
     observationDisclosure.open =
       !window.matchMedia("(max-width: 600px)").matches;
     root.append(
+      findingCard(),
       assuranceProof(),
       section("Operational evidence", summary, observationDisclosure),
       section("Recent attempts", receiptTable(state.receipts.slice(0, 5))),
@@ -884,10 +919,14 @@ async function refreshProof() {
   const results = await Promise.allSettled([
     api("/api/evidence?limit=100"),
     api("/api/receipts"),
+    api("/api/findings/demonstration"),
   ]);
   if (results[0].status === "fulfilled") state.trail = results[0].value;
   if (results[1].status === "fulfilled")
     state.receipts = results[1].value.receipts;
+  if (results[2].status === "fulfilled")
+    state.demonstrationFinding = results[2].value;
+  if (state.page === "overview") renderPage();
 }
 function savePending(value) {
   state.pending = value;

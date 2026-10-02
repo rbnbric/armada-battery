@@ -13,3 +13,8 @@ This revision follows the first public review of Armada Battery.
 
 The quick path qualifies the synthetic engine. The optional IRIS path remains
 read-only by default and keeps live qualification separate.
+
+A follow-up adds a visible synthetic task-history finding to the judge path.
+Reviewing it opens the existing guarded run request; a verified receipt resolves
+the finding, while a failed or unattributed attempt stays in review. This is one
+bounded example, not a claim of general live IRIS health assessment.

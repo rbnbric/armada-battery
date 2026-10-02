@@ -275,6 +275,25 @@ td small {
 .section {
   margin-bottom: 28px;
 }
+.finding-card {
+  padding: 20px 24px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--watch);
+  background: var(--surface);
+}
+.finding-card-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.finding-card .fields {
+  margin-bottom: 16px;
+}
+.finding-card > button {
+  margin-right: 8px;
+}
 .proof-result {
   margin: 0 0 32px;
   padding: 24px;

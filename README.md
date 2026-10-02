@@ -45,6 +45,12 @@ freshness, and keeps unsupported management areas visible. New requests have an
 explicit prepare → authorize → execute → verify lifecycle. Receipts expose their
 actual before/after observations and related ledger records.
 
+The synthetic overview also derives one bounded finding from the demonstration
+task's history. It begins open when no result exists, links to the reviewed task
+request, and resolves only after a Battery receipt verifies the run. Failed or
+unattributed attempts remain for review. This finding does not assess live IRIS
+health or implement a general incident queue.
+
 Every flow separates preparation from execution. Preparation compares the
 request with current state, authority, and rule maturity. Execution uses a
 short-lived single-use certificate, records the attempt before transport, and
@@ -54,9 +60,9 @@ requires fresh readback before reporting verified success.
 
 No IRIS instance is required for the deterministic evaluation path. Open the
 [hosted synthetic walkthrough](https://rbnbric.github.io/armada-battery/), select
-**Try the one-dispatch proof**, review the demonstration task, prepare it, and
+**Review this task** on the observed finding, review the demonstration task, prepare it, and
 choose **Run and verify**. The resulting receipt shows the original ambiguous
-dispatch reconciled without resend.
+dispatch reconciled without resend; returning to Overview shows the finding resolved.
 
 No installation, account, credentials, IRIS download, or local Python is required.
 The same proof can run entirely inside Docker:
@@ -71,7 +77,7 @@ docker compose run --rm proof
 Open `http://127.0.0.1:8080`. The default Compose path starts only the lightweight
 synthetic application; it does not download or wait for an IRIS image.
 
-The complete local gate is 46 backend tests, four UI lifecycle tests, and all
+The complete local gate is 48 backend tests, four UI lifecycle tests, and all
 eight scenario demonstrations. The optional Compose overlay below adds a real IRIS
 Community Edition instance and starts conservatively with changes disabled.
 

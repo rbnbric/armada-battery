@@ -131,6 +131,49 @@ class ApiTests(unittest.TestCase):
         self.assertTrue(detail["ledger"])
         self.assertNotIn(prepared["certificate"]["token"], str(detail))
 
+    def test_demonstration_finding_resolves_only_after_verified_attempt(self):
+        initial = self.client.get("/api/findings/demonstration").json()
+        self.assertEqual(initial["scope"], "synthetic")
+        self.assertEqual(initial["status"], "OPEN")
+        self.assertEqual(initial["history_count"], 0)
+        prepared = self.client.post(
+            "/api/intents/task/17/run", json={"task_definition_reviewed": True}
+        ).json()
+        self.assertEqual(
+            self.client.get("/api/findings/demonstration").json()["status"], "OPEN"
+        )
+        receipt = self.client.post(
+            "/api/actions/task-run/" + prepared["certificate"]["token"] + "/execute",
+            headers={"Idempotency-Key": "finding-run"},
+        ).json()
+        self.assertEqual(receipt["status"], "VERIFIED_SUCCESS")
+        resolved = self.client.get("/api/findings/demonstration").json()
+        self.assertEqual(resolved["status"], "RESOLVED")
+        self.assertEqual(resolved["history_count"], 1)
+        self.assertEqual(resolved["receipt_id"], receipt["id"])
+        web.engine.adapter.history[17].clear()
+        self.assertEqual(
+            self.client.get("/api/findings/demonstration").json()["status"],
+            "REVIEW",
+        )
+
+    def test_demonstration_finding_does_not_resolve_failed_attempt(self):
+        web.engine = BatteryEngine(
+            SyntheticTaskAdapter(run_result="failure"), ledger=Ledger()
+        )
+        prepared = self.client.post(
+            "/api/intents/task/17/run", json={"task_definition_reviewed": True}
+        ).json()
+        receipt = self.client.post(
+            "/api/actions/task-run/" + prepared["certificate"]["token"] + "/execute",
+            headers={"Idempotency-Key": "failed-finding-run"},
+        ).json()
+        self.assertEqual(receipt["status"], "VERIFIED_FAILURE")
+        self.assertEqual(
+            self.client.get("/api/findings/demonstration").json()["status"],
+            "REVIEW",
+        )
+
     def test_health_does_not_claim_a_broken_chain_is_ready(self):
         web.engine.ledger.append("probe", {})
         web.engine.ledger.records[0]["digest"] = "tampered"

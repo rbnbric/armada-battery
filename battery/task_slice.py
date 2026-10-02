@@ -759,6 +759,51 @@ class BatteryEngine(AdministrativeIntentMixin):
             area.setdefault("complete", None)
         return {"captured_at": captured, "areas": sanitize(areas)}
 
+    def demonstration_finding(self) -> dict[str, Any]:
+        """A bounded synthetic finding; never infer live health from task history."""
+        captured = self.now().isoformat()
+        if not self.adapter.synthetic:
+            return {
+                "scope": "live", "available": False, "captured_at": captured,
+                "detail": "The demonstration finding is synthetic; live task health is not evaluated.",
+            }
+        task_id = 17
+        task = self.adapter.get_task(task_id)
+        history = self.adapter.get_history(task_id)
+        receipts = sorted(
+            (r for r in self.receipts.values() if r.target == f"task:{task_id}"),
+            key=lambda r: r.started_at, reverse=True,
+        )
+        latest = receipts[0] if receipts else None
+        if (
+            latest
+            and latest.status == ReceiptStatus.VERIFIED_SUCCESS
+            and history
+            and self._history_outcome(self._latest_history(history)) == "success"
+        ):
+            status = "RESOLVED"
+            summary = "Demonstration task run verified"
+            detail = "A fresh terminal result was attributed to the recorded synthetic attempt."
+        elif latest:
+            status = "REVIEW"
+            summary = "Demonstration task still needs review"
+            detail = f"The latest attempt is {latest.status.value}; no new run is recommended."
+        elif history:
+            status = "REVIEW"
+            summary = "Task history exists without a Battery receipt"
+            detail = "History alone does not establish an attributable verified run."
+        else:
+            status = "OPEN"
+            summary = "No result recorded for the demonstration task"
+            detail = "The synthetic on-demand task has no terminal history row. Review its definition before choosing whether to run it once."
+        return {
+            "scope": "synthetic", "available": True, "id": "demo-task-result",
+            "status": status, "summary": summary, "detail": detail,
+            "task_id": task_id, "task_name": task.get("Name"),
+            "history_count": len(history), "receipt_id": latest.id if latest else None,
+            "captured_at": captured,
+        }
+
     def audit_trail(self, limit: int = 20) -> dict[str, Any]:
         with self.ledger.locked():
             records = []

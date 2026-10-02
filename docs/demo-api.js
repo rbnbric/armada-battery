@@ -273,6 +273,24 @@
         total: 8,
         scenarios,
       });
+    if (path === "/api/findings/demonstration")
+      return json({
+        scope: "synthetic",
+        available: true,
+        id: "demo-task-result",
+        status: executed ? "RESOLVED" : "OPEN",
+        summary: executed
+          ? "Demonstration task run verified"
+          : "No result recorded for the demonstration task",
+        detail: executed
+          ? "A fresh terminal result was attributed to the recorded synthetic attempt."
+          : "The synthetic on-demand task has no terminal history row. Review its definition before choosing whether to run it once.",
+        task_id: 17,
+        task_name: task.Name,
+        history_count: executed ? 1 : 0,
+        receipt_id: executed ? "demo-receipt-0001" : null,
+        captured_at: now(),
+      });
     if (path === "/api/evidence") {
       const records = ledger();
       return json({
@@ -308,7 +326,7 @@
     banner.className = "demo-banner";
     banner.setAttribute("role", "note");
     banner.innerHTML =
-      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Select <b>Try the one-dispatch proof</b>, review the demonstration task, then prepare and execute it once.';
+      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Open the observed task finding, review its definition, then prepare and execute it once.';
     document.body.prepend(banner);
     document.querySelectorAll("#workflow option:not([value='run'])").forEach((option) => {
       option.disabled = true;
