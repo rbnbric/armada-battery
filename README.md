@@ -15,6 +15,11 @@ to resend the change. Unresolved outcomes stay visible until reconciliation.
 **[Open the credential-free walkthrough](https://rbnbric.github.io/armada-battery/)**
 — a clearly labeled synthetic judge path that sends no request to IRIS.
 
+**[Watch the public reviewer-feedback update](https://www.youtube.com/watch?v=GbEMgSDRCZk)**
+— a before/after walkthrough of the faster judge path and the new synthetic
+finding-to-receipt flow. The original demonstration remains available on the
+Open Exchange listing.
+
 ## What the demonstration proves
 
 The concrete failure case is a task request whose transport response disappears.
