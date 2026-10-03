@@ -136,7 +136,7 @@ IRIS overlay:
 git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 cp .env.example .env
-# Set IRIS_PASSWORD in .env to a long local demo password.
+# Set IRIS_PASSWORD in .env to a unique 8–32 character local demo password.
 docker compose -f compose.yaml -f compose.iris.yaml up -d
 docker compose -f compose.yaml -f compose.iris.yaml exec battery \
   python scripts/verify_container.py
@@ -153,6 +153,13 @@ starts and applies `IRIS_PASSWORD` to `_SYSTEM`. Initialization can take a
 couple of minutes; run the in-container verifier after it completes (the script
 itself waits and retries for up to three minutes). No host Python, host `chown`,
 or manual first-login password change is required.
+
+The password length check runs before IRIS starts. If an earlier startup failed
+while changing the Web Gateway password, its named volume may contain a partly
+initialized instance. For a **disposable test**, use a fresh Compose project
+name (for example `docker compose -p battery-qa-retry -f compose.yaml -f
+compose.iris.yaml up -d`) and run the verifier with that same `-p` value.
+Keep any existing volume that contains data; do not remove it as a repair step.
 
 Battery is available at `http://127.0.0.1:8080`; the IRIS Management Portal is
 available at `http://127.0.0.1:52773/csp/sys/UtilHome.csp`.

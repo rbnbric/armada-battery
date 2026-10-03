@@ -5,7 +5,17 @@ services:
     entrypoint:
       - /bin/sh
       - -c
-      - chown 51773:51773 /durable && printf %s "$$IRIS_PASSWORD" > /durable/password.txt
+      - |
+        set -eu
+        password_length=$${#IRIS_PASSWORD}
+        if [ "$$password_length" -lt 8 ] || [ "$$password_length" -gt 32 ]; then
+          echo >&2 "IRIS_PASSWORD must be 8–32 characters for IRIS and Web Gateway initialization."
+          exit 1
+        fi
+        chown 51773:51773 /durable
+        umask 077
+        printf '%s\n' "$$IRIS_PASSWORD" > /durable/password.txt
+        chown 51773:51773 /durable/password.txt
     environment:
       IRIS_PASSWORD: ${IRIS_PASSWORD:?Set IRIS_PASSWORD in .env}
     volumes:
