@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1180" viewBox="0 0 1600 1180" role="img" aria-labelledby="title desc">
+  <title id="title">Three ways a convincing answer can hide an unverified result</title>
+  <desc id="desc">An editorial comparison of confident claims and the evidence needed to assess them: an invented API, a lost response, a green success message without readback, and a synthetic demo that did not exercise live startup.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f5f0e5}.ink{fill:#162424}.muted{fill:#58645f}.accent{fill:#ad751d}.gold{fill:#e9b95e}.teal{fill:#176e70}.line{stroke:#d7ccba;stroke-width:2}.sans{font-family:Arial,Helvetica,sans-serif}.serif{font-family:Georgia,'Times New Roman',serif}
+      .label{font-size:20px;font-weight:bold;letter-spacing:4px}.head{font-size:68px}.col{font-size:20px;font-weight:bold;letter-spacing:3px}.num{font-size:42px;font-weight:bold}.claim{font-size:31px}.truth{font-size:31px}.small{font-size:20px}
+    </style>
+  </defs>
+  <rect class="bg" width="1600" height="1180"/>
+  <rect x="0" y="0" width="18" height="1180" fill="#176e70"/>
+  <text x="92" y="92" class="sans label accent">THE CONFIDENCE GAP</text>
+  <text x="92" y="176" class="serif head ink">It looks done. What happened?</text>
+  <text x="95" y="220" class="sans small muted">Illustrative failure modes; the fourth surfaced in Armada Battery’s IRIS QA review.</text>
+  <line x1="92" y1="270" x2="1508" y2="270" class="line"/>
+  <text x="180" y="319" class="sans col accent">THE ATTRACTIVE ANSWER</text>
+  <text x="846" y="319" class="sans col teal">THE REQUIRED EVIDENCE</text>
+  <line x1="92" y1="343" x2="1508" y2="343" class="line"/>
+  <line x1="92" y1="522" x2="1508" y2="522" class="line"/>
+  <line x1="92" y1="701" x2="1508" y2="701" class="line"/>
+  <line x1="92" y1="880" x2="1508" y2="880" class="line"/>
+  <line x1="92" y1="1059" x2="1508" y2="1059" class="line"/>
+  <line x1="784" y1="343" x2="784" y2="1059" class="line"/>
+
+  <circle cx="126" cy="428" r="26" fill="#e9b95e"/>
+  <text x="112" y="441" class="sans num ink" font-size="25">1</text>
+  <text x="180" y="411" class="serif claim ink">“The API supports it.”</text>
+  <text x="180" y="451" class="sans small muted">A plausible method name is not a contract.</text>
+  <text x="846" y="411" class="serif truth ink">Call the documented endpoint.</text>
+  <text x="846" y="451" class="sans small muted">Check the response shape and version.</text>
+
+  <circle cx="126" cy="607" r="26" fill="#e9b95e"/>
+  <text x="112" y="620" class="sans num ink" font-size="25">2</text>
+  <text x="180" y="590" class="serif claim ink">“It timed out. Retry.”</text>
+  <text x="180" y="630" class="sans small muted">The change may already have happened.</text>
+  <text x="846" y="590" class="serif truth ink">Keep one execution record.</text>
+  <text x="846" y="630" class="sans small muted">Read back state before another dispatch.</text>
+
+  <circle cx="126" cy="786" r="26" fill="#e9b95e"/>
+  <text x="112" y="799" class="sans num ink" font-size="25">3</text>
+  <text x="180" y="769" class="serif claim ink">“Success!” says the green toast.</text>
+  <text x="180" y="809" class="sans small muted">The interface checked a response, not the result.</text>
+  <text x="846" y="769" class="serif truth ink">Read the changed state back.</text>
+  <text x="846" y="809" class="sans small muted">A beautiful confirmation is not a receipt.</text>
+
+  <circle cx="126" cy="965" r="26" fill="#e9b95e"/>
+  <text x="112" y="978" class="sans num ink" font-size="25">4</text>
+  <text x="180" y="948" class="serif claim ink">“The demo passes.”</text>
+  <text x="180" y="988" class="sans small muted">A fixture never started the live stack.</text>
+  <text x="846" y="948" class="serif truth ink">Boot a fresh IRIS container.</text>
+  <text x="846" y="988" class="sans small muted">Prove the login, reads, and blocked preflight.</text>
+
+  <text x="94" y="1117" class="sans small muted">Armada Battery  ·  The fourth case led to release 1.0.2 and a live-container CI check.</text>
+  <path d="M1453 1104h38m-18-18 18 18-18 18" fill="none" stroke="#176e70" stroke-width="5"/>
+</svg>
