@@ -1,6 +1,6 @@
 services:
   iris-init:
-    image: ${IRIS_IMAGE:-containers.intersystems.com/intersystems/iris-community:latest-cd}
+    image: ${IRIS_IMAGE:-containers.intersystems.com/intersystems/iris-community:2026.1}
     user: "root"
     entrypoint:
       - /bin/sh
@@ -22,7 +22,7 @@ services:
       - iris-data:/durable
 
   iris:
-    image: ${IRIS_IMAGE:-containers.intersystems.com/intersystems/iris-community:latest-cd}
+    image: ${IRIS_IMAGE:-containers.intersystems.com/intersystems/iris-community:2026.1}
     depends_on:
       iris-init:
         condition: service_completed_successfully

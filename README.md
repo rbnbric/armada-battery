@@ -142,10 +142,12 @@ docker compose -f compose.yaml -f compose.iris.yaml exec battery \
   python scripts/verify_container.py
 ```
 
-The overlay defaults to the InterSystems IRIS Community Edition `latest-cd`
-image (2026.2 at the time of this revision), replacing the older 2026.1
-extended-maintenance demonstration image. Set `IRIS_IMAGE` to reproduce a
-specific release.
+The overlay pins InterSystems IRIS Community Edition `2026.1`. A fresh-container
+test of the `2026.2` image failed during `--password-file` because its
+`ChangeGatewayMgrPassword()` call could not find `/usr/irissys/bin/CSPpwd`.
+Keep the pinned image until this startup path is fixed and a newer version
+passes the live container check. Set `IRIS_IMAGE` explicitly to test a newer
+release in a disposable Compose project.
 
 The first full-stack start initializes a fresh IRIS instance:
 `iris-init` prepares the durable storage and writes the password file, then IRIS
