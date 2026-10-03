@@ -2,7 +2,17 @@ name: IRIS startup and Battery smoke
 
 on:
   push:
-    branches: [fix/iris-password-init]
+    branches: [main, fix/iris-password-init]
+    paths:
+      - .env.example
+      - .github/workflows/iris-qa.yml
+      - Dockerfile
+      - app.py
+      - battery/**
+      - compose.yaml
+      - compose.iris.yaml
+      - requirements.txt
+      - scripts/verify_container.py
   workflow_dispatch:
 
 jobs:
