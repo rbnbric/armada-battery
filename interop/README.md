@@ -5,14 +5,19 @@ Status: compiled and exercised on AI Hub Community build 109 through native
 management portal and its synthetic proof are separate. Native measurements
 and remaining limits are recorded below; compilation alone is not acceptance.
 
-This small IRIS production accepts a bounded evidence case through
-`Battery.Intake`, routes it through `Battery.CaseProcess`, and calls native
-`%AI.Agent` from `Battery.Agent`. Nemotron 3 Nano checks two separate facts:
-whether the rule assertion is verified and whether the observed output meets
-an independent acceptance criterion. An unverified assertion or a failed/unknown
-output sends the case to Nemotron 3 Super to choose the next evidence probe. The process
-validates each model's JSON shape and evidence IDs. Its states are review
-states; **it sends no external business effect and does not claim a repair**.
+The default production now includes a [receipt solver](RECEIPT_SOLVER.md):
+small-agent review, larger-agent investigation, one executed read-only receipt
+probe, bounded follow-up review, and deterministic checks of fresh scoped
+outcome evidence. Raw model answers remain visible separately from the final
+measurement disposition. Cases without an adapter-owned binding are held.
+The current demonstration uses synthetic persisted receipts and real AI Hub
+calls; it does not issue an external business effect or claim a repair.
+
+Current receipt qualification: **149/149 proof checks, 27/27 workflow fault
+checks, and 24/24 final live dispositions across three repetitions**. The raw
+models matched 27/27 assertion and 26/27 output judgments; the scope check
+corrected the remaining uncertainty mistake. [Results and limitations](RECEIPT_SOLVER.md#measured-final-run)
+keep model accuracy separate from final workflow behavior.
 
 ## Run on the contest AI Hub image
 
@@ -30,25 +35,20 @@ docker compose -f compose.interop.yaml up --build -d
 docker compose -f compose.interop.yaml exec battery-interop iris session IRIS -U BATTERY
 ```
 
-In the IRIS terminal:
+For the current solver demonstration, compile the test fixture classes in a
+disposable instance and run the native suite:
 
 ```objectscript
-Do ##class(Battery.Interop.Demo).Start()
-Do ##class(Battery.Interop.Demo).Run("match")
-Do ##class(Battery.Interop.Demo).Run("drift")
-Do ##class(Battery.Interop.Demo).Run("wrongrule")
-Do ##class(Battery.Interop.Demo).Run("badoutput")
+Do $SYSTEM.OBJ.LoadDir("/home/irisowner/dev/interop/tests", "ck", , 1)
+Do ##class(Battery.Test.SolverSuite).Run(0,1)
+// Real provider calls, eight cases, repeated three times:
+Do ##class(Battery.Test.SolverSuite).Run(1,3)
 ```
 
-The first case should return `AGREED_PENDING_GATE` with one reviewer call. The
-second should return `INVESTIGATION_PENDING_GATE` with a reviewer `NO` and an
-investigator probe. The third and fourth cases show an inaccurate rule with a
-passing output, and an accurate rule with a failing output. Both should reach
-investigation. Check the IRIS Interoperability Message Viewer for the
-Service → Process → Agent Operation trace and compare the printed response
-with its messages. If provider setup or model output fails, the case is held
-for review and no external effect is sent. These are expected outcomes to
-verify when reproducing the run. Retain both the response and message trace.
+See [the receipt contract and reproduction steps](RECEIPT_SOLVER.md) for the
+exact states, evidence fields and test expectations. The older `Demo.Run`
+free-form cases have no adapter binding and are now held by the default solver;
+they cannot silently become verified outcomes.
 
 The AI Hub operation uses its documented `openai` provider with a custom
 OpenAI-compatible Nebius Token Factory base URL. It reads `NEBIUS_API_KEY` only
@@ -77,23 +77,14 @@ truncated JSON, wrong root types, renamed fields, invalid evidence containers,
 type/size limits, duplicate citations, and a complete Markdown JSON fence. Only a complete outer fence is removed;
 arbitrary prose is never searched for a convenient JSON fragment.
 
-The following run makes billable provider calls through native AI Hub:
+For the current receipt proof matrix and repeated native model run, follow
+[the solver checks](RECEIPT_SOLVER.md#run-the-native-checks). Its report is
+`results/solver-109.json`.
 
-```bash
-docker compose -f compose.interop.yaml exec -T battery-interop \
-  iris session IRIS -U BATTERY < interop/tests/edge-corpus.script
-```
-
-It prints one `EDGE_CASE=` JSON record per fixture. Compare all 32 records
-against `interop/tests/edge-fixtures.json`, including the independent output
-grade, expected route, and preferred investigation probe. The answer keys are
-kept outside model inputs. A zero shell exit code alone does not establish a
-pass: IRIS terminal sessions can print errors and still exit zero.
-
-Current native results are retained in `interop/results/edge-109.json`. The tests use
-synthetic evidence; they do not send real business effects or prove a complete
-repair loop. See the [edge gauntlet](GAUNTLET.md) for fault-injection instructions,
-coverage boundaries, and the reassessment of the original answer keys.
+The older `edge-corpus.script` and `corpus.script` are historical raw-review
+fixtures. To reproduce their original measurements, use public commit
+`7a5b88e`; the new default production requires adapter-owned evidence. The
+historical scripts and results are retained unchanged for comparison.
 
 ### Expanded build-109 gauntlet — 4 November 2026
 

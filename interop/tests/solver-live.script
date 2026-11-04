@@ -1,0 +1,4 @@
+zn "BATTERY"
+set sc=##class(Battery.Test.SolverSuite).Run(1,3)
+if $SYSTEM.Status.IsError(sc) { write "SOLVER_ERROR=",$SYSTEM.Status.GetErrorText(sc),! }
+halt

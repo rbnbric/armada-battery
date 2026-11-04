@@ -5,6 +5,12 @@ fault-injection runs are complete: 50/50 and 26/26 checks passed. The expanded
 live-model corpus and its exact scores are in `results/edge-109.json`.
 The full downstream execution gauntlet remains a separate pending boundary.
 
+The next increment adds the [receipt solver](RECEIPT_SOLVER.md). Its 149 native
+proof cases, 27 workflow fault cases and repeated live-model run are recorded
+separately in `results/solver-109.json`. The 32-case report below measures the
+older broad prose-only review task, not this narrower typed receipt profile.
+Historical reproduction below requires commit `7a5b88e`.
+
 For every fixture retain the original input, selected rule and defeated rules,
 independent acceptance criterion, expected assertion accuracy, expected output
 result, reviewer JSON, investigator handoff and probe, IRIS message trace,

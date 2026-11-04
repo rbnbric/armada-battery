@@ -4,11 +4,11 @@
 
 ## Interoperability agent preview for contest 49
 
-The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch adds a native IRIS AI Hub review path. A small agent judges **rule assertion accuracy** separately from **output pass/fail** against an independent acceptance criterion; a larger agent investigates disagreements. See [setup and qualification status](interop/README.md).
+The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch runs a native IRIS AI Hub receipt workflow: small-agent review, larger-agent investigation, one executed read-only receipt probe, a bounded follow-up, and deterministic outcome checks. Raw model answers remain separate from verified measurements. [Setup and receipt contract](interop/RECEIPT_SOLVER.md).
 
-Reassessment reproduced and repaired five validator defects. Native checks now pass **50/50 contracts and 26/26 fault/replay/restart checks**. The expanded live corpus matched **31/32 assertion judgments and 28/32 output judgments**, with acceptable next probes in **16/22 expected investigations**. Two output expectations are ambiguous and remain annotated. One case incorrectly agreed without outcome evidence; one fact-order pair changed applicability. [Full results and message traces](interop/results/edge-109.json) and [the findings](interop/GAUNTLET.md) retain those failures. The earlier 13/13 score used a flawed missing-observation oracle and is historical, not a current correctness claim.
+**Final native checks:** 149/149 receipt-proof cases, 27/27 adversarial workflow cases, and 24/24 final live dispositions across three repetitions with neutral model-facing IDs. All three recovered-receipt cases executed a probe and a second review. Raw model judgments matched 27/27 assertions and 26/27 output grades; a scope check correctly retained UNKNOWN when the model called a wrong-partner receipt FAIL. [Full evidence and retained failures](interop/results/solver-109.json).
 
-The live run made 53 model calls in 585.777 seconds. Downstream repair and probe execution remain unconnected. The existing management demonstration below remains a separate, synthetic proof.
+The final run took 239.719 seconds and made 45 model calls. Receipt snapshots are synthetic and persisted in IRIS; external adapters and business repair execution remain unconnected. These results establish the tested receipt profile's behavior, not universal model reliability. The earlier broader review corpus and its failures remain in [the prior report](interop/results/edge-109.json). The management demonstration below is separate.
 
 Armada Battery is an adversarially tested change-control engine for four
 consequential InterSystems IRIS administration workflows. It is built around the

@@ -1,0 +1,6 @@
+zn "BATTERY"
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,Content,UsageJSON FROM Battery_Interop.AgentResponse WHERE ID IN (SELECT MessageBodyId FROM Ens.MessageHeader WHERE MessageBodyClassName='Battery.Interop.AgentResponse' AND SessionId IN (SELECT h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId LIKE 'solver4-live-%')) ORDER BY ID")
+if rs.%SQLCODE<0 { write "EXPORT_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"Content":(rs.%Get("Content")),"UsageJSON":(rs.%Get("UsageJSON"))} write "AGENTS=",row.%ToJSON(),! }
+write "EXPORT_END",!
+halt

@@ -89,11 +89,14 @@ recommend an allow-listed action or a candidate rule amendment. It cannot
 send, replay, edit a contract, confirm its own proposal, or manufacture a
 missing acknowledgement.
 
-The current native preview returns a validated probe name and hypothesis;
-it does not yet execute that probe or fetch new evidence. The next solver
-increment is a bounded probe executor with captured readback and a second
-review. Tool execution, the downstream action gate, and an actual repair loop
-must receive their own qualification before being described as working.
+The current native increment executes a bounded receipt/readback probe through
+an Interoperability Operation, then performs one follow-up review if usable
+new evidence arrives. A separate deterministic receipt profile checks scope,
+freshness, effect count and result. The adapter reads synthetic persisted
+snapshots in the demonstrated run. Raw model answers and verified measurement
+results remain separate. See [the implemented receipt contract](../interop/RECEIPT_SOLVER.md).
+Broader tool implementations, external adapters, action permits and business
+repair execution remain to be connected and qualified.
 
 The agent returns a versioned structured decision: case ID, action, target,
 evidence references, contradictions, uncertainty, and a concise explanation.
