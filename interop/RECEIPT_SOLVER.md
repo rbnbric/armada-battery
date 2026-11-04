@@ -100,7 +100,7 @@ read/write race around an external mutation.
 
 | Field/state | Meaning |
 | --- | --- |
-| `ReviewerVerdict`, `OutputResult`, `ReviewerApplicability` | Last raw model judgment |
+| `ReviewerVerdict`, `OutputResult`, `ReviewerApplicability` | Last contract-validated model judgment; invalid responses leave these fields empty |
 | `GateVerdict`, `GateOutput`, `ProofJSON` | Deterministic judgment for the bound receipt profile |
 | `InvestigatorProbe` | Last proposed model probe |
 | `ExecutedProbe` | The bounded read actually executed |
@@ -113,6 +113,8 @@ read/write race around an external mutation.
 A raw YES/PASS may coexist with a held final disposition. Do not display the raw
 model answer as the final result. VERIFIED means this measurement was checked;
 it never means a repair was performed or a downstream action was authorized.
+The original response text is retained in native `AgentResponse` messages,
+including rejected answers; it is scored separately from these validated fields.
 
 ## Run the native checks
 
@@ -187,3 +189,43 @@ external action execution, effect deduplication, distributed concurrency,
 crash recovery and multi-probe investigation remain outside this increment.
 The older broad corpus and its misses remain in `results/edge-109.json`.
 The current evidence report is `results/solver-109.json`.
+
+## Thirty-round repeatability audit
+
+The frozen follow-up ran **30 serial rounds of eight scenarios**, using the
+same production source and model settings throughout. Every requested case
+completed. No failing case was retried or removed.
+
+| Measurement | Result |
+| --- | --- |
+| Expected final dispositions | 230/240 (95.83%) |
+| Unexpected review holds | 10 |
+| Incorrect verified dispositions | 0 |
+| Raw assertion judgments matching the oracle | 258/270 |
+| Raw output judgments matching the oracle | 254/270 |
+| Raw reviewer responses with valid evidence-ID lists | 260/270 |
+| Raw reviewer JSON parse errors | 0 |
+| Maximum review rounds / evidence reads per case | 2 / 3 |
+| Case latency median / p95 / maximum | 10.005s / 16.912s / 30.846s |
+
+The unexpected holds came from reviewer contract rejection, including citations
+to `receipt-review` instead of supplied fact IDs. The validator prevented those
+answers from being accepted, but the workflow lacked a bounded recovery route.
+This is a completion-reliability defect. Raw model disagreements remain in the
+report even when the deterministic gate corrected the final disposition.
+
+Elapsed command time was 2354.815 seconds. SDK usage reports
+438 model calls, 334,284 prompt tokens and
+378,129 completion tokens. Actual billing has not been
+reconciled. The previous 24/24 sample remains historical evidence; the longer
+run does not support a claim of flawless operation.
+
+These are repeated development scenarios with fresh synthetic timestamps, not
+240 independent unseen workflows. External receipt authenticity, business
+mutations, and concurrent production load were not tested by this run.
+
+See the [complete repetition evidence](results/solver-repeat-109.json) for every
+case, native trace, raw response, timing, source hash, and retained failure.
+The [whole-system design audit](../docs/SYSTEM_DESIGN_AUDIT.md) specifies the
+recovery and integration work. No production repair was applied during this
+measurement or as part of the documentation audit.

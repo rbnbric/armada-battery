@@ -13,11 +13,14 @@ measurement disposition. Cases without an adapter-owned binding are held.
 The current demonstration uses synthetic persisted receipts and real AI Hub
 calls; it does not issue an external business effect or claim a repair.
 
-Current receipt qualification: **149/149 proof checks, 27/27 workflow fault
-checks, and 24/24 final live dispositions across three repetitions**. The raw
-models matched 27/27 assertion and 26/27 output judgments; the scope check
-corrected the remaining uncertainty mistake. [Results and limitations](RECEIPT_SOLVER.md#measured-final-run)
-keep model accuracy separate from final workflow behavior.
+Receipt qualification includes **149/149 proof checks and 27/27 workflow fault
+checks**. The longer frozen live run produced **230/240 expected dispositions**
+and **10 unexpected review holds**, with no incorrect verified disposition in
+that fixed corpus. The earlier 24/24 run remains a smaller historical sample.
+[Results and limitations](RECEIPT_SOLVER.md#thirty-round-repeatability-audit)
+separate raw model accuracy, workflow completion, and deterministic containment.
+The [system design audit](../docs/SYSTEM_DESIGN_AUDIT.md) records missing product
+integration, operational limitations, and proposed acceptance tests.
 
 ## Run on the contest AI Hub image
 

@@ -1,8 +1,11 @@
 # Interoperability agent: binary review and edge investigation
 
-Status: design plus a compiled, natively exercised IRIS production preview for the AI
-Agents in Interoperability Workflows contest. This is not a claim of AI Hub
-runtime qualification.
+Status: design plus a natively exercised IRIS AI Hub production preview for the
+AI Agents in Interoperability Workflows contest. Native qualification covers the
+bounded receipt profile with real model calls and synthetic adapter evidence;
+the broader architecture below remains partly unimplemented. See the
+[whole-system design audit](SYSTEM_DESIGN_AUDIT.md) for the implementation map,
+observed defects, and integration priorities.
 
 ## Purpose
 

@@ -1,0 +1,1376 @@
+{
+  "schema": "battery-system-design-audit/v1",
+  "date_utc": "2026-11-04T23:41:30.044876+00:00",
+  "base_public_commit": "a294987f6a39091a82e7e5eb88c272e3d2eab364",
+  "runtime_modified": false,
+  "cached_checks": {
+    "test_runtime_safety.py": "PASS; 1 cached file, 0 executed by DevLathe",
+    "test_api.py": "PASS; 1 cached file, 0 executed by DevLathe"
+  },
+  "limits": [
+    "Existing synthetic demo API intercepts browser requests. No live IRIS browser integration is asserted.",
+    "Browser transport renders an HTML string; one full-execution attempt returned render failed and is not counted as passed.",
+    "The normal SSH alias failed DNS; direct local execution was used.",
+    "No destructive native-container replacement or external business mutation was performed.",
+    "The execution rendering failure was isolated: the HTML-string browser context used about: with isSecureContext=false and no crypto.randomUUID. It is a harness limitation; the documented localhost/HTTPS deployment was not implicated."
+  ],
+  "browser_reproduction": {
+    "source": "static/index.html with actual static/app.css and static/app.js inlined",
+    "fixture": "docs/demo-api.js; replace its location.href URL base with https://battery-audit.invalid/ for HTML-string rendering",
+    "stalled_endpoint_override": "const fixtureFetch=window.fetch; window.fetch=(input,options)=>String(input)===\"/api/assurance\"?new Promise(()=>{}):fixtureFetch(input,options);",
+    "override_order": "After the fixture and before app.js",
+    "readiness_probe": "After normal fixture responses, inspect #page-content, #page-state, #refresh.disabled, and #error-message. A never-settling request remains pending because fetch has no deadline and load awaits Promise.allSettled.",
+    "text_size_smoke": "Capture each element computed font size first, then assign twice that size in CSS pixels; this is not browser zoom or screen-reader qualification.",
+    "navigation_smoke": "Dispatch click to each [data-page] handler and inspect page title, nonempty content, error region and document width; not a complete touch-target or keyboard test."
+  },
+  "shared_checkout_revision": "3348a06ca8f96fce421233045198dd140e626e9a",
+  "shared_source_sha256": {
+    "app.py": "34b4da56a56c21124c8466acfe341d4899851988eaa798ec6c225d3b12a40cdd",
+    "battery/task_slice.py": "60bf1da3761488ff0054c21735ae0c204ac88ddb6cd07c30b6e8371d0da84898",
+    "battery/admin_slice.py": "2818451a930d8b75302b87b0000e9a78dbbcc208a7662b3496aa99149607e278",
+    "battery/ledger.py": "d41a1ebbe284f2f7a60fb254c65de52e17f31240b1306a48c7d964e0aeed99e5",
+    "battery/models.py": "8582d2ed2ae3b4a9737ca46fc0f4bc7545c8899e34e92b2b0ab73d91f5c3b628",
+    "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+    "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+    "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+    "compose.interop.yaml": "d0889487537c95fe64e71a569db982a5ce75573fdfe10e52315f0b4073e5f60a",
+    "Dockerfile.interop": "69114553dbd8a5bdfaee3e0422866ec6780139430aa85bd0f0182fb2bb76a436",
+    "interop/merge.cpf": "468c019e4bd77567dc6f6ea426d81f8541a63fb643a0a89d0da8bae9f9d09485",
+    "tests/test_runtime_safety.py": "9aa2881ff981317042960919274eaefa6c20c2091ec0ea8b5c4522714450bef5",
+    "tests/test_api.py": "d0a1d961773c1c9c8a5a5edd17c6870f38ebdc770ec17d511afcf12b741c9157",
+    "tests/ui_state.test.js": "5b2f38f13e21ffbb2499f325fb2f539ea382572abb8c69f701e9b13b7dea9dcb",
+    "interop/Battery/Interop/AgentOperation.cls": "09ba2c26bf6fc3267000e063229ed4cbfb1a613a16ff9e96571e4a1165b985c9",
+    "interop/Battery/Interop/AgentRequest.cls": "e82e18a6d48bf4f75e5449e7fa579f05930baabf177c2c9c83ebb51a3befd6d0",
+    "interop/Battery/Interop/AgentResponse.cls": "a0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456",
+    "interop/Battery/Interop/CaseProcess.cls": "9eee1bca512aeb0a54fbc54bf64a06a875cde37889648e83b8e7863923cb11da",
+    "interop/Battery/Interop/CaseRequest.cls": "d379c10f7d4abdf0f79d36df63347bf0d48ca3502fc31ba74024edc2757cbe98",
+    "interop/Battery/Interop/CaseResponse.cls": "7a12c87a6c578f9f70efd674dffdf2be81b0e9f648b175726542842d55b31e5e",
+    "interop/Battery/Interop/Demo.cls": "f13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705",
+    "interop/Battery/Interop/EvidenceBinding.cls": "64892c7ff083f2cf17ae56d262c2948735840197d268b69f00928848321c8e0e",
+    "interop/Battery/Interop/EvidenceOperation.cls": "b69f92dcd6e3eace12af8e1d0e207ade205d9f81752fce51160ffa980b4e9c27",
+    "interop/Battery/Interop/EvidenceRequest.cls": "4d985e611f4800f3b7c13be0e9b0774760fcf52f539bf317b2fb5688e786b780",
+    "interop/Battery/Interop/EvidenceResponse.cls": "e864d0a8afb38836b49ee668d913f3e1993be5cfdb4a2c74467a39deba68b531",
+    "interop/Battery/Interop/IntakeService.cls": "dd98d9b77db02e7f67a3c8f8a8f68388789c0fba20ff8d072a1b238947ae3ee3",
+    "interop/Battery/Interop/OutcomeProof.cls": "b00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455",
+    "interop/Battery/Interop/Production.cls": "0fd708c00ec924809a29e7da637bcbac26ac69b8101d9a7f6f18070aeb15c3f9",
+    "interop/Battery/Interop/SolverProcess.cls": "c56bc24ab75faf7f352f3611f385477385352fb60a0f51eb7d7b0deb88bf562b"
+  },
+  "public_source_sha256": {
+    "app.py": "0b31c177c0f66d722456a414c8c1c927724a893ddb4c919f45290e65724e276f",
+    "battery/task_slice.py": "b217fbf1e622c3b6af5bf663064722b266c763a2a6c445b43517860b970ee679",
+    "battery/admin_slice.py": "2818451a930d8b75302b87b0000e9a78dbbcc208a7662b3496aa99149607e278",
+    "battery/ledger.py": "d41a1ebbe284f2f7a60fb254c65de52e17f31240b1306a48c7d964e0aeed99e5",
+    "battery/models.py": "8582d2ed2ae3b4a9737ca46fc0f4bc7545c8899e34e92b2b0ab73d91f5c3b628",
+    "static/app.js": "e47b777238f6af45b8399ad0e3ff078e203d99910f575b07db8cdc9b4b06ff23",
+    "static/app.css": "014f269975e9a2547a986bdc4dc8516b5d284834992d903b83c1ed0a882a53e9",
+    "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+    "compose.interop.yaml": "d0889487537c95fe64e71a569db982a5ce75573fdfe10e52315f0b4073e5f60a",
+    "Dockerfile.interop": "69114553dbd8a5bdfaee3e0422866ec6780139430aa85bd0f0182fb2bb76a436",
+    "interop/merge.cpf": "468c019e4bd77567dc6f6ea426d81f8541a63fb643a0a89d0da8bae9f9d09485",
+    "tests/test_runtime_safety.py": "9aa2881ff981317042960919274eaefa6c20c2091ec0ea8b5c4522714450bef5",
+    "tests/test_api.py": "27444d23061d158a03c817aaca160a52ced58de3e66242635b8be24e1d0ed7bc",
+    "tests/ui_state.test.js": "4a2ee39e4096f58b316e15351a38a9163098923f1ffb38d889ff6ec1c6d96d7e",
+    "interop/Battery/Interop/AgentOperation.cls": "09ba2c26bf6fc3267000e063229ed4cbfb1a613a16ff9e96571e4a1165b985c9",
+    "interop/Battery/Interop/AgentRequest.cls": "e82e18a6d48bf4f75e5449e7fa579f05930baabf177c2c9c83ebb51a3befd6d0",
+    "interop/Battery/Interop/AgentResponse.cls": "a0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456",
+    "interop/Battery/Interop/CaseProcess.cls": "9eee1bca512aeb0a54fbc54bf64a06a875cde37889648e83b8e7863923cb11da",
+    "interop/Battery/Interop/CaseRequest.cls": "d379c10f7d4abdf0f79d36df63347bf0d48ca3502fc31ba74024edc2757cbe98",
+    "interop/Battery/Interop/CaseResponse.cls": "7a12c87a6c578f9f70efd674dffdf2be81b0e9f648b175726542842d55b31e5e",
+    "interop/Battery/Interop/Demo.cls": "f13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705",
+    "interop/Battery/Interop/EvidenceBinding.cls": "64892c7ff083f2cf17ae56d262c2948735840197d268b69f00928848321c8e0e",
+    "interop/Battery/Interop/EvidenceOperation.cls": "b69f92dcd6e3eace12af8e1d0e207ade205d9f81752fce51160ffa980b4e9c27",
+    "interop/Battery/Interop/EvidenceRequest.cls": "4d985e611f4800f3b7c13be0e9b0774760fcf52f539bf317b2fb5688e786b780",
+    "interop/Battery/Interop/EvidenceResponse.cls": "e864d0a8afb38836b49ee668d913f3e1993be5cfdb4a2c74467a39deba68b531",
+    "interop/Battery/Interop/IntakeService.cls": "dd98d9b77db02e7f67a3c8f8a8f68388789c0fba20ff8d072a1b238947ae3ee3",
+    "interop/Battery/Interop/OutcomeProof.cls": "b00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455",
+    "interop/Battery/Interop/Production.cls": "0fd708c00ec924809a29e7da637bcbac26ac69b8101d9a7f6f18070aeb15c3f9",
+    "interop/Battery/Interop/SolverProcess.cls": "c56bc24ab75faf7f352f3611f385477385352fb60a0f51eb7d7b0deb88bf562b"
+  },
+  "source_differences": [
+    "app.py",
+    "battery/task_slice.py",
+    "static/app.js",
+    "static/app.css",
+    "tests/test_api.py",
+    "tests/ui_state.test.js"
+  ],
+  "shared_browser": {
+    "desktop": {
+      "elapsed_seconds": 0.6,
+      "evaluate_result": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "page": "Overview",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "THE CONCRETE RESULT\n\n8/8 failure-mode checks contained\n\nWhen a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again.\n\n1\nDISPATCH\n0\nAUTOMATIC RETRIES\n8/8\nCHECKS PASSED\nInspect all deterministic checks\nTry the one-dispatch proof\nAbout one minute \u00b7 synthetic target \u00b7 no credentials required\nOperational evidence\n\n8 observation areas returned; 0 are unavailable, stale or otherwise unresolved. Instance health has not been evaluated.\n\nInspect 8 collected areas\nArea\tQuality\tObservation / completeness\tSource\tAge\nSystem\t\u2713 VALID\t\nCPU 7% \u00b7 memory 34% \u00b7 259 GB storage available\nCompleteness: complete\n\tsynthetic system fixture\t0s ago \u00b7 stale after 60s\nProcesses\t\u2713 VALID\t\n4 processes observed\nCompleteness: complete\n\tsynthetic process fixture\t0s ago \u00b7 stale after 60s\nDatabases\t\u2713 VALID\t\n3 databases observed\nCompleteness: complete\n\tsynthetic database fixture\t0s ago \u00b7 stale after 60s\nLicense\t\u2713 VALID\t\nCommunity license observable\nCompleteness: complete\n\tsynthetic license fixture\t0s ago \u00b7 stale after 60s\nAudit\t\u2713 VALID\t\nAuditing enabled\nCompleteness: complete\n\tsynthetic audit fixture\t0s ago \u00b7 stale after 60s\nJournals\t\u2713 VALID\t\n2 recent files observed\nCompleteness: complete\n\tsynthetic journal fixture\t0s ago \u00b7 stale after 60s\nTLS\t\u2713 VALID\t\n2 metadata records; secrets omitted\nCompleteness: complete\n\tsynthetic TLS fixture\t0s ago \u00b7 stale after 60s\nWallets\t\u2713 VALID\t\n1 collection; secrets not requested\nCompleteness: complete\n\tsynthetic wallet fixture\t0s ago \u00b7 stale after 60s\nRecent attempts\n\nNo attempts recorded. Preparation alone does not execute a change.\n\nThe checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 137.9375,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 109.21875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 1400,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Overview",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Tasks \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Web applications \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "REST APIs Not implemented",
+            "width": 193,
+            "height": 55.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Permissions \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Security \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Operating system \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Logs & audit \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Receipts",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Evidence ledger",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Rules",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect all deterministic checks",
+            "width": 1116,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Try the one-dispatch proof",
+            "width": 210.421875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect 8 collected areas",
+            "width": 1166,
+            "height": 21,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "mobile-navigation": {
+      "elapsed_seconds": 0.79,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Rules",
+        "navigation": [
+          {
+            "page": "overview",
+            "title": "Overview",
+            "characters": 835,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "tasks",
+            "title": "Tasks",
+            "characters": 171,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "webapps",
+            "title": "Web applications",
+            "characters": 155,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "rest",
+            "title": "REST APIs",
+            "characters": 144,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "permissions",
+            "title": "Permissions",
+            "characters": 183,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "security",
+            "title": "Security",
+            "characters": 397,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "os",
+            "title": "Operating system",
+            "characters": 718,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "logs",
+            "title": "Logs & audit",
+            "characters": 372,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "receipts",
+            "title": "Receipts",
+            "characters": 66,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "ledger",
+            "title": "Evidence ledger",
+            "characters": 33,
+            "error": "",
+            "width": 360
+          },
+          {
+            "page": "rules",
+            "title": "Rules",
+            "characters": 373,
+            "error": "",
+            "width": 360
+          }
+        ],
+        "receipt": "",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Policy\ntask.intent.run-existing \u00b7 version 1\nValidation\nSIMULATED\nExecution requires\nSIMULATED\nRationale\nThe operator requested a new run. The adapter exposes task history for independent readback.\nAssumptions\nCounterexamples\nRecorded live validations\n\nRule maturity is configured by the operator. Listed validation records, when absent, do not establish live qualification.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Assumptions",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Counterexamples",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Recorded live validations",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "mobile-prepare": {
+      "elapsed_seconds": 1.03,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "New request",
+        "navigation": null,
+        "receipt": "",
+        "action": "Preparation failed: crypto.randomUUID is not a function",
+        "finding": "Preparation failed: crypto.randomUUID is not a function",
+        "secure": false,
+        "uuid": "undefined",
+        "protocol": "about:",
+        "status": "Prepare \u2192 authorize \u2192 execute \u2192 verify",
+        "content": "",
+        "refreshDisabled": false,
+        "error": "Preparation failed: crypto.randomUUID is not a function",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Requested outcome",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "workflow",
+            "text": "Run an existing task once\n                Schedule an existi",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "task",
+            "text": "Battery Demonstration Task",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Review task definition and runtime state",
+            "width": 336,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "reviewed",
+            "text": "",
+            "width": 16,
+            "height": 16,
+            "font": "14px"
+          },
+          {
+            "id": "prepare",
+            "text": "Prepare change",
+            "width": 129.765625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect evidence and rule",
+            "width": 310,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "execute",
+            "text": "Execute and verify",
+            "width": 284,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "mobile-request": {
+      "elapsed_seconds": 1.03,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "New request",
+        "status": "Prepare \u2192 authorize \u2192 execute \u2192 verify",
+        "content": "",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Requested outcome",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "workflow",
+            "text": "Run an existing task once\n                Schedule an existi",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "task",
+            "text": "Battery Demonstration Task",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Review task definition and runtime state",
+            "width": 336,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "reviewed",
+            "text": "",
+            "width": 16,
+            "height": 16,
+            "font": "14px"
+          },
+          {
+            "id": "prepare",
+            "text": "Prepare change",
+            "width": 129.765625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect evidence and rule",
+            "width": 310,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "execute",
+            "text": "Execute and verify",
+            "width": 284,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "mobile-text-200": {
+      "elapsed_seconds": 0.57,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Overview",
+        "navigation": null,
+        "receipt": "",
+        "action": "\n                  Prepare the exact intended change to establish eligibility.\n                ",
+        "finding": "Choose an outcome and review its target.",
+        "secure": false,
+        "uuid": "undefined",
+        "protocol": "about:",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "THE CONCRETE RESULT\n\n8/8 failure-mode checks contained\n\nWhen a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again.\n\n1\nDISPATCH\n0\nAUTOMATIC RETRIES\n8/8\nCHECKS PASSED\nInspect all deterministic checks\nTry the one-dispatch proof\nAbout one minute \u00b7 synthetic target \u00b7 no credentials required\nOperational evidence\n\n8 observation areas returned; 0 are unavailable, stale or otherwise unresolved. Instance health has not been evaluated.\n\nInspect 8 collected areas\nRecent attempts\n\nNo attempts recorded. Preparation alone does not execute a change.\n\nThe checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 102,
+            "font": "28px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 102,
+            "font": "28px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 36,
+            "font": "24px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 102,
+            "font": "28px"
+          },
+          {
+            "id": "",
+            "text": "Inspect all deterministic checks",
+            "width": 306,
+            "height": 84,
+            "font": "28px"
+          },
+          {
+            "id": "",
+            "text": "Try the one-dispatch proof",
+            "width": 306,
+            "height": 102,
+            "font": "28px"
+          },
+          {
+            "id": "",
+            "text": "Inspect 8 collected areas",
+            "width": 336,
+            "height": 84,
+            "font": "28px"
+          }
+        ],
+        "overflow": [
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          },
+          {
+            "tag": "LI",
+            "id": "",
+            "class": "",
+            "right": 443.171875
+          },
+          {
+            "tag": "STRONG",
+            "id": "",
+            "class": "",
+            "right": 430.171875
+          }
+        ]
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "mobile": {
+      "elapsed_seconds": 0.55,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Overview",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "THE CONCRETE RESULT\n\n8/8 failure-mode checks contained\n\nWhen a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again.\n\n1\nDISPATCH\n0\nAUTOMATIC RETRIES\n8/8\nCHECKS PASSED\nInspect all deterministic checks\nTry the one-dispatch proof\nAbout one minute \u00b7 synthetic target \u00b7 no credentials required\nOperational evidence\n\n8 observation areas returned; 0 are unavailable, stale or otherwise unresolved. Instance health has not been evaluated.\n\nInspect 8 collected areas\nRecent attempts\n\nNo attempts recorded. Preparation alone does not execute a change.\n\nThe checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect all deterministic checks",
+            "width": 306,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Try the one-dispatch proof",
+            "width": 306,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect 8 collected areas",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "stalled-assurance": {
+      "elapsed_seconds": 1.74,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Overview",
+        "status": "Loading observations\u2026",
+        "content": "",
+        "refreshDisabled": true,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "e6f896d2fbbad0f633b45f9246ac64cb46851780f13adfaa272080e0a6998993",
+        "static/app.js": "7e2acf2e7cecd2dde347cdb20daea5faf2050c0038bffd383addc71f36ce5ba6",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    }
+  },
+  "public_browser": {
+    "desktop": {
+      "elapsed_seconds": 0.54,
+      "evaluate_result": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "page": "Overview",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "SYNTHETIC \u00b7 OBSERVED TASK HISTORY\n\nNo result recorded for the demonstration task\n! ACT\n\nThe synthetic on-demand task has no terminal history row. Review its definition before choosing whether to run it once.\n\nObserved task\nBattery Demonstration Task\nHistory rows\n0\nObserved at\n2026-11-04T23:46:39.661Z\nBattery receipt\nNone recorded\nReview this task\n\nTHE CONCRETE RESULT\n\n8/8 failure-mode checks contained\n\nWhen a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again.\n\n1\nDISPATCH\n0\nAUTOMATIC RETRIES\n8/8\nCHECKS PASSED\nInspect all deterministic checks\nTry the one-dispatch proof\nAbout one minute \u00b7 synthetic target \u00b7 no credentials required\nOperational evidence\n\n8 observation areas returned; 0 are unavailable, stale or otherwise unresolved. Instance health has not been evaluated.\n\nInspect 8 collected areas\nArea\tQuality\tObservation / completeness\tSource\tAge\nSystem\t\u2713 VALID\t\nCPU 7% \u00b7 memory 34% \u00b7 259 GB storage available\nCompleteness: complete\n\tsynthetic system fixture\t0s ago \u00b7 stale after 60s\nProcesses\t\u2713 VALID\t\n4 processes observed\nCompleteness: complete\n\tsynthetic process fixture\t0s ago \u00b7 stale after 60s\nDatabases\t\u2713 VALID\t\n3 databases observed\nCompleteness: complete\n\tsynthetic database fixture\t0s ago \u00b7 stale after 60s\nLicense\t\u2713 VALID\t\nCommunity license observable\nCompleteness: complete\n\tsynthetic license fixture\t0s ago \u00b7 stale after 60s\nAudit\t\u2713 VALID\t\nAuditing enabled\nCompleteness: complete\n\tsynthetic audit fixture\t0s ago \u00b7 stale after 60s\nJournals\t\u2713 VALID\t\n2 recent files observed\nCompleteness: complete\n\tsynthetic journal fixture\t0s ago \u00b7 stale after 60s\nTLS\t\u2713 VALID\t\n2 metadata records; secrets omitted\nCompleteness: complete\n\tsynthetic TLS fixture\t0s ago \u00b7 stale after 60s\nWallets\t\u2713 VALID\t\n1 collection; secrets not requested\nCompleteness: complete\n\tsynthetic wallet fixture\t0s ago \u00b7 stale after 60s\nRecent attempts\n\nNo attempts recorded. Preparation alone does not execute a change.\n\nThe checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 137.9375,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 109.21875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 1400,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Overview",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Tasks \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Web applications \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "REST APIs Not implemented",
+            "width": 193,
+            "height": 55.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Permissions \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Security \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Operating system \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Logs & audit \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Receipts",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Evidence ledger",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Rules",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Review this task",
+            "width": 130.0625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect all deterministic checks",
+            "width": 1116,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Try the one-dispatch proof",
+            "width": 210.421875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect 8 collected areas",
+            "width": 1166,
+            "height": 21,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "014f269975e9a2547a986bdc4dc8516b5d284834992d903b83c1ed0a882a53e9",
+        "static/app.js": "e47b777238f6af45b8399ad0e3ff078e203d99910f575b07db8cdc9b4b06ff23",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    },
+    "mobile-request": {
+      "elapsed_seconds": 1.02,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "New request",
+        "status": "Prepare \u2192 authorize \u2192 execute \u2192 verify",
+        "content": "",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Requested outcome",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "workflow",
+            "text": "Run an existing task once\n                Schedule an existi",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "task",
+            "text": "Battery Demonstration Task",
+            "width": 336,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "reviewed",
+            "text": "",
+            "width": 16,
+            "height": 16,
+            "font": "14px"
+          },
+          {
+            "id": "prepare",
+            "text": "Prepare change",
+            "width": 129.765625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect evidence and rule",
+            "width": 310,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "execute",
+            "text": "Execute and verify",
+            "width": 284,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "014f269975e9a2547a986bdc4dc8516b5d284834992d903b83c1ed0a882a53e9",
+        "static/app.js": "e47b777238f6af45b8399ad0e3ff078e203d99910f575b07db8cdc9b4b06ff23",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    },
+    "mobile": {
+      "elapsed_seconds": 0.54,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Overview",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "SYNTHETIC \u00b7 OBSERVED TASK HISTORY\n\nNo result recorded for the demonstration task\n! ACT\n\nThe synthetic on-demand task has no terminal history row. Review its definition before choosing whether to run it once.\n\nObserved task\nBattery Demonstration Task\nHistory rows\n0\nObserved at\n2026-11-04T23:46:40.455Z\nBattery receipt\nNone recorded\nReview this task\n\nTHE CONCRETE RESULT\n\n8/8 failure-mode checks contained\n\nWhen a task request loses its response, Battery dispatches once, records the uncertainty, and verifies the original attempt from fresh evidence. It does not send the change again.\n\n1\nDISPATCH\n0\nAUTOMATIC RETRIES\n8/8\nCHECKS PASSED\nInspect all deterministic checks\nTry the one-dispatch proof\nAbout one minute \u00b7 synthetic target \u00b7 no credentials required\nOperational evidence\n\n8 observation areas returned; 0 are unavailable, stale or otherwise unresolved. Instance health has not been evaluated.\n\nInspect 8 collected areas\nRecent attempts\n\nNo attempts recorded. Preparation alone does not execute a change.\n\nThe checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Review this task",
+            "width": 130.0625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect all deterministic checks",
+            "width": 306,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Try the one-dispatch proof",
+            "width": 306,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect 8 collected areas",
+            "width": 336,
+            "height": 21,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "014f269975e9a2547a986bdc4dc8516b5d284834992d903b83c1ed0a882a53e9",
+        "static/app.js": "e47b777238f6af45b8399ad0e3ff078e203d99910f575b07db8cdc9b4b06ff23",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    },
+    "stalled-assurance": {
+      "elapsed_seconds": 1.73,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Overview",
+        "status": "Loading observations\u2026",
+        "content": "",
+        "refreshDisabled": true,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 164,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 18,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "e52029ad76fafdb0aff93728318324973bc75099814b220c1732446d37e71dfa",
+        "static/app.css": "014f269975e9a2547a986bdc4dc8516b5d284834992d903b83c1ed0a882a53e9",
+        "static/app.js": "e47b777238f6af45b8399ad0e3ff078e203d99910f575b07db8cdc9b4b06ff23",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    }
+  },
+  "shared_executed_tests": [
+    {
+      "command": "python3 -m unittest discover -s tests -p test_runtime_safety.py -v",
+      "passed": 12,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "Disposable synthetic adapter; thread/process idempotency, restart, ambiguity, evidence, authority, and ledger failure."
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_api.py -v",
+      "passed": 6,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "FastAPI TestClient with synthetic engine; no live IRIS."
+    },
+    {
+      "command": "node --test tests/ui_state.test.js",
+      "passed": 4,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "Actual UI handlers with a minimal VM DOM, not browser layout."
+    }
+  ],
+  "public_executed_tests": [
+    {
+      "command": "python3 -m unittest discover -s tests -p test_runtime_safety.py -v",
+      "passed": 12,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "Disposable synthetic adapter; thread/process idempotency, restart, ambiguity, evidence, authority, and ledger failure."
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_api.py -v",
+      "passed": 8,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "FastAPI TestClient with synthetic engine; no live IRIS."
+    },
+    {
+      "command": "node --test tests/ui_state.test.js",
+      "passed": 4,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "Actual UI handlers with a minimal VM DOM, not browser layout."
+    }
+  ],
+  "publication_scope": "Documentation and evidence only. Existing public runtime and demonstration-finding implementation are preserved.",
+  "public_screenshot_sha256": {
+    "desktop.png": "4faf76297f2cf3bda6da2441ef60587fb2a234759d94caff1ab375d1a2cc079b",
+    "mobile.png": "7d5c81e1e9140c447e4edf6257bd4ace28556988072095b6686916e87fa79be6",
+    "stalled-assurance.png": "d8a138c0407627d5dd2e4c6bba6afe3b41e706f8ac3f972bd0106ca91d92c76f"
+  },
+  "native_runtime_inspection": {
+    "id": "a7904434-c226-4412-a261-d2036cb2d8f8",
+    "path": "battery_audit_state.cmd",
+    "sha256": "f2422653fececfe475f07c1e90753566487f98c96a66a555608236d999c85bfb",
+    "status": "completed",
+    "started": 1793836128434,
+    "output": "PROVIDER_FILE_REMOVED\r\nSTATE=running OOM=false MEMORY=4294967296 CPU_NANO=2000000000\nCPU=0.21% MEMORY=406.2MiB / 4GiB PIDS=67\n09ba2c26bf6fc3267000e063229ed4cbfb1a613a16ff9e96571e4a1165b985c9  /home/irisowner/dev/interop/Battery/Interop/AgentOperation.cls\ne82e18a6d48bf4f75e5449e7fa579f05930baabf177c2c9c83ebb51a3befd6d0  /home/irisowner/dev/interop/Battery/Interop/AgentRequest.cls\na0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456  /home/irisowner/dev/interop/Battery/Interop/AgentResponse.cls\n9eee1bca512aeb0a54fbc54bf64a06a875cde37889648e83b8e7863923cb11da  /home/irisowner/dev/interop/Battery/Interop/CaseProcess.cls\nd379c10f7d4abdf0f79d36df63347bf0d48ca3502fc31ba74024edc2757cbe98  /home/irisowner/dev/interop/Battery/Interop/CaseRequest.cls\n7a12c87a6c578f9f70efd674dffdf2be81b0e9f648b175726542842d55b31e5e  /home/irisowner/dev/interop/Battery/Interop/CaseResponse.cls\nf13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705  /home/irisowner/dev/interop/Battery/Interop/Demo.cls\n64892c7ff083f2cf17ae56d262c2948735840197d268b69f00928848321c8e0e  /home/irisowner/dev/interop/Battery/Interop/EvidenceBinding.cls\nb69f92dcd6e3eace12af8e1d0e207ade205d9f81752fce51160ffa980b4e9c27  /home/irisowner/dev/interop/Battery/Interop/EvidenceOperation.cls\n4d985e611f4800f3b7c13be0e9b0774760fcf52f539bf317b2fb5688e786b780  /home/irisowner/dev/interop/Battery/Interop/EvidenceRequest.cls\ne864d0a8afb38836b49ee668d913f3e1993be5cfdb4a2c74467a39deba68b531  /home/irisowner/dev/interop/Battery/Interop/EvidenceResponse.cls\ndd98d9b77db02e7f67a3c8f8a8f68388789c0fba20ff8d072a1b238947ae3ee3  /home/irisowner/dev/interop/Battery/Interop/IntakeService.cls\nb00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455  /home/irisowner/dev/interop/Battery/Interop/OutcomeProof.cls\n0fd708c00ec924809a29e7da637bcbac26ac69b8101d9a7f6f18070aeb15c3f9  /home/irisowner/dev/interop/Battery/Interop/Production.cls\nc56bc24ab75faf7f352f3611f385477385352fb60a0f51eb7d7b0deb88bf562b  /home/irisowner/dev/interop/Battery/Interop/SolverProcess.cls\nIMAGE=sha256:f45df25ef438220142edd6a0bd4228293816ffec8857218b0420db711ece0b2b\nMOUNTS=[]\nDECLARED_VOLUMES=null\n",
+    "exitCode": 0,
+    "finished": 1793836130029
+  },
+  "export_gate": {
+    "command": "devlathe test --tree bizlathe --filter ventures/armada-battery/tests/test_ship_export_release.py",
+    "executed_test_files": 1,
+    "cached_files": 0,
+    "exit_code": 0,
+    "result": "PASS"
+  }
+}
