@@ -1,0 +1,6 @@
+[Actions]
+CreateResource:Name=%DB_BATTERY_DATA,Description="Battery demo data"
+CreateDatabase:Name=BATTERY_DATA,Directory=/usr/irissys/mgr/BATTERY_DATA,Resource=%DB_BATTERY_DATA
+CreateResource:Name=%DB_BATTERY_CODE,Description="Battery demo code"
+CreateDatabase:Name=BATTERY_CODE,Directory=/usr/irissys/mgr/BATTERY_CODE,Resource=%DB_BATTERY_CODE
+CreateNamespace:Name=BATTERY,Globals=BATTERY_DATA,Routines=BATTERY_CODE,Interop=1

@@ -1,0 +1,11 @@
+ARG AIHUB_IMAGE=iris-community:2027.1.0AI.109.0
+FROM ${AIHUB_IMAGE}
+
+WORKDIR /home/irisowner/dev
+COPY --chown=51773:51773 interop /home/irisowner/dev/interop
+
+RUN iris start IRIS && \
+    iris merge IRIS /home/irisowner/dev/interop/merge.cpf && \
+    iris session IRIS < /home/irisowner/dev/interop/iris.script > /home/irisowner/dev/interop/compile.log && \
+    grep -q '^BATTERY_COMPILE_OK$' /home/irisowner/dev/interop/compile.log && \
+    iris stop IRIS quietly

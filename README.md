@@ -2,6 +2,10 @@
 
 <p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery industrial battery icon"></p>
 
+## Interoperability agent preview for contest 49
+
+The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch adds source for a native IRIS AI Hub review path. A small agent judges **rule assertion accuracy** separately from **output pass/fail** against an independent acceptance criterion; a larger agent investigates disagreements. See [setup and exact qualification status](interop/README.md). The EAP production source has not yet been compiled or run on the contest image. The existing management demonstration below remains a separate, synthetic proof.
+
 Armada Battery is an adversarially tested change-control engine for four
 consequential InterSystems IRIS administration workflows. It is built around the
 failure cases ordinary admin screens tend to hide: stale review state, replay,

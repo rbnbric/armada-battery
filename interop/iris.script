@@ -1,0 +1,5 @@
+zn "BATTERY"
+set sc = $SYSTEM.OBJ.LoadDir("/home/irisowner/dev/interop/Battery", "ck", , 1)
+if $SYSTEM.Status.IsError(sc) { write $SYSTEM.Status.GetErrorText(sc), ! halt }
+write "BATTERY_COMPILE_OK", !
+halt

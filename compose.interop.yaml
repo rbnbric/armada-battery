@@ -1,0 +1,13 @@
+services:
+  battery-interop:
+    build:
+      context: .
+      dockerfile: Dockerfile.interop
+      args:
+        AIHUB_IMAGE: ${AIHUB_IMAGE:-iris-community:2027.1.0AI.109.0}
+    environment:
+      NEBIUS_API_KEY: ${NEBIUS_API_KEY:?Set NEBIUS_API_KEY for the native AI Hub demo}
+      ISC_CPF_MERGE_FILE: /home/irisowner/dev/interop/merge.cpf
+    ports:
+      - "127.0.0.1:52774:52773"
+      - "127.0.0.1:1973:1972"
