@@ -4,7 +4,16 @@ from __future__ import annotations
 
 import unittest
 
-from scripts.eval_interop_agents import CASES, validate_investigation, validate_review
+import runpy
+from pathlib import Path
+
+DRILL_TEST_DEPS = ["ventures/armada-battery/scripts/eval_interop_agents.py"]
+
+# Load the real adjacent script without claiming the fleet-wide scripts namespace.
+_evaluator = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts/eval_interop_agents.py"))
+CASES = _evaluator["CASES"]
+validate_investigation = _evaluator["validate_investigation"]
+validate_review = _evaluator["validate_review"]
 
 
 class InteropAgentContractTests(unittest.TestCase):
@@ -42,6 +51,20 @@ class InteropAgentContractTests(unittest.TestCase):
         case = CASES[1]
         with self.assertRaisesRegex(ValueError, "absent evidence"):
             validate_investigation({"next_probe": "CHECK_TARGET_VERSION", "evidence_ids": ["fake"], "hypothesis": "Version drift", "uncertainty": "Unconfirmed"}, case)
+
+    def test_unobserved_application_state_is_not_a_successful_hold(self):
+        case = next(case for case in CASES if case["id"] == "missing_observation")
+        self.assertEqual((case["gold"], case["output_gold"]), ("NO", "UNKNOWN"))
+        review = validate_review({"verdict": "NO", "applicability": "UNKNOWN", "output_result": "UNKNOWN", "evidence_ids": ["K1", "K2"], "summary": "Application state has not been observed."}, case)
+        self.assertEqual(review["output_result"], "UNKNOWN")
+
+    def test_reassessment_contract_regressions(self):
+        valid = {"verdict": "YES", "applicability": "APPLICABLE", "output_result": "PASS", "evidence_ids": ["A1"], "summary": "Observed"}
+        for field, value in [("summary", 17), ("summary", {}), ("summary", "   "), ("evidence_ids", ["A1", "A1"]), ("execute", "SEND_NOW")]:
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                validate_review({**valid, field: value}, CASES[0])
+        with self.assertRaises(ValueError):
+            validate_review(valid, {**CASES[0], "facts": {"A1": {}}})
 
 
 if __name__ == "__main__":

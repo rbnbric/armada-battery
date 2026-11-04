@@ -56,6 +56,13 @@ inapplicable and predict a different result while the actual output passes.
 Agreement with a rule does not approve a send or declare the case resolved.
 Missing output evidence is `UNKNOWN`, never an invented pass.
 
+For the binary review, `NO` means the assertion is not verified. It can be
+false, inapplicable, or unproven; the explanation must distinguish those
+reasons. An unknown fact is not converted into a factual claim of falsity.
+The initial corpus wrongly treated an unobserved application state as a
+successful hold. The expanded gauntlet corrects that expectation to `NO` /
+`UNKNOWN` while preserving the earlier receipt as historical evidence.
+
 Keep all four known combinations in qualification: accurate assertion with
 passing output, inaccurate assertion with passing output, accurate assertion
 with failing output, and inaccurate assertion with failing output. `UNKNOWN`
@@ -73,7 +80,7 @@ than counted as `YES` or `NO`.
 
 Invoke the larger native IRIS AI Hub agent for the contradiction handoff,
 conflicting rules, incidents spanning messages or contracts, or cases with no
-rule candidate. It has read-only tools to inspect the case,
+rule candidate. The intended next iteration adds read-only tools to inspect the case,
 related message traces, partner contract, runbook, recent incidents, and
 qualification results. It may pursue a limited number of tangents: for each
 one it records a hypothesis, supporting evidence, contradicting evidence, and
@@ -81,6 +88,12 @@ the next observation that would decide it. It may request more evidence or
 recommend an allow-listed action or a candidate rule amendment. It cannot
 send, replay, edit a contract, confirm its own proposal, or manufacture a
 missing acknowledgement.
+
+The current native preview returns a validated probe name and hypothesis;
+it does not yet execute that probe or fetch new evidence. The next solver
+increment is a bounded probe executor with captured readback and a second
+review. Tool execution, the downstream action gate, and an actual repair loop
+must receive their own qualification before being described as working.
 
 The agent returns a versioned structured decision: case ID, action, target,
 evidence references, contradictions, uncertainty, and a concise explanation.

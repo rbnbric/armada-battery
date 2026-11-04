@@ -1,0 +1,19 @@
+zn "BATTERY"
+write "EDGE_EVIDENCE_BEGIN",!
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,SessionId,SourceConfigName,TargetConfigName,MessageBodyClassName,MessageBodyId,Status FROM Ens.MessageHeader WHERE SessionId IN (SELECT h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId LIKE 'edge-%') ORDER BY ID")
+if rs.%SQLCODE<0 { write "EVIDENCE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"SessionId":(rs.%Get("SessionId")),"SourceConfigName":(rs.%Get("SourceConfigName")),"TargetConfigName":(rs.%Get("TargetConfigName")),"MessageBodyClassName":(rs.%Get("MessageBodyClassName")),"MessageBodyId":(rs.%Get("MessageBodyId")),"Status":(rs.%Get("Status"))} write "TRACE=",row.%ToJSON(),! }
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,Content,UsageJSON FROM Battery_Interop.AgentResponse WHERE ID IN (SELECT MessageBodyId FROM Ens.MessageHeader WHERE MessageBodyClassName='Battery.Interop.AgentResponse' AND SessionId IN (SELECT h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId LIKE 'edge-%')) ORDER BY ID")
+if rs.%SQLCODE<0 { write "EVIDENCE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"Content":(rs.%Get("Content")),"UsageJSON":(rs.%Get("UsageJSON"))} write "AGENT_RECORD=",row.%ToJSON(),! }
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,""Role"",CaseJSON FROM Battery_Interop.AgentRequest WHERE ID IN (SELECT MessageBodyId FROM Ens.MessageHeader WHERE MessageBodyClassName='Battery.Interop.AgentRequest' AND SessionId IN (SELECT h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId LIKE 'edge-%')) ORDER BY ID")
+if rs.%SQLCODE<0 { write "EVIDENCE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"Role":(rs.%Get("Role")),"CaseJSON":(rs.%Get("CaseJSON"))} write "AGENT_INPUT=",row.%ToJSON(),! }
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,CaseJSON FROM Battery_Interop.CaseRequest WHERE ID IN (SELECT MessageBodyId FROM Ens.MessageHeader WHERE MessageBodyClassName='Battery.Interop.CaseRequest' AND SessionId IN (SELECT h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId LIKE 'edge-%')) ORDER BY ID")
+if rs.%SQLCODE<0 { write "EVIDENCE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"CaseJSON":(rs.%Get("CaseJSON"))} write "CASE_INPUT=",row.%ToJSON(),! }
+set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT ID,CaseId,State FROM Battery_Interop.CaseResponse WHERE CaseId LIKE 'edge-%' ORDER BY ID")
+if rs.%SQLCODE<0 { write "EVIDENCE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"CaseId":(rs.%Get("CaseId")),"State":(rs.%Get("State"))} write "CASE_RESULT=",row.%ToJSON(),! }
+write "EDGE_EVIDENCE_END",!
+halt

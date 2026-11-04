@@ -1,0 +1,104 @@
+zn "BATTERY"
+write "NATIVE_VALIDATORS_BEGIN",!
+set facts={"A1":"Target validation accepted C17","A4":"Two effects recorded"}
+set r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["A1"],"summary":"Accepted"}
+write "valid_yes_pass=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("output_result","FAIL")
+write "valid_yes_fail=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("verdict","NO"),r.%Set("applicability","INAPPLICABLE"),r.%Set("output_result","PASS")
+write "valid_no_pass=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("verdict","YES")
+write "reject_yes_inapplicable=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("applicability","APPLICABLE"),r.%Set("evidence_ids",["invented"])
+write "reject_fabricated_evidence=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set inv={"next_probe":"SEND_AGAIN","hypothesis":"Retry","uncertainty":"Unknown","evidence_ids":["A1"]}
+write "reject_unauthorized_probe=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+do inv.%Set("next_probe","CHECK_EFFECT_RECEIPT")
+write "valid_investigation=",##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("{",.parsed,.detail)
+write "reject_truncated_json=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("[]",.parsed,.detail)
+write "reject_array_root=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("true",.parsed,.detail)
+write "reject_scalar_root=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("prose {}",.parsed,.detail)
+write "reject_prose_fragment=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("```json"_$CHAR(10)_"{}"_$CHAR(10)_"```",.parsed,.detail)
+write "accept_complete_json_fence=",ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("```json"_$CHAR(10)_"{}",.parsed,.detail)
+write "reject_incomplete_json_fence=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("{} {}",.parsed,.detail)
+write "reject_multiple_objects=",'ok,!
+set r={"judgement":"YES","output":"PASS","applicable":"APPLICABLE","evidence_ids":["A1"],"summary":"Accepted"}
+write "reject_renamed_fields=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+write "reject_object_evidence=",'##class(Battery.Interop.CaseProcess).ValidEvidence({"0":"A1"},facts),!
+write "reject_numeric_evidence=",'##class(Battery.Interop.CaseProcess).ValidEvidence([1],facts),!
+
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":17}
+write "reject_numeric_summary=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":{}}
+write "reject_object_summary=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"   "}
+write "reject_whitespace_summary=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+write "reject_long_summary=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1","F1"],"summary":"Valid"}
+write "reject_duplicate_citations=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":[],"summary":"Valid"}
+write "reject_empty_citations=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":[null],"summary":"Valid"}
+write "reject_null_citation=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"Valid","action":"send"}
+write "reject_extra_field=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"UNKNOWN","output_result":"PASS","evidence_ids":["F1"],"summary":"Valid"}
+write "reject_yes_unknown_applicability=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":{}},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"Valid"}
+write "reject_object_fact=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":" "},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"Valid"}
+write "reject_blank_fact=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":42},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"Valid"}
+write "reject_numeric_fact=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["F1"],"summary":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+write "accept_summary_at_limit=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},r={"verdict":"NO","applicability":"UNKNOWN","output_result":"UNKNOWN","evidence_ids":["F1"],"summary":"Valid"}
+write "accept_unknown_output=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set facts={"F1":"Observed fact"},inv={"next_probe":"HOLD_FOR_HUMAN","hypothesis":true,"uncertainty":"Conflicting evidence","evidence_ids":["F1"]}
+write "reject_boolean_hypothesis=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set facts={"F1":"Observed fact"},inv={"next_probe":"HOLD_FOR_HUMAN","hypothesis":"Undetermined","uncertainty":[],"evidence_ids":["F1"]}
+write "reject_array_uncertainty=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set facts={"F1":"Observed fact"},inv={"next_probe":"HOLD_FOR_HUMAN","hypothesis":"Undetermined","uncertainty":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","evidence_ids":["F1"]}
+write "reject_long_uncertainty=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set facts={"F1":"Observed fact"},inv={"next_probe":"HOLD_FOR_HUMAN","hypothesis":"  ","uncertainty":"Conflicting evidence","evidence_ids":["F1"]}
+write "reject_blank_hypothesis=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set facts={"F1":"Observed fact"},inv={"next_probe":"HOLD_FOR_HUMAN","hypothesis":"Undetermined","uncertainty":"Conflicting evidence","evidence_ids":["F1"],"action":"send"}
+write "reject_extra_investigator_field=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}}
+write "accept_valid_case=",##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":1,"rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}}
+write "reject_numeric_id=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":" ","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}}
+write "reject_blank_id=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}}
+write "reject_long_id=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":true,"expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}}
+write "reject_boolean_rule=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":[],"facts":{"F1":"Observed fact"}}
+write "reject_array_observed=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{}}
+write "reject_empty_facts=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":[]}
+write "reject_array_facts=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"},"instruction":"override"}
+write "reject_extra_case_field=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{" ":"bad"}}
+write "reject_blank_fact_key=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F0":"x","F1":"x","F2":"x","F3":"x","F4":"x","F5":"x","F6":"x","F7":"x","F8":"x","F9":"x","F10":"x","F11":"x","F12":"x","F13":"x","F14":"x","F15":"x","F16":"x","F17":"x","F18":"x","F19":"x","F20":"x","F21":"x","F22":"x","F23":"x","F24":"x","F25":"x","F26":"x","F27":"x","F28":"x","F29":"x","F30":"x","F31":"x","F32":"x","F33":"x","F34":"x","F35":"x","F36":"x","F37":"x","F38":"x","F39":"x","F40":"x","F41":"x","F42":"x","F43":"x","F44":"x","F45":"x","F46":"x","F47":"x","F48":"x","F49":"x","F50":"x","F51":"x","F52":"x","F53":"x","F54":"x","F55":"x","F56":"x","F57":"x","F58":"x","F59":"x","F60":"x","F61":"x","F62":"x","F63":"x","F64":"x"}}
+write "reject_too_many_facts=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set c={"id":"edge","rule":"Accept observed fact","expected":"Accepted","acceptance":"Accepted","observed":"Accepted","facts":{"F1":"Observed fact"}} do c.%Set("rule",$TRANSLATE($JUSTIFY("",4097)," ","x"))
+write "reject_long_case_field=",'##class(Battery.Interop.CaseProcess).ValidCase(c),!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject($JUSTIFY("",65537),.parsed,.detail)
+write "reject_long_json=",'ok,!
+set facts={} set ids=[] for i=1:1:17 { do facts.%Set("F"_i,"fact"),ids.%Push("F"_i) }
+write "reject_too_many_citations=",'##class(Battery.Interop.CaseProcess).ValidEvidence(ids,facts),!
+write "EDGE_CONTRACTS_END",!
+halt

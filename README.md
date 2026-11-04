@@ -4,7 +4,11 @@
 
 ## Interoperability agent preview for contest 49
 
-The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch adds source for a native IRIS AI Hub review path. A small agent judges **rule assertion accuracy** separately from **output pass/fail** against an independent acceptance criterion; a larger agent investigates disagreements. See [setup and exact qualification status](interop/README.md). The native build-109 run passed 17/17 validator checks, 13/13 assertion judgments, and 13/13 output grades; investigation probes matched the preferred choice in 5/7 cases. [Measured results and message traces](interop/results/native-109.json) retain the two mismatches. Downstream repair execution remains unconnected. The existing management demonstration below remains a separate, synthetic proof.
+The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch adds a native IRIS AI Hub review path. A small agent judges **rule assertion accuracy** separately from **output pass/fail** against an independent acceptance criterion; a larger agent investigates disagreements. See [setup and qualification status](interop/README.md).
+
+Reassessment reproduced and repaired five validator defects. Native checks now pass **50/50 contracts and 26/26 fault/replay/restart checks**. The expanded live corpus matched **31/32 assertion judgments and 28/32 output judgments**, with acceptable next probes in **16/22 expected investigations**. Two output expectations are ambiguous and remain annotated. One case incorrectly agreed without outcome evidence; one fact-order pair changed applicability. [Full results and message traces](interop/results/edge-109.json) and [the findings](interop/GAUNTLET.md) retain those failures. The earlier 13/13 score used a flawed missing-observation oracle and is historical, not a current correctness claim.
+
+The live run made 53 model calls in 585.777 seconds. Downstream repair and probe execution remain unconnected. The existing management demonstration below remains a separate, synthetic proof.
 
 Armada Battery is an adversarially tested change-control engine for four
 consequential InterSystems IRIS administration workflows. It is built around the

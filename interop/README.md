@@ -8,8 +8,8 @@ and remaining limits are recorded below; compilation alone is not acceptance.
 This small IRIS production accepts a bounded evidence case through
 `Battery.Intake`, routes it through `Battery.CaseProcess`, and calls native
 `%AI.Agent` from `Battery.Agent`. Nemotron 3 Nano checks two separate facts:
-whether the rule assertion is accurate and whether the observed output meets
-an independent acceptance criterion. A false assertion or a failed/unknown
+whether the rule assertion is verified and whether the observed output meets
+an independent acceptance criterion. An unverified assertion or a failed/unknown
 output sends the case to Nemotron 3 Super to choose the next evidence probe. The process
 validates each model's JSON shape and evidence IDs. Its states are review
 states; **it sends no external business effect and does not claim a repair**.
@@ -68,33 +68,58 @@ With the production image running, execute the parser/validator checks first:
 
 ```bash
 docker compose -f compose.interop.yaml exec -T battery-interop \
-  iris session IRIS -U BATTERY < interop/tests/validators.script
+  iris session IRIS -U BATTERY < interop/tests/edge-contracts.script
 ```
 
-All 17 named checks must print `=1`, with no ObjectScript errors. They cover
+All 50 named checks must print `=1`, with no ObjectScript errors. They cover
 the assertion/output split, fabricated evidence, invalid probes, malformed and
 truncated JSON, wrong root types, renamed fields, invalid evidence containers,
-and a complete Markdown JSON fence. Only a complete outer fence is removed;
+type/size limits, duplicate citations, and a complete Markdown JSON fence. Only a complete outer fence is removed;
 arbitrary prose is never searched for a convenient JSON fragment.
 
 The following run makes billable provider calls through native AI Hub:
 
 ```bash
 docker compose -f compose.interop.yaml exec -T battery-interop \
-  iris session IRIS -U BATTERY < interop/tests/corpus.script
+  iris session IRIS -U BATTERY < interop/tests/edge-corpus.script
 ```
 
-It prints one `NATIVE_CASE=` JSON record per fixture. Compare all 13 records
-against `interop/tests/corpus-fixtures.json`, including the independent output
+It prints one `EDGE_CASE=` JSON record per fixture. Compare all 32 records
+against `interop/tests/edge-fixtures.json`, including the independent output
 grade, expected route, and preferred investigation probe. The answer keys are
 kept outside model inputs. A zero shell exit code alone does not establish a
 pass: IRIS terminal sessions can print errors and still exit zero.
 
-Native results are retained in `interop/results/native-109.json`. The tests use
+Current native results are retained in `interop/results/edge-109.json`. The tests use
 synthetic evidence; they do not send real business effects or prove a complete
-repair loop. See the remaining [edge gauntlet](GAUNTLET.md).
+repair loop. See the [edge gauntlet](GAUNTLET.md) for fault-injection instructions,
+coverage boundaries, and the reassessment of the original answer keys.
 
-### Build 109 result — 4 November 2026
+### Expanded build-109 gauntlet — 4 November 2026
+
+After repairing five reproduced validator defects, native checks passed 50/50
+contracts and 26/26 fault/replay/restart checks. The 32-case live corpus matched
+31 assertion judgments, 28 output judgments, and 31 routes. Acceptable probes
+matched 16/22 expected investigations (14 exact preferred choices). Two output
+expectations are ambiguous and remain annotated in the frozen results.
+
+One case incorrectly agreed without outcome evidence and skipped escalation.
+Another confused unknown outcome with failure. Reordering facts preserved the
+primary decision in four pairs but changed one applicability judgment. These
+are remaining defects, not successful qualification. See [findings and next
+priorities](GAUNTLET.md#measured-result--4-november-2026).
+
+The run made 53 calls in 585.777 seconds; SDK usage was 24,835 prompt and 39,967
+completion tokens. No billed-cost figure has been verified. Full inputs,
+outputs, source hashes and native message traces are retained in the result.
+
+### Historical first build-109 run — 4 November 2026
+
+These scores describe `results/native-109.json` against its original oracle.
+Reassessment found one incorrect expectation: an unobserved application state
+was treated as a successful hold. The expanded gauntlet corrects that to
+NO/UNKNOWN. The original 13/13 result is therefore **not a current correctness
+claim**. It remains here as a record of what was measured and later challenged.
 
 | Measurement | Result |
 | --- | --- |
