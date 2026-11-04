@@ -1,6 +1,6 @@
 # Interoperability agent: binary review and edge investigation
 
-Status: design plus an uncompiled IRIS production source preview for the AI
+Status: design plus a compiled, natively exercised IRIS production preview for the AI
 Agents in Interoperability Workflows contest. This is not a claim of AI Hub
 runtime qualification.
 

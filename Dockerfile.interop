@@ -4,8 +4,8 @@ FROM ${AIHUB_IMAGE}
 WORKDIR /home/irisowner/dev
 COPY --chown=51773:51773 interop /home/irisowner/dev/interop
 
-RUN iris start IRIS && \
-    iris merge IRIS /home/irisowner/dev/interop/merge.cpf && \
+RUN ISC_CPF_MERGE_FILE=/home/irisowner/dev/interop/merge.cpf iris start IRIS && \
     iris session IRIS < /home/irisowner/dev/interop/iris.script > /home/irisowner/dev/interop/compile.log && \
+    cat /home/irisowner/dev/interop/compile.log && \
     grep -q '^BATTERY_COMPILE_OK$' /home/irisowner/dev/interop/compile.log && \
     iris stop IRIS quietly

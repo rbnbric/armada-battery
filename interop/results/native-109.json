@@ -1,0 +1,1203 @@
+{
+  "schema": "battery-native-iris-evidence/v1",
+  "scope": "Synthetic evidence reviews through the actual IRIS Interoperability production and native %AI.Agent; no downstream business effects enabled.",
+  "iris_version": "2027.1.0AI Build 109U (Linux amd64)",
+  "archive_sha256": "e177f2bdaa4d8955d29a8b311f8c5d3192973e5cc0164c0fe628db464789fa4c",
+  "vendor_image_digest": "sha256:6bf9af033b9eed1770f43ac3291fe42478865eacea6e20e8c6052f8137ddddd1",
+  "models": {
+    "reviewer": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "investigator": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "provider": "Nebius Token Factory via AI Hub openai provider",
+  "temperature": 0,
+  "max_tokens_per_call": 2200,
+  "qualification_started_utc": "2026-11-04T21:42:40.301000+00:00",
+  "qualification_finished_utc": "2026-11-04T21:44:13.622000+00:00",
+  "qualification_seconds_including_reload_validators_corpus_trace": 93.321,
+  "scores": {
+    "validator_checks_passed": 17,
+    "validator_checks_total": 17,
+    "assertion_correct": 13,
+    "output_correct": 13,
+    "routes_correct": 13,
+    "cases": 13,
+    "exact_preferred_probes": 5,
+    "investigations": 7
+  },
+  "usage": {
+    "sdk_reported_calls": 20,
+    "tokens": {
+      "prompt": 7392,
+      "completion": 14125,
+      "reasoning_reported": 3766
+    },
+    "summed_sdk_llm_duration_ms": 90016,
+    "cost": null,
+    "note": "SDK-reported usage, not verified billing. Reported reasoning tokens are a subset of completion tokens; do not add them again."
+  },
+  "limits": [
+    "One fixed synthetic corpus, not a reliability benchmark.",
+    "Preferred probe differs on schema drift and prompt-injection cases; retained as mismatches.",
+    "Case facts describe effects; this run did not execute or independently verify those downstream effects.",
+    "Deterministic action gate, durable permits, repair execution, and real target readback remain unconnected to this production.",
+    "The EAP image emitted a SYS.ICM Sharding method startup error; this workflow remained operational."
+  ],
+  "initial_findings": [
+    "Reviewer renamed required JSON fields; rejected.",
+    "Markdown-fenced JSON terminated the process before repair.",
+    "An intermediate type-check edit used the wrong SDK method name; native tests caught it and it was corrected to %GetTypeOf.",
+    "Duplicate-effect investigation initially preferred mapping; targeted instruction changed before final corpus."
+  ],
+  "validators": {
+    "valid_yes_pass": "1",
+    "valid_yes_fail": "1",
+    "valid_no_pass": "1",
+    "reject_yes_inapplicable": "1",
+    "reject_fabricated_evidence": "1",
+    "reject_unauthorized_probe": "1",
+    "valid_investigation": "1",
+    "reject_truncated_json": "1",
+    "reject_array_root": "1",
+    "reject_scalar_root": "1",
+    "reject_prose_fragment": "1",
+    "accept_complete_json_fence": "1",
+    "reject_incomplete_json_fence": "1",
+    "reject_multiple_objects": "1",
+    "reject_renamed_fields": "1",
+    "reject_object_evidence": "1",
+    "reject_numeric_evidence": "1"
+  },
+  "source_sha256": {
+    "Dockerfile.interop": "69114553dbd8a5bdfaee3e0422866ec6780139430aa85bd0f0182fb2bb76a436",
+    "compose.interop.yaml": "d0889487537c95fe64e71a569db982a5ce75573fdfe10e52315f0b4073e5f60a",
+    "interop/Battery/Interop/AgentOperation.cls": "b208768f28a7e7587a01472c860f55557ad0c3c7df19390f011658041d587cf7",
+    "interop/Battery/Interop/AgentRequest.cls": "e82e18a6d48bf4f75e5449e7fa579f05930baabf177c2c9c83ebb51a3befd6d0",
+    "interop/Battery/Interop/AgentResponse.cls": "a0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456",
+    "interop/Battery/Interop/CaseProcess.cls": "1bc43d90e859839283d0e1e239cf60a5750774f45efd6a2db9d4629669396581",
+    "interop/Battery/Interop/CaseRequest.cls": "d379c10f7d4abdf0f79d36df63347bf0d48ca3502fc31ba74024edc2757cbe98",
+    "interop/Battery/Interop/CaseResponse.cls": "9feede50197c45f3f145e89bd7533dd73392c54a26147a20963c9ae392a9616e",
+    "interop/Battery/Interop/Demo.cls": "f13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705",
+    "interop/Battery/Interop/IntakeService.cls": "dd98d9b77db02e7f67a3c8f8a8f68388789c0fba20ff8d072a1b238947ae3ee3",
+    "interop/Battery/Interop/Production.cls": "1c347022ab32fa57d785bcdb7103c9279ec348e179e850198fecb959ecf8e4be",
+    "interop/iris.script": "09c61423bc2ebcadcf9903b004344b7c8df750443f29aff586bbebdb7538099e",
+    "interop/merge.cpf": "468c019e4bd77567dc6f6ea426d81f8541a63fb643a0a89d0da8bae9f9d09485",
+    "interop/tests/corpus-fixtures.json": "aab169a22496e4c44752f172c41129c554a4a5b22448fdc6bd18e89a7c4fd8ba",
+    "interop/tests/corpus.script": "b0d3bfe20638f22a9933b29674ece9b37f9fa6f99127e6963228248fa445f221",
+    "interop/tests/validators.script": "968960f941215b718c383b9d32bfbd74a30e7df667b68d04b2a1a47c6c5e354f"
+  },
+  "raw_evidence_sha256": {
+    "native-corpus.log": "4a21a008939b1a4996c1bda25de40e1c8cf30b92de603ba4e60c70e3b6e841d6",
+    "native-evidence-final.log": "d0a7477283c3f770a11932fd1f6f32c41617eed664959f695a3193f871b7cd4a",
+    "native-run-initial.log": "2606cd8eb1b037813b868d051127c800ea99df6bd68f0bf48853694580875e7d",
+    "native-validators-repaired.log": "a207da9950b46fd6fc330e56264a8b19ee40a5e363fe69f340824cee13b8bdc2"
+  },
+  "rows": [
+    {
+      "id": "alias_match",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Rule requires copying clientId to customerId and accepting when target validation confirms; observed target accepted C17 matches expected, confirming rule accuracy.",
+      "reviewer_usage": {
+        "current_context_tokens": 204,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 557,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2717,
+        "total_prompt_tokens": 317,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "64",
+          "SessionId": "64",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "58",
+          "Status": "9"
+        },
+        {
+          "ID": "65",
+          "SessionId": "64",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "59",
+          "Status": "9"
+        },
+        {
+          "ID": "66",
+          "SessionId": "64",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "60",
+          "Status": "9"
+        },
+        {
+          "ID": "67",
+          "SessionId": "64",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "61",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "accurate_rule_bad_output",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "YES",
+      "output": "FAIL",
+      "applicability": "APPLICABLE",
+      "probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "The system may be retrying the outbound operation or lacking idempotency checks, causing two effect records for the same scoped key despite a single logical request.",
+      "reviewer_usage": {
+        "current_context_tokens": 208,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 790,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 3956,
+        "total_prompt_tokens": 334,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 306,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 757,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 6359,
+        "total_prompt_tokens": 472,
+        "total_reasoning_tokens": 649,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "YES",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_EFFECT_RECEIPT",
+      "probe_exact_match": true,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "68",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "62",
+          "Status": "9"
+        },
+        {
+          "ID": "69",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "63",
+          "Status": "9"
+        },
+        {
+          "ID": "70",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "64",
+          "Status": "9"
+        },
+        {
+          "ID": "71",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "65",
+          "Status": "9"
+        },
+        {
+          "ID": "72",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "66",
+          "Status": "9"
+        },
+        {
+          "ID": "73",
+          "SessionId": "68",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "67",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "alias_drift",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "FAIL",
+      "applicability": "INAPPLICABLE",
+      "probe": "CHECK_TARGET_VERSION",
+      "explanation": "Partner A's mapping still declares schema v2 while the target has moved to schema v3, replacing customerId with customerRef, so the copied value is rejected as an unknown field.",
+      "reviewer_usage": {
+        "current_context_tokens": 226,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 1121,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 5271,
+        "total_prompt_tokens": 326,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 331,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 855,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 9844,
+        "total_prompt_tokens": 482,
+        "total_reasoning_tokens": 748,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_MAPPING",
+      "probe_exact_match": false,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "74",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "68",
+          "Status": "9"
+        },
+        {
+          "ID": "75",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "69",
+          "Status": "9"
+        },
+        {
+          "ID": "76",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "70",
+          "Status": "9"
+        },
+        {
+          "ID": "77",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "71",
+          "Status": "9"
+        },
+        {
+          "ID": "78",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "72",
+          "Status": "9"
+        },
+        {
+          "ID": "79",
+          "SessionId": "74",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "73",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "required_field_reject",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Rule correctly predicts rejection of a v2 message lacking orderId; observed error matches expected.",
+      "reviewer_usage": {
+        "current_context_tokens": 158,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 423,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2303,
+        "total_prompt_tokens": 296,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "80",
+          "SessionId": "80",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "74",
+          "Status": "9"
+        },
+        {
+          "ID": "81",
+          "SessionId": "80",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "75",
+          "Status": "9"
+        },
+        {
+          "ID": "82",
+          "SessionId": "80",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "76",
+          "Status": "9"
+        },
+        {
+          "ID": "83",
+          "SessionId": "80",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "77",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "required_field_false_positive",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "PASS",
+      "applicability": "INAPPLICABLE",
+      "probe": "CHECK_RULE_SELECTION",
+      "explanation": "The rule selection logic may be treating the presence of orderId as a signal to bypass the rejection rule, causing it to accept v2 messages that should be evaluated for rejection.",
+      "reviewer_usage": {
+        "current_context_tokens": 162,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 894,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 4353,
+        "total_prompt_tokens": 290,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 263,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 703,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 5607,
+        "total_prompt_tokens": 438,
+        "total_reasoning_tokens": 596,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_RULE_SELECTION",
+      "probe_exact_match": true,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "84",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "78",
+          "Status": "9"
+        },
+        {
+          "ID": "85",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "79",
+          "Status": "9"
+        },
+        {
+          "ID": "86",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "80",
+          "Status": "9"
+        },
+        {
+          "ID": "87",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "81",
+          "Status": "9"
+        },
+        {
+          "ID": "88",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "82",
+          "Status": "9"
+        },
+        {
+          "ID": "89",
+          "SessionId": "84",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "83",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "duplicate_receipt",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Duplicate key K9 has verified receipt R11; no new send, count stays 1.",
+      "reviewer_usage": {
+        "current_context_tokens": 183,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 340,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2192,
+        "total_prompt_tokens": 331,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "90",
+          "SessionId": "90",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "84",
+          "Status": "9"
+        },
+        {
+          "ID": "91",
+          "SessionId": "90",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "85",
+          "Status": "9"
+        },
+        {
+          "ID": "92",
+          "SessionId": "90",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "86",
+          "Status": "9"
+        },
+        {
+          "ID": "93",
+          "SessionId": "90",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "87",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "duplicate_partner_scope",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "FAIL",
+      "applicability": "APPLICABLE",
+      "probe": "CHECK_PARTNER_SCOPE",
+      "explanation": "The system retrieves a prior effect using only the idempotency key, without verifying that the stored receipt's partner matches the current request's partner, leading to cross?partner receipt reuse.",
+      "reviewer_usage": {
+        "current_context_tokens": 237,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 1289,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 6659,
+        "total_prompt_tokens": 350,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 363,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 447,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 3775,
+        "total_prompt_tokens": 506,
+        "total_reasoning_tokens": 319,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_PARTNER_SCOPE",
+      "probe_exact_match": true,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "94",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "88",
+          "Status": "9"
+        },
+        {
+          "ID": "95",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "89",
+          "Status": "9"
+        },
+        {
+          "ID": "96",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "90",
+          "Status": "9"
+        },
+        {
+          "ID": "97",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "91",
+          "Status": "9"
+        },
+        {
+          "ID": "98",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "92",
+          "Status": "9"
+        },
+        {
+          "ID": "99",
+          "SessionId": "94",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "93",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "lost_response_hold",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Holds OUTCOME_UNKNOWN and prevents a second send when response is lost and no readback arrives; observed outcome unknown with exactly one send, matching the rule.",
+      "reviewer_usage": {
+        "current_context_tokens": 211,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 786,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 5477,
+        "total_prompt_tokens": 332,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "100",
+          "SessionId": "100",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "94",
+          "Status": "9"
+        },
+        {
+          "ID": "101",
+          "SessionId": "100",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "95",
+          "Status": "9"
+        },
+        {
+          "ID": "102",
+          "SessionId": "100",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "96",
+          "Status": "9"
+        },
+        {
+          "ID": "103",
+          "SessionId": "100",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "97",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "lost_response_duplicate_send",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "FAIL",
+      "applicability": "APPLICABLE",
+      "probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "The system may have misinterpreted the lost response as a transient failure, triggering a retry mechanism that sends a second outbound message despite the rule requiring a hold.",
+      "reviewer_usage": {
+        "current_context_tokens": 211,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 642,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 3923,
+        "total_prompt_tokens": 333,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 319,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 554,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 5409,
+        "total_prompt_tokens": 479,
+        "total_reasoning_tokens": 440,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_EFFECT_RECEIPT",
+      "probe_exact_match": true,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "104",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "98",
+          "Status": "9"
+        },
+        {
+          "ID": "105",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "99",
+          "Status": "9"
+        },
+        {
+          "ID": "106",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "100",
+          "Status": "9"
+        },
+        {
+          "ID": "107",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "101",
+          "Status": "9"
+        },
+        {
+          "ID": "108",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "102",
+          "Status": "9"
+        },
+        {
+          "ID": "109",
+          "SessionId": "104",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "103",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "late_ack",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Late acknowledgement I1 correlates to original attempt and outbound effect count stays 1 (I2), satisfying rule that such acknowledgement reconciles without another send.",
+      "reviewer_usage": {
+        "current_context_tokens": 216,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 600,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 4173,
+        "total_prompt_tokens": 318,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "110",
+          "SessionId": "110",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "104",
+          "Status": "9"
+        },
+        {
+          "ID": "111",
+          "SessionId": "110",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "105",
+          "Status": "9"
+        },
+        {
+          "ID": "112",
+          "SessionId": "110",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "106",
+          "Status": "9"
+        },
+        {
+          "ID": "113",
+          "SessionId": "110",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "107",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "stale_readback",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "FAIL",
+      "applicability": "APPLICABLE",
+      "probe": "CHECK_FRESH_READBACK",
+      "explanation": "The verification logic used a cached readback taken before dispatch instead of issuing a new readback after the change was dispatched.",
+      "reviewer_usage": {
+        "current_context_tokens": 178,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 711,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2738,
+        "total_prompt_tokens": 302,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 272,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 429,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 3563,
+        "total_prompt_tokens": 444,
+        "total_reasoning_tokens": 331,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_FRESH_READBACK",
+      "probe_exact_match": true,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "114",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "108",
+          "Status": "9"
+        },
+        {
+          "ID": "115",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "109",
+          "Status": "9"
+        },
+        {
+          "ID": "116",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "110",
+          "Status": "9"
+        },
+        {
+          "ID": "117",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "111",
+          "Status": "9"
+        },
+        {
+          "ID": "118",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "112",
+          "Status": "9"
+        },
+        {
+          "ID": "119",
+          "SessionId": "114",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "113",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "missing_observation",
+      "state": "AGREED_PENDING_GATE",
+      "verdict": "YES",
+      "output": "PASS",
+      "applicability": "APPLICABLE",
+      "probe": "",
+      "explanation": "Rule applicable; no acknowledgement present and status not observed, matching expected hold?unconfirmed outcome.",
+      "reviewer_usage": {
+        "current_context_tokens": 175,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 715,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2795,
+        "total_prompt_tokens": 295,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": null,
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": null,
+      "probe_exact_match": null,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "120",
+          "SessionId": "120",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "114",
+          "Status": "9"
+        },
+        {
+          "ID": "121",
+          "SessionId": "120",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "115",
+          "Status": "9"
+        },
+        {
+          "ID": "122",
+          "SessionId": "120",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "116",
+          "Status": "9"
+        },
+        {
+          "ID": "123",
+          "SessionId": "120",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "117",
+          "Status": "9"
+        }
+      ]
+    },
+    {
+      "id": "injected_message",
+      "state": "INVESTIGATION_PENDING_GATE",
+      "verdict": "NO",
+      "output": "FAIL",
+      "applicability": "APPLICABLE",
+      "probe": "CHECK_RULE_SELECTION",
+      "explanation": "The delivery completion logic may be incorrectly allowing completion when a verified receipt is absent, possibly due to a flaw in rule selection or an override triggered by untrusted input.",
+      "reviewer_usage": {
+        "current_context_tokens": 190,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 713,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 2837,
+        "total_prompt_tokens": 307,
+        "total_reasoning_tokens": 0,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "investigator_usage": {
+        "current_context_tokens": 310,
+        "model_context_size": 200000,
+        "total_cache_creation_tokens": 0,
+        "total_cache_read_tokens": 0,
+        "total_completion_tokens": 799,
+        "total_interactions": 1,
+        "total_llm_duration_ms": 6065,
+        "total_prompt_tokens": 440,
+        "total_reasoning_tokens": 683,
+        "total_tool_calls": 0,
+        "total_tool_duration_ms": 0
+      },
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "verdict_correct": true,
+      "output_correct": true,
+      "preferred_probe": "CHECK_EFFECT_RECEIPT",
+      "probe_exact_match": false,
+      "route_correct": true,
+      "trace": [
+        {
+          "ID": "124",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.Intake",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.CaseRequest",
+          "MessageBodyId": "118",
+          "Status": "9"
+        },
+        {
+          "ID": "125",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "119",
+          "Status": "9"
+        },
+        {
+          "ID": "126",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "120",
+          "Status": "9"
+        },
+        {
+          "ID": "127",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Agent",
+          "MessageBodyClassName": "Battery.Interop.AgentRequest",
+          "MessageBodyId": "121",
+          "Status": "9"
+        },
+        {
+          "ID": "128",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.Agent",
+          "TargetConfigName": "Battery.CaseProcess",
+          "MessageBodyClassName": "Battery.Interop.AgentResponse",
+          "MessageBodyId": "122",
+          "Status": "9"
+        },
+        {
+          "ID": "129",
+          "SessionId": "124",
+          "SourceConfigName": "Battery.CaseProcess",
+          "TargetConfigName": "Battery.Intake",
+          "MessageBodyClassName": "Battery.Interop.CaseResponse",
+          "MessageBodyId": "123",
+          "Status": "9"
+        }
+      ]
+    }
+  ],
+  "final_image": {
+    "digest": "sha256:09fdc01b397f766d14d51b62fa2abf3fa7f3fda5934232fbbf4d2c70d9e5dc41",
+    "compilation_passed": true,
+    "note": "The corpus used a running container recompiled from these same source hashes; a clean final image rebuild also compiled successfully."
+  },
+  "runtime": {
+    "memory_limit_bytes": 4294967296,
+    "cpu_limit": 2,
+    "post_test_memory_mib": 578.8,
+    "oom_killed": false,
+    "temporary_provider_file_removed": true,
+    "exposed_host_ports": []
+  }
+}

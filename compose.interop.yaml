@@ -1,5 +1,10 @@
 services:
   battery-interop:
+    cpus: 2
+    mem_limit: 4g
+    memswap_limit: 4g
+    pids_limit: 512
+    shm_size: 256m
     build:
       context: .
       dockerfile: Dockerfile.interop

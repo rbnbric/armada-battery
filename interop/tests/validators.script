@@ -1,0 +1,37 @@
+zn "BATTERY"
+write "NATIVE_VALIDATORS_BEGIN",!
+set facts={"A1":"Target validation accepted C17","A4":"Two effects recorded"}
+set r={"verdict":"YES","applicability":"APPLICABLE","output_result":"PASS","evidence_ids":["A1"],"summary":"Accepted"}
+write "valid_yes_pass=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("output_result","FAIL")
+write "valid_yes_fail=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("verdict","NO"),r.%Set("applicability","INAPPLICABLE"),r.%Set("output_result","PASS")
+write "valid_no_pass=",##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("verdict","YES")
+write "reject_yes_inapplicable=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+do r.%Set("applicability","APPLICABLE"),r.%Set("evidence_ids",["invented"])
+write "reject_fabricated_evidence=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+set inv={"next_probe":"SEND_AGAIN","hypothesis":"Retry","uncertainty":"Unknown","evidence_ids":["A1"]}
+write "reject_unauthorized_probe=",'##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+do inv.%Set("next_probe","CHECK_EFFECT_RECEIPT")
+write "valid_investigation=",##class(Battery.Interop.CaseProcess).ValidInvestigation(inv,facts),!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("{",.parsed,.detail)
+write "reject_truncated_json=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("[]",.parsed,.detail)
+write "reject_array_root=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("true",.parsed,.detail)
+write "reject_scalar_root=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("prose {}",.parsed,.detail)
+write "reject_prose_fragment=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("```json"_$CHAR(10)_"{}"_$CHAR(10)_"```",.parsed,.detail)
+write "accept_complete_json_fence=",ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("```json"_$CHAR(10)_"{}",.parsed,.detail)
+write "reject_incomplete_json_fence=",'ok,!
+set ok=##class(Battery.Interop.CaseProcess).ParseObject("{} {}",.parsed,.detail)
+write "reject_multiple_objects=",'ok,!
+set r={"judgement":"YES","output":"PASS","applicable":"APPLICABLE","evidence_ids":["A1"],"summary":"Accepted"}
+write "reject_renamed_fields=",'##class(Battery.Interop.CaseProcess).ValidReview(r,facts),!
+write "reject_object_evidence=",'##class(Battery.Interop.CaseProcess).ValidEvidence({"0":"A1"},facts),!
+write "reject_numeric_evidence=",'##class(Battery.Interop.CaseProcess).ValidEvidence([1],facts),!
+write "NATIVE_VALIDATORS_END",!
+halt
