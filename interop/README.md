@@ -72,7 +72,11 @@ acceptance result. It exposed partner-scope confusion and a case where the
 model graded output from the rule's prediction instead of the independent
 criterion. The revised 13-case direct-model run correctly classified all 13
 assertion judgments and all 13 output grades. The investigator selected the
-preferred next probe in 5 of 7 cases; two alternate probes remain for review.
+preferred next probe in 5 of 7 cases. One miss chose a plausible rule-selection
+probe for schema drift; the other chose a receipt probe although the evidence
+already showed a partner-scope mismatch. The latter needs correction.
+With a clarified probe instruction, a targeted recheck of that same case chose
+`CHECK_PARTNER_SCOPE`; this is one case, not a new full-corpus score.
 Those numbers use fixed synthetic evidence and direct provider calls, not
 native AI Hub execution or a reliability estimate. The two-by-two cases
 include a bad rule with a good output and a good rule with a bad output.
