@@ -29,6 +29,22 @@ ClassMethod Run(which As %String = "match") As %Status
         Do facts.%Set("B1", "Partner A mapping still declares schema v2.")
         Do facts.%Set("B2", "Target reports active schema v3, where customerRef replaces customerId.")
         Do facts.%Set("B3", "Saved target validation rejected customerId.")
+    } ElseIf which = "wrongrule" {
+        Do case.%Set("id", "demo-wrong-rule-good-output")
+        Do case.%Set("rule", "Reject a v2 message without orderId.")
+        Do case.%Set("expected", "rejected: orderId required")
+        Do case.%Set("acceptance", "A v2 message with orderId is accepted.")
+        Do case.%Set("observed", "accepted")
+        Do facts.%Set("D1", "Input includes orderId=O19.")
+        Do facts.%Set("D2", "Validation receipt says accepted.")
+    } ElseIf which = "badoutput" {
+        Do case.%Set("id", "demo-good-rule-bad-output")
+        Do case.%Set("rule", "For partner A schema v2, a valid customerId is accepted by target validation.")
+        Do case.%Set("expected", "target accepted customerId=C17")
+        Do case.%Set("acceptance", "The request creates at most one external effect for the same scoped key.")
+        Do case.%Set("observed", "target accepted customerId=C17; two outbound effects recorded")
+        Do facts.%Set("A3", "Partner A schema v2 requires customerId, and target validation accepted C17.")
+        Do facts.%Set("A4", "Effect ledger records two outbound effects for Partner A/key K17.")
     } Else {
         Return $$$ERROR($$$GeneralError, "Unknown demo case")
     }

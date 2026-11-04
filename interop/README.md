@@ -35,11 +35,15 @@ In the IRIS terminal:
 Do ##class(Battery.Interop.Demo).Start()
 Do ##class(Battery.Interop.Demo).Run("match")
 Do ##class(Battery.Interop.Demo).Run("drift")
+Do ##class(Battery.Interop.Demo).Run("wrongrule")
+Do ##class(Battery.Interop.Demo).Run("badoutput")
 ```
 
 The first case should return `AGREED_PENDING_GATE` with one reviewer call. The
 second should return `INVESTIGATION_PENDING_GATE` with a reviewer `NO` and an
-investigator probe. Check the IRIS Interoperability Message Viewer for the
+investigator probe. The third and fourth cases show an inaccurate rule with a
+passing output, and an accurate rule with a failing output. Both should reach
+investigation. Check the IRIS Interoperability Message Viewer for the
 Service → Process → Agent Operation trace and compare the printed response
 with its messages. If provider setup or model output fails, the case is held
 for review and no external effect is sent. These are expected outcomes to
@@ -61,7 +65,21 @@ then `NEBIUS_API_KEY=... python3 scripts/eval_interop_agents.py --live --output
 eval.json` for billable calls. Keep that receipt private if it contains
 provider metadata you do not want to publish.
 
+An initial 12-case direct-model run of the separate assertion/output contract
+returned 10/12 correct assertion judgments, 11/12 correct output grades, and
+4/6 exact investigator probes. That is a failure-finding baseline, not an
+acceptance result. It exposed partner-scope confusion and a case where the
+model graded output from the rule's prediction instead of the independent
+criterion. The revised 13-case direct-model run correctly classified all 13
+assertion judgments and all 13 output grades. The investigator selected the
+preferred next probe in 5 of 7 cases; two alternate probes remain for review.
+Those numbers use fixed synthetic evidence and direct provider calls, not
+native AI Hub execution or a reliability estimate. The two-by-two cases
+include a bad rule with a good output and a good rule with a bad output.
+
 The existing Battery action gate is not wired into this preview. The next
 iteration must add a durable case record, rule selection, deterministic gate,
 and verified readback before any external effect is enabled. The full intended
-contract is in `docs/INTEROP_AGENT_ARCHITECTURE.md`.
+contract is in `docs/INTEROP_AGENT_ARCHITECTURE.md`. The
+[edge gauntlet](GAUNTLET.md) defines the next native qualification cases
+and the effect-count evidence each one must retain.

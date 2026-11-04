@@ -28,6 +28,11 @@ class InteropAgentContractTests(unittest.TestCase):
         review = validate_review({"verdict": "NO", "applicability": "INAPPLICABLE", "output_result": "PASS", "evidence_ids": ["D1", "D2"], "summary": "The rule is out of context; accepting this valid input passes."}, case)
         self.assertEqual((review["verdict"], review["output_result"]), ("NO", "PASS"))
 
+    def test_accurate_assertion_can_coexist_with_failing_output(self):
+        case = next(case for case in CASES if case["id"] == "accurate_rule_bad_output")
+        review = validate_review({"verdict": "YES", "applicability": "APPLICABLE", "output_result": "FAIL", "evidence_ids": ["A3", "A4"], "summary": "Validation passed, but the duplicate effect fails acceptance."}, case)
+        self.assertEqual((review["verdict"], review["output_result"]), ("YES", "FAIL"))
+
     def test_investigator_cannot_invent_a_probe(self):
         case = CASES[1]
         with self.assertRaisesRegex(ValueError, "invalid investigation probe"):

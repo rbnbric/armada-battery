@@ -36,7 +36,10 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
         }
         Set investigateRequest = ##class(Battery.Interop.AgentRequest).%New()
         Set investigateRequest.Role = "investigator"
-        Set investigateRequest.CaseJSON = pRequest.CaseJSON
+        Set handoff = ##class(%DynamicObject).%New()
+        Do handoff.%Set("case", case)
+        Do handoff.%Set("review", review)
+        Set investigateRequest.CaseJSON = handoff.%ToJSON()
         Set sc = ..SendRequestSync("Battery.Agent", investigateRequest, .investigateResponse, 90)
         If $$$ISERR(sc) { Set pResponse.Explanation = "Investigator call failed after reviewer NO" Return $$$OK }
         If '$IsObject(investigateResponse) { Set pResponse.Explanation = "Investigator returned no response" Return $$$OK }
@@ -72,7 +75,7 @@ ClassMethod ValidInvestigation(investigation As %DynamicObject, facts As %Dynami
 {
     If ('$IsObject(investigation)) || ('$IsObject(facts)) { Return 0 }
     Set probe = investigation.%Get("next_probe")
-    If (probe '= "CHECK_TARGET_VERSION") && (probe '= "CHECK_EFFECT_RECEIPT") && (probe '= "CHECK_PARTNER_SCOPE") && (probe '= "CHECK_MAPPING") && (probe '= "CHECK_RULE_SELECTION") && (probe '= "HOLD_FOR_HUMAN") { Return 0 }
+    If (probe '= "CHECK_TARGET_VERSION") && (probe '= "CHECK_EFFECT_RECEIPT") && (probe '= "CHECK_PARTNER_SCOPE") && (probe '= "CHECK_MAPPING") && (probe '= "CHECK_RULE_SELECTION") && (probe '= "CHECK_FRESH_READBACK") && (probe '= "HOLD_FOR_HUMAN") { Return 0 }
     If (investigation.%Get("hypothesis") = "") || ($LENGTH(investigation.%Get("hypothesis")) > 300) { Return 0 }
     If (investigation.%Get("uncertainty") = "") || ($LENGTH(investigation.%Get("uncertainty")) > 200) { Return 0 }
     Return ..ValidEvidence(investigation.%Get("evidence_ids"), facts)

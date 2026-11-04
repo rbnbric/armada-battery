@@ -56,6 +56,11 @@ inapplicable and predict a different result while the actual output passes.
 Agreement with a rule does not approve a send or declare the case resolved.
 Missing output evidence is `UNKNOWN`, never an invented pass.
 
+Keep all four known combinations in qualification: accurate assertion with
+passing output, inaccurate assertion with passing output, accurate assertion
+with failing output, and inaccurate assertion with failing output. `UNKNOWN`
+is a fifth held condition when the output cannot yet be observed.
+
 When either primary finding is negative or unknown,
 the reviewer writes a compact handoff: expected result, observed result,
 support for the rule, contradiction, missing evidence, and related trace IDs.
