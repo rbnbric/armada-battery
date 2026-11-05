@@ -1,0 +1,822 @@
+{
+  "schema": "battery-layer-comparison/v1",
+  "scope": "Retrospective native proof replay of retained synthetic scenarios; historical real-model responses",
+  "source_sha256": "db9de1008e7125061fa8af61752faa603955dd15430ea5d685c5916e7437afbc",
+  "native_log_sha256": "e8bab74505a1e77f9ab79b705c00c010d43ac3d7b447e461809a03d107fdb8c0",
+  "replay_script_sha256": "6296b613ecfaedf2f6217e916d0764d811d9491ce4bdab0ec562d9d4f51348ac",
+  "summary": {
+    "rules_initial": 21,
+    "first_validated_review": 21,
+    "rules_final_evidence": 24,
+    "recorded_workflow": 24,
+    "cases": 24,
+    "distinct_scenarios": 8,
+    "first_reviews_matching_initial_evidence": 24,
+    "rules_final_states_correct": 24,
+    "recorded_states_correct": 24
+  },
+  "historical_model_usage": {
+    "calls": 46,
+    "prompt_tokens": 35500,
+    "completion_tokens": 41208,
+    "llm_ms": 234328
+  },
+  "new_model_calls": 0,
+  "rows": [
+    {
+      "case_id": "solver4-live-match-1",
+      "mode": "match",
+      "round": 1,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-missing-1",
+      "mode": "missing",
+      "round": 1,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-recovered-1",
+      "mode": "recovered",
+      "round": 1,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 2,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-wrong_partner-1",
+      "mode": "wrong_partner",
+      "round": 1,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-zero-1",
+      "mode": "zero",
+      "round": 1,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-wrong_rule-1",
+      "mode": "wrong_rule",
+      "round": 1,
+      "target": [
+        "NO",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-duplicate-1",
+      "mode": "duplicate",
+      "round": 1,
+      "target": [
+        "NO",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "NO",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-accurate_bad_output-1",
+      "mode": "accurate_bad_output",
+      "round": 1,
+      "target": [
+        "YES",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "YES",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "YES",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-match-2",
+      "mode": "match",
+      "round": 2,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-missing-2",
+      "mode": "missing",
+      "round": 2,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-recovered-2",
+      "mode": "recovered",
+      "round": 2,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 2,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-wrong_partner-2",
+      "mode": "wrong_partner",
+      "round": 2,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-zero-2",
+      "mode": "zero",
+      "round": 2,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-wrong_rule-2",
+      "mode": "wrong_rule",
+      "round": 2,
+      "target": [
+        "NO",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-duplicate-2",
+      "mode": "duplicate",
+      "round": 2,
+      "target": [
+        "NO",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "NO",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-accurate_bad_output-2",
+      "mode": "accurate_bad_output",
+      "round": 2,
+      "target": [
+        "YES",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "YES",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "YES",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-match-3",
+      "mode": "match",
+      "round": 3,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-missing-3",
+      "mode": "missing",
+      "round": 3,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-recovered-3",
+      "mode": "recovered",
+      "round": 3,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 2,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-wrong_partner-3",
+      "mode": "wrong_partner",
+      "round": 3,
+      "target": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "rules_initial": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_validated_review": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "UNKNOWN"
+      ],
+      "recorded_state": "HELD_FOR_EVIDENCE",
+      "rules_final_state": "HELD_FOR_EVIDENCE",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-zero-3",
+      "mode": "zero",
+      "round": 3,
+      "target": [
+        "YES",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MATCH",
+      "rules_initial": [
+        "YES",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "YES",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MATCH",
+      "rules_final_state": "VERIFIED_MATCH",
+      "review_rounds": 1,
+      "evidence_reads": 2,
+      "executed_probe": ""
+    },
+    {
+      "case_id": "solver4-live-wrong_rule-3",
+      "mode": "wrong_rule",
+      "round": 3,
+      "target": [
+        "NO",
+        "PASS"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "PASS"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "PASS"
+      ],
+      "first_validated_review": [
+        "NO",
+        "PASS"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "PASS"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-duplicate-3",
+      "mode": "duplicate",
+      "round": 3,
+      "target": [
+        "NO",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "NO",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "NO",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "NO",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "NO",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    },
+    {
+      "case_id": "solver4-live-accurate_bad_output-3",
+      "mode": "accurate_bad_output",
+      "round": 3,
+      "target": [
+        "YES",
+        "FAIL"
+      ],
+      "expected_state": "VERIFIED_MISMATCH",
+      "rules_initial": [
+        "YES",
+        "FAIL"
+      ],
+      "rules_final_evidence": [
+        "YES",
+        "FAIL"
+      ],
+      "first_validated_review": [
+        "YES",
+        "FAIL"
+      ],
+      "first_review_matches_initial_evidence": true,
+      "recorded_workflow": [
+        "YES",
+        "FAIL"
+      ],
+      "recorded_state": "VERIFIED_MISMATCH",
+      "rules_final_state": "VERIFIED_MISMATCH",
+      "review_rounds": 1,
+      "evidence_reads": 3,
+      "executed_probe": "CHECK_EFFECT_RECEIPT"
+    }
+  ],
+  "limits": [
+    "Final snapshots came from the recorded workflow; this is not independent recovery execution.",
+    "Replay clock is latest observed_at per case; this does not test historical freshness or latency.",
+    "First review is the first validated response, after bounded repair if present; usage includes rejected calls.",
+    "Known development cases repeated three times are not independent unseen cases.",
+    "Observed rule parity does not measure explanation usefulness or general agent superiority.",
+    "SDK usage is not a billing receipt; replay duration is not comparable to historical workflow latency."
+  ],
+  "execution": {
+    "runtime": "IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2027.1.0AI (Build 109U) Fri Oct 30 2026 16:31:24 EDT",
+    "native_assessments": 48,
+    "installed_source_sha256": {
+      "interop/Battery/Interop/OutcomeProof.cls": "b00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455",
+      "interop/Battery/Interop/CaseProcess.cls": "e66ef25c859c7dec0008d66281342cce4038135362201c7b9fb5224fffc7c09f"
+    },
+    "command_exit_code": 0,
+    "prior_attempts": [
+      {
+        "stage": "engine",
+        "outcome": "Docker Desktop Linux engine unavailable; no IRIS assessment"
+      },
+      {
+        "stage": "startup",
+        "outcome": "Instance is not running; no IRIS assessment"
+      }
+    ]
+  }
+}

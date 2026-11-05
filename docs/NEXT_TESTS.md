@@ -2,26 +2,53 @@
 
 ## Current status
 
-The comparison runner is built. Its 14 integrity tests passed on 2026-11-05.
-The first attempt to execute native proof on the installed Windows environment
-stopped before IRIS: Docker Desktop's Linux engine pipe was unavailable.
-**No new native comparison score, agent call, or runtime change is claimed.**
+T1 completed on 2026-11-05 using the installed IRIS AI Hub build 109. All
+48 native proof assessments were returned, bound to their expected snapshots,
+and scored across 24 retained cases. Installed proof/parser source hashes match
+the repository. The runner's 14 integrity tests and 2 export tests passed.
+The earlier engine-unavailable and instance-startup attempts produced no native
+assessment; the successful run followed startup. This replay made zero new model
+calls and performed no business operation.
+
+| Measurement | Result |
+| --- | --- |
+| Rules on initial evidence matching the eventual target | 21/24 |
+| First validated reviewer matching the eventual target | 21/24 |
+| First validated reviewer matching its initial evidence | 24/24 |
+| Rules on recovered/final evidence matching the target | 24/24 |
+| Recorded full workflow matching the target and final state | 24/24 |
+
+The three initial differences are the three repetitions of the recovered-receipt
+scenario. Initially UNKNOWN was the correct judgment for the available evidence;
+the later receipt supported YES/PASS. The result establishes no decision-quality
+advantage over rules supplied with the same final evidence. An independent
+rules-only recovery run is still needed (T2); this replay does not perform the
+historical evidence collection.
+
+[Machine-readable result](../interop/results/layer-comparison-109.json) ·
+[Exact native output](../interop/results/layer-comparison-109.log) ·
+[Executed read-only script](../interop/results/layer-comparison-109.script)
+
+Historical SDK usage for these retained workflows was 46 calls, 35,500 prompt
+tokens, 41,208 completion tokens and 234,328 ms summed model duration. These are
+historical figures, not the cost or latency of today's replay, and not billing.
+
 The UI/UX pass is deliberately waiting for the owner's new design codices.
 
 ## Work queue
 
 | ID | Task | Completion evidence | Status |
 | --- | --- | --- | --- |
-| T1 | Reassess retained cases with the native rule checker | 48 native proof results for all 24 retained cases, exact snapshot binding, source/log hashes, scored report | Runner tested; waiting for Docker |
+| T1 | Reassess retained cases with the native rule checker | 48 native proof results for all 24 retained cases, exact snapshot binding, source/log hashes, scored report | Complete; evidence linked above |
 | T2 | Execute an independent rules-only recovery baseline | Same fixture schedule, source access, read budget and final checks as the agent workflow; separate outcome/hold/latency/usage results | Specified; implementation follows T1 |
 | T3 | Test cases that distinguish rule assertion from observed success | Frozen expected outcomes; all four YES/NO × PASS/FAIL combinations, UNKNOWN, context changes, stale and wrong-scope evidence, restart and malformed provider response | Existing cases inventoried; new independent cases pending |
 | T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | After runtime is available |
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
 | T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Waiting for codices; no redesign now |
 
-We walk through one task at a time. The first owner action is to start Docker
-Desktop and report that its Linux engine is running. We then check the existing
-containers; no fresh installation is requested by this procedure.
+We walk through one task at a time. Docker is now running and the existing native and web containers were restarted.
+The next owner check is to open the installed app and confirm access to Agent cases.
+No fresh installation is requested by this procedure.
 
 ## T1: comparison contract
 

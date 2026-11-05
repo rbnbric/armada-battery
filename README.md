@@ -296,4 +296,4 @@ tracked in [WORKFLOW_MATRIX.md](WORKFLOW_MATRIX.md).
 
 ## Next tests and guided review
 
-[Layer comparison and one-step test queue](docs/NEXT_TESTS.md) separates recorded evidence replay from a prospective recovery comparison. Native replay is pending; the comparison-runner integrity tests pass.
+[Layer comparison and one-step test queue](docs/NEXT_TESTS.md) separates recorded evidence replay from a prospective recovery comparison. Native replay completed: rules on final evidence and the recorded workflow both matched 24/24 targets. Independent recovery comparison remains next.
