@@ -10,7 +10,7 @@ In [Let creativity lead. Make execution answerable.](https://community.intersyst
 
 This is that next step. The agent got something wrong. So did our code. We kept going.
 
-That is the problem I wanted Armada Battery to confront. I intend to succeed by making the machine answer for what it did. Not a special design problem, surely, but rarely is this a glamorous achievement.
+That is the problem I wanted Armada Battery to confront. I intend to succeed by making the machine answer for what it did. Not a special design problem, surely, but rarely is this a glamorous achievement. It's a truth worth standing by: doubt is not a weakness. A critical eye is more valuable than blind devotion.
 
 ## The change that outlived its reply
 
