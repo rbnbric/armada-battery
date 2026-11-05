@@ -4,13 +4,29 @@ The reply was lost. The change was not. I think I've done this before.
 
 A management request can reach InterSystems IRIS, change a configuration, and lose its reply on the way back. The operator sees an error. The change already happened. If the software treats silence as failure and sends the request again, automation has created the next incident.
 
+In [Let creativity lead. Make execution answerable.](https://community.intersystems.com/post/let-creativity-lead-make-execution-answerable), I wrote about giving people and agents room to invent while making the resulting work answer to evidence. The earlier post left Battery with a synthetic demonstration and a tested live, read-only connection. The next step was to make a real configuration change, review it through native AI Hub, and find out where our confidence outran the implementation.
+
+This is that next step. The agent got something wrong. So did our code. We kept going.
+
 That is the problem I wanted Armada Battery to confront. I intend to succeed by making the machine answer for what it did. Not a special design problem, surely, but rarely is this a glamorous achievement.
 
-In our connected test, the first agent review interpreted missing evidence as failure. Further investigation found the existing successful receipt, and the final configuration check supported a verified match. The wrong first answer became part of an investigation we could inspect.
+## The change that outlived its reply
+
+Our connected test used a disposable installation of IRIS AI Hub EAP build 109. Battery created a temporary REST application configuration, and the client closed the execution connection before reading the response.
+
+We then recovered the successful receipt. Reusing the execution key returned the same receipt, and an independent read found the intended configuration.
+
+When native AI Hub reviewed the result, its first interpretation treated missing evidence as failure. Further investigation found the existing successful receipt, and the final configuration check supported `VERIFIED_MATCH`. The temporary application and test identity were removed afterward.
+
+The model's initial mistake remained in the record. A final green result should not erase the reasoning that needed correction. A fluent explanation is cheap. A correlated receipt and a fresh readback cost effort, but they let us say what happened.
+
+![Recorded real IRIS configuration run: the first review was wrong. The receipt and fresh readback supported the final match.](https://raw.githubusercontent.com/rbnbric/armada-battery/287d2083bbfa7d5b80dff7e28b5dc59db5f296b9/docs/community/2026-11-05/01-lost-reply-evidence.png)
+
+Recorded real IRIS configuration run: the first review was wrong. The receipt and fresh readback supported the final match.
 
 ## Two questions hiding inside one green checkmark
 
-Battery began as a change-control console for IRIS administration. Adding native AI Hub review made an existing question more explicit: what exactly are we asking the agent to judge?
+That investigation brings us back to the design question. Battery began as a change-control console for IRIS administration. Adding native AI Hub review made an existing question more explicit: what exactly are we asking the agent to judge?
 
 We separate two things:
 
@@ -27,23 +43,11 @@ There is also the case where we simply cannot tell. True ambiguity—the worst o
 
 For someone operating a system, this distinction matters more than a polished explanation. They need to know whether the work succeeded, whether their decision rule still makes sense, and what they should inspect next.
 
-## The change that outlived its reply
-
-Our connected test used a disposable installation of IRIS AI Hub EAP build 109. Battery created a temporary REST application configuration, and the client closed the execution connection before reading the response.
-
-We then recovered the successful receipt. Reusing the execution key returned the same receipt, and an independent read found the intended configuration. The native AI Hub review eventually reached `VERIFIED_MATCH`. The temporary application and test identity were removed afterward.
-
-The model's initial mistake remained in the record. A final green result should not erase the reasoning that needed correction. A fluent explanation is cheap. A correlated receipt and a fresh readback cost effort, but they let us say what happened.
-
-![Recorded real IRIS configuration run: the first review was wrong. The receipt and fresh readback supported the final match.](https://raw.githubusercontent.com/rbnbric/armada-battery/287d2083bbfa7d5b80dff7e28b5dc59db5f296b9/docs/community/2026-11-05/01-lost-reply-evidence.png)
-
-Recorded real IRIS configuration run: the first review was wrong. The receipt and fresh readback supported the final match.
+## The configuration existed. The service still had bugs.
 
 That demonstration established a configuration change and its readback. There was still an obvious question: does the configured REST service actually work?
 
 So we tested it.
-
-## The configuration existed. The service still had bugs.
 
 The first authenticated list request returned HTTP 500. The configuration was there, exactly as requested, and the service still failed at an ordinary job.
 
@@ -77,6 +81,8 @@ The REST checks measure service behavior; those repeatability runs measure revie
 
 ## The ordinary engineering is part of the experience
 
+The earlier post described a tester finding a broken installation path and the repair that followed. This round brought us back to that same obligation: what happens when somebody actually tries to use the thing?
+
 Some of the work was much less dramatic: checking the actual endpoint's fields, fixing session cleanup, making interrupted reviews visible, and checking the phone layout. The awkward integration work is the product work.
 
 After the REST fixes, the application checks still passed **86 Python tests and 13 UI tests**. Those checks accompany the native integration evidence; they do not substitute for it.
@@ -94,6 +100,8 @@ Actual installed application: a real native AI Hub review of a synthetic managem
 The same installed case at a 390px phone viewport. Rule assertion and measured output remain separate fields.
 
 ## What I mean by augmentation
+
+This is still the creative ambition I started with. Each repair gives us firmer ground to build on.
 
 I want and work to create software that takes more of the investigative burden off the person using it. Inform the user, let them decide. Give them tools, not something to babysit, nor a full replacement onto which we dump all the blame. Soon, nobody can account for the result. Just another unset VCR clock, another piece of tech to kick hoping it works better, another... burdensome issue. Kick the can. One day somebody will fix it.
 
@@ -115,6 +123,8 @@ The [browser walkthrough](https://rbnbric.github.io/armada-battery/) is an earli
 
 For the new workflow, use the current [contest-49-wip source and native setup](https://github.com/rbnbric/armada-battery/blob/contest-49-wip/docs/NATIVE_CASE_WORKFLOW.md), including the REST fixes described here. It requires the separately obtained AI Hub EAP image and configured model access. InterSystems provides the [EAP documentation and download instructions](https://github.com/intersystems-community/ai-hub-eap).
 
-What is the awkward case in your interoperability work: a late reply, stale configuration, conflicting evidence, or a rule that makes sense until its context changes? A small, sanitized example and the result you would expect would give us something concrete to test.
+What is the awkward case in your interoperability work: a late reply, stale configuration, conflicting evidence, or a rule that makes sense until its context changes? A small, sanitized example and the result you would expect would give us something concrete to test. Bring us the point where the tool stops helping. That is where the next repair should start.
 
 Limit personality. Maximize accessibility. Minimize hurdles. Build the scaffold. Test the cases that make a confident demo uncomfortable. Then let the machine take on more work as it earns that responsibility.
+
+Let creativity lead. Make execution answerable. Then come back with the repairs.
