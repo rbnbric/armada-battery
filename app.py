@@ -124,7 +124,7 @@ def login(body: LoginRequest):
         if not issued:
             raise HTTPException(401, "Access key was not accepted")
         name, token = issued
-    elif not access_key() or not secrets.compare_digest(body.access_key, access_key()):
+    elif not access_key() or not secrets.compare_digest(body.access_key.encode(), access_key().encode()):
         raise HTTPException(401, "Access key was not accepted")
     expires = str(int(time.time()) + 3600)
     response = JSONResponse({"operator": name if operators.configured() else current_operator()})
@@ -150,7 +150,12 @@ def logout():
 async def access_boundary(request, call_next):
     if request.method not in {"GET", "HEAD", "OPTIONS"}:
         origin = request.headers.get("origin")
-        if origin and urlsplit(origin).netloc != request.headers.get("host"):
+        try:
+            parsed_origin = urlsplit(origin) if origin else None
+            bad_origin = parsed_origin and (parsed_origin.scheme not in {"http", "https"} or parsed_origin.netloc != request.headers.get("host"))
+        except ValueError:
+            bad_origin = True
+        if bad_origin:
             return JSONResponse(
                 {"detail": "Cross-origin changes are not accepted"}, status_code=403
             )
@@ -185,6 +190,8 @@ async def security_headers(request, call_next):
     )
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
+    if request.url.path.startswith("/api/"):
+        response.headers["Cache-Control"] = "no-store"
     return response
 
 
@@ -457,7 +464,7 @@ def submit_native_case(body: NativeCaseRequest, idempotency_key: str = Header(..
 @app.get("/api/native-evidence/{case_id}")
 def native_evidence(case_id: str, phase: str, x_battery_adapter: str = Header(default=""), x_battery_operator: str = Header(default="")):
     expected = os.environ.get("BATTERY_ADAPTER_KEY", "")
-    if len(expected) < 32 or not hmac.compare_digest(expected, x_battery_adapter):
+    if len(expected) < 32 or not hmac.compare_digest(expected.encode(), x_battery_adapter.encode()):
         raise HTTPException(401, "Native adapter authentication required")
     try:
         if operators.configured():

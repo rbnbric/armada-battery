@@ -266,3 +266,37 @@ test("read-only identity cannot send a mutation from the UI", async () => {
   await assert.rejects(h.run("api('/api/cases',{method:'POST'})"), /read-only/);
   assert.equal(h.calls.length, 0);
 });
+test("expired sign-in removes previous operator evidence and rejects late responses", async () => {
+  const h = harness();
+  h.run("state.nativeDetail={id:'private-case'}; state.receipts=[{id:'private-receipt'}]; state.server={operator:'alice'}");
+  h.get('page-content').textContent='private evidence';
+  let release;
+  const late=new Promise(r=>release=r);
+  h.context.fetch=async path=> path==='/api/slow' ? late : {ok:false,status:401,json:async()=>({detail:'sign in'})};
+  const pending=h.run("api('/api/slow')");
+  await assert.rejects(h.run("api('/api/state')"),/sign-in/);
+  release({ok:true,status:200,json:async()=>({private:'old operator'})});
+  await assert.rejects(pending,/session changed|sign-in/i);
+  assert.equal(h.run('state.nativeDetail'),null);
+  assert.equal(h.run('state.receipts.length'),0);
+});
+test("sign-out clears the page and reloads even when browser storage is blocked", async () => {
+  const h=harness(); let reloaded=false;
+  h.context.window.location={reload:()=>{reloaded=true;}};
+  Object.defineProperty(h.context,'localStorage',{get:()=>{throw new Error('storage blocked');}});
+  h.run("state.nativeDetail={id:'private-case'}");
+  await h.get('sign-out').listeners.click();
+  assert.equal(reloaded,true);
+  assert.equal(h.run('state.nativeDetail'),null);
+});
+test("successful sign-in reloads instead of retaining the previous operator view", async () => {
+  const h=harness(); let reloaded=false;
+  h.context.window.location={reload:()=>{reloaded=true;}};
+  h.run("state.nativeDetail={id:'old-case'}; state.pending={key:'old-key'}");
+  h.get('access-key').value='new identity key';
+  await h.get('login-form').listeners.submit({preventDefault(){}});
+  assert.equal(reloaded,true);
+  assert.equal(h.run('state.nativeDetail'),null);
+  assert.equal(h.run('state.pending'),null);
+  assert.equal(h.get('access-key').value,'');
+});

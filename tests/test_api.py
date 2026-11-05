@@ -32,6 +32,16 @@ class ApiTests(unittest.TestCase):
         web.engine = BatteryEngine(SyntheticTaskAdapter(), ledger=Ledger())
         self.client = TestClient(web.app)
 
+    def test_non_ascii_access_key_is_a_rejection_not_server_error(self):
+        with patch.dict(os.environ, {"BATTERY_ACCESS_KEY": "a" * 40}):
+            response=self.client.post('/api/session',json={'access_key':'é'*40})
+            self.assertEqual(response.status_code,401)
+
+    def test_malformed_origin_is_rejected_and_api_is_not_cached(self):
+        response=self.client.post('/api/session',json={'access_key':'test'},headers={'Origin':'http://['})
+        self.assertEqual(response.status_code,403)
+        self.assertEqual(self.client.get('/api/state').headers.get('cache-control'),'no-store')
+
     def test_catalog_and_security_headers(self):
         response = self.client.get("/api/catalog")
         self.assertEqual(response.status_code, 200)

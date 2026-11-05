@@ -1,0 +1,116 @@
+{
+  "date_utc": "2026-11-05",
+  "baseline_commit": "1f30e6899bba5139394528e75e5bbfbbfcdcc409",
+  "python": {
+    "passed": 86,
+    "failed": 0
+  },
+  "node": {
+    "passed": 13,
+    "failed": 0
+  },
+  "browser": {
+    "phone": {
+      "measurements": {
+        "width": 360,
+        "scrollWidth": 360,
+        "loginVisible": true,
+        "executeDisabled": true,
+        "prepareDisabled": true,
+        "privateTextVisible": false,
+        "pageContent": "",
+        "error": ""
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed",
+        "static/app.js": "f9442ccde8d7dd97024db03e87110ebf4e9530fbb303cd8d167af8bb62b88a03",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      },
+      "fixture": "Real application HTML/CSS/JS; synthetic case API; injected 401 through Refresh button. No live native integration in browser fixture."
+    },
+    "desktop": {
+      "measurements": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "loginVisible": true,
+        "executeDisabled": true,
+        "prepareDisabled": true,
+        "privateTextVisible": false,
+        "pageContent": "",
+        "error": ""
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed",
+        "static/app.js": "f9442ccde8d7dd97024db03e87110ebf4e9530fbb303cd8d167af8bb62b88a03",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      },
+      "fixture": "Real application HTML/CSS/JS; synthetic case API; injected 401 through Refresh button. No live native integration in browser fixture."
+    }
+  },
+  "installed_http": {
+    "checks": [
+      {
+        "case": "unicode-key",
+        "status": 401,
+        "cache_control": "no-store",
+        "passed": true
+      },
+      {
+        "case": "malformed-origin",
+        "status": 403,
+        "cache_control": "no-store",
+        "passed": true
+      },
+      {
+        "case": "anonymous-state",
+        "status": 401,
+        "cache_control": "no-store",
+        "passed": true
+      },
+      {
+        "case": "health",
+        "status": 200,
+        "cache_control": "no-store",
+        "passed": true
+      }
+    ]
+  },
+  "runtime_readback": {
+    "health": {
+      "ok": true,
+      "ledger_valid": true,
+      "scope": "local event store; IRIS connectivity is not established by this check"
+    },
+    "budget": {
+      "operator_daily_used": 1,
+      "operator_daily_limit": 20,
+      "service_daily_used": 1,
+      "service_daily_limit": 100,
+      "operator_active_limit": 2,
+      "service_active_limit": 4
+    },
+    "installed_runtime_sha256": {
+      "app.py": "0ac214b17815e66ab1473d2e8d876acbd796515ac6c54345e57a9a68d2cc5fe4",
+      "battery/ledger.py": "d41a1ebbe284f2f7a60fb254c65de52e17f31240b1306a48c7d964e0aeed99e5",
+      "battery/models.py": "8582d2ed2ae3b4a9737ca46fc0f4bc7545c8899e34e92b2b0ab73d91f5c3b628",
+      "battery/ship_native_cases.py": "fd9ea229b6d151fc0fedd77410a86118936d54fc8f960f342323ec5401048e12",
+      "battery/scenarios.py": "fbf6687a643f3e6c504046a4d2a356718cd7c618d8cb9baa604ad05c21a37a19",
+      "battery/task_slice.py": "9c30fbf50df4045734e784607231a7e4ec54a1c96a9c8018c3c6b4836ae06977",
+      "battery/admin_slice.py": "fe6aa5b7b2ec85ac08f3b04856096e217f8c453840985a70ba040a69a0e5e0db",
+      "battery/errors.py": "358ba4bd562986421f9ab190addd93f4859fa1ac8c30df910c83de817cf233b7",
+      "battery/ship_operator_sessions.py": "4f34437b708a8a014b388b0b08c39216ad772596f2f083fdf0a2f7ebe71aa094",
+      "battery/__init__.py": "c9fbad07c9dc583be68993de547700eed730964940f3badcf3a7555dc2ce472e",
+      "static/app.js": "f9442ccde8d7dd97024db03e87110ebf4e9530fbb303cd8d167af8bb62b88a03",
+      "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+      "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed"
+    }
+  },
+  "source_sha256": {
+    "app.py": "0ac214b17815e66ab1473d2e8d876acbd796515ac6c54345e57a9a68d2cc5fe4",
+    "static/app.js": "f9442ccde8d7dd97024db03e87110ebf4e9530fbb303cd8d167af8bb62b88a03",
+    "tests/test_api.py": "8da6e91610549a4a1d678fb8be634f65218f5ba0000ba5d7ee80fd98eb6830a5",
+    "tests/ui_state.test.js": "baf09269b56a450dd659e6fbbbed4f24aa55f2d8dd74b452368ffd1e58a41382"
+  }
+}

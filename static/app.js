@@ -1,5 +1,7 @@
 "use strict";
 let nativeLoadEpoch = 0;
+let sessionEpoch = 0;
+let requiresSignIn = false;
 const state = {
   page: "overview",
   nativeCases: null,
@@ -191,7 +193,43 @@ function evidenceQuality(value) {
   }
   return value?.quality || "UNKNOWN";
 }
+function clearOperatorView() {
+  requiresSignIn = true;
+  sessionEpoch++;
+  loadEpoch++;
+  nativeLoadEpoch++;
+  invalidate("Sign in again. Inspect Receipts for any unfinished operation before making another change.");
+  for (const key of ["server", "catalog", "observations", "trail", "assurance", "demonstrationFinding", "nativeCases", "nativeDetail", "pending"]) state[key] = null;
+  state.receipts = [];
+  state.nativeError = "";
+  state.errors = {};
+  state.busy = false;
+  for (const id of ["page-content", "receipt", "task-detail"]) byId(id).replaceChildren();
+  document.querySelectorAll("#intent-form input, #intent-form select, #intent-form textarea").forEach(field => {
+    field.value = "";
+    if (field.type === "checkbox") field.checked = false;
+    if (field.tagName === "SELECT") field.replaceChildren();
+  });
+  byId("request-workspace").hidden = true;
+  byId("page-content").hidden = false;
+  byId("instance").textContent = "Sign-in required";
+  byId("authority").textContent = "SIGNED OUT";
+  byId("connection").textContent = "Operator sign-in required.";
+  byId("page-state").textContent = "Operator sign-in required.";
+  byId("prepare").disabled = true;
+  byId("new-request").disabled = true;
+  byId("refresh").disabled = false;
+  byId("login-panel").hidden = false;
+  // Storage is only a browser hint; inability to clear it cannot prevent logout.
+  for (const name of ["localStorage", "sessionStorage"]) {
+    try {
+      const storage = globalThis[name];
+      for (const key of Object.keys(storage)) if (key.startsWith("battery")) storage.removeItem(key);
+    } catch { /* Blocked storage never grants access or prevents sign-out. */ }
+  }
+}
 async function api(path, options = {}) {
+  const epoch = sessionEpoch;
   if (state.server?.role === "observer" && options.method && options.method !== "GET" && !path.startsWith("/api/session")) throw new Error("This identity has read-only access.");
   const { timeoutMs = options.method && options.method !== "GET" ? 30000 : 8000, ...request } = options;
   const controller = new AbortController();
@@ -206,11 +244,13 @@ async function api(path, options = {}) {
   });
   const operation = async () => {
     const response = await fetch(path, { ...request, signal: controller.signal });
+    if (epoch !== sessionEpoch) throw new Error("Operator session changed; response discarded.");
     let data;
     try { data = await response.json(); }
     catch { throw new Error("Response was unreadable; no outcome was established."); }
+    if (epoch !== sessionEpoch) throw new Error("Operator session changed; response discarded.");
     if (response.status === 401) {
-      byId("login-panel").hidden = false;
+      clearOperatorView();
       throw new Error("Operator sign-in required.");
     }
     if (!response.ok) {
@@ -946,7 +986,7 @@ async function prepare(event) {
       announce(`Preparation failed: ${error.message}`, true);
     }
   } finally {
-    byId("prepare").disabled = false;
+    byId("prepare").disabled = requiresSignIn;
   }
 }
 async function refreshProof() {
@@ -1053,7 +1093,7 @@ async function execute() {
     stage("verify");
   } finally {
     state.busy = false;
-    byId("prepare").disabled = false;
+    byId("prepare").disabled = requiresSignIn;
     byId("action-copy").textContent =
       "This authorization is consumed. Reconcile an unresolved attempt before considering another request.";
   }
@@ -1266,9 +1306,7 @@ document.querySelector(".nav-toggle").addEventListener("click", (event) => {
 byId("sign-out").addEventListener("click", async () => {
   try {
     await api("/api/session/logout", {method: "POST"});
-    for (const storage of [localStorage, sessionStorage]) {
-      for (const key of Object.keys(storage)) if (key.startsWith("battery")) storage.removeItem(key);
-    }
+    clearOperatorView();
     window.location.reload();
   } catch (error) { announce(error.message, true); }
 });
@@ -1281,8 +1319,8 @@ byId("login-form").addEventListener("submit", async (event) => {
       body: JSON.stringify({ access_key: byId("access-key").value }),
     });
     byId("access-key").value = "";
-    byId("login-panel").hidden = true;
-    await load();
+    clearOperatorView();
+    window.location.reload();
   } catch (error) {
     announce(error.message, true);
   }
