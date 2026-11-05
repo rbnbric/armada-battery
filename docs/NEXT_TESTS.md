@@ -42,7 +42,7 @@ The UI/UX pass is deliberately waiting for the owner's new design codices.
 | T1 | Reassess retained cases with the native rule checker | 48 native proof results for all 24 retained cases, exact snapshot binding, source/log hashes, scored report | Complete; evidence linked above |
 | T2 | Execute an independent rules-only recovery baseline | Same fixture schedule, source access, read budget and final checks as the agent workflow; separate outcome/hold/latency/usage results | Specified; implementation follows T1 |
 | T3 | Test cases that distinguish rule assertion from observed success | Frozen expected outcomes; all four YES/NO × PASS/FAIL combinations, UNKNOWN, context changes, stale and wrong-scope evidence, restart and malformed provider response | Existing cases inventoried; new independent cases pending |
-| T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | After runtime is available |
+| T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | Navigation exercised; comprehension and continuity findings below |
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
 | T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Waiting for codices; no redesign now |
 
@@ -133,3 +133,39 @@ retained case. Do not submit another review just to inspect it. First establish
 whether the person can identify the **Source scope** and final **State**.
 Ask that single question before moving on to the review/probe history.
 This checks comprehension of the current interface; visual redesign waits for T6.
+
+## Owner walkthrough findings — 2026-11-05
+
+Observed through the owner's screenshots of the installed application:
+
+- Operator sign-in succeeded, but navigation landed on Overview after sign-in
+  had been requested from Agent cases. Preserve the intended destination.
+- Agent cases listed the retained case ending `12d07156`, and its detail opened.
+  The source scope was synthetic, with final YES/PASS and VERIFIED_MATCH.
+- Inspect operation receipt opened receipt beginning `889e1589`, for `task:17`,
+  with VERIFIED_SUCCESS and the corresponding before/after evidence visible.
+- Returning via Agent cases retained the selected case and detail. The three
+  previously expanded evidence disclosures were closed. Selection continuity
+  worked; disclosure continuity did not survive this observed round trip.
+- The receipt-page message “Attempt verified success.” remained at the top of
+  Agent cases. Its referent was not stated there. Treat this as an unscoped
+  cross-page status message, not evidence that another action was executed.
+- The owner reported that interpreting the page required study beyond their
+  current comprehension. Successful navigation is therefore not a successful
+  comprehension test. No explanation-quality or task-comprehension pass is claimed.
+
+Requirements for the later codex-guided UX pass:
+
+1. Start with an evidence-supported plain-language result, the simulation/live
+   scope, unresolved questions and the user's next action (including when none
+   is required). Do not imply a real external effect from a synthetic receipt.
+2. Explain the sequence of initial uncertainty, evidence collection and final
+   judgment in readable steps; retain the exact records below that explanation.
+3. Offer result, explanation and technical evidence as progressive levels.
+4. Preserve destination through sign-in, selected case, disclosure state and
+   reading position through case/receipt navigation.
+5. Bind success/error messages to the action and record they describe; expire or
+   relabel them when navigating to a different context.
+
+These are observed findings and acceptance requirements, not implemented fixes.
+Visual redesign remains deferred until the owner's new codices are available.
