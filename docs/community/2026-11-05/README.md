@@ -4,7 +4,9 @@ The reply was lost. The change was not. I think I've done this before.
 
 A management request can reach InterSystems IRIS, change a configuration, and lose its reply on the way back. The operator sees an error. The change already happened. If the software treats silence as failure and sends the request again, automation has created the next incident.
 
-In [Let creativity lead. Make execution answerable.](https://community.intersystems.com/post/let-creativity-lead-make-execution-answerable), I wrote about giving people and agents room to invent while making the resulting work answer to evidence. The earlier post left Battery with a synthetic demonstration and a tested live, read-only connection. The next step was to make a real configuration change, review it through native AI Hub, and find out where our confidence outran the implementation.
+This began with [The request timed out. Did IRIS change?](https://community.intersystems.com/post/request-timed-out-did-iris-change). The first job was to keep uncertainty visible and stop a lost reply from becoming a duplicate action. Now we are asking agents to help investigate that uncertainty, while keeping the same demand for evidence.
+
+In [Let creativity lead. Make execution answerable.](https://community.intersystems.com/post/let-creativity-lead-make-execution-answerable), I wrote about giving people and agents room to invent while making the resulting work answer to evidence. At that stage, Battery had a synthetic demonstration and a tested live, read-only connection. The next step was to make a real configuration change, review it through native AI Hub, and find out where our confidence outran the implementation.
 
 This is that next step. The agent got something wrong. So did our code. We kept going.
 
