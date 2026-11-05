@@ -293,3 +293,7 @@ checks internal consistency, not independent tamper resistance or observation tr
 
 The product contract is in [PRODUCT_SPEC.md](PRODUCT_SPEC.md), and coverage is
 tracked in [WORKFLOW_MATRIX.md](WORKFLOW_MATRIX.md).
+
+## Next tests and guided review
+
+[Layer comparison and one-step test queue](docs/NEXT_TESTS.md) separates recorded evidence replay from a prospective recovery comparison. Native replay is pending; the comparison-runner integrity tests pass.
