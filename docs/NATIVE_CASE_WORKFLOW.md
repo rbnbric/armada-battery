@@ -7,8 +7,25 @@ not accept browser-authored proof.
 
 ## Run locally
 
+Start from the branch containing the agent implementation:
+
+```sh
+git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
+cd armada-battery
+```
+
+The default branch and hosted walkthrough contain the earlier management release.
+For the fixed 1.0.3 code snapshot, use commit
+`f3f438a177b27f834aa022ebb7fc810acd8a4b15`.
+
 Load the AI Hub EAP build 109 image using the vendor's
 [AI Hub EAP instructions](https://github.com/intersystems-community/ai-hub-eap).
+After loading, use `docker image ls` to check the image name. Compose defaults to
+`iris-community:2027.1.0AI.109.0`. If the imported image has a registry-qualified
+name, set `AIHUB_IMAGE` to that exact name in `.env`. The EAP image is obtained
+from the vendor; the repository does not redistribute it. Other EAP builds and
+CPU architectures need their own compatibility check.
+
 Prepare a private, git-ignored `.env` with `NEBIUS_API_KEY`,
 `BATTERY_NATIVE_PASSWORD`, `BATTERY_ADAPTER_KEY`, and `BATTERY_ACCESS_KEY`.
 Use independently generated values of at least 32 characters for the last three.
@@ -22,6 +39,12 @@ docker compose -f compose.interop.yaml exec -T battery-interop iris session IRIS
 
 Require the `BATTERY_SETUP_OK` marker. On Windows, run the redirected command
 from CMD. A PowerShell invocation should explicitly run it through `cmd /d /c`.
+If IRIS is still starting, wait until it is running before provisioning; inspect
+`docker compose -f compose.interop.yaml logs --tail=80 battery-interop` for startup
+failures. The setup command's exit status alone does not establish success: check
+the marker. Re-running provisioning does not rotate an existing adapter account's
+password; keep its original private password or deliberately update the native
+account and web-service configuration together.
 The browser app is at `http://localhost:8080`; sign in with this installation's
 `BATTERY_ACCESS_KEY`. On Windows, `powershell -File scripts/open_local.ps1` opens this local URL and
 copies the operator key to your clipboard for the sign-in field. Pass
@@ -43,8 +66,10 @@ connecting AI Hub does not convert a synthetic operation into a live one.
    revision. The old revision and its failure remain visible.
 
 An `ADMISSION_UNCERTAIN` case requires inspection of the native trace. It is not
-an instruction to resend an operation. A process crash can leave a case marked
-`RUNNING`; automated abandoned-run detection is not implemented yet.
+an instruction to resend an operation. Expired queued, running or uncertain
+admissions become `RECOVERY_REQUIRED` on the next maintenance sweep. The operator
+can inspect the original case and request a new review revision. Recovery never
+replays the business operation; see [service controls](SERVICE_CONTROLS.md).
 
 ## What the tools measure
 

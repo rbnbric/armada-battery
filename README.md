@@ -2,15 +2,22 @@
 
 <p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery industrial battery icon"></p>
 
-## Interoperability agent preview for contest 49
+## Version 1.0.3 — interoperability agent preview for contest 49
 
 The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip) branch connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This proves one configuration workflow, not the functional behavior of the created service or all four administration workflows.
 
-**Current qualification:** 75 Python tests, 8 UI tests, 149 native proof checks,
-31 solver faults, 26 agent faults, and 24/24 repeated real-model cases passed.
-One real invalid-citation response recovered through the new bounded repair.
+**Latest application qualification:** 86 Python tests and 13 UI tests passed,
+plus phone/desktop session-expiry browser checks and four installed HTTP checks.
+[Latest bug-check evidence](docs/PREPUBLICATION_BUGCHECK.md).
+
+**Earlier native qualification:** 149 native proof checks, 31 solver faults,
+26 agent faults and 24/24 repeated real-model cases passed. Later service-control
+qualification added 17 lifecycle checks, actual restart recovery and an authenticated
+native API audit. These are separate runs with different scopes; see
+[implementation evidence](docs/IMPLEMENTATION_EVIDENCE.md) and
+[service evidence](docs/SERVICE_EVIDENCE.md).
 
 **Persistence:** replacing the native container preserved a completed case, its exact result, and its native response record. **Browser:** independent collectors have deadlines; a stalled panel no longer holds the whole overview. Agent cases expose the separate assertion and output judgments, review history, and actual evidence reads.
 
@@ -29,14 +36,16 @@ with fresh evidence, and never turns an uncertain transport outcome into permiss
 to resend the change. Unresolved outcomes stay visible until reconciliation.
 
 **[Open the credential-free walkthrough](https://rbnbric.github.io/armada-battery/)**
-— a clearly labeled synthetic judge path that sends no request to IRIS.
+— the earlier management walkthrough, clearly labeled synthetic and sending no
+request to IRIS. It does not include the native Agent cases screen. Use the
+[local EAP setup](docs/NATIVE_CASE_WORKFLOW.md) for the new agent workflow.
 
 **[Watch the public reviewer-feedback update](https://www.youtube.com/watch?v=GbEMgSDRCZk)**
 — a before/after walkthrough of the faster judge path and the new synthetic
 finding-to-receipt flow. The original demonstration remains available on the
 Open Exchange listing.
 
-## What the demonstration proves
+## What the hosted synthetic demonstration proves
 
 The concrete failure case is a task request whose transport response disappears.
 Battery records one dispatch, reports the outcome as unknown, and refuses to send
@@ -53,7 +62,7 @@ attempt to `VERIFIED_SUCCESS`.
 The checks also cover insufficient privilege, a previous failed task, stale
 authorization, an unqualified rule, concurrent target changes, intentional
 changes, and secret-free evidence. This is synthetic qualification of the engine;
-it does not claim that a live IRIS mutation has been qualified.
+its result is separate from the connected configuration qualification described above.
 
 The working slice covers four ordinary requests: run an existing task, schedule
 an existing task, create a bounded REST application, and grant an existing
@@ -89,7 +98,7 @@ No installation, account, credentials, IRIS download, or local Python is require
 The same proof can run entirely inside Docker:
 
 ```bash
-git clone https://github.com/rbnbric/armada-battery.git
+git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 docker compose up -d
 docker compose run --rm proof
@@ -98,7 +107,7 @@ docker compose run --rm proof
 Open `http://127.0.0.1:8080`. The default Compose path starts only the lightweight
 synthetic application; it does not download or wait for an IRIS image.
 
-The complete local gate is 75 backend tests, eight UI lifecycle tests, and all
+The latest local check passed 86 backend tests, 13 UI lifecycle tests, and all
 eight scenario demonstrations. The optional Compose overlay below adds a real IRIS
 Community Edition instance and starts conservatively with changes disabled.
 
@@ -149,7 +158,7 @@ path. Copy `.env.example` to `.env`, replace the sample password, and start the
 IRIS overlay:
 
 ```bash
-git clone https://github.com/rbnbric/armada-battery.git
+git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 cp .env.example .env
 # Set IRIS_PASSWORD in .env to a unique 8–32 character local demo password.
@@ -225,17 +234,22 @@ It demonstrates eight synthetic behaviors, including restraint after a failed ta
 expiration of stale authorization, idempotency, concurrent-change rejection,
 and reconciliation after an ambiguous transport result without a retry.
 
-## Contest
+## Contest history and release source
 
-Armada Battery is an entry in the
-[InterSystems Programming Contest — Build Your Own Management Portal](https://community.intersystems.com/post/intersystems-programming-contest-build-your-own-management-portal).
-The contest listing is
-<https://openexchange.intersystems.com/contest/48>.
+Battery began with the [Build Your Own Management Portal contest](https://openexchange.intersystems.com/contest/48).
+Version 1.0.3 adds the native AI Hub workflow for
+[AI Agents in Interoperability Workflows](https://openexchange.intersystems.com/contest/49).
 
-Judges can start with the synthetic demonstration and
-`docker compose run --rm proof` for the eight deterministic behaviors, then
-run the composed stack to inspect a live IRIS Community Edition instance and
-its blocked preflight. Live outcome qualification remains separate.
+The new implementation is on `contest-49-wip`; the default `main` branch and
+hosted Pages walkthrough retain the earlier management release. Clone the explicit
+branch as shown above. The 1.0.3 tested code snapshot is
+[`f3f438a`](https://github.com/rbnbric/armada-battery/commit/f3f438a177b27f834aa022ebb7fc810acd8a4b15).
+For a fixed checkout, run `git checkout f3f438a177b27f834aa022ebb7fc810acd8a4b15`
+after cloning. Later documentation corrections may be present on the branch.
+
+The credential-free demonstration covers the synthetic engine. The native agent
+path requires the separately obtained AI Hub EAP image and configured model access.
+See [native setup](docs/NATIVE_CASE_WORKFLOW.md) for that path.
 
 ## Connect to IRIS
 
