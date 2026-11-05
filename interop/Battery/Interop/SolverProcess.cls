@@ -7,6 +7,20 @@ Class Battery.Interop.SolverProcess Extends Ens.BusinessProcess
 Parameter REVIEWTIMEOUT = 200;
 Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Battery.Interop.CaseResponse) As %Status
 {
+    If pRequest.RunId'="" {
+        If '##class(Battery.Interop.CaseRecord).Begin(pRequest.RunId) { Return $$$OK }
+    }
+    Set sc=..Solve(pRequest,.pResponse)
+    If pRequest.RunId'="" {
+        If $IsObject(pResponse) {
+            Set saved=##class(Battery.Interop.CaseRecord).Complete(pRequest.RunId,pResponse)
+            If $$$ISERR(saved) { Return saved }
+        }
+    }
+    Return sc
+}
+Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Battery.Interop.CaseResponse) As %Status
+{
     Set pResponse=##class(Battery.Interop.CaseResponse).%New()
     Set pResponse.State="HELD_FOR_REVIEW",pResponse.GateVerdict="NO",pResponse.GateOutput="UNKNOWN"
     Set history=[],reads=[]
@@ -37,6 +51,14 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
         If (proof.verdict'="YES")||(proof.output'="PASS")||(review.State'="AGREED_PENDING_GATE") {
             // A receipt profile has a defined next observation. Never execute arbitrary model text.
             Set er.Phase=$SELECT(proof.reason="Observation expired":"CHECK_FRESH_READBACK",1:"CHECK_EFFECT_RECEIPT")
+            If pRequest.RunId'="" {
+                Set proposed=review.InvestigatorProbe
+                If proposed="HOLD_FOR_HUMAN" { Set pResponse.Explanation="Investigator requested human review; no probe executed" Return $$$OK }
+                If proposed'="" {
+                    If (proposed'="CHECK_EFFECT_RECEIPT")&&(proposed'="CHECK_TARGET_VERSION")&&(proposed'="CHECK_FRESH_READBACK") { Set pResponse.Explanation="Proposed probe is unavailable in this adapter: "_proposed Return $$$OK }
+                    Set er.Phase=proposed
+                }
+            }
             Set pResponse.ExecutedProbe=er.Phase
             Set sc=..SendRequestSync("Battery.Evidence",er,.probed,10)
             If $$$ISERR(sc) { Set pResponse.Explanation="Evidence probe failed" Return $$$OK }
@@ -88,20 +110,25 @@ ClassMethod Enrich(case As %DynamicObject, contract As %String, observation As %
     Do copy.%Set("observed",observation)
     // All original facts remain stored in the input trace; only adapter-bound facts enter this profile.
     Set facts={"B_CONTRACT":(contract),"B_OBSERVATION":(observation),"B_EVALUATED_AT":(""_##class(Battery.Interop.OutcomeProof).Now())}
+    Set binding=##class(Battery.Interop.EvidenceBinding).%OpenId(case.id)
+    If $IsObject(binding) {
+        If binding.Adapter="management" { Do facts.%Set("B_TOOLS","CHECK_EFFECT_RECEIPT reads the scoped durable operation receipt; CHECK_TARGET_VERSION reads current target configuration through the management adapter; CHECK_FRESH_READBACK reads both. All are read-only. HOLD_FOR_HUMAN stops. Other probes are unavailable. count denotes correlated verified receipt records, not a physical effect count. Source may be synthetic; retain that scope.") }
+    }
     Do copy.%Set("facts",facts)
     Return copy.%ToJSON()
 }
 ClassMethod RecordRead(list As %DynamicArray, phase As %String, r As Battery.Interop.EvidenceResponse)
 {
-    Do list.%Push({"phase":(phase),"found":(r.Found),"contract":(r.ContractJSON),"observation":(r.ObservationJSON),"reason":(r.Reason)})
+    Do list.%Push({"phase":(phase),"found":(r.Found),"contract":(r.ContractJSON),"observation":(r.ObservationJSON),"reason":(r.Reason),"tool":(r.ToolJSON)})
 }
 ClassMethod RecordReview(list As %DynamicArray, r As Battery.Interop.CaseResponse)
 {
-    Do list.%Push({"state":(r.State),"verdict":(r.ReviewerVerdict),"output":(r.OutputResult),"applicability":(r.ReviewerApplicability),"probe":(r.InvestigatorProbe),"explanation":(r.Explanation),"reviewer_usage":(r.ReviewerUsageJSON),"investigator_usage":(r.InvestigatorUsageJSON)})
+    Do list.%Push({"state":(r.State),"verdict":(r.ReviewerVerdict),"output":(r.OutputResult),"applicability":(r.ReviewerApplicability),"probe":(r.InvestigatorProbe),"explanation":(r.Explanation),"reviewer_usage":(r.ReviewerUsageJSON),"investigator_usage":(r.InvestigatorUsageJSON),"agent_calls":(r.AgentCallsJSON)})
 }
 ClassMethod CopyReview(out As Battery.Interop.CaseResponse, r As Battery.Interop.CaseResponse)
 {
-    Set out.ReviewerVerdict=r.ReviewerVerdict,out.OutputResult=r.OutputResult,out.ReviewerApplicability=r.ReviewerApplicability,out.InvestigatorProbe=r.InvestigatorProbe
+    Set out.ReviewerVerdict=r.ReviewerVerdict,out.OutputResult=r.OutputResult,out.ReviewerApplicability=r.ReviewerApplicability
+    If r.InvestigatorProbe'="" { Set out.InvestigatorProbe=r.InvestigatorProbe }
     Set out.ReviewerUsageJSON=r.ReviewerUsageJSON,out.InvestigatorUsageJSON=r.InvestigatorUsageJSON
 }
 }

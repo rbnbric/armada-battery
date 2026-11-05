@@ -375,7 +375,7 @@ class IrisTaskAdapter:
                 else AdapterError
             )
             raise error(
-                f"IRIS returned HTTP {exc.code}; upstream body withheld"
+                f"IRIS returned HTTP {exc.code}; upstream body withheld", http_status=exc.code
             ) from exc
         except (TimeoutError, urllib.error.URLError, ConnectionError) as exc:
             if method in {"POST", "PUT", "DELETE", "PATCH"}:
@@ -486,8 +486,7 @@ class IrisTaskAdapter:
 
     def put_web_app(self, name: str, payload: dict[str, Any]) -> None:
         body = dict(payload)
-        if "NameSpace" in body and "Namespace" not in body:
-            body["Namespace"] = body.pop("NameSpace")
+        # SysAdmin v1 requires the Security.Applications spelling, NameSpace.
         self._request("PUT", "/v1/web-app", query={"name": name}, body=body)
 
     def list_users(self) -> list[dict[str, Any]]:

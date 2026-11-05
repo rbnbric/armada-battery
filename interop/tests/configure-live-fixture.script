@@ -1,0 +1,7 @@
+zn "%SYS"
+set password=$SYSTEM.Util.GetEnviron("BATTERY_NATIVE_PASSWORD")
+if $length(password)<32 { write "LIVE_FIXTURE_ERROR=password missing",! halt }
+if '##class(Security.Roles).Exists("BatteryFixtureRole") { set sc=##class(Security.Roles).Create("BatteryFixtureRole","Disposable Battery qualification operator","%Admin_Secure:U,%Admin_Operate:U,%Admin_Manage:U,%DB_IRISSYS:R,%DB_BATTERY_DATA:RW,%DB_BATTERY_CODE:R","") if $SYSTEM.Status.IsError(sc) { write "LIVE_FIXTURE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+if '##class(Security.Users).Exists("BatteryFixtureUser") { set sc=##class(Security.Users).Create("BatteryFixtureUser","BatteryFixtureRole",password,"Disposable Battery qualification","BATTERY","","",0,1) if $SYSTEM.Status.IsError(sc) { write "LIVE_FIXTURE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+write "LIVE_FIXTURE_READY",!
+halt

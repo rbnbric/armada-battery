@@ -34,6 +34,18 @@ class AdminSliceTests(unittest.TestCase):
             adapter or SyntheticTaskAdapter(), ledger=Ledger(), **kwargs
         )
 
+    def test_vendor_web_app_readback_numeric_auth_mask(self):
+        class VendorReadback(SyntheticTaskAdapter):
+            def get_web_app(self, name):
+                row = super().get_web_app(name)
+                row["AutheEnabled"] = int(row["AutheEnabled"])
+                row.pop("Type", None)
+                return row
+        engine = self.engine(VendorReadback())
+        plan = engine.prepare_create_web_app(name="/api/vendor", namespace="USER", dispatch_class="Demo.Orders", resource="App.Reader", requested_by="operator")
+        result = engine.execute_admin(plan["certificate"]["token"], "vendor-contract")
+        self.assertEqual(result["status"], "VERIFIED_SUCCESS")
+
     def test_create_web_app_executes_and_verifies(self):
         engine = self.engine()
         plan = engine.prepare_create_web_app(

@@ -1,0 +1,12 @@
+zn "BATTERY"
+if '$data(^BatteryPersistenceProof) { write "PERSISTENCE_ERROR=no capture",! halt }
+set expected=##class(%DynamicObject).%FromJSON(^BatteryPersistenceProof)
+set r=##class(Battery.Interop.CaseRecord).%OpenId(expected.%Get("case_id")),response=##class(Battery.Interop.CaseResponse).%OpenId(expected.%Get("response_id"))
+if '$isobject(r) { write "PERSISTENCE_ERROR=case lost",! halt }
+if '$isobject(response) { write "PERSISTENCE_ERROR=trace response lost",! halt }
+if r.ResultJSON'=expected.%Get("result_json") { write "PERSISTENCE_ERROR=case result changed",! halt }
+if response.State'=expected.%Get("response_state") { write "PERSISTENCE_ERROR=response changed",! halt }
+set measured={"case_id":(r.CaseId),"response_id":(response.%Id()),"state":(r.State),"identical_result":true,"native_response_retained":true}
+write "PERSISTENCE_RESULT=",measured.%ToJSON(),!
+write "PERSISTENCE_VERIFY_OK",!
+halt

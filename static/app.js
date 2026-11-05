@@ -1,6 +1,10 @@
 "use strict";
+let nativeLoadEpoch = 0;
 const state = {
   page: "overview",
+  nativeCases: null,
+  nativeDetail: null,
+  nativeError: "",
   revision: 0,
   plan: null,
   certificate: null,
@@ -19,6 +23,7 @@ const state = {
 };
 const byId = (id) => document.getElementById(id);
 const LABELS = {
+  cases: "Agent cases",
   overview: "Overview",
   tasks: "Tasks",
   webapps: "Web applications",
@@ -187,28 +192,37 @@ function evidenceQuality(value) {
   return value?.quality || "UNKNOWN";
 }
 async function api(path, options = {}) {
-  const response = await fetch(path, options);
-  let data;
-  try {
-    data = await response.json();
-  } catch {
-    throw new Error("Response was unreadable; no outcome was established.");
-  }
-  if (response.status === 401) {
-    byId("login-panel").hidden = false;
-    throw new Error("Operator sign-in required.");
-  }
-  if (!response.ok) {
-    const error = new Error(
-      typeof data.detail === "string"
-        ? data.detail
-        : `Request failed (${response.status}). No outcome established.`,
-    );
-    error.httpStatus = response.status;
-    throw error;
-  }
-  return data;
+  const { timeoutMs = options.method && options.method !== "GET" ? 30000 : 8000, ...request } = options;
+  const controller = new AbortController();
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      controller.abort();
+      const error = new Error("Request timed out; no outcome was established.");
+      error.code = "TIMEOUT";
+      reject(error);
+    }, timeoutMs);
+  });
+  const operation = async () => {
+    const response = await fetch(path, { ...request, signal: controller.signal });
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error("Response was unreadable; no outcome was established."); }
+    if (response.status === 401) {
+      byId("login-panel").hidden = false;
+      throw new Error("Operator sign-in required.");
+    }
+    if (!response.ok) {
+      const error = new Error(typeof data.detail === "string" ? data.detail : `Request failed (${response.status}). No outcome established.`);
+      error.httpStatus = response.status;
+      throw error;
+    }
+    return data;
+  };
+  try { return await Promise.race([operation(), timeout]); }
+  finally { clearTimeout(timer); }
 }
+
 function stage(name) {
   document.querySelectorAll("[data-stage]").forEach((n) => {
     if (n.dataset.stage === name) n.setAttribute("aria-current", "step");
@@ -239,6 +253,7 @@ function invalidate(
 }
 function navigate(page, focus = true) {
   state.page = page;
+  if (page === "cases") loadNativeCases();
   byId("page-title").textContent = LABELS[page] || page;
   byId("request-workspace").hidden = page !== "request";
   byId("page-content").hidden = page === "request";
@@ -323,7 +338,9 @@ function showRule(rule, root = byId("rule")) {
     details("Recorded live validations", rule.live_validations),
   );
 }
+let loadEpoch = 0;
 async function load() {
+  const epoch = ++loadEpoch;
   byId("refresh").disabled = true;
   clearError();
   const sources = {
@@ -335,18 +352,33 @@ async function load() {
     demonstrationFinding: "/api/findings/demonstration",
     receipts: "/api/receipts",
   };
-  const keys = Object.keys(sources);
-  const results = await Promise.allSettled(keys.map((k) => api(sources[k])));
   state.errors = {};
-  results.forEach((r, i) => {
-    const k = keys[i];
-    if (r.status === "fulfilled")
-      state[k] = k === "receipts" ? r.value.receipts : r.value;
-    else {
-      state[k] = k === "receipts" ? [] : null;
-      state.errors[k] = r.reason.message;
+  try {
+    const results = await Promise.allSettled(Object.entries(sources).map(async ([key, url]) => {
+      try {
+        const value = await api(url);
+        if (epoch !== loadEpoch) return;
+        state[key] = key === "receipts" ? value.receipts : value;
+        delete state.errors[key];
+      } catch (error) {
+        if (epoch !== loadEpoch) return;
+        state[key] = key === "receipts" ? [] : null;
+        state.errors[key] = error.message;
+      }
+      if (epoch === loadEpoch) renderCollectors(key);
+    }));
+    const failure = results.find(result => result.status === "rejected");
+    if (failure && epoch === loadEpoch) throw failure.reason;
+  } finally {
+    if (epoch === loadEpoch) {
+      byId("refresh").disabled = false;
+      if (Object.keys(state.errors).length)
+        announce(`Some collectors are unavailable: ${Object.keys(state.errors).join(", ")}. Working areas remain available.`);
+      if (state.pending) showPending();
     }
-  });
+  }
+}
+function renderCollectors(changed) {
   const server = state.server;
   byId("instance").textContent = server?.instance || "Instance unavailable";
   byId("adapter").textContent = server
@@ -370,10 +402,10 @@ async function load() {
   byId("connection").textContent = server
     ? `${server.server.version} · ${server.mode === "synthetic" ? "Fixture identity" : "IRIS authority"}: ${server.server.username} · Battery operator: ${server.operator} · ${server.access_mode}`
     : state.errors.server || "Connection unavailable";
-  if (!server?.changes_enabled && state.certificate)
+  if (changed === "server" && !server?.changes_enabled && state.certificate)
     invalidate("Changes are disabled or authority is unavailable.");
   const c = state.catalog;
-  if (c) {
+  if (c && changed === "catalog") {
     fillSelect("task", c.tasks, "Id", "Name");
     fillSelect("namespace", c.namespaces, null);
     fillSelect("resource", c.resources, "Name");
@@ -382,13 +414,8 @@ async function load() {
   }
   updateFreshness();
   renderPage();
-  byId("refresh").disabled = false;
-  if (Object.keys(state.errors).length)
-    announce(
-      `Some collectors are unavailable: ${Object.keys(state.errors).join(", ")}. Working areas remain available.`,
-    );
-  if (state.pending) showPending();
 }
+
 function updateFreshness() {
   byId("freshness").textContent = state.server
     ? `Instance observed ${age(state.server.captured_at)}`
@@ -723,6 +750,8 @@ function renderPage() {
       ),
       button("Open Battery evidence ledger", () => navigate("ledger")),
     );
+  } else if (state.page === "cases") {
+    renderNativeCases(root);
   } else if (state.page === "receipts") {
     root.append(receiptTable(state.receipts));
     if (state.pending) root.append(pendingDocument());
@@ -1070,6 +1099,7 @@ async function renderReceipt(packet, target) {
           : r.explanation,
     }),
   );
+  box.append(button("Review this receipt with AI Hub", () => submitNativeCase(r.id)));
   (packet.evidence || []).forEach((o) =>
     box.append(details(`${o.source} · ${o.id} · ${o.captured_at}`, o)),
   );
@@ -1137,6 +1167,68 @@ function tick() {
     announce("Authorization expires within 30 seconds.");
   }
 }
+
+async function loadNativeCases(id = null) {
+  const epoch = ++nativeLoadEpoch;
+  try {
+    const list = await api("/api/cases");
+    if (epoch !== nativeLoadEpoch) return;
+    state.nativeCases = list;
+    const selected = id || state.nativeDetail?.id;
+    if (selected) {
+      const detail = await api(`/api/cases/${encodeURIComponent(selected)}`);
+      if (epoch !== nativeLoadEpoch) return;
+      state.nativeDetail = detail;
+    }
+    state.nativeError = "";
+  } catch (error) {
+    if (epoch === nativeLoadEpoch) state.nativeError = error.message;
+  }
+  if (epoch === nativeLoadEpoch && state.page === "cases") renderPage();
+}
+async function submitNativeCase(receiptId, parentId = "") {
+  const storageKey = `battery-native:${receiptId}:${parentId}`;
+  try {
+    let key = localStorage.getItem(storageKey);
+    if (!key) {
+      key = crypto.randomUUID();
+      localStorage.setItem(storageKey, key);
+    }
+    const result = await api("/api/cases", {
+      method: "POST", headers: {"Content-Type": "application/json", "Idempotency-Key": key},
+      body: JSON.stringify({receipt_id: receiptId, parent_id: parentId}),
+    });
+    state.nativeDetail = result;
+    navigate("cases");
+    await loadNativeCases(result.id);
+    announce("Native review admitted. Refresh cases to follow its progress.");
+  } catch (error) {
+    announce(`Case admission not confirmed: ${error.message}. Retrying this review keeps its request key and does not repeat the operation.`, true);
+  }
+}
+function renderNativeCases(root) {
+  root.append(node("p", "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate."), button("Refresh cases", () => loadNativeCases()));
+  if (state.nativeError) root.append(node("p", state.nativeError, "error-message"));
+  const list = state.nativeCases;
+  if (!list) { root.append(empty("Loading native cases…")); return; }
+  if (!list.available) { root.append(empty(list.detail)); return; }
+  if (!list.items.length) root.append(empty("No native cases yet. Open an operation receipt and choose Review this receipt with AI Hub."));
+  else root.append(table(["Case", "State", "Updated (IRIS time)"], list.items.map(c => [button(`${c.target || "Review"} · ${c.id.slice(-8)}`, () => loadNativeCases(c.id)), c.state, c.updated_at])));
+  const c = state.nativeDetail;
+  if (!c) return;
+  const r = c.result || {};
+  const box = section("Case detail", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
+  if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
+  if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
+  if (c.state.startsWith("HELD_") && c.receipt_id) box.append(button("Review refreshed evidence as a new revision", () => submitNativeCase(c.receipt_id, c.id)));
+  if (c.state === "ADMISSION_UNCERTAIN") box.append(empty("Queue admission is uncertain. Inspect the native message trace before starting another revision."));
+  for (const [label, key] of [["Measurement proof", "ProofJSON"], ["Reviews, rejected answers and usage", "ReviewHistoryJSON"], ["Evidence tool reads", "ProbeHistoryJSON"]]) {
+    if (r[key]) box.append(details(label, r[key]));
+  }
+  box.append(empty("A measured match does not authorize another operation. Any further change uses the existing prepare, authorize, execute and verify workflow."));
+  root.append(box);
+}
+
 byId("intent-form").addEventListener("input", () => invalidate());
 byId("intent-form").addEventListener("change", (event) => {
   if (event.target.id === "workflow") showWorkflow();
@@ -1155,7 +1247,7 @@ byId("execute").addEventListener("click", execute);
 byId("new-request").addEventListener("click", () => startRequest());
 byId("refresh").addEventListener("click", () => {
   invalidate("Evidence refresh requested; prepare the current intent again.");
-  load();
+  load().catch(error => announce(error.message, true));
 });
 document
   .querySelectorAll("[data-page]")

@@ -1,0 +1,17 @@
+zn "BATTERY"
+set sc=##class(Ens.Director).StopProduction()
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/interop/Battery","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/qualification-tests","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "QUALIFICATION_COMPILE_OK",!
+set sc=##class(Battery.Test.SolverSuite).Run(0,1)
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.FaultSuite).Run()
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "QUALIFICATION_FAULTS_FINISHED",!
+set sc=##class(Battery.Test.SolverSuite).Run(1,3)
+if $SYSTEM.Status.IsError(sc) { write "QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "QUALIFICATION_FINISHED",!
+halt

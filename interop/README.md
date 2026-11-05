@@ -1,26 +1,24 @@
 # Battery interoperability agent preview
 
-Status: compiled and exercised on AI Hub Community build 109 through native
-`%AI.Agent` and the IRIS Interoperability production. The existing Battery
-management portal and its synthetic proof are separate. Native measurements
-and remaining limits are recorded below; compilation alone is not acceptance.
+Status: the management application is now connected to the native `%AI.Agent`
+and IRIS Interoperability production. The [connected workflow](../docs/NATIVE_CASE_WORKFLOW.md)
+provides a case queue, durable admission, authenticated receipt/target evidence
+reads, and a review history. [Executed implementation evidence](../docs/IMPLEMENTATION_EVIDENCE.md)
+records the real IRIS configuration demonstration and container replacement test.
 
-The default production now includes a [receipt solver](RECEIPT_SOLVER.md):
-small-agent review, larger-agent investigation, one executed read-only receipt
-probe, bounded follow-up review, and deterministic checks of fresh scoped
-outcome evidence. Raw model answers remain visible separately from the final
-measurement disposition. Cases without an adapter-owned binding are held.
-The current demonstration uses synthetic persisted receipts and real AI Hub
-calls; it does not issue an external business effect or claim a repair.
+The default management target remains synthetic; inference and native queues
+are real. A separately configured qualification installation exercised an actual
+IRIS REST application configuration. Neither a model recommendation nor a
+verified snapshot authorizes a new business mutation.
 
-Receipt qualification includes **149/149 proof checks and 27/27 workflow fault
-checks**. The longer frozen live run produced **230/240 expected dispositions**
-and **10 unexpected review holds**, with no incorrect verified disposition in
-that fixed corpus. The earlier 24/24 run remains a smaller historical sample.
-[Results and limitations](RECEIPT_SOLVER.md#thirty-round-repeatability-audit)
-separate raw model accuracy, workflow completion, and deterministic containment.
-The [system design audit](../docs/SYSTEM_DESIGN_AUDIT.md) records missing product
-integration, operational limitations, and proposed acceptance tests.
+The [receipt solver](RECEIPT_SOLVER.md) separates the assertion judgment from
+measured output. The larger investigator selects an admitted evidence tool for
+connected cases. One malformed reviewer response can receive one bounded repair;
+transport errors are not retried. Both answers and validation errors are retained.
+
+Historical evidence remains unchanged: the frozen 240-case run reached 230
+expected dispositions and 10 unexpected review holds, with no incorrect verified
+disposition in that corpus. [Original results](RECEIPT_SOLVER.md#thirty-round-repeatability-audit).
 
 ## Run on the contest AI Hub image
 
@@ -33,8 +31,9 @@ using your InterSystems account. The EAP image is not included in this repositor
 docker image load -i /path/to/iris-community-2027.1.0AI.109.0-docker.tar.gz
 docker images
 docker tag <loaded-image-name> iris-community:2027.1.0AI.109.0
-export NEBIUS_API_KEY='<your Token Factory key>'
+# Prepare the private .env described in docs/NATIVE_CASE_WORKFLOW.md first.
 docker compose -f compose.interop.yaml up --build -d
+docker compose -f compose.interop.yaml exec -T battery-interop iris session IRIS < interop/configure.script
 docker compose -f compose.interop.yaml exec battery-interop iris session IRIS -U BATTERY
 ```
 

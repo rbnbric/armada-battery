@@ -1,0 +1,14 @@
+zn "%SYS"
+set password=$SYSTEM.Util.GetEnviron("BATTERY_NATIVE_PASSWORD")
+if $length(password)<32 { write "BATTERY_SETUP_ERROR=Set BATTERY_NATIVE_PASSWORD with at least 32 characters",! halt }
+if '##class(Security.Roles).Exists("BatteryAdapter") { set sc=##class(Security.Roles).Create("BatteryAdapter","Battery private adapter","%DB_BATTERY_DATA:RW,%DB_BATTERY_CODE:R","") if $SYSTEM.Status.IsError(sc) { write "BATTERY_SETUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+if '##class(Security.Users).Exists("BatteryAdapterUser") { set sc=##class(Security.Users).Create("BatteryAdapterUser","BatteryAdapter",password,"Battery private adapter","BATTERY","","",0,1) if $SYSTEM.Status.IsError(sc) { write "BATTERY_SETUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+kill properties
+set properties("NameSpace")="BATTERY",properties("DispatchClass")="Battery.Interop.CaseAPI",properties("AutheEnabled")=32,properties("Enabled")=1,properties("UseCookies")=0
+if ##class(Security.Applications).Exists("/api/battery") { set sc=##class(Security.Applications).Modify("/api/battery",.properties) } else { set sc=##class(Security.Applications).Create("/api/battery",.properties) }
+if $SYSTEM.Status.IsError(sc) { write "BATTERY_SETUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+zn "BATTERY"
+set sc=##class(Ens.Director).StartProduction("Battery.Interop.Production")
+if $SYSTEM.Status.IsError(sc) { write "BATTERY_SETUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "BATTERY_SETUP_OK",!
+halt

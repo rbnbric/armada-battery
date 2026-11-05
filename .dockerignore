@@ -9,3 +9,11 @@ README.md
 
 .ruff_cache
 .pytest_cache
+*.tar
+*.tar.gz
+*.zip
+*.log
+*.env
+*.cmd
+*.ps1
+interop/results

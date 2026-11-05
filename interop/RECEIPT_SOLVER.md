@@ -64,7 +64,7 @@ A complete observation has exactly `available`, `partner`, `attempt`, `target`,
 boolean; count and timestamp are nonnegative integer JSON numbers. Counts are
 bounded to one million and maximum age to 1–3600 seconds. `observed_at` uses the
 IRIS `$HOROLOG` day/second clock converted to seconds by `OutcomeProof.Now()`;
-external timestamp adapters are not yet implemented. Exact expiry is stale;
+the connected management adapter converts retained UTC timestamps to that epoch. Exact expiry is stale;
 future observations are rejected. Scope must match on all four fields.
 An unavailable observation is represented by `{"available": false}`.
 
@@ -85,10 +85,14 @@ It does not solve the original broad prose-only corpus by assertion.
 A missing, stale, wrong-scope, or failing receipt leads to one bounded receipt
 probe. The production reads `CurrentJSON` through `EvidenceOperation`. A changed,
 usable observation triggers one follow-up review. Identical or unusable evidence
-stops the loop. There are at most two review rounds, each containing at most one
-reviewer and one investigator call, and at most three evidence reads. The
-investigator proposes a probe; the supported receipt profile determines which
-read can actually execute. Other probe implementations remain future work.
+stops the loop. There are at most two review rounds, each containing one reviewer
+call, at most one repair of an invalid reviewer response, and at most one
+investigator call: six agent calls maximum. Provider transport errors are not
+retried. There are at most three evidence reads. Connected management cases
+execute the investigator’s admitted receipt, target-version, or fresh-readback
+tool. Legacy synthetic cases preserve their original deterministic probe policy.
+See [the connected workflow](../docs/NATIVE_CASE_WORKFLOW.md) for tool scope,
+180-second review budgets, durability, and operational limits.
 
 Before returning a verified result, the process reads again and checks that the
 original case binding, measurement contract and selected observation are

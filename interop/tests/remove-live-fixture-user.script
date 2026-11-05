@@ -1,0 +1,5 @@
+zn "%SYS"
+if ##class(Security.Users).Exists("BatteryFixtureUser") { set sc=##class(Security.Users).Delete("BatteryFixtureUser") if $SYSTEM.Status.IsError(sc) { write "LIVE_FIXTURE_CLEANUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+if ##class(Security.Roles).Exists("BatteryFixtureRole") { set sc=##class(Security.Roles).Delete("BatteryFixtureRole") if $SYSTEM.Status.IsError(sc) { write "LIVE_FIXTURE_CLEANUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+write "LIVE_FIXTURE_USER_REMOVED",!
+halt

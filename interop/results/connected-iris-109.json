@@ -1,0 +1,136 @@
+{
+  "scope": "real IRIS REST application configuration and native AI Hub review",
+  "checks": {
+    "lost_response_recovered": true,
+    "execution_key_reused_receipt": true,
+    "one_named_configuration": true,
+    "native_review_completed": true,
+    "fixture_removed": true
+  },
+  "observed_receipts": [
+    {
+      "id": "9c342f5d-efb9-4af7-8742-2f07e488564f",
+      "intent_id": "64ab251d-892f-4d33-8dac-25e5866499f1",
+      "action_id": "web-app.create",
+      "target": "web-app:/battery-qualification-b911dfd6834b",
+      "operator": "qualification-operator",
+      "idempotency_key": "90a9476e-ae14-4345-a468-6f0682523a00",
+      "started_at": "2026-11-05T00:39:21.182756+00:00",
+      "status": "VERIFIED_SUCCESS",
+      "transport_result": "IRIS accepted the configuration request",
+      "finished_at": "2026-11-05T00:39:21.516040+00:00",
+      "before_evidence": [
+        "840f10b2-6ebe-4d8e-94d2-3c60208a165e"
+      ],
+      "after_evidence": [
+        "071e6b80-7c89-4b9a-9e83-6ef41ff46f4c"
+      ],
+      "explanation": "Fresh configuration readback matches the requested state. This does not prove functional service behavior.",
+      "certificate_digest": "cb2225e5e79194822401bfc7504728ffcf777f1791694a11275ffb836c5b13f4",
+      "history_before": [],
+      "verification_deadline": "2026-11-05T00:44:21.182763+00:00"
+    }
+  ],
+  "receipt": {
+    "id": "9c342f5d-efb9-4af7-8742-2f07e488564f",
+    "intent_id": "64ab251d-892f-4d33-8dac-25e5866499f1",
+    "action_id": "web-app.create",
+    "target": "web-app:/battery-qualification-b911dfd6834b",
+    "operator": "qualification-operator",
+    "idempotency_key": "90a9476e-ae14-4345-a468-6f0682523a00",
+    "started_at": "2026-11-05T00:39:21.182756+00:00",
+    "status": "VERIFIED_SUCCESS",
+    "transport_result": "IRIS accepted the configuration request",
+    "finished_at": "2026-11-05T00:39:21.516040+00:00",
+    "before_evidence": [
+      "840f10b2-6ebe-4d8e-94d2-3c60208a165e"
+    ],
+    "after_evidence": [
+      "071e6b80-7c89-4b9a-9e83-6ef41ff46f4c"
+    ],
+    "explanation": "Fresh configuration readback matches the requested state. This does not prove functional service behavior.",
+    "certificate_digest": "cb2225e5e79194822401bfc7504728ffcf777f1791694a11275ffb836c5b13f4",
+    "history_before": [],
+    "verification_deadline": "2026-11-05T00:44:21.182763+00:00"
+  },
+  "case": {
+    "id": "case-e7d692663b410794d769ff3db44c14ad",
+    "parent_id": "",
+    "state": "VERIFIED_MATCH",
+    "created_at": "2026-11-05 00:39:21",
+    "updated_at": "2026-11-05 00:39:46",
+    "result": {
+      "state": "VERIFIED_MATCH",
+      "assertion": "YES",
+      "output": "PASS",
+      "reviewer_assertion": "YES",
+      "reviewer_output": "PASS",
+      "applicability": "APPLICABLE",
+      "explanation": "Fresh scoped receipt measurement",
+      "proposed_probe": "",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "response_id": "45",
+      "ProofJSON": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      },
+      "ReviewHistoryJSON": [
+        {
+          "state": "INVESTIGATION_PENDING_GATE",
+          "verdict": "NO",
+          "output": "FAIL",
+          "applicability": "APPLICABLE",
+          "probe": "CHECK_EFFECT_RECEIPT",
+          "explanation": "The qualification operation did not succeed, leaving the system unavailable and no corresponding effect receipt recorded for the scoped contract.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":873,\"total_completion_tokens\":966,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":4058,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "{\"current_context_tokens\":692,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":918,\"total_interactions\":1,\"total_llm_duration_ms\":7454,\"total_prompt_tokens\":1011,\"total_reasoning_tokens\":808,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"36\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"NO\\\",\\n  \\\"output_result\\\": \\\"FAIL\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\\"B_CONTRACT\\\", \\\"B_OBSERVATION\\\"],\\n  \\\"summary\\\": \\\"Rule version matches, but observation shows unavailable (available:false) and does not deliver the expected COMPLETE result, so the assertion is not verified; outcome FAIL.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":588,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":966,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":4058,\\\"total_prompt_tokens\\\":873,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"38\",\"content\":\"\\n\\n{\\n  \\\"next_probe\\\": \\\"CHECK_EFFECT_RECEIPT\\\",\\n  \\\"hypothesis\\\": \\\"The qualification operation did not succeed, leaving the system unavailable and no corresponding effect receipt recorded for the scoped contract.\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"uncertainty\\\": \\\"It is uncertain whether the absence of a receipt reflects a true failure or a delay/missing log; checking receipts will clarify.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":692,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":918,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":7454,\\\"total_prompt_tokens\\\":1011,\\\"total_reasoning_tokens\\\":808,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Rule version matches, observation is fresh and matches scope; count=1 equals expected_count=1 and result=COMPLETE matches expected_result=COMPLETE within max_age, so assertion verified and outcome PASS.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":1197,\"total_completion_tokens\":902,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":11073,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"42\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"YES\\\",\\n  \\\"output_result\\\": \\\"PASS\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\",\\n    \\\"B_EVALUATED_AT\\\",\\n    \\\"B_TOOLS\\\"\\n  ],\\n  \\\"summary\\\": \\\"Rule version matches, observation is fresh and matches scope; count=1 equals expected_count=1 and result=COMPLETE matches expected_result=COMPLETE within max_age, so assertion verified and outcome PASS.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":774,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":902,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":11073,\\\"total_prompt_tokens\\\":1197,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        }
+      ],
+      "ProbeHistoryJSON": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"qualification-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"target\":\"web-app:/battery-qualification-b911dfd6834b\",\"version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\"}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"qualification-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"target\":\"web-app:/battery-qualification-b911dfd6834b\",\"version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\"}",
+          "observation": "{\"available\":true,\"partner\":\"qualification-operator\",\"attempt\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"target\":\"web-app:/battery-qualification-b911dfd6834b\",\"version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:iris\",\"observed_at\":5864747961}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"CHECK_EFFECT_RECEIPT\",\"receipt_id\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"iris\",\"complete\":true,\"source\":\"durable operator-scoped receipt ledger\"}"
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"qualification-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"target\":\"web-app:/battery-qualification-b911dfd6834b\",\"version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\"}",
+          "observation": "{\"available\":true,\"partner\":\"qualification-operator\",\"attempt\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"target\":\"web-app:/battery-qualification-b911dfd6834b\",\"version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:iris\",\"observed_at\":5864747961}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"FINAL\",\"receipt_id\":\"9c342f5d-efb9-4af7-8742-2f07e488564f\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"iris\",\"complete\":true,\"target_version\":\"9184456ece48b40a3d198b465faa9ca3034f506fc5ba7d8ac717f625d1261b18\",\"source\":\"configured management adapter target readback\"}"
+        }
+      ]
+    },
+    "receipt_id": "9c342f5d-efb9-4af7-8742-2f07e488564f",
+    "source_scope": "iris",
+    "target": "web-app:/battery-qualification-b911dfd6834b"
+  },
+  "elapsed_seconds": 26.152
+}

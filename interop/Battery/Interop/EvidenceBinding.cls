@@ -2,6 +2,7 @@
 /// Demo fixtures populate synthetic snapshots; external adapters are not yet connected.
 Class Battery.Interop.EvidenceBinding Extends %Persistent
 {
+Property Adapter As %String(MAXLEN=30);
 Property CaseId As %String(MAXLEN = 120) [ Required ];
 Property CaseJSON As %String(MAXLEN = "") [ Required ];
 Property ContractJSON As %String(MAXLEN = "") [ Required ];

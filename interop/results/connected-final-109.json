@@ -1,0 +1,113 @@
+{
+  "scope": "real native AI Hub review of a synthetic management operation",
+  "receipt": {
+    "id": "d1486f71-a1fa-439e-a180-5dea4d799432",
+    "intent_id": "ca13d378-8429-410a-adc6-f4da7b91a110",
+    "action_id": "task.run-once",
+    "target": "task:17",
+    "operator": "local-operator",
+    "idempotency_key": "e163d39f-7a29-4bbc-9f09-e4c5dbec6446",
+    "started_at": "2026-11-05T00:48:44.801535+00:00",
+    "status": "VERIFIED_SUCCESS",
+    "transport_result": "Synthetic adapter accepted the run request",
+    "finished_at": "2026-11-05T00:48:44.953873+00:00",
+    "before_evidence": [
+      "d29183d4-3d65-4d84-9e24-d742b650ec03",
+      "e65d8d82-7bd9-41bd-a8ac-506188bb8858",
+      "a36a18d2-814a-43c7-bd10-b26b87147429"
+    ],
+    "after_evidence": [
+      "53acbaa7-af07-4871-ab52-96b285e1b099"
+    ],
+    "explanation": "The isolated synthetic adapter's new terminal record establishes the outcome.",
+    "certificate_digest": "8a8251f0f7f9fb88d081a7834efaac27e4ae3db4e4b01874e442304e689f3fe9",
+    "history_before": [],
+    "verification_deadline": "2026-11-05T00:53:44.801540+00:00"
+  },
+  "case": {
+    "id": "case-83a260bec895beee7a8e1cd5fce25640",
+    "parent_id": "",
+    "state": "VERIFIED_MATCH",
+    "created_at": "2026-11-05 00:48:45",
+    "updated_at": "2026-11-05 00:48:59",
+    "result": {
+      "state": "VERIFIED_MATCH",
+      "assertion": "YES",
+      "output": "PASS",
+      "reviewer_assertion": "YES",
+      "reviewer_output": "PASS",
+      "applicability": "APPLICABLE",
+      "explanation": "Fresh scoped receipt measurement",
+      "proposed_probe": "CHECK_EFFECT_RECEIPT",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "response_id": "745",
+      "ProofJSON": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      },
+      "ReviewHistoryJSON": [
+        {
+          "state": "INVESTIGATION_PENDING_GATE",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "INAPPLICABLE",
+          "probe": "CHECK_EFFECT_RECEIPT",
+          "explanation": "The operation may have completed successfully but the observation record incorrectly reports unavailable due to a delayed update or stale read.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":850,\"total_completion_tokens\":960,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":3565,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "{\"current_context_tokens\":678,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":907,\"total_interactions\":1,\"total_llm_duration_ms\":5786,\"total_prompt_tokens\":987,\"total_reasoning_tokens\":803,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"736\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"NO\\\",\\n  \\\"output_result\\\": \\\"UNKNOWN\\\",\\n  \\\"applicability\\\": \\\"INAPPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"summary\\\": \\\"Rule needs available=true and exact scope match; observation shows available=false and no fresh match, so the assertion cannot be verified \u2013 verdict NO, output UNKNOWN.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":581,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":960,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":3565,\\\"total_prompt_tokens\\\":850,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"738\",\"content\":\"\\n\\n{\\n  \\\"next_probe\\\": \\\"CHECK_EFFECT_RECEIPT\\\",\\n  \\\"hypothesis\\\": \\\"The operation may have completed successfully but the observation record incorrectly reports unavailable due to a delayed update or stale read.\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_OBSERVATION\\\",\\n    \\\"B_CONTRACT\\\"\\n  ],\\n  \\\"uncertainty\\\": \\\"It is uncertain whether the false available flag reflects a genuine absence of effect or merely a stale observation.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":678,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":907,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":5786,\\\"total_prompt_tokens\\\":987,\\\"total_reasoning_tokens\\\":803,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Rule applicable; observation matches contract partner, attempt, target, version, is available and fresh (diff 11s < max_age 300). Count=1, result=COMPLETE match accepted, so PASS.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":1132,\"total_completion_tokens\":1203,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":4284,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"742\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"YES\\\",\\n  \\\"output_result\\\": \\\"PASS\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\",\\n    \\\"B_EVALUATED_AT\\\"\\n  ],\\n  \\\"summary\\\": \\\"Rule applicable; observation matches contract partner, attempt, target, version, is available and fresh (diff 11s < max_age 300). Count=1, result=COMPLETE match accepted, so PASS.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":735,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":1203,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":4284,\\\"total_prompt_tokens\\\":1132,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        }
+      ],
+      "ProbeHistoryJSON": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864748524}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"CHECK_EFFECT_RECEIPT\",\"receipt_id\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"source\":\"durable operator-scoped receipt ledger\"}"
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864748524}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"FINAL\",\"receipt_id\":\"d1486f71-a1fa-439e-a180-5dea4d799432\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"target_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"source\":\"configured management adapter target readback\"}"
+        }
+      ]
+    },
+    "receipt_id": "d1486f71-a1fa-439e-a180-5dea4d799432",
+    "source_scope": "synthetic",
+    "target": "task:17"
+  },
+  "state_transitions": [
+    "RUNNING",
+    "VERIFIED_MATCH"
+  ],
+  "elapsed_seconds": 14.099,
+  "duplicate_operation_receipt_equal": true,
+  "duplicate_case_id_equal": true
+}

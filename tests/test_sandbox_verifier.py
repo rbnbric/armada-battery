@@ -19,7 +19,7 @@ class SandboxVerifierTests(unittest.TestCase):
         )
         report = build_report()
         self.assertTrue(report["passed"])
-        self.assertEqual(report["core"]["tests_run"], 39)
+        self.assertEqual(report["core"]["tests_run"], 41)
         self.assertEqual(report["scenarios"]["passed"], 8)
         self.assertEqual(report["scenarios"]["total"], 8)
         self.assertEqual(set(report["excluded"]), {"tests/test_api.py"})

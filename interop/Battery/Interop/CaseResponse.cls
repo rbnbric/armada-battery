@@ -10,6 +10,7 @@ Property GateVerdict As %String(MAXLEN = 8);
 Property GateOutput As %String(MAXLEN = 20);
 Property ExecutedProbe As %String(MAXLEN = 40);
 Property ProofJSON As %String(MAXLEN = "");
+Property AgentCallsJSON As %String(MAXLEN = "");
 Property ReviewHistoryJSON As %String(MAXLEN = "");
 Property ProbeHistoryJSON As %String(MAXLEN = "");
 Property InvestigatorProbe As %String(MAXLEN = 60);

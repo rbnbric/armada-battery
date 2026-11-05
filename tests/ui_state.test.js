@@ -87,6 +87,7 @@ function harness() {
     window: { matchMedia: () => ({ matches: false }) },
     navigator: {},
     setInterval: () => {},
+    setTimeout, clearTimeout, AbortController,
     sessionStorage: {
       getItem: () => null,
       setItem: () => {},
@@ -203,4 +204,47 @@ test("lost execution response records its key and never retries the mutation", a
     1,
   );
   assert.equal(h.run("state.pending.key"), "one-execution-key");
+});
+
+test("a hung read times out even if fetch ignores AbortSignal", async () => {
+  const h = harness();
+  h.context.fetch = () => new Promise(() => {});
+  await assert.rejects(h.run('api("/api/state", {timeoutMs: 10})'), /timed out/);
+});
+test("body reads have the same deadline as the HTTP request", async () => {
+  const h = harness();
+  h.context.fetch = async () => ({ok:true,status:200,json:()=>new Promise(()=>{})});
+  await assert.rejects(h.run('api("/api/state", {timeoutMs: 10})'), /timed out/);
+});
+test("collectors render independently and an old refresh cannot overwrite a newer one", async () => {
+  const h = harness();
+  h.run('renderCollectors = () => {}');
+  let release;
+  const old = new Promise(r=>release=r);
+  h.context.fetch = async url => ({ok:true,status:200,json:()=>url === "/api/assurance" ? old : Promise.resolve(url.startsWith("/api/receipts")?{receipts:[]}:{marker:"old"})});
+  const first=h.run('load()');
+  await new Promise(r=>setImmediate(r));
+  assert.equal(h.run('state.server.marker'), 'old');
+  assert.equal(h.get('refresh').disabled,true);
+  h.context.fetch = async url => ({ok:true,status:200,json:async()=>url.startsWith("/api/receipts")?{receipts:[]}:{marker:"new"}});
+  await h.run('load()');
+  release({marker:"old"}); await first;
+  assert.equal(h.run('state.assurance.marker'),'new');
+  assert.equal(h.get('refresh').disabled,false);
+});
+
+
+test("native review response loss retains its admission key and never invokes an action", async () => {
+  const h = harness();
+  const storage = new Map();
+  h.context.localStorage = {getItem: k => storage.get(k), setItem: (k, v) => storage.set(k, v)};
+  h.run('var nativeRequests=[]; api=async (path,options)=>{nativeRequests.push({path,options}); throw new Error("lost admission response");}');
+  await h.run('submitNativeCase("receipt-1")');
+  await h.run('submitNativeCase("receipt-1")');
+  const requests = h.run('nativeRequests');
+  assert.equal(requests.length, 2);
+  assert.equal(requests[0].path, "/api/cases");
+  assert.equal(requests[1].path, "/api/cases");
+  assert.equal(requests[0].options.headers["Idempotency-Key"], requests[1].options.headers["Idempotency-Key"]);
+  assert.match(h.get("error-message").textContent, /does not repeat the operation/);
 });

@@ -4,11 +4,19 @@
 
 ## Interoperability agent preview for contest 49
 
-The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip/interop) branch runs a native IRIS AI Hub receipt workflow: small-agent review, larger-agent investigation, one executed read-only receipt probe, a bounded follow-up, and deterministic outcome checks. Raw model answers remain separate from verified measurements. [Setup and receipt contract](interop/RECEIPT_SOLVER.md).
+The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip) branch connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
 
-**Current native evidence:** 149/149 receipt-proof checks and 27/27 adversarial workflow checks. The longer frozen run completed all 240 cases: **230/240 expected dispositions, 10 unexpected review holds, and zero incorrect verified dispositions in this fixed corpus**. The holds exposed invalid model evidence citations and a missing bounded recovery path. [Full 30-round report](interop/results/solver-repeat-109.json) · [Results and limitations](interop/RECEIPT_SOLVER.md#thirty-round-repeatability-audit).
+**Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This proves one configuration workflow, not the functional behavior of the created service or all four administration workflows.
 
-The run took 2354.815 seconds and made 438 model calls. Receipt snapshots are synthetic and persisted in IRIS; external adapters and business repair execution remain unconnected. The [whole-system design audit](docs/SYSTEM_DESIGN_AUDIT.md) documents twelve findings, observed browser defects, deployment limitations, and the integration plan. The [earlier 24-case result](interop/results/solver-109.json) and [broader review corpus](interop/results/edge-109.json) remain available. The management demonstration below is separate.
+**Current qualification:** 75 Python tests, 8 UI tests, 149 native proof checks,
+31 solver faults, 26 agent faults, and 24/24 repeated real-model cases passed.
+One real invalid-citation response recovered through the new bounded repair.
+
+**Persistence:** replacing the native container preserved a completed case, its exact result, and its native response record. **Browser:** independent collectors have deadlines; a stalled panel no longer holds the whole overview. Agent cases expose the separate assertion and output judgments, review history, and actual evidence reads.
+
+[Run the connected workflow](docs/NATIVE_CASE_WORKFLOW.md) · [Implementation evidence and remaining limits](docs/IMPLEMENTATION_EVIDENCE.md) · [Original system audit](docs/SYSTEM_DESIGN_AUDIT.md).
+
+The frozen pre-repair run remains **230/240 expected dispositions, 10 unexpected review holds, and zero incorrect verified dispositions in that fixed corpus**. It took 2354.815 seconds and 438 model calls. Its synthetic observations and failures have not been rewritten as successes. [Original repeatability report](interop/results/solver-repeat-109.json).
 
 Armada Battery is an adversarially tested change-control engine for four
 consequential InterSystems IRIS administration workflows. It is built around the
@@ -90,7 +98,7 @@ docker compose run --rm proof
 Open `http://127.0.0.1:8080`. The default Compose path starts only the lightweight
 synthetic application; it does not download or wait for an IRIS image.
 
-The complete local gate is 48 backend tests, four UI lifecycle tests, and all
+The complete local gate is 75 backend tests, eight UI lifecycle tests, and all
 eight scenario demonstrations. The optional Compose overlay below adds a real IRIS
 Community Edition instance and starts conservatively with changes disabled.
 

@@ -124,8 +124,7 @@ class AdministrativeIntentMixin:
             "DispatchClass": dispatch_class,
             "Resource": resource,
             "Enabled": True,
-            "Type": 2,
-            "AutheEnabled": 32,
+            "AutheEnabled": "32",
             "UseCookies": "Never",
             "SessionScope": "Strict",
             "Description": "Created through Armada Battery",
@@ -323,10 +322,14 @@ class AdministrativeIntentMixin:
         try:
             self._apply_admin(cert["action_id"], cert["target"], cert["payload"])
             receipt.transport_result = "IRIS accepted the configuration request"
-        except AmbiguousTransport:
-            receipt.transport_result = "response unavailable"
-        except AdapterError:
-            receipt.transport_result = "IRIS request did not establish an outcome"
+        except AdapterError as exc:
+            # Keep the safe status, never the upstream body or arbitrary exception text.
+            status = getattr(exc, "http_status", None)
+            receipt.transport_result = (
+                f"IRIS returned HTTP {status}; readback required"
+                if isinstance(status, int) and 100 <= status <= 599
+                else "IRIS request did not establish an outcome"
+            )
         return self.reconcile_admin(receipt)
 
     def reconcile_admin(self, receipt: Receipt) -> dict[str, Any]:
@@ -373,6 +376,9 @@ class AdministrativeIntentMixin:
 
     @staticmethod
     def _normalized_field(key, value):
+        # SysAdmin accepts this mask as a string but reads it back as a number.
+        if key == "AutheEnabled" and isinstance(value, str) and value.isascii() and value.isdecimal():
+            return int(value)
         if key == "Roles" and isinstance(value, list):
             return sorted(value)
         if (

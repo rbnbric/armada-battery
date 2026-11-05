@@ -5,6 +5,7 @@ Include %occStatus
 Class Battery.Interop.CaseProcess Extends Ens.BusinessProcess
 {
 Parameter AGENTTIMEOUT = 90;
+Parameter CASEBUDGET = 180;
 
 Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Battery.Interop.CaseResponse) As %Status
 {
@@ -22,16 +23,29 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
         Set reviewRequest = ##class(Battery.Interop.AgentRequest).%New()
         Set reviewRequest.Role = "reviewer"
         Set reviewRequest.CaseJSON = pRequest.CaseJSON
-        Set sc = ..SendRequestSync("Battery.Agent", reviewRequest, .reviewResponse, ..#AGENTTIMEOUT)
-        If $$$ISERR(sc) { Set pResponse.Explanation = "Reviewer call failed" Return $$$OK }
-        If '$IsObject(reviewResponse) { Set pResponse.Explanation = "Reviewer returned no response" Return $$$OK }
-        Set pResponse.ReviewerUsageJSON = reviewResponse.UsageJSON
-        If '..ParseObject(reviewResponse.Content, .review, .detail) { Set pResponse.Explanation = "Invalid reviewer JSON: " _ detail Return $$$OK }
-        If '..ValidReview(review, facts) { Set pResponse.Explanation = "Reviewer output failed contract validation" Return $$$OK }
+        Set calls=[],started=##class(Battery.Interop.OutcomeProof).Now(),usage={}
+        For attempt=1:1:2 {
+            Set remaining=..#CASEBUDGET-(##class(Battery.Interop.OutcomeProof).Now()-started)
+            If remaining<1 { Set pResponse.Explanation="Reviewer deadline exhausted" Return $$$OK }
+            Set timeout=$SELECT(remaining<..#AGENTTIMEOUT:remaining,1:..#AGENTTIMEOUT)
+            If attempt=2 { Set timeout=$SELECT(timeout<45:timeout,1:45) }
+            Set sc=..SendRequestSync("Battery.Agent",reviewRequest,.reviewResponse,timeout)
+            If $$$ISERR(sc) { Set pResponse.Explanation="Reviewer call failed" Return $$$OK }
+            If '$IsObject(reviewResponse) { Set pResponse.Explanation="Reviewer returned no response" Return $$$OK }
+            Set reason=..ReviewError(reviewResponse.Content,facts,.review)
+            Do ..RecordCall(calls,"reviewer",attempt,reviewResponse,reason)
+            Do ..AddUsage(usage,reviewResponse.UsageJSON)
+            Set pResponse.AgentCallsJSON=calls.%ToJSON(),pResponse.ReviewerUsageJSON=usage.%ToJSON()
+            If reason="" { Quit }
+            If attempt=2 { Set pResponse.Explanation="Reviewer repair rejected: "_reason Return $$$OK }
+            Set ids=[],iterator=facts.%GetIterator()
+            While iterator.%GetNext(.factId,.value) { Do ids.%Push(factId) }
+            Set repair={"case":(case),"previous_response":($EXTRACT(reviewResponse.Content,1,8192)),"validation_error":(reason),"allowed_evidence_ids":(ids)}
+            Set reviewRequest.RepairJSON=repair.%ToJSON()
+        }
         Set pResponse.ReviewerVerdict = review.%Get("verdict")
         Set pResponse.ReviewerApplicability = review.%Get("applicability")
         Set pResponse.OutputResult = review.%Get("output_result")
-        Set pResponse.ReviewerUsageJSON = reviewResponse.UsageJSON
         Set pResponse.Explanation = review.%Get("summary")
         If (pResponse.ReviewerVerdict = "YES") && (pResponse.OutputResult = "PASS") {
             Set pResponse.State = "AGREED_PENDING_GATE"
@@ -43,12 +57,21 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
         Do handoff.%Set("case", case)
         Do handoff.%Set("review", review)
         Set investigateRequest.CaseJSON = handoff.%ToJSON()
-        Set sc = ..SendRequestSync("Battery.Agent", investigateRequest, .investigateResponse, ..#AGENTTIMEOUT)
+        Set remaining=..#CASEBUDGET-(##class(Battery.Interop.OutcomeProof).Now()-started)
+        If remaining<1 { Set pResponse.Explanation="Investigation deadline exhausted" Return $$$OK }
+        Set sc = ..SendRequestSync("Battery.Agent", investigateRequest, .investigateResponse, $SELECT(remaining<..#AGENTTIMEOUT:remaining,1:..#AGENTTIMEOUT))
         If $$$ISERR(sc) { Set pResponse.Explanation = "Investigator call failed after escalation" Return $$$OK }
         If '$IsObject(investigateResponse) { Set pResponse.Explanation = "Investigator returned no response" Return $$$OK }
         Set pResponse.InvestigatorUsageJSON = investigateResponse.UsageJSON
-        If '..ParseObject(investigateResponse.Content, .investigation, .detail) { Set pResponse.Explanation = "Invalid investigator JSON: " _ detail Return $$$OK }
-        If '..ValidInvestigation(investigation, facts) { Set pResponse.Explanation = "Investigator output failed contract validation" Return $$$OK }
+        Set reason=""
+        If '..ParseObject(investigateResponse.Content,.investigation,.detail) {
+            Set reason="Invalid investigator JSON"
+        } ElseIf '..ValidInvestigation(investigation,facts) {
+            Set reason="Investigator output failed contract validation"
+        }
+        Do ..RecordCall(calls,"investigator",1,investigateResponse,reason)
+        Set pResponse.AgentCallsJSON=calls.%ToJSON()
+        If reason'="" { Set pResponse.Explanation=reason Return $$$OK }
         Set pResponse.InvestigatorProbe = investigation.%Get("next_probe")
         Set pResponse.InvestigatorUsageJSON = investigateResponse.UsageJSON
         Set pResponse.Explanation = investigation.%Get("hypothesis")
@@ -57,6 +80,28 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
     } Catch ex {
         Set pResponse.Explanation = "Case held: " _ $SYSTEM.Status.GetErrorText(ex.AsStatus())
         Return $$$OK
+    }
+}
+
+/// A repair receives a precise contract error, never a silently rewritten answer.
+ClassMethod ReviewError(text As %String, facts As %DynamicObject, Output review As %DynamicObject) As %String
+{
+    If '..ParseObject(text,.review,.detail) { Return "Expected one complete JSON object" }
+    If review.%Size()'=5 { Return "Required keys: verdict, output_result, applicability, evidence_ids, summary; no extra keys" }
+    If '..ValidEvidence(review.%Get("evidence_ids"),facts) { Return "evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id" }
+    If '..ValidReview(review,facts) { Return "Invalid verdict, output_result, applicability, or summary; satisfy the original five-key contract" }
+    Return ""
+}
+ClassMethod RecordCall(list As %DynamicArray, role As %String, attempt As %Integer, response As Battery.Interop.AgentResponse, reason As %String)
+{
+    Do list.%Push({"role":(role),"attempt":(attempt),"response_id":(response.%Id()),"content":(response.Content),"validation_error":(reason),"usage":(response.UsageJSON)})
+}
+ClassMethod AddUsage(total As %DynamicObject, raw As %String)
+{
+    If raw="" { Quit }
+    Set value=##class(%DynamicObject).%FromJSON(raw)
+    For key="total_interactions","total_prompt_tokens","total_completion_tokens","total_reasoning_tokens","total_llm_duration_ms","total_tool_calls","total_tool_duration_ms","total_cache_creation_tokens","total_cache_read_tokens" {
+        Do total.%Set(key,total.%Get(key,0)+value.%Get(key,0))
     }
 }
 

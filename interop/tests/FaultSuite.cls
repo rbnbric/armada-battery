@@ -17,7 +17,8 @@ ClassMethod Run() As %Status
             Do ..Check(mode,"",wanted,1,$SELECT(mode="agree":0,1:1))
         }
         For mode="reviewer_error","reviewer_noresponse","reviewer_empty","reviewer_malformed","reviewer_array","reviewer_fabricated","reviewer_extra","reviewer_timeout" {
-            Do ..Check(mode,"","HELD_FOR_REVIEW",1,0)
+            Set attempts=$SELECT((mode="reviewer_error")||(mode="reviewer_noresponse")||(mode="reviewer_timeout"):1,1:2)
+            Do ..Check(mode,"","HELD_FOR_REVIEW",attempts,0)
         }
         For mode="investigator_error","investigator_noresponse","investigator_empty","investigator_malformed","investigator_array","investigator_fabricated","investigator_extra","investigator_probe","investigator_timeout" {
             Do ..Check(mode,"","HELD_FOR_REVIEW",1,1)

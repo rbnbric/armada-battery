@@ -2,7 +2,9 @@
 
 
 class AdapterError(RuntimeError):
-    pass
+    def __init__(self, message, *, http_status=None):
+        super().__init__(message)
+        self.http_status = http_status
 
 
 class AmbiguousTransport(AdapterError):

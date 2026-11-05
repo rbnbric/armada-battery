@@ -133,6 +133,16 @@ class RuntimeSafetyTests(unittest.TestCase):
             self.assertTrue(result["before_evidence"])
             self.assertTrue(result["after_evidence"])
 
+    def test_http_rejection_is_visible_without_leaking_upstream_body(self):
+        class Rejected(SyntheticTaskAdapter):
+            def put_web_app(self, name, payload):
+                raise AdapterError("private-server-body", http_status=400)
+        engine = BatteryEngine(Rejected(), ledger=Ledger())
+        receipt = engine.execute_admin(create_plan(engine), "http-rejection")
+        self.assertEqual(receipt["status"], "OUTCOME_UNKNOWN")
+        self.assertIn("HTTP 400", receipt["transport_result"])
+        self.assertNotIn("private-server-body", json.dumps(receipt))
+
     def test_readback_failure_is_not_mutation_failure(self):
         adapter = ReadbackFails()
         engine = BatteryEngine(adapter, ledger=Ledger())

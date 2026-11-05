@@ -1,5 +1,14 @@
 services:
+  native-init:
+    image: ${AIHUB_IMAGE:-iris-community:2027.1.0AI.109.0}
+    user: "root"
+    entrypoint: ["/bin/sh", "-c", "chown 51773:51773 /durable"]
+    volumes:
+      - native-system:/durable
   battery-interop:
+    depends_on:
+      native-init:
+        condition: service_completed_successfully
     cpus: 2
     mem_limit: 4g
     memswap_limit: 4g
@@ -12,7 +21,41 @@ services:
         AIHUB_IMAGE: ${AIHUB_IMAGE:-iris-community:2027.1.0AI.109.0}
     environment:
       NEBIUS_API_KEY: ${NEBIUS_API_KEY:?Set NEBIUS_API_KEY for the native AI Hub demo}
+      BATTERY_NATIVE_PASSWORD: ${BATTERY_NATIVE_PASSWORD:?Set a private adapter password}
+      BATTERY_MANAGEMENT_HOST: battery-web
+      BATTERY_ADAPTER_KEY: ${BATTERY_ADAPTER_KEY:?Set a private adapter key}
+      ISC_DATA_DIRECTORY: /durable/instance
       ISC_CPF_MERGE_FILE: /home/irisowner/dev/interop/merge.cpf
+    volumes:
+      - native-system:/durable
+      - native-data:/usr/irissys/mgr/BATTERY_DATA
+      - native-code:/usr/irissys/mgr/BATTERY_CODE
     ports:
-      - "127.0.0.1:52774:52773"
-      - "127.0.0.1:1973:1972"
+      - "127.0.0.1:${BATTERY_NATIVE_PORT:-52774}:52773"
+      - "127.0.0.1:${BATTERY_SUPER_PORT:-1973}:1972"
+
+  battery-web:
+    build:
+      context: .
+      target: runtime
+    cpus: 1
+    mem_limit: 512m
+    environment:
+      BATTERY_NATIVE_URL: http://battery-interop:52773/api/battery
+      BATTERY_NATIVE_USER: BatteryAdapterUser
+      BATTERY_NATIVE_PASSWORD: ${BATTERY_NATIVE_PASSWORD:?Set a private adapter password}
+      BATTERY_ADAPTER_KEY: ${BATTERY_ADAPTER_KEY:?Set a private adapter key}
+      BATTERY_ACCESS_KEY: ${BATTERY_ACCESS_KEY:?Set an operator access key}
+      BATTERY_LEDGER_PATH: /app/var/ledger.jsonl
+    volumes:
+      - management-data:/app/var
+    ports:
+      - "127.0.0.1:${BATTERY_WEB_PORT:-8080}:8080"
+    depends_on:
+      - battery-interop
+
+volumes:
+  native-system:
+  native-data:
+  native-code:
+  management-data:

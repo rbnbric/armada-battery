@@ -38,11 +38,11 @@ ClassMethod Check(mode As %String, round As %Integer, live As %Boolean)
     Set ^BatterySolverTest("mode")=mode,^BatterySolverTest("case")=id
     Do ..Seed(id,mode,.raw)
     Set wanted="HELD_FOR_EVIDENCE",verdict="NO",output="UNKNOWN"
-    If (mode="match")||(mode="zero")||(mode="recovered")||(mode="investigator_bad_recovered")||(mode="investigator_error_recovered") { Set wanted="VERIFIED_MATCH",verdict="YES",output="PASS" }
+    If (mode="repair_ids")||(mode="repair_json")||(mode="repair_extra")||(mode="match")||(mode="zero")||(mode="recovered")||(mode="investigator_bad_recovered")||(mode="investigator_error_recovered") { Set wanted="VERIFIED_MATCH",verdict="YES",output="PASS" }
     If mode="wrong_rule" { Set wanted="VERIFIED_MISMATCH",output="PASS" }
     If (mode="duplicate")||(mode="accurate_bad_output") { Set wanted="VERIFIED_MISMATCH",output="FAIL" }
     If mode="accurate_bad_output" { Set verdict="YES" }
-    If (mode="invalid_contract")||(mode="provider_error")||(mode="invalid_model")||(mode="changed_contract")||(mode="changed_case")||(mode="changed_observation")||(mode="initial_read_error")||(mode="probe_read_error")||(mode="final_read_error") { Set wanted="HELD_FOR_REVIEW" }
+    If (mode="repair_error")||(mode="invalid_contract")||(mode="provider_error")||(mode="invalid_model")||(mode="changed_contract")||(mode="changed_case")||(mode="changed_observation")||(mode="initial_read_error")||(mode="probe_read_error")||(mode="final_read_error") { Set wanted="HELD_FOR_REVIEW" }
     Set request=##class(Battery.Interop.CaseRequest).%New(),request.CaseJSON=raw
     Set sc=##class(Ens.Director).CreateBusinessService("Battery.Intake",.service)
     If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
@@ -54,6 +54,14 @@ ClassMethod Check(mode As %String, round As %Integer, live As %Boolean)
     Set passed=('(r.Explanation [ "Solver error:"))&&(r.State=wanted)&&(r.GateVerdict=verdict)&&(r.GateOutput=output)&&(reviews.%Size()<=2)&&(reads.%Size()<=3)
     If (mode="recovered")||(mode="investigator_bad_recovered")||(mode="investigator_error_recovered") { Set passed=passed&&(reviews.%Size()=2)&&(r.ExecutedProbe="CHECK_EFFECT_RECEIPT") }
     If (mode="unbound")||(mode="input_tamper")||(mode="invalid_contract") { Set passed=passed&&(reviews.%Size()=0) }
+    If (mode="repair_ids")||(mode="repair_json")||(mode="repair_extra")||(mode="repair_error")||(mode="invalid_model") {
+        Set passed=passed&&($Get(^BatterySolverTest("calls"))=2)
+        If (mode'="repair_error")&&(reviews.%Size()>0) {
+            Set entry=reviews.%Get(0),calls=##class(%DynamicArray).%FromJSON(entry.%Get("agent_calls"))
+            Set first=calls.%Get(0)
+            Set passed=passed&&(calls.%Size()=2)&&(first.%Get("validation_error")'="")
+        }
+    }
     Set row={"case_id":(id),"mode":(mode),"round":(round),"live":(live),"passed":(passed),"state":(r.State),"expected_state":(wanted),"gate_verdict":(r.GateVerdict),"gate_output":(r.GateOutput),"expected_verdict":(verdict),"expected_output":(output),"raw_verdict":(r.ReviewerVerdict),"raw_output":(r.OutputResult),"executed_probe":(r.ExecutedProbe),"explanation":(r.Explanation),"reviews":(reviews),"reads":(reads),"response_id":(r.%Id())}
     Write !,"SOLVER_CASE=",row.%ToJSON(),!
 }
@@ -69,7 +77,7 @@ ClassMethod Run(live As %Boolean = 0, rounds As %Integer = 1) As %Status
             If live {
                 For mode="match","missing","recovered","wrong_partner","zero","wrong_rule","duplicate","accurate_bad_output" { Do ..Check(mode,round,1) }
             } Else {
-                For mode="match","missing","recovered","wrong_partner","wrong_attempt","wrong_target","wrong_version","stale","future","string_count","zero","wrong_rule","duplicate","accurate_bad_output","invalid_contract","unbound","input_tamper","provider_error","invalid_model","changed_contract","changed_case","changed_observation","initial_read_error","probe_read_error","final_read_error","investigator_bad_recovered","investigator_error_recovered" { Do ..Check(mode,round,0) }
+                For mode="match","missing","recovered","wrong_partner","wrong_attempt","wrong_target","wrong_version","stale","future","string_count","zero","wrong_rule","duplicate","accurate_bad_output","invalid_contract","unbound","input_tamper","provider_error","invalid_model","changed_contract","changed_case","changed_observation","initial_read_error","probe_read_error","final_read_error","investigator_bad_recovered","investigator_error_recovered","repair_ids","repair_json","repair_extra","repair_error" { Do ..Check(mode,round,0) }
             }
         }
     } Catch ex { Set result=ex.AsStatus() Write !,"SOLVER_ERROR=",$SYSTEM.Status.GetErrorText(result),! }

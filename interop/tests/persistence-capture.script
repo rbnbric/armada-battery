@@ -1,0 +1,11 @@
+zn "BATTERY"
+set stamp=$order(^BatteryCaseList(""),-1),id=$order(^BatteryCaseList(stamp,""))
+set r=##class(Battery.Interop.CaseRecord).%OpenId(id)
+if '$isobject(r) { write "PERSISTENCE_ERROR=no case",! halt }
+if r.State'="VERIFIED_MATCH" { write "PERSISTENCE_ERROR=latest case not verified",! halt }
+set result=##class(%DynamicObject).%FromJSON(r.ResultJSON),response=##class(Battery.Interop.CaseResponse).%OpenId(result.%Get("response_id"))
+if '$isobject(response) { write "PERSISTENCE_ERROR=native response not retained",! halt }
+set captured={"case_id":(id),"response_id":(response.%Id()),"result_json":(r.ResultJSON),"response_state":(response.State)}
+set ^BatteryPersistenceProof=captured.%ToJSON()
+write "PERSISTENCE_CAPTURE_OK",!
+halt

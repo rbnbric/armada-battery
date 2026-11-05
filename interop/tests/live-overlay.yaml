@@ -1,0 +1,11 @@
+# Explicit qualification overlay for a disposable native installation only.
+services:
+  battery-web:
+    environment:
+      BATTERY_IRIS_URL: http://battery-interop:52773/api/admin
+      BATTERY_IRIS_USER: BatteryFixtureUser
+      BATTERY_IRIS_PASSWORD: ${BATTERY_NATIVE_PASSWORD:?Set the fixture password}
+      BATTERY_ALLOW_CHANGES: "true"
+      BATTERY_RULE_VALIDATION: LIVE_OBSERVED
+      BATTERY_OPERATOR_NAME: qualification-operator
+      BATTERY_LEDGER_PATH: /app/var/live-qualification.jsonl

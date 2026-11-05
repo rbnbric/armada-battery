@@ -130,14 +130,14 @@ class V1PathTests(unittest.TestCase):
         self.assertEqual(rows[0]["TaskId"], 7)
         self.assertEqual(rows[0]["Result"], "Success")
 
-    def test_web_app_namespace_spelling_is_bridged_both_ways(self):
+    def test_web_app_write_preserves_vendor_required_namespace_spelling(self):
         adapter = RecordingIrisAdapter()
         app = adapter.get_web_app("/api/demo")
         adapter.put_web_app("/api/demo", {"NameSpace": "USER"})
         body = adapter.calls[-1][3]
         self.assertEqual(app["NameSpace"], "USER")
-        self.assertEqual(body.get("Namespace"), "USER")
-        self.assertNotIn("NameSpace", body)
+        self.assertEqual(body.get("NameSpace"), "USER")
+        self.assertNotIn("Namespace", body)
 
 
 if __name__ == "__main__":

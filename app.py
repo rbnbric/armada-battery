@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from battery.task_slice import AdapterError, engine_from_environment
 from battery.scenarios import run_scenarios
 from battery.ledger import sanitize
+from battery.ship_native_cases import NativeCases
 
 
 ROOT = Path(__file__).parent
@@ -105,6 +106,7 @@ async def access_boundary(request, call_next):
     if (
         request.url.path.startswith("/api/")
         and request.url.path not in {"/api/health", "/api/session"}
+        and not request.url.path.startswith("/api/native-evidence/")
         and not authenticated(request)
     ):
         return JSONResponse({"detail": "Operator sign-in required"}, status_code=401)
@@ -343,3 +345,57 @@ def health():
         },
         status_code=200 if valid else 503,
     )
+
+
+class NativeCaseRequest(BaseModel):
+    receipt_id: str
+    parent_id: str = ""
+
+
+def native_cases():
+    return NativeCases(engine)
+
+
+@app.get("/api/cases")
+def list_native_cases():
+    try:
+        return native_cases().list(current_operator())
+    except (AdapterError, ValueError) as exc:
+        raise HTTPException(502, str(exc)) from exc
+
+
+@app.get("/api/cases/{case_id}")
+def get_native_case(case_id: str):
+    try:
+        return native_cases().get(case_id, current_operator())
+    except KeyError as exc:
+        raise HTTPException(404, "Case not found") from exc
+    except (AdapterError, ValueError) as exc:
+        raise HTTPException(502, str(exc)) from exc
+
+
+@app.post("/api/cases")
+def submit_native_case(body: NativeCaseRequest, idempotency_key: str = Header(..., alias="Idempotency-Key")):
+    try:
+        return native_cases().submit(body.receipt_id, idempotency_key, current_operator(), body.parent_id)
+    except KeyError as exc:
+        raise HTTPException(404, "Receipt not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except AdapterError as exc:
+        raise HTTPException(502, str(exc)) from exc
+
+
+@app.get("/api/native-evidence/{case_id}")
+def native_evidence(case_id: str, phase: str, x_battery_adapter: str = Header(default="")):
+    expected = os.environ.get("BATTERY_ADAPTER_KEY", "")
+    if len(expected) < 32 or not hmac.compare_digest(expected, x_battery_adapter):
+        raise HTTPException(401, "Native adapter authentication required")
+    try:
+        return native_cases().evidence(case_id, phase)
+    except KeyError as exc:
+        raise HTTPException(404, "Case not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except AdapterError as exc:
+        raise HTTPException(502, "Evidence source unavailable") from exc

@@ -9,9 +9,13 @@ Method RunAgent(pRequest As Battery.Interop.AgentRequest, Output pResponse As Ba
     Set pResponse=##class(Battery.Interop.AgentResponse).%New()
     Set pResponse.UsageJSON="{}"
     Set r={"verdict":"YES","output_result":"PASS","applicability":"APPLICABLE","summary":"Deliberately overconfident test reviewer","evidence_ids":["B_OBSERVATION"]}
+    If (mode="repair_error")&&(n=2) { Return $$$ERROR($$$GeneralError,"Injected repair provider error") }
+    If ((mode="repair_ids")||(mode="repair_error"))&&(n=1) { Do r.%Set("evidence_ids",["receipt-review"]) }
+    If (mode="repair_extra")&&(n=1) { Do r.%Set("execute","SEND_NOW") }
     If mode="invalid_model" { Do r.%Set("evidence_ids",["invented"]) }
     If ((mode="investigator_bad_recovered")||(mode="investigator_error_recovered"))&&(n=1) { Do r.%Set("verdict","NO"),r.%Set("output_result","UNKNOWN") }
     Set pResponse.Content=r.%ToJSON()
+    If (mode="repair_json")&&(n=1) { Set pResponse.Content="{" }
     If (pRequest.Role="investigator")&&(mode="investigator_bad_recovered") { Set pResponse.Content="{" }
     If (pRequest.Role="investigator")&&(mode="investigator_error_recovered") { Return $$$ERROR($$$GeneralError,"Injected investigator failure after valid reviewer") }
     If (n=1)&&((mode="changed_contract")||(mode="changed_case")||(mode="changed_observation")) {

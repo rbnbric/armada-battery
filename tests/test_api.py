@@ -184,3 +184,38 @@ class ApiTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NativeApiBoundaryTests(unittest.TestCase):
+    def setUp(self):
+        web.engine = BatteryEngine(SyntheticTaskAdapter(), ledger=Ledger())
+        self.client = TestClient(web.app)
+
+    def test_disabled_native_service_explains_missing_connection(self):
+        with patch.dict(os.environ, {"BATTERY_NATIVE_URL": "", "BATTERY_ACCESS_KEY": ""}):
+            response = self.client.get("/api/cases")
+            self.assertEqual(response.status_code, 200)
+            self.assertFalse(response.json()["available"])
+
+    def test_private_evidence_requires_separate_adapter_credential(self):
+        with patch.dict(os.environ, {"BATTERY_ADAPTER_KEY": "k" * 40, "BATTERY_ACCESS_KEY": "a" * 40}):
+            self.client.post("/api/session", json={"access_key": "a" * 40})
+            self.assertEqual(self.client.get("/api/native-evidence/x?phase=FINAL").status_code, 401)
+            self.assertEqual(self.client.get("/api/native-evidence/x?phase=FINAL", headers={"X-Battery-Adapter": "wrong"}).status_code, 401)
+            self.assertEqual(self.client.get("/api/native-evidence/x?phase=FINAL", headers={"X-Battery-Adapter": "k" * 40}).status_code, 404)
+
+    def test_case_routes_require_operator_login_and_same_origin(self):
+        with patch.dict(os.environ, {"BATTERY_ACCESS_KEY": "a" * 40}):
+            self.assertEqual(self.client.get("/api/cases").status_code, 401)
+            self.assertEqual(self.client.post("/api/cases", json={"receipt_id": "x"}).status_code, 401)
+            self.client.post("/api/session", json={"access_key": "a" * 40})
+            self.assertEqual(self.client.post("/api/cases", json={"receipt_id": "x"}, headers={"Origin": "https://foreign.invalid"}).status_code, 403)
+
+    def test_browser_cannot_supply_authoritative_native_observations(self):
+        from unittest.mock import Mock
+        bridge = Mock()
+        bridge.submit.return_value = {"id": "case-1", "state": "QUEUED"}
+        with patch.object(web, "native_cases", return_value=bridge), patch.dict(os.environ, {"BATTERY_ACCESS_KEY": ""}):
+            response = self.client.post("/api/cases", json={"receipt_id": "receipt-1", "initial": {"available": True}, "contract": {"accept": "anything"}}, headers={"Idempotency-Key": "request-key-000001"})
+            self.assertEqual(response.status_code, 200)
+            bridge.submit.assert_called_once_with("receipt-1", "request-key-000001", "local-operator", "")
