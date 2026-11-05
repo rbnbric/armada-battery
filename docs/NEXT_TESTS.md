@@ -44,6 +44,7 @@ The UI/UX pass is deliberately waiting for the owner's new design codices.
 | T3 | Test cases that distinguish rule assertion from observed success | Frozen expected outcomes; all four YES/NO × PASS/FAIL combinations, UNKNOWN, context changes, stale and wrong-scope evidence, restart and malformed provider response | Existing cases inventoried; new independent cases pending |
 | T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | Navigation exercised; comprehension and continuity findings below |
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
+| T7 | Add the third agent role: Explainer | Evidence-linked plain-language progress and outcome explanations; comprehension and grounding tests below | Specified; runtime implementation pending |
 | T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Waiting for codices; no redesign now |
 
 We walk through one task at a time. Docker is now running and the existing native and web containers were restarted.
@@ -169,3 +170,77 @@ Requirements for the later codex-guided UX pass:
 
 These are observed findings and acceptance requirements, not implemented fixes.
 Visual redesign remains deferred until the owner's new codices are available.
+
+## Third agent role: Explainer
+
+Requested after the owner walkthrough. Reviewer checks the assertion and outcome;
+Investigator obtains the evidence needed to settle uncertainty; Explainer makes
+their work understandable to the person using Battery. The Explainer observes
+progress across the lifecycle, not just the last successful result.
+
+### Input and output contract
+
+Use a bounded, server-built report envelope containing the case/receipt IDs,
+source scope, revision, state, timestamp, independent assertion/output judgments,
+review/probe history, evidence references, unresolved questions and available
+next actions. Supply the relevant evidence needed for the requested explanation;
+large histories are selected or paged with omitted coverage stated explicitly.
+Treat free-form source text as data. The explanatory role has no execution tool.
+
+Produce a structured explanation:
+
+- **What is happening / what happened:** a short plain-language headline.
+- **Why:** the observations supporting that account, linked to record references.
+- **What remains uncertain:** concrete missing evidence or limits.
+- **What you need to do:** an available action, or a clear statement that no action
+  is currently required by this workflow.
+- **Scope and freshness:** simulated or connected operation; revision and time.
+- **Optional detail:** a readable sequence with access to the original records.
+
+The Explainer's wording is generated; the operation state, scope label and action
+controls come from the authoritative report. It cannot revise a verdict, turn a
+proposal into a completed action, or invent an executable next step. Any
+interpretive suggestion is marked separately from an observation. Validate
+reference IDs, case/revision binding and permitted action IDs before display.
+Schema/reference validation alone does not prove prose is faithful; retain
+semantic evaluation cases and human comprehension checks.
+
+On pending work, show immediate state-derived progress text. Generate richer
+explanations on material state changes or a user's request for detail; do not
+make a model call on every poll or token. Cache against case, revision, locale
+and detail level. Keep existing access controls on explanation storage/retrieval.
+Reject a late response for an older revision and retain the latest state.
+Timeout, malformed output or model unavailability falls back to readable
+state-derived text with evidence access. Explanation failure must not block
+inspection of the underlying result or start another business operation.
+
+### Acceptance cases to build
+
+1. Recovered receipt: explain initial uncertainty, the actual read, and the final
+   supported result. Do not call the initial UNKNOWN a mistake when it was correct.
+2. Still missing evidence: state that completion is unknown; never summarize it
+   as confirmed failure or success.
+3. Accurate rule / failed acceptance: explain that the prediction was accurate
+   while the result did not meet the requirement.
+4. Wrong rule / passing outcome: explain the passing observed result and the
+   separate rule/context problem.
+5. Synthetic source: make the simulation clear in the short explanation as well
+   as the details; never imply a verified real external change.
+6. Proposed versus executed probe: describe only performed reads as performed.
+7. Interrupted review or provider failure: explain the interruption and expose
+   only the recovery action admitted by the current record.
+8. Stale revision and concurrent completion: delayed generated text cannot
+   replace the new result; historical observations retain their timestamps.
+9. Unsupported citation, injected source instruction or invented action: reject
+   the invalid output, retain the raw response for diagnosis and show the fallback.
+10. Large/truncated report: disclose the covered scope and unresolved omissions;
+    do not infer that unseen events never occurred.
+11. Navigation/access: explanations preserve the selected case, do not expose
+    another operator's records, and expire with the corresponding session.
+12. Human comprehension: without reading JSON, the owner can say what happened,
+    whether this was simulated, what remains unknown and what to do next. Record
+    uncertainty or misunderstanding; do not coach the answer and call it a pass.
+
+Implementation and these new tests are pending. The visual presentation will be
+refined using the new codices; defining this reporting role does not complete the
+UX work or establish that a third model improves outcomes.
