@@ -53,7 +53,10 @@ ClassMethod Submit() As %Status
     Set locked=0
     Try {
         If %request.Content.Size>131072 { Return ..Reply({"detail":"Case envelope too large"},"413 Content Too Large") }
-        Set body=##class(%DynamicObject).%FromJSON(%request.Content)
+        Try { Set body=##class(%DynamicObject).%FromJSON(%request.Content) }
+        Catch parseError { Return ..Reply({"detail":"Request must be a JSON object"},"400 Bad Request") }
+        If '$IsObject(body) { Return ..Reply({"detail":"Request must be a JSON object"},"400 Bad Request") }
+        If 'body.%IsA("%DynamicObject") { Return ..Reply({"detail":"Request must be a JSON object"},"400 Bad Request") }
         Set case=body.%Get("case"),contract=body.%Get("contract"),initial=body.%Get("initial"),parent=body.%Get("parent_id","")
         If '##class(Battery.Interop.CaseProcess).ValidCase(case) { Return ..Reply({"detail":"Invalid case"},"400 Bad Request") }
         If '$IsObject(contract) { Return ..Reply({"detail":"Missing contract"},"400 Bad Request") }

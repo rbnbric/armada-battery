@@ -15,8 +15,10 @@ cd armada-battery
 ```
 
 The default branch and hosted walkthrough contain the earlier management release.
-For the fixed 1.0.3 code snapshot, use commit
-`f3f438a177b27f834aa022ebb7fc810acd8a4b15`.
+The original 1.0.3 code snapshot is
+`f3f438a177b27f834aa022ebb7fc810acd8a4b15`. Use the current branch head for the
+subsequent functional REST fixes; the original commit is for reproducing the
+historical baseline.
 
 Load the AI Hub EAP build 109 image using the vendor's
 [AI Hub EAP instructions](https://github.com/intersystems-community/ai-hub-eap).
@@ -153,3 +155,9 @@ check the result state, probe history, native response ID and final marker.
 See [the implementation evidence report](IMPLEMENTATION_EVIDENCE.md) for the actually executed checks,
 source hashes and remaining unqualified boundaries. The earlier
 [SYSTEM_DESIGN_AUDIT](SYSTEM_DESIGN_AUDIT.md) remains the historical baseline.
+
+## Functional REST follow-up
+
+[REST service qualification](REST_SERVICE_EVIDENCE.md) provides the reproducible
+HTTP checks for a Battery-created CaseAPI application and the native fixes they
+exposed. This is separate from the paid AI Hub integration runner above.

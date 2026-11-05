@@ -93,7 +93,11 @@ ClassMethod Capacity(owner As %String, operator As %String) As %Boolean
 ClassMethod Budget(owner As %String, operator As %String) As %DynamicObject
 {
     Set day=+$HOROLOG
-    Return {"operator_daily_used":($Get(^BatteryCaseBudget(day,owner,operator),0)),"operator_daily_limit":(..Limit("OPERATOR_DAILY_LIMIT",20,1,1000)),"service_daily_used":($Get(^BatteryCaseBudget(day,"all"),0)),"service_daily_limit":(..Limit("DAILY_LIMIT",100,1,10000)),"operator_active_limit":(..Limit("OPERATOR_ACTIVE_LIMIT",2,1,16)),"service_active_limit":(..Limit("ACTIVE_LIMIT",4,1,32))}
+    // An account-wide list/maintenance request has no operator filter.
+    // IRIS globals reject an empty subscript; unscoped usage is not zero usage.
+    Set out={"operator_scoped":(operator'=""),"operator_daily_used":null,"operator_daily_limit":(..Limit("OPERATOR_DAILY_LIMIT",20,1,1000)),"service_daily_used":($Get(^BatteryCaseBudget(day,"all"),0)),"service_daily_limit":(..Limit("DAILY_LIMIT",100,1,10000)),"operator_active_limit":(..Limit("OPERATOR_ACTIVE_LIMIT",2,1,16)),"service_active_limit":(..Limit("ACTIVE_LIMIT",4,1,32))}
+    If operator'="" { Do out.%Set("operator_daily_used",$Get(^BatteryCaseBudget(day,owner,operator),0)) }
+    Return out
 }
 ClassMethod Reserve(r As Battery.Interop.CaseRecord)
 {

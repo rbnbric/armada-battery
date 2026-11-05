@@ -6,7 +6,7 @@
 
 The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip) branch connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
 
-**Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This proves one configuration workflow, not the functional behavior of the created service or all four administration workflows.
+**Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
 
 **Latest application qualification:** 86 Python tests and 13 UI tests passed,
 plus phone/desktop session-expiry browser checks and four installed HTTP checks.
@@ -244,8 +244,10 @@ The new implementation is on `contest-49-wip`; the default `main` branch and
 hosted Pages walkthrough retain the earlier management release. Clone the explicit
 branch as shown above. The 1.0.3 tested code snapshot is
 [`f3f438a`](https://github.com/rbnbric/armada-battery/commit/f3f438a177b27f834aa022ebb7fc810acd8a4b15).
-For a fixed checkout, run `git checkout f3f438a177b27f834aa022ebb7fc810acd8a4b15`
-after cloning. Later documentation corrections may be present on the branch.
+That commit preserves the original published measurement baseline. The current
+branch also contains the subsequent native REST fixes and their
+[functional qualification](docs/REST_SERVICE_EVIDENCE.md); use the branch head
+for the corrected implementation.
 
 The credential-free demonstration covers the synthetic engine. The native agent
 path requires the separately obtained AI Hub EAP image and configured model access.

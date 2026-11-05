@@ -1,0 +1,259 @@
+{
+  "date_utc": "2026-11-05",
+  "functional": {
+    "scope": "HTTP behavior of a temporary REST application created through Battery on real IRIS",
+    "started_utc": "2026-11-05T04:17:36Z",
+    "application": "/battery-functional-2db60bcee66f",
+    "dispatch_class": "Battery.Interop.CaseAPI",
+    "checks": [
+      {
+        "name": "battery_creation_receipt",
+        "passed": true,
+        "status": "VERIFIED_SUCCESS"
+      },
+      {
+        "name": "execution_key_reuses_receipt",
+        "passed": true
+      },
+      {
+        "name": "configuration_readback",
+        "passed": true,
+        "namespace": "BATTERY",
+        "dispatch_class": "Battery.Interop.CaseAPI",
+        "authentication_mask": 32
+      },
+      {
+        "name": "anonymous_denied",
+        "passed": true,
+        "status": 401
+      },
+      {
+        "name": "wrong_password_denied",
+        "passed": true,
+        "status": 401
+      },
+      {
+        "name": "authenticated_list_json",
+        "passed": true,
+        "status": 200,
+        "content_type": "application/json",
+        "diagnostic": null,
+        "direct_status": 200,
+        "direct_diagnostic": null
+      },
+      {
+        "name": "routed_list_matches_native_api",
+        "passed": true,
+        "items": 5
+      },
+      {
+        "name": "case_detail_matches_native_api",
+        "passed": true,
+        "status": 200,
+        "state": "VERIFIED_MATCH"
+      },
+      {
+        "name": "valid_post_replays_existing_case",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "name": "foreign_native_owner_denied",
+        "passed": true,
+        "status": 404
+      },
+      {
+        "name": "foreign_operator_denied",
+        "passed": true,
+        "status": 404
+      },
+      {
+        "name": "missing_case_404",
+        "passed": true,
+        "status": 404
+      },
+      {
+        "name": "missing_route_404",
+        "passed": true,
+        "status": 404
+      },
+      {
+        "name": "invalid_case_400",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "malformed_json_400",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "json_array_400",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "json_null_400",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "json_string_400",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "rejected_posts_add_no_cases",
+        "passed": true
+      },
+      {
+        "name": "rejected_posts_spend_no_review_budget",
+        "passed": true
+      },
+      {
+        "name": "configuration_removed",
+        "passed": true
+      },
+      {
+        "name": "removed_route_unavailable",
+        "passed": true,
+        "status": 404
+      }
+    ],
+    "model_calls": 0,
+    "baseline_commit": "83d17afa658ed316cfd118795e43080ff0b4c7f1",
+    "source_sha256": {
+      "app.py": "0ac214b17815e66ab1473d2e8d876acbd796515ac6c54345e57a9a68d2cc5fe4",
+      "battery/admin_slice.py": "fe6aa5b7b2ec85ac08f3b04856096e217f8c453840985a70ba040a69a0e5e0db",
+      "battery/task_slice.py": "9c30fbf50df4045734e784607231a7e4ec54a1c96a9c8018c3c6b4836ae06977",
+      "interop/tests/verify-rest-service.py": "51625d0a31a84fccd95492d1ac5b047d4d3c22e7312915d35919df74eedc8aba"
+    },
+    "passed": 22,
+    "total": 22,
+    "ok": true
+  },
+  "native_lifecycle": {
+    "passed": 19,
+    "total": 19,
+    "checks": [
+      {
+        "name": "two active cases exhaust operator slots",
+        "passed": 1
+      },
+      {
+        "name": "different operator retains capacity",
+        "passed": 1
+      },
+      {
+        "name": "queued case receives lease",
+        "passed": 1
+      },
+      {
+        "name": "duplicate delivery cannot claim running case",
+        "passed": 1
+      },
+      {
+        "name": "valid lease accepted",
+        "passed": 1
+      },
+      {
+        "name": "foreign lease denied",
+        "passed": 1
+      },
+      {
+        "name": "late successful completion rejected",
+        "passed": 1
+      },
+      {
+        "name": "expired run remains held without fabricated result",
+        "passed": 1
+      },
+      {
+        "name": "expired worker cannot dispatch further provider calls",
+        "passed": 1
+      },
+      {
+        "name": "queue gap recovers without replay",
+        "passed": 1
+      },
+      {
+        "name": "delayed queued delivery denied",
+        "passed": 1
+      },
+      {
+        "name": "expiry returns operator slots",
+        "passed": 1
+      },
+      {
+        "name": "current worker completes",
+        "passed": 1
+      },
+      {
+        "name": "completion releases active slot",
+        "passed": 1
+      },
+      {
+        "name": "duplicate completion cannot overwrite result",
+        "passed": 1
+      },
+      {
+        "name": "unscoped budget avoids empty global subscript and reports unknown operator usage",
+        "passed": 1
+      },
+      {
+        "name": "scoped budget retains the operator counter",
+        "passed": 1
+      },
+      {
+        "name": "daily budget persists outside worker memory",
+        "passed": 1
+      },
+      {
+        "name": "daily operator budget does not block another operator",
+        "passed": 1
+      }
+    ]
+  },
+  "installed_native_source_sha256": {
+    "interop/Battery/Interop/CaseAPI.cls": "f61fabc555b7d3887a547e0109b7e10ccc55de5d32a1e407663c2049a0521d0a",
+    "interop/Battery/Interop/CaseRecord.cls": "dce6e2e9c3ddfdc3d3e966de5281c2906abdfe8c3aa57a90b71a5dfbb49e11ed"
+  },
+  "qualification_source_sha256": {
+    "interop/tests/LifecycleSuite.cls": "007cfe8e033e093008abafca5d06eb2d7ac453c28fcf22aae25a16495187a1e5",
+    "interop/tests/configure-rest-fixture.script": "e56bcde65fe811f68e4f66d8f69a69b255340518d1594afb72f767cbe66e9328",
+    "interop/tests/remove-rest-fixture.script": "815cf7f63024a9cdd4b49a32cf065bc725c60a6ce9026759cd5ade211f2fb902",
+    "interop/tests/verify-rest-service.py": "51625d0a31a84fccd95492d1ac5b047d4d3c22e7312915d35919df74eedc8aba"
+  },
+  "before_fixes": [
+    {
+      "stage": "initial functional run",
+      "executed_checks": 8,
+      "passed": 7,
+      "stopped_at": "authenticated_list_json",
+      "status": 500,
+      "cause": "Budget lookup used an empty operator global subscript; direct native route failed too. Remaining checks had not run."
+    },
+    {
+      "stage": "after unscoped budget fix",
+      "executed_checks": 21,
+      "passed": 18,
+      "failures": {
+        "malformed_json_400": 500,
+        "json_null_400": 500,
+        "json_string_400": 500
+      }
+    }
+  ],
+  "cleanup": {
+    "temporary_application_removed": true,
+    "removed_route_status": 404,
+    "temporary_native_identity_and_role_removed": true,
+    "source": "Functional result plus completed qualification job cleanup marker"
+  },
+  "boundaries": [
+    "Real IRIS HTTP service behavior through a temporary Battery-created application with Battery.Interop.CaseAPI dispatch.",
+    "Positive POST replays an existing terminal case; it does not dispatch a new model review.",
+    "Model calls: zero. Historical model-review evidence remains separate.",
+    "No load, arbitrary application behavior, or all-route correctness claim."
+  ]
+}

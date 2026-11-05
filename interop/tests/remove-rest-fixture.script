@@ -1,0 +1,5 @@
+zn "%SYS"
+if ##class(Security.Users).Exists("BatteryRestFixtureUser") { set sc=##class(Security.Users).Delete("BatteryRestFixtureUser") if $SYSTEM.Status.IsError(sc) { write "REST_FIXTURE_CLEANUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+if ##class(Security.Roles).Exists("BatteryRestFixtureRole") { set sc=##class(Security.Roles).Delete("BatteryRestFixtureRole") if $SYSTEM.Status.IsError(sc) { write "REST_FIXTURE_CLEANUP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+write "REST_FIXTURE_USER_REMOVED",!
+halt

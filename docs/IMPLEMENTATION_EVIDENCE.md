@@ -147,3 +147,10 @@ Docker qualifications did execute. No broad fleet deployment is claimed.
 The results and open boundaries above describe the original integration run.
 [SERVICE_EVIDENCE](SERVICE_EVIDENCE.md) records the later lease recovery, admission
 budget and shared-identity qualification; it does not alter these historical results.
+
+## Subsequent functional REST qualification
+
+[REST_SERVICE_EVIDENCE](REST_SERVICE_EVIDENCE.md) records later HTTP requests
+through a Battery-created application, two reproduced native faults, and the
+passing 22-check functional and 19-check lifecycle results. These follow-up
+measurements do not change the original configuration-only experiment above.

@@ -49,6 +49,10 @@ ClassMethod Run() As %Status
         Do ..Assert($$$ISERR(again),"duplicate completion cannot overwrite result")
         Set day=+$HOROLOG,prior=$Get(^BatteryCaseBudget(day,"lifecycle-test","alice"),0)
         Set ^BatteryCaseBudget(day,"lifecycle-test","alice")=20
+        Set budget=##class(Battery.Interop.CaseRecord).Budget("lifecycle-test","")
+        Do ..Assert(('budget.%Get("operator_scoped"))&&(budget.%GetTypeOf("operator_daily_used")="null"),"unscoped budget avoids empty global subscript and reports unknown operator usage")
+        Set budget=##class(Battery.Interop.CaseRecord).Budget("lifecycle-test","alice")
+        Do ..Assert(budget.%Get("operator_scoped")&&(budget.%Get("operator_daily_used")=20),"scoped budget retains the operator counter")
         Do ..Assert('##class(Battery.Interop.CaseRecord).Capacity("lifecycle-test","alice"),"daily budget persists outside worker memory")
         Do ..Assert(##class(Battery.Interop.CaseRecord).Capacity("lifecycle-test","bob"),"daily operator budget does not block another operator")
         Set ^BatteryCaseBudget(day,"lifecycle-test","alice")=prior

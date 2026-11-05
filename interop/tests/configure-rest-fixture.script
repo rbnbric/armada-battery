@@ -1,0 +1,8 @@
+zn "%SYS"
+if ##class(Security.Users).Exists("BatteryRestFixtureUser")||##class(Security.Roles).Exists("BatteryRestFixtureRole") { write "REST_FIXTURE_ERROR=Qualification identity already exists; inspect before continuing",! halt }
+set password=$SYSTEM.Util.GetEnviron("BATTERY_NATIVE_PASSWORD")
+if $length(password)<32 { write "REST_FIXTURE_ERROR=password missing",! halt }
+if '##class(Security.Roles).Exists("BatteryRestFixtureRole") { set sc=##class(Security.Roles).Create("BatteryRestFixtureRole","Disposable Battery qualification operator","%Admin_Secure:U,%Admin_Operate:U,%Admin_Manage:U,%DB_IRISSYS:R,%DB_BATTERY_DATA:RW,%DB_BATTERY_CODE:R","") if $SYSTEM.Status.IsError(sc) { write "REST_FIXTURE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+if '##class(Security.Users).Exists("BatteryRestFixtureUser") { set sc=##class(Security.Users).Create("BatteryRestFixtureUser","BatteryRestFixtureRole",password,"Disposable Battery qualification","BATTERY","","",0,1) if $SYSTEM.Status.IsError(sc) { write "REST_FIXTURE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt } }
+write "REST_FIXTURE_READY",!
+halt
