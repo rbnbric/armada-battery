@@ -1,0 +1,1204 @@
+{
+  "fixture_scope": "Real Chromium UI with synthetic API network fixtures. No live IRIS or inference.",
+  "checks": [
+    {
+      "name": "320: cases first",
+      "passed": true
+    },
+    {
+      "name": "320: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "320: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "320: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "320: scope visible",
+      "passed": true
+    },
+    {
+      "name": "320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "320: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "320: receipt route",
+      "passed": true
+    },
+    {
+      "name": "320: draft retained",
+      "passed": true
+    },
+    {
+      "name": "320: choice retained",
+      "passed": true
+    },
+    {
+      "name": "320: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "320: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "320: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "320: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "320: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "320: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "320: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "320: one decision request",
+      "passed": true
+    },
+    {
+      "name": "320: search empty state",
+      "passed": true
+    },
+    {
+      "name": "320: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "320: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "360: cases first",
+      "passed": true
+    },
+    {
+      "name": "360: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "360: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "360: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "360: scope visible",
+      "passed": true
+    },
+    {
+      "name": "360: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "360: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "360: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "360: receipt route",
+      "passed": true
+    },
+    {
+      "name": "360: draft retained",
+      "passed": true
+    },
+    {
+      "name": "360: choice retained",
+      "passed": true
+    },
+    {
+      "name": "360: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "360: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "360: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "360: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "360: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "360: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "360: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "360: one decision request",
+      "passed": true
+    },
+    {
+      "name": "360: search empty state",
+      "passed": true
+    },
+    {
+      "name": "360: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "360: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "200% text: no overflow",
+      "passed": true
+    },
+    {
+      "name": "390: cases first",
+      "passed": true
+    },
+    {
+      "name": "390: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "390: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "390: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "390: scope visible",
+      "passed": true
+    },
+    {
+      "name": "390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "390: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "390: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "390: receipt route",
+      "passed": true
+    },
+    {
+      "name": "390: draft retained",
+      "passed": true
+    },
+    {
+      "name": "390: choice retained",
+      "passed": true
+    },
+    {
+      "name": "390: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "390: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "390: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "390: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "390: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "390: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "390: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "390: one decision request",
+      "passed": true
+    },
+    {
+      "name": "390: search empty state",
+      "passed": true
+    },
+    {
+      "name": "390: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "390: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "768: cases first",
+      "passed": true
+    },
+    {
+      "name": "768: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "768: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "768: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "768: scope visible",
+      "passed": true
+    },
+    {
+      "name": "768: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "768: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "768: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "768: receipt route",
+      "passed": true
+    },
+    {
+      "name": "768: draft retained",
+      "passed": true
+    },
+    {
+      "name": "768: choice retained",
+      "passed": true
+    },
+    {
+      "name": "768: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "768: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "768: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "768: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "768: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "768: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "768: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "768: one decision request",
+      "passed": true
+    },
+    {
+      "name": "768: search empty state",
+      "passed": true
+    },
+    {
+      "name": "768: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "768: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "1440: cases first",
+      "passed": true
+    },
+    {
+      "name": "1440: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "1440: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "1440: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "1440: scope visible",
+      "passed": true
+    },
+    {
+      "name": "1440: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "1440: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt route",
+      "passed": true
+    },
+    {
+      "name": "1440: draft retained",
+      "passed": true
+    },
+    {
+      "name": "1440: choice retained",
+      "passed": true
+    },
+    {
+      "name": "1440: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "1440: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "1440: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "1440: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "1440: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "1440: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "1440: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "1440: one decision request",
+      "passed": true
+    },
+    {
+      "name": "1440: search empty state",
+      "passed": true
+    },
+    {
+      "name": "1440: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "1440: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "login returns to requested case",
+      "passed": true
+    },
+    {
+      "name": "stale decision retains draft",
+      "passed": true
+    },
+    {
+      "name": "stale decision prompts comparison",
+      "passed": true
+    },
+    {
+      "name": "expiry removes case data",
+      "passed": true
+    },
+    {
+      "name": "expiry clears draft memory",
+      "passed": true
+    },
+    {
+      "name": "navigation: receipts",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: receipts",
+      "passed": true
+    },
+    {
+      "name": "navigation: rest",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: rest",
+      "passed": true
+    },
+    {
+      "name": "navigation: webapps",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: webapps",
+      "passed": true
+    },
+    {
+      "name": "navigation: overview",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: overview",
+      "passed": true
+    },
+    {
+      "name": "navigation: logs",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: logs",
+      "passed": true
+    },
+    {
+      "name": "navigation: permissions",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: permissions",
+      "passed": true
+    },
+    {
+      "name": "navigation: ledger",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: ledger",
+      "passed": true
+    },
+    {
+      "name": "navigation: rules",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: rules",
+      "passed": true
+    },
+    {
+      "name": "navigation: cases",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: cases",
+      "passed": true
+    },
+    {
+      "name": "navigation: os",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: os",
+      "passed": true
+    },
+    {
+      "name": "navigation: security",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: security",
+      "passed": true
+    },
+    {
+      "name": "navigation: tasks",
+      "passed": true
+    },
+    {
+      "name": "navigation reflow: tasks",
+      "passed": true
+    },
+    {
+      "name": "hostile evidence is rendered as text",
+      "passed": true
+    },
+    {
+      "name": "long values reflow",
+      "passed": true
+    },
+    {
+      "name": "no browser exceptions",
+      "passed": true
+    }
+  ],
+  "views": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 142.40625,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 142.40625,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 292.8125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 288,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 255.625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 255.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 255.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "16px",
+        "16px",
+        "16px",
+        "15.2px",
+        "15.2px"
+      ],
+      "contrast": {
+        "text": 14.990117593342424,
+        "secondary": 9.197936812464311,
+        "input": 4.388325094388485,
+        "focus": 9.5043256471059
+      }
+    },
+    {
+      "width": 360,
+      "scrollWidth": 360,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 162.40625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 162.40625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 332.8125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 328,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 295.625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 295.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 295.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "16px",
+        "16px",
+        "16px",
+        "15.2px",
+        "15.2px"
+      ],
+      "contrast": {
+        "text": 14.990117593342424,
+        "secondary": 9.197936812464311,
+        "input": 4.388325094388485,
+        "focus": 9.5043256471059
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 115.59375,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 115.609375,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 115.609375,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 358,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 325.625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 325.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 325.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "16px",
+        "16px",
+        "16px",
+        "15.2px",
+        "15.2px"
+      ],
+      "contrast": {
+        "text": 14.990117593342424,
+        "secondary": 9.197936812464311,
+        "input": 4.388325094388485,
+        "focus": 9.5043256471059
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 172.046875,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 134.8125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 100.1875,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 736,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 673.875,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 177.234375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 204.484375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "16px",
+        "16px",
+        "16px",
+        "15.2px",
+        "15.2px"
+      ],
+      "contrast": {
+        "text": 14.990117593342424,
+        "secondary": 9.197936812464311,
+        "input": 4.388325094388485,
+        "focus": 9.5043256471059
+      }
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 63.25,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 55.359375,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48.03125,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 66.359375
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 197.40625,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 1047.625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 177.234375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 204.484375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "16px",
+        "16px",
+        "16px",
+        "15.2px",
+        "15.2px"
+      ],
+      "contrast": {
+        "text": 14.990117593342424,
+        "secondary": 9.197936812464311,
+        "input": 4.388325094388485,
+        "focus": 9.5043256471059
+      }
+    }
+  ],
+  "browser_errors": [],
+  "source_sha256": {
+    "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
+    "static/app.js": "cea35384ce13f1b7ed35ba5f2199a9f7918fd18ad53a9e643d335a0dd8f83a00",
+    "static/app.css": "e5d98fde96e10c65cf992df486538d78ac94a5041427dbf46959a2abe052af8e",
+    "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
+    "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
+    "tests/fixtures/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+  }
+}

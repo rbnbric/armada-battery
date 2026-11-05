@@ -1,0 +1,164 @@
+{
+  "complete": {
+    "id": "case-abf31cec4fc24678dbf0328d5e9342a7",
+    "state": "VERIFIED_MATCH",
+    "updated_at": "2026-11-05 02:04:00",
+    "result": {
+      "assertion": "YES",
+      "output": "PASS",
+      "reason_code": "COMPLETE",
+      "explanation": "Fresh scoped receipt measurement"
+    },
+    "receipt_id": "a0fe901d-f9f4-4ba2-bf9f-ecc0ee3e6626",
+    "source_scope": "synthetic",
+    "target": "task:17",
+    "brief": {
+      "revision": "5c0f897546ba8cc2e613c2a58133b90d1331d67dc6345d1f3a255249ef329685",
+      "case_id": "case-abf31cec4fc24678dbf0328d5e9342a7",
+      "kind": "COMPLETE",
+      "question": "This review is complete",
+      "summary": "The saved evidence passed this review\u2019s checks. The settings we can read now match those saved with the request.",
+      "next_step": "You do not need to repeat the operation because of this review.",
+      "owner": "owner",
+      "scope": "synthetic",
+      "facts": [
+        {
+          "id": "review",
+          "label": "Recorded review",
+          "value": {
+            "state": "VERIFIED_MATCH",
+            "assertion": "YES",
+            "output": "PASS",
+            "reason": "Fresh scoped receipt measurement"
+          },
+          "observed_at": "2026-11-05 02:04:00"
+        },
+        {
+          "id": "scope",
+          "label": "Source and target",
+          "value": {
+            "scope": "synthetic",
+            "target": "task:17",
+            "receipt": "a0fe901d-f9f4-4ba2-bf9f-ecc0ee3e6626"
+          }
+        },
+        {
+          "id": "configuration",
+          "label": "Current configuration comparison",
+          "value": {
+            "changed": false,
+            "read_error": "",
+            "retained_digest": "ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0",
+            "current_digest": "ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0"
+          }
+        }
+      ],
+      "differences": [],
+      "differences_omitted": 0,
+      "choices": [],
+      "successor": "",
+      "read_at": "2026-11-05T22:04:42.787477+00:00",
+      "unknowns": [
+        "Matching settings alone do not prove that the service works in use."
+      ],
+      "history_note": "No comparison with similar cases has been performed."
+    },
+    "decisions": [],
+    "decisions_omitted": 0
+  },
+  "changed": {
+    "id": "case-context",
+    "state": "VERIFIED_MATCH",
+    "updated_at": "2026-11-05 02:04:00",
+    "result": {
+      "assertion": "YES",
+      "output": "PASS",
+      "reason_code": "COMPLETE",
+      "explanation": "Fresh scoped receipt measurement"
+    },
+    "receipt_id": "a0fe901d-f9f4-4ba2-bf9f-ecc0ee3e6626",
+    "source_scope": "synthetic",
+    "target": "task:17",
+    "brief": {
+      "revision": "1c4f83757e63861b491d0a573797f02b5bae0a754edd00ec08de2dcc1f9c468c",
+      "case_id": "case-context",
+      "kind": "CONTEXT_DECISION",
+      "question": "Was the later configuration intentional?",
+      "summary": "The settings are different from those saved with this request. We do not yet know who changed them or why.",
+      "next_step": "Check the difference and record the intended outcome, or request more evidence.",
+      "owner": "owner",
+      "scope": "synthetic",
+      "facts": [
+        {
+          "id": "review",
+          "label": "Recorded review",
+          "value": {
+            "state": "VERIFIED_MATCH",
+            "assertion": "YES",
+            "output": "PASS",
+            "reason": "Fresh scoped receipt measurement"
+          },
+          "observed_at": "2026-11-05 02:04:00"
+        },
+        {
+          "id": "scope",
+          "label": "Source and target",
+          "value": {
+            "scope": "synthetic",
+            "target": "task:17",
+            "receipt": "a0fe901d-f9f4-4ba2-bf9f-ecc0ee3e6626"
+          }
+        },
+        {
+          "id": "configuration",
+          "label": "Current configuration comparison",
+          "value": {
+            "changed": true,
+            "read_error": "",
+            "retained_digest": "ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0",
+            "current_digest": "988233fc39bf75a224324b04fc412013c6a2326a36c6269511d15dcb4bbfe043"
+          }
+        }
+      ],
+      "differences": [
+        {
+          "field": "Name",
+          "retained": "Battery Demonstration Task",
+          "current": "Intentionally changed elsewhere"
+        }
+      ],
+      "differences_omitted": 0,
+      "choices": [
+        {
+          "id": "keep_current",
+          "label": "The current configuration is intended",
+          "consequence": "Records your intent. It does not change the earlier measurement or apply a configuration."
+        },
+        {
+          "id": "restore_intent",
+          "label": "The earlier outcome is still required",
+          "consequence": "Records the need for a corrective request. Prepare and authorize that request separately against current evidence."
+        },
+        {
+          "id": "request_evidence",
+          "label": "Request a fresh evidence review",
+          "consequence": "Creates one new review revision using the current adapter. It can use model calls; it does not repeat the business operation."
+        },
+        {
+          "id": "defer",
+          "label": "Wait for more context",
+          "consequence": "Records what is missing and who you need to ask. No review or operation is started."
+        }
+      ],
+      "successor": "",
+      "read_at": "2026-11-05T22:04:42.788794+00:00",
+      "unknowns": [
+        "Matching settings alone do not prove that the service works in use.",
+        "The author, authorization and purpose of the later change are not established by this comparison."
+      ],
+      "history_note": "No comparison with similar cases has been performed."
+    },
+    "decisions": [],
+    "decisions_omitted": 0
+  }
+}

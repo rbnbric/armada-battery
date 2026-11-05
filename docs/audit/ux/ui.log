@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: all input changes and failed preparations consume the displayed plan
+ok 1 - all input changes and failed preparations consume the displayed plan
+  ---
+  duration_ms: 4.698845
+  type: 'test'
+  ...
+# Subtest: late preparation responses never authorize changed input
+ok 2 - late preparation responses never authorize changed input
+  ---
+  duration_ms: 0.979245
+  type: 'test'
+  ...
+# Subtest: expiry disables execution and unresolved quality never inherits success
+ok 3 - expiry disables execution and unresolved quality never inherits success
+  ---
+  duration_ms: 1.487101
+  type: 'test'
+  ...
+# Subtest: lost execution response records its key and never retries the mutation
+ok 4 - lost execution response records its key and never retries the mutation
+  ---
+  duration_ms: 2.116928
+  type: 'test'
+  ...
+# Subtest: a hung read times out even if fetch ignores AbortSignal
+ok 5 - a hung read times out even if fetch ignores AbortSignal
+  ---
+  duration_ms: 11.077231
+  type: 'test'
+  ...
+# Subtest: body reads have the same deadline as the HTTP request
+ok 6 - body reads have the same deadline as the HTTP request
+  ---
+  duration_ms: 11.723609
+  type: 'test'
+  ...
+# Subtest: collectors render independently and an old refresh cannot overwrite a newer one
+ok 7 - collectors render independently and an old refresh cannot overwrite a newer one
+  ---
+  duration_ms: 1.952199
+  type: 'test'
+  ...
+# Subtest: native review response loss retains its admission key and never invokes an action
+ok 8 - native review response loss retains its admission key and never invokes an action
+  ---
+  duration_ms: 1.150597
+  type: 'test'
+  ...
+# Subtest: recovery shows an explicit revision action and never replays work on render
+ok 9 - recovery shows an explicit revision action and never replays work on render
+  ---
+  duration_ms: 1.511455
+  type: 'test'
+  ...
+# Subtest: read-only identity cannot send a mutation from the UI
+ok 10 - read-only identity cannot send a mutation from the UI
+  ---
+  duration_ms: 1.074849
+  type: 'test'
+  ...
+# Subtest: expired sign-in removes previous operator evidence and rejects late responses
+ok 11 - expired sign-in removes previous operator evidence and rejects late responses
+  ---
+  duration_ms: 2.016877
+  type: 'test'
+  ...
+# Subtest: sign-out clears the page and reloads even when browser storage is blocked
+ok 12 - sign-out clears the page and reloads even when browser storage is blocked
+  ---
+  duration_ms: 1.028585
+  type: 'test'
+  ...
+# Subtest: successful sign-in reloads instead of retaining the previous operator view
+ok 13 - successful sign-in reloads instead of retaining the previous operator view
+  ---
+  duration_ms: 0.719431
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 80.817441

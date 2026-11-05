@@ -1,0 +1,176 @@
+"""Real Chromium journeys on shipped UI with explicitly synthetic API fixtures.
+
+Run separately: python tests/browser_ux.py --out <evidence-directory>.
+Requires Playwright + Chromium. No live IRIS or model claim.
+Browser ownership: local_browser: true (multi-page, keyboard, history and session checks).
+"""
+import argparse
+import base64
+import functools
+import hashlib
+import json
+import threading
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+CASES = json.loads((ROOT/'tests/fixtures/ux_cases.json').read_text())
+FIXTURE = '''
+// seam: API network boundary. Real UI code; synthetic operations only.
+const fixtureCases = CASES;
+const oldFetch = window.fetch;
+window.uxTest = {signedIn:true, posts:[], failExplain:false, stale:false, version:1};
+window.fetch = async (input, options={}) => {
+ const path=String(input), cfg=window.uxTest;
+ const response=(data,status=200)=>Promise.resolve(new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json'}}));
+ if(path==='/api/session') { cfg.signedIn=true; sessionStorage.setItem('ux-auth','yes');return response({ok:true}); }
+ if(path==='/api/session/logout') { cfg.signedIn=false;return response({ok:true}); }
+ if(new URL(location.href).searchParams.has('login') && sessionStorage.getItem('ux-auth')!=='yes') cfg.signedIn=false;
+ if(!cfg.signedIn) return response({detail:'Operator sign-in required.'},401);
+ if(path==='/api/cases') return response({available:true,items:Object.values(fixtureCases),budget:{operator_daily_used:1,operator_daily_limit:20,operator_active_limit:2}});
+ if(path.endsWith('/explain')) { cfg.posts.push({path,body:JSON.parse(options.body)}); return response({status:'unavailable',detail:'Model unavailable. Your evidence summary remains usable.'}); }
+ if(path.endsWith('/decision')) {
+  cfg.posts.push({path,body:JSON.parse(options.body)});
+  if(cfg.stale) { fixtureCases.changed.brief.revision='changed-revision'; return response({detail:'Evidence changed. Review current facts.'},409); }
+  await new Promise(resolve=>setTimeout(resolve,200));
+  return response({next_step:'Your intention was recorded. No configuration was changed.'});
+ }
+ if(path.startsWith('/api/cases/')) { const id=decodeURIComponent(path.split('/').pop());const c=Object.values(fixtureCases).find(c=>c.id===id);return response(c||{detail:'Case not found'},c?200:404); }
+ if(path.startsWith('/api/receipts/') && !path.endsWith('/reconcile')) return response({receipt:{id:path.split('/').pop(),status:'VERIFIED_SUCCESS',target:'task:17',operator:'owner',action_id:'task.run-once',before_evidence:[],after_evidence:[],explanation:'Synthetic task history established the result.'},evidence:[{source:'synthetic history',id:'fixture-evidence',captured_at:'2026-11-05',value:{result:'success'}}],ledger:[]});
+ return oldFetch(input,options);
+};
+'''.replace('CASES',json.dumps(CASES))
+
+class Handler(SimpleHTTPRequestHandler):
+    def log_message(self,*args): pass
+    def do_GET(self):
+        if self.path.split('?')[0] == '/':
+            html=(ROOT/'static/index.html').read_text()
+            scripts='<script>'+(ROOT/'tests/fixtures/demo-api.js').read_text()+'\n'+FIXTURE+'</script>'
+            html=html.replace('<script src="/static/app.js"></script>',scripts+'<script src="/static/app.js"></script>')
+            raw=html.encode();self.send_response(200);self.send_header('Content-Type','text/html');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
+        else: super().do_GET()
+
+def run(out):
+    out.mkdir(parents=True,exist_ok=True)
+    server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Handler,directory=str(ROOT)))
+    threading.Thread(target=server.serve_forever,daemon=True).start()
+    origin=f'http://127.0.0.1:{server.server_address[1]}'
+    checks=[];views=[];errors=[]
+    def check(name,condition):
+        checks.append({'name':name,'passed':bool(condition)})
+        if not condition: raise AssertionError(name)
+    try:
+        with sync_playwright() as pw:
+            browser=pw.chromium.launch(headless=True)
+            for width in [320,360,390,768,1440]:
+                context=browser.new_context(viewport={'width':width,'height':900},reduced_motion='reduce')
+                page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+                page.goto(origin);page.locator('.case-card').first.wait_for()
+                check(f'{width}: cases first',page.locator('#page-title').inner_text()=='Cases')
+                check(f'{width}: logo loaded',page.locator('.brand img').evaluate('(e)=>e.complete && e.naturalWidth>0'))
+                page.locator('[data-case-id="case-context"]').click();page.locator('#decision-reason').wait_for()
+                check(f'{width}: choices not preselected',page.locator('input[name=decision-choice]:checked').count()==0)
+                check(f'{width}: technical initially closed',not page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))
+                check(f'{width}: scope visible','Simulated operation' in page.locator('.decision-brief').inner_text())
+                m=page.evaluate('''() => ({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('button,input,select,textarea')].filter(e=>e.getClientRects().length).map(e=>({tag:e.tagName,type:e.type,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:[...document.querySelectorAll('.decision-brief > p')].map(e=>getComputedStyle(e).fontSize)})''')
+                views.append(m);check(f'{width}: no horizontal overflow',m['scrollWidth']<=width)
+                check(f'{width}: 44px working controls',all(c['h']>=44 for c in m['controls'] if c['type'] not in ['radio','checkbox']))
+                contrast=page.evaluate("""() => {
+                  const vars=getComputedStyle(document.documentElement);
+                  const lum=color=>{const a=color.trim().match(/[a-f0-9]{2}/gi).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return .2126*a[0]+.7152*a[1]+.0722*a[2]};
+                  const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+                  return {text:ratio(vars.getPropertyValue('--text'),vars.getPropertyValue('--surface')),secondary:ratio(vars.getPropertyValue('--text-2'),vars.getPropertyValue('--surface')),input:ratio(vars.getPropertyValue('--control-border'),vars.getPropertyValue('--surface')),focus:ratio(vars.getPropertyValue('--focus'),vars.getPropertyValue('--surface'))};
+                }""")
+                m['contrast']=contrast
+                check(f'{width}: palette contrast',contrast['text']>=4.5 and contrast['secondary']>=4.5 and contrast['input']>=3 and contrast['focus']>=3)
+                page.screenshot(path=str(out/f'decision-{width}.png'),full_page=True)
+                # Enter context; keep it through receipt navigation and browser history.
+                page.locator('#decision-reason').fill('The later configuration is intentional.')
+                page.locator('input[value=keep_current]').check()
+                page.get_by_text('What happened',exact=True).click()
+                page.get_by_text('Technical details and full evidence',exact=True).click()
+                page.get_by_role('button',name='Inspect operation receipt',exact=True).first.click()
+                page.locator('.receipt-document').wait_for()
+                check(f'{width}: receipt route',page.url.split('#')[-1].startswith('receipts/'))
+                page.get_by_role('button',name='Back to case',exact=True).click();page.locator('#decision-reason').wait_for()
+                check(f'{width}: draft retained',page.locator('#decision-reason').input_value()=='The later configuration is intentional.')
+                check(f'{width}: choice retained',page.locator('input[value=keep_current]').is_checked())
+                check(f'{width}: history disclosure retained',page.get_by_text('What happened',exact=True).evaluate('(e)=>e.parentElement.open'))
+                check(f'{width}: technical disclosure retained',page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))
+                check(f'{width}: no carried receipt success',not page.locator('#status-message').inner_text())
+                # Browser history follows the same case/receipt routes.
+                page.go_back();page.locator('.receipt-document').wait_for()
+                page.go_forward();page.locator('#decision-reason').wait_for()
+                check(f'{width}: browser history restores case',page.url.endswith('#cases/case-context'))
+                # Keyboard expands history without moving away from the case.
+                history=page.get_by_text('What happened',exact=True)
+                history.focus();history.press('Enter')
+                check(f'{width}: keyboard disclosure works',not history.evaluate('(e)=>e.parentElement.open'))
+                history.press('Enter')
+                # Refresh preserves text selection and reading position.
+                page.locator('#decision-reason').focus();page.locator('#decision-reason').evaluate('(e)=>e.setSelectionRange(4,12)')
+                before=page.evaluate('scrollY')
+                page.evaluate('document.querySelector("#decision-reason").setSelectionRange(4,12); loadNativeCases(state.caseId)')
+                check(f'{width}: focused draft survives refresh',page.locator('#decision-reason').evaluate('(e)=>document.activeElement===e && e.selectionStart===4 && e.selectionEnd===12'))
+                check(f'{width}: scroll survives refresh',abs(page.evaluate('scrollY')-before)<3)
+                page.get_by_role('button',name='Record decision',exact=True).dblclick()
+                page.wait_for_timeout(350)
+                check(f'{width}: one decision request',page.evaluate('uxTest.posts.filter(p=>p.path.endsWith("/decision")).length')==1)
+                # Search has stable focus and can be typed normally.
+                page.get_by_role('button',name='Back to cases',exact=True).click();page.locator('#case-search').fill('no such target')
+                check(f'{width}: search empty state','No cases match' in page.locator('#page-content').inner_text())
+                page.locator('#case-search').fill('');page.locator('[data-case-id]').first.click()
+                page.locator('.decision-brief').wait_for()
+                check(f'{width}: completed review has no choices',page.locator('input[name=decision-choice]').count()==0)
+                page.get_by_text('More explanation',exact=True).click()
+                page.get_by_role('button',name='Explain this evidence',exact=True).click()
+                page.get_by_text('Model unavailable. Your evidence summary remains usable.',exact=True).wait_for()
+                check(f'{width}: explanation failure retains summary',page.locator('.decision-brief > h2').is_visible())
+                page.screenshot(path=str(out/f'complete-{width}.png'),full_page=True)
+                if width==360:
+                    page.evaluate('document.documentElement.style.fontSize="200%"')
+                    check('200% text: no overflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+                    page.screenshot(path=str(out/'complete-text200.png'),full_page=True)
+                context.close()
+            # Explicit protected destination survives login reload.
+            context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+            page.goto(origin+'/?login#cases/case-context');page.locator('#login-panel').wait_for(state='visible')
+            page.locator('#access-key').fill('fixture-key');page.get_by_role('button',name='Sign in',exact=True).click()
+            page.locator('#decision-reason').wait_for();check('login returns to requested case',page.url.endswith('#cases/case-context'))
+            # Stale submission preserves draft and refreshes the actual evidence revision.
+            page.locator('#decision-reason').fill('Preserve this draft when the evidence changes.');page.locator('input[value=defer]').check()
+            page.evaluate('uxTest.stale=true');page.get_by_role('button',name='Record decision',exact=True).click()
+            page.wait_for_timeout(250)
+            check('stale decision retains draft',page.locator('#decision-reason').input_value().startswith('Preserve this draft'))
+            check('stale decision prompts comparison','Evidence changed' in page.locator('#status-message').inner_text())
+            # Expiry removes drafts and all case data; late calls cannot repaint it.
+            page.evaluate('uxTest.signedIn=false; loadNativeCases(state.caseId)')
+            check('expiry removes case data',page.locator('#page-content').inner_text()=='')
+            check('expiry clears draft memory',page.evaluate('Object.keys(state.decisionDrafts).length')==0)
+            context.close()
+            # Repeated switching across the actual app screens, including unavailable coverage.
+            context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+            page.goto(origin);page.locator('.case-card').first.wait_for()
+            import random
+            names=['overview','tasks','webapps','rest','permissions','security','os','logs','receipts','ledger','rules','cases']
+            random.Random(49).shuffle(names)
+            for name in names:
+                page.locator('.nav-toggle').click()
+                page.locator(f'[data-page={name}]').click()
+                check(f'navigation: {name}',page.url.endswith('#'+name) and page.locator('#page-title').inner_text())
+                check(f'navigation reflow: {name}',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+            page.goto(origin+'/#cases/case-context');page.locator('#decision-reason').wait_for()
+            page.evaluate('fixtureCases.changed.brief.differences[0].current="X".repeat(300); fixtureCases.changed.brief.summary="<img src=x onerror=alert(1)>";loadNativeCases(state.caseId)')
+            check('hostile evidence is rendered as text',page.locator('.decision-brief img').count()==0 and '<img' in page.locator('.decision-brief').inner_text())
+            check('long values reflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+            context.close();browser.close()
+        check('no browser exceptions',not errors)
+    finally:
+        server.shutdown();server.server_close()
+        report={'fixture_scope':'Real Chromium UI with synthetic API network fixtures. No live IRIS or inference.', 'checks':checks,'views':views,'browser_errors':errors,'source_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in ['static/index.html','static/app.js','static/app.css','static/battery-logo.png','tests/fixtures/ux_cases.json','tests/fixtures/demo-api.js']}}
+        (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+        print(json.dumps({'passed':sum(c['passed'] for c in checks),'checks':len(checks),'errors':errors,'report':str(out/'report.json')}))
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);run(parser.parse_args().out)

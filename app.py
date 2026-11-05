@@ -210,6 +210,11 @@ def javascript():
     return FileResponse(ROOT / "static" / "app.js", media_type="text/javascript")
 
 
+@app.get("/static/battery-logo.png")
+def battery_logo():
+    return FileResponse(ROOT / "static" / "battery-logo.png", media_type="image/png")
+
+
 @app.get("/api/state")
 def state():
     try:

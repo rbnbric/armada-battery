@@ -6,7 +6,7 @@ The first implementation is delivered: structured briefs and current-state
 comparisons, durable human answers, explicit follow-up review, and a native AI Hub
 Explainer. [Executed evidence and remaining scope](DECISION_BRIEF_EVIDENCE.md).
 This does not establish a human-comprehension pass or complete every later design
-requirement below. The broader codex-led visual redesign remains deferred.
+requirement below. The approved visual and continuity pass is delivered; see [UX evidence](UX_REFINEMENT_EVIDENCE.md).
 
 ## Current status
 
@@ -41,7 +41,7 @@ Historical SDK usage for these retained workflows was 46 calls, 35,500 prompt
 tokens, 41,208 completion tokens and 234,328 ms summed model duration. These are
 historical figures, not the cost or latency of today's replay, and not billing.
 
-The UI/UX pass is deliberately waiting for the owner's new design codices.
+The new design codices have been reviewed. [UX refinement spec](UX_REFINEMENT_SPEC.md) defines the next pass; all four directions are approved and the first pass is delivered.
 
 ## Work queue
 
@@ -53,7 +53,7 @@ The UI/UX pass is deliberately waiting for the owner's new design codices.
 | T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | Navigation exercised; comprehension and continuity findings below |
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
 | T7 | Add the third agent role: Explainer | Evidence-linked plain-language progress and outcome explanations; comprehension and grounding tests below | First slice implemented; native qualification and limits in DECISION_BRIEF_EVIDENCE.md |
-| T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Waiting for codices; no redesign now |
+| T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Implemented and installed; UX_REFINEMENT_EVIDENCE.md records qualification, owner comprehension pending |
 
 We walk through one task at a time. Docker is now running and the existing native and web containers were restarted.
 The next owner check is to open the installed app and confirm access to Agent cases.
@@ -176,8 +176,8 @@ Requirements for the later codex-guided UX pass:
 5. Bind success/error messages to the action and record they describe; expire or
    relabel them when navigating to a different context.
 
-These were the observed findings. The readable brief and expandable technical records are now implemented; navigation continuity and the other findings remain open.
-Visual redesign remains deferred until the owner's new codices are available.
+These were the observed findings. The readable brief and expandable technical records are now implemented; the subsequent UX pass repairs destination, disclosure, scroll/focus continuity and context-bound messages. Human comprehension remains to be checked.
+Visual redesign is implemented against UX_REFINEMENT_SPEC.md; qualification and remaining limits are in UX_REFINEMENT_EVIDENCE.md.
 
 ## Third agent role: Explainer
 

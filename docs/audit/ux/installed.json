@@ -1,0 +1,74 @@
+{
+  "scope": "Installed Battery HTTP and source verification; existing case read only. No model or business operation requested.",
+  "checks": [
+    {
+      "name": "static/index.html HTTP matches installed source",
+      "passed": true
+    },
+    {
+      "name": "static/index.html same-origin CSP",
+      "passed": true
+    },
+    {
+      "name": "static/app.js HTTP matches installed source",
+      "passed": true
+    },
+    {
+      "name": "static/app.js same-origin CSP",
+      "passed": true
+    },
+    {
+      "name": "static/app.css HTTP matches installed source",
+      "passed": true
+    },
+    {
+      "name": "static/app.css same-origin CSP",
+      "passed": true
+    },
+    {
+      "name": "static/battery-logo.png HTTP matches installed source",
+      "passed": true
+    },
+    {
+      "name": "static/battery-logo.png same-origin CSP",
+      "passed": true
+    },
+    {
+      "name": "logo MIME",
+      "passed": true
+    },
+    {
+      "name": "operator sign-in",
+      "passed": true
+    },
+    {
+      "name": "retained case list",
+      "passed": true
+    },
+    {
+      "name": "current task brief",
+      "passed": true
+    },
+    {
+      "name": "completed review has no approval choices",
+      "passed": true
+    },
+    {
+      "name": "retained history accessible",
+      "passed": true
+    },
+    {
+      "name": "linked receipt accessible",
+      "passed": true
+    }
+  ],
+  "hashes": {
+    "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
+    "static/app.js": "cea35384ce13f1b7ed35ba5f2199a9f7918fd18ad53a9e643d335a0dd8f83a00",
+    "static/app.css": "e5d98fde96e10c65cf992df486538d78ac94a5041427dbf46959a2abe052af8e",
+    "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
+    "app.py": "f724bccdac79a0905fa2d5e24de52b07bfd1556b21955eae809600b9d723abea"
+  },
+  "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+  "passed": true
+}

@@ -3,7 +3,9 @@ let nativeLoadEpoch = 0;
 let sessionEpoch = 0;
 let requiresSignIn = false;
 const state = {
-  page: "overview",
+  page: "cases",
+  caseId: "", receiptId: "", caseFilter: "all", caseSearch: "",
+  views: {}, caseOrder: [], inspectedKinds: {}, decisionChoices: {},
   nativeCases: null,
   nativeDetail: null,
   nativeError: "",
@@ -26,7 +28,7 @@ const state = {
 };
 const byId = (id) => document.getElementById(id);
 const LABELS = {
-  cases: "Agent cases",
+  cases: "Cases",
   overview: "Overview",
   tasks: "Tasks",
   webapps: "Web applications",
@@ -204,6 +206,7 @@ function clearOperatorView() {
   state.receipts = [];
   state.nativeError = "";
   state.decisionDrafts = {};
+  state.views = {}; state.inspectedKinds = {}; state.caseOrder = []; state.caseFilter = "all"; state.caseSearch = ""; state.decisionChoices = {}; paintedView = "";
   state.errors = {};
   state.busy = false;
   for (const id of ["page-content", "receipt", "task-detail"]) byId(id).replaceChildren();
@@ -294,21 +297,76 @@ function invalidate(
   byId("plan-evidence").replaceChildren();
   stage("prepare");
 }
-function navigate(page, focus = true) {
+// View memory is scoped to this signed-in page. Only the destination name is persisted.
+let paintedView = "";
+function viewKey() { return `${state.page}/${state.page === "cases" ? state.caseId : state.page === "receipts" ? state.receiptId : ""}`; }
+function rememberView() {
+  const root = byId("page-content");
+  if (!paintedView || !root.querySelectorAll || requiresSignIn) return;
+  const focused = document.activeElement;
+  state.views[paintedView] = {
+    open: [...root.querySelectorAll("details")].filter(e => e.open).map(e => e.querySelector("summary")?.textContent),
+    scroll: window.scrollY || 0,
+    focus: root.contains(focused) ? {id: focused.id, text: focused.textContent, tag: focused.tagName, start: focused.selectionStart, end: focused.selectionEnd} : null,
+  };
+}
+function restoreView() {
+  const saved = state.views[viewKey()], root = byId("page-content");
+  if (!saved || !root.querySelectorAll) return;
+  for (const el of root.querySelectorAll("details")) el.open = saved.open.includes(el.querySelector("summary")?.textContent);
+  const f = saved.focus;
+  if (f) {
+    const el = f.id ? byId(f.id) : [...root.querySelectorAll("button,summary,a")].find(e => e.tagName === f.tag && e.textContent === f.text);
+    if (el) { el.focus({preventScroll:true}); if (el.setSelectionRange && f.start != null) el.setSelectionRange(f.start, f.end); }
+  }
+  window.scrollTo?.(0, saved.scroll);
+}
+function parseRoute(hash) {
+  const match = /^#([a-z]+)(?:\/([A-Za-z0-9_.:-]{1,160}))?$/.exec(hash || "");
+  return match && LABELS[match[1]] ? {page:match[1], id:match[2] || ""} : null;
+}
+function routeHash() { return `#${viewKey().replace(/\/$/, "")}`; }
+function navigate(page, focus = true, id = "", historyMode = "push") {
+  if (!LABELS[page]) page = "cases";
+  rememberView();
+  const previous = viewKey();
   state.page = page;
-  if (page === "cases") loadNativeCases();
-  byId("page-title").textContent = LABELS[page] || page;
+  if (page === "cases") state.caseId = id;
+  if (page === "receipts") state.receiptId = id;
+  if (previous !== viewKey()) { byId("status-message").textContent = ""; clearError(); }
+  if (window.history && historyMode !== "none" && window.location?.hash !== routeHash())
+    window.history[historyMode === "replace" ? "replaceState" : "pushState"](null, "", routeHash());
+  try { localStorage.setItem("battery-last-page", page); } catch { /* Optional location hint. */ }
+  byId("page-title").textContent = LABELS[page];
+  if (byId("nav-current")) byId("nav-current").textContent = LABELS[page];
   byId("request-workspace").hidden = page !== "request";
   byId("page-content").hidden = page === "request";
-  document.querySelectorAll("[data-page]").forEach((b) => {
-    if (b.dataset.page === page) b.setAttribute("aria-current", "page");
-    else b.removeAttribute("aria-current");
+  document.querySelectorAll("[data-page]").forEach(b => {
+    if (b.dataset.page === page) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
   byId("navigation").dataset.open = "false";
   document.querySelector(".nav-toggle").setAttribute("aria-expanded", "false");
+  paintedView = "";
   renderPage();
-  if (focus) byId("workspace").focus();
+  if (!state.views[viewKey()] && focus) { byId("workspace").focus({preventScroll:true}); window.scrollTo?.(0,0); }
+  if (page === "cases" && !requiresSignIn) loadNativeCases(id);
+  if (page === "receipts" && id && !requiresSignIn) openReceipt(id, byId("page-content"));
 }
+function openCase(id) { navigate("cases", true, id); }
+function initializeRoute() {
+  if (!window.location) return;
+  let route = parseRoute(window.location.hash);
+  if (!route) { let page; try { page = localStorage.getItem("battery-last-page"); } catch {} route = {page: LABELS[page] ? page : "cases", id:""}; }
+  navigate(route.page, false, route.id, "replace");
+}
+window.addEventListener?.("popstate", () => { const r = parseRoute(window.location.hash); if(r) navigate(r.page, true, r.id, "none"); });
+window.addEventListener?.("hashchange", () => { const r = parseRoute(window.location.hash); if(r && `#${r.page}${r.id ? "/"+r.id : ""}` !== routeHash()) navigate(r.page, true, r.id, "none"); });
+window.addEventListener?.("keydown", event => {
+  if (event.key === "Escape" && byId("navigation").dataset.open === "true") {
+    byId("navigation").dataset.open = "false";
+    const menu = document.querySelector(".nav-toggle"); menu.setAttribute("aria-expanded","false"); menu.focus();
+  }
+});
 function startRequest(workflow = "run", taskId = null) {
   byId("workflow").value = workflow;
   if (taskId !== null) byId("task").value = String(taskId);
@@ -428,15 +486,15 @@ function renderCollectors(changed) {
   byId("new-request").disabled = readOnly;
   byId("instance").textContent = server?.instance || "Instance unavailable";
   byId("adapter").textContent = server
-    ? server.mode.toUpperCase()
+    ? server.mode === "synthetic" ? "Simulated operation" : "Connected IRIS"
     : "CONTEXT UNKNOWN";
   byId("adapter").className = "badge";
   byId("authority").textContent = server
     ? server.mode === "synthetic"
-      ? "FIXTURE ACTIONS ONLY"
+      ? "Simulation actions only"
       : server.changes_enabled
-        ? "CHANGES ENABLED"
-        : "OBSERVATION ONLY"
+        ? "Changes enabled"
+        : "Read-only observations"
     : "AUTHORITY UNKNOWN";
   if (readOnly) byId("authority").textContent = "READ-ONLY IDENTITY";
   byId("authority").className =
@@ -460,7 +518,7 @@ function renderCollectors(changed) {
     fillSelect("role-name", c.roles, "Name");
   }
   updateFreshness();
-  renderPage();
+  if (!(state.page === "receipts" && state.receiptId)) renderPage();
 }
 
 function updateFreshness() {
@@ -659,6 +717,13 @@ function findingCard() {
   return card;
 }
 function renderPage() {
+  if (requiresSignIn) return;
+  if (paintedView === viewKey()) rememberView();
+  renderPageContent();
+  paintedView = viewKey();
+  restoreView();
+}
+function renderPageContent() {
   const root = byId("page-content");
   root.replaceChildren();
   byId("page-state").textContent =
@@ -800,6 +865,7 @@ function renderPage() {
   } else if (state.page === "cases") {
     renderNativeCases(root);
   } else if (state.page === "receipts") {
+    if (state.receiptId) { root.append(empty("Loading operation receipt…")); return; }
     root.append(receiptTable(state.receipts));
     if (state.pending) root.append(pendingDocument());
   } else if (state.page === "ledger") {
@@ -1101,15 +1167,23 @@ async function execute() {
   }
 }
 async function openReceipt(id, target = null) {
+  if (!target) { navigate("receipts", true, id); return; }
+  const epoch = sessionEpoch, route = viewKey();
   try {
     const packet = await api(`/api/receipts/${encodeURIComponent(id)}`);
-    if (!target) {
-      navigate("receipts");
-      target = byId("page-content");
-    }
+    if (epoch !== sessionEpoch || route !== viewKey()) return;
+    rememberView();
     await renderReceipt(packet, target);
+    if (state.page === "receipts") {
+      const back = button("Back to case", () => openCase(state.nativeDetail.id));
+      if (state.nativeDetail?.receipt_id === id) target.prepend(back);
+      paintedView = viewKey(); restoreView();
+    }
   } catch (error) {
-    announce(`Receipt detail unavailable: ${error.message}`, true);
+    if (epoch === sessionEpoch && route === viewKey()) {
+      announce(`Receipt detail unavailable: ${error.message}`, true);
+      if (target === byId("page-content")) target.replaceChildren(button("Back to receipts", () => navigate("receipts")));
+    }
   }
 }
 async function renderReceipt(packet, target) {
@@ -1146,6 +1220,11 @@ async function renderReceipt(packet, target) {
           : r.explanation,
     }),
   );
+  const receiptFacts = box.lastElementChild;
+  if (receiptFacts?.tagName === "DL") {
+    receiptFacts.remove();
+    const disclosure = node("details"); disclosure.append(node("summary", "Receipt properties and identifiers"), receiptFacts); box.append(disclosure);
+  }
   box.append(button("Review this receipt with AI Hub", () => submitNativeCase(r.id)));
   (packet.evidence || []).forEach((o) =>
     box.append(details(`${o.source} · ${o.id} · ${o.captured_at}`, o)),
@@ -1221,15 +1300,19 @@ async function loadNativeCases(id = null) {
     const list = await api("/api/cases");
     if (epoch !== nativeLoadEpoch) return;
     state.nativeCases = list;
-    const selected = id || state.nativeDetail?.id;
+    const selected = id || state.caseId;
+    const previousRevision = state.nativeDetail?.brief?.revision;
     if (selected) {
       const detail = await api(`/api/cases/${encodeURIComponent(selected)}`);
       if (epoch !== nativeLoadEpoch) return;
       state.nativeDetail = detail;
+      if (detail.brief) state.inspectedKinds[detail.id] = detail.brief.kind;
+      if (previousRevision && detail.brief?.revision !== previousRevision && state.decisionDrafts[detail.id])
+        announce("Evidence changed. Your draft is preserved; compare the current facts before recording your decision.");
     }
     state.nativeError = "";
   } catch (error) {
-    if (epoch === nativeLoadEpoch) state.nativeError = error.message;
+    if (epoch === nativeLoadEpoch) { state.nativeError = error.message; if (id || state.caseId) state.nativeDetail = null; }
   }
   if (epoch === nativeLoadEpoch && state.page === "cases") renderPage();
 }
@@ -1246,8 +1329,7 @@ async function submitNativeCase(receiptId, parentId = "") {
       body: JSON.stringify({receipt_id: receiptId, parent_id: parentId}),
     });
     state.nativeDetail = result;
-    navigate("cases");
-    await loadNativeCases(result.id);
+    openCase(result.id);
     announce("Native review admitted. Refresh cases to follow its progress.");
   } catch (error) {
     announce(`Case admission not confirmed: ${error.message}. Retrying this review keeps its request key and does not repeat the operation.`, true);
@@ -1257,12 +1339,14 @@ function renderDecisionBrief(c) {
   const b = c.brief;
   const box = section(b.question, node("p", b.summary));
   box.className += " decision-brief";
+  box.dataset.kind = b.kind;
+  box.prepend(node("p", b.choices.length ? "Your next decision" : "Current task", "eyebrow"));
   box.append(node("p", `${b.scope === "synthetic" ? "Simulated operation" : "IRIS operation"} · Decision owner: ${b.owner}`));
   box.append(node("p", b.next_step, "decision-next"));
-  if (b.successor) box.append(button("Open newer review", () => loadNativeCases(b.successor)));
+  if (b.successor) box.append(button("Open newer review", () => openCase(b.successor)));
   if (b.differences.length) box.append(table(["What changed", "Retained with receipt", "Current value"], b.differences.map(d => [d.field, JSON.stringify(d.retained), JSON.stringify(d.current)])));
   if (b.differences_omitted) box.append(node("p", `${b.differences_omitted} additional changed fields omitted. Inspect the target before deciding.`));
-  for (const unknown of b.unknowns) box.append(node("p", unknown));
+  for (const unknown of b.unknowns) box.append(node("p", unknown, "brief-limit"));
   const evidence = node("details");
   evidence.append(node("summary", "Why is Battery showing this?"));
   for (const fact of b.facts) {
@@ -1271,17 +1355,17 @@ function renderDecisionBrief(c) {
     evidence.append(item);
   }
   evidence.append(node("p", `Configuration read: ${b.read_at}. ${b.history_note}`));
-  box.append(evidence);
+  const help = node("details"); help.append(node("summary", "More explanation"), evidence);
   if (c.explanation?.status === "ready") {
     const e = c.explanation.content;
     const explanation = section("AI explanation — interpretation of the evidence", node("p", e.summary), node("p", e.meaning), node("p", e.missing));
     for (const id of e.evidence_ids) {
       const link = node("a", `Evidence: ${id}`); link.href = `#decision-fact-${id}`;
-      link.addEventListener("click", () => { evidence.open = true; });
+      link.addEventListener("click", event => { event.preventDefault(); evidence.open = true; const fact = byId(`decision-fact-${id}`); fact?.scrollIntoView({block:"center"}); });
       explanation.append(link, node("span", " "));
     }
-    box.append(explanation);
-  } else if (c.explanation) box.append(node("p", c.explanation.detail));
+    help.append(explanation);
+  } else if (c.explanation) help.append(node("p", c.explanation.detail));
   if (!["IN_PROGRESS", "SUPERSEDED"].includes(b.kind) && (!c.explanation || (c.explanation.status === "unavailable" && (c.explanation.attempt || 1) < 2))) {
     const status = node("p", "Optional: ask AI Hub to explain these observations in everyday language.");
     status.setAttribute("role", "status");
@@ -1298,35 +1382,50 @@ function renderDecisionBrief(c) {
         if (epoch === sessionEpoch) { status.textContent = error.message; explain.disabled = false; }
       }
     });
-    box.append(explain, status);
+    help.append(explain, status);
   }
   if (b.choices.length) {
-    const form = node("form"), label = node("label", "What do you know about the intended outcome or missing context?");
-    const reason = node("textarea"); reason.id = "decision-reason"; reason.maxLength = 2000; reason.required = true; reason.rows = 3;
+    const form = node("form", undefined, "decision-form"), group = node("fieldset");
+    group.append(node("legend", "Choose the next step"));
+    const label = node("label", "Your context or reason"), reason = node("textarea");
+    reason.id = "decision-reason"; reason.maxLength = 2000; reason.required = true; reason.rows = 3;
     label.htmlFor = reason.id; reason.value = state.decisionDrafts[c.id] || "";
     reason.addEventListener("input", () => { state.decisionDrafts[c.id] = reason.value; });
-    form.append(label, reason);
-    const controls = [];
     for (const option of b.choices) {
-      const control = button(option.label, async () => {
-        if (!reason.reportValidity()) return;
-        const epoch = sessionEpoch;
-        controls.forEach(x => x.disabled = true);
-        try {
-          const response = await api(`/api/cases/${encodeURIComponent(c.id)}/decision`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({revision: b.revision, choice: option.id, reason: reason.value})});
-          if (epoch !== sessionEpoch) return;
-          delete state.decisionDrafts[c.id];
-          await loadNativeCases(response.child_id || c.id);
-          announce(response.child_id ? "Your request was recorded and a new review was admitted. The business operation was not repeated." : response.next_step);
-        } catch (error) { if (epoch === sessionEpoch) announce(error.message, true); }
-        finally { controls.forEach(x => x.disabled = false); }
-      });
-      controls.push(control);
-      form.append(control, node("p", option.consequence));
+      const card = node("label", undefined, "decision-option"), radio = node("input");
+      radio.type = "radio"; radio.name = "decision-choice"; radio.value = option.id; radio.required = true;
+      radio.checked = state.decisionChoices[c.id] === option.id;
+      radio.addEventListener("change", () => { state.decisionChoices[c.id] = option.id; });
+      const words = node("span"); words.append(node("strong", option.label), node("span", option.consequence));
+      card.append(radio, words); group.append(card);
     }
-    form.addEventListener("submit", e => e.preventDefault());
+    const submit = node("button", "Record decision", "primary"); submit.type = "submit";
+    const feedback = node("p"); feedback.setAttribute("role", "status");
+    form.append(group, label, reason, submit, feedback);
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (submit.disabled || !form.reportValidity()) return;
+      const option = b.choices.find(o => o.id === state.decisionChoices[c.id]);
+      if (!option) return;
+      const epoch = sessionEpoch; submit.disabled = true;
+      feedback.textContent = "Recording your decision…";
+      try {
+        const response = await api(`/api/cases/${encodeURIComponent(c.id)}/decision`, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({revision:b.revision, choice:option.id, reason:reason.value})});
+        if (epoch !== sessionEpoch) return;
+        delete state.decisionDrafts[c.id]; delete state.decisionChoices[c.id];
+        if (response.child_id) openCase(response.child_id); else await loadNativeCases(c.id);
+        announce(response.child_id ? "Your request was recorded and a new review was admitted. The operation was not repeated." : response.next_step);
+      } catch (error) {
+        if (epoch === sessionEpoch) {
+          feedback.textContent = error.message;
+          if (error.httpStatus === 409) await loadNativeCases(c.id);
+          else announce(`Decision not confirmed: ${error.message}. Your draft is retained.`, true);
+        }
+      } finally { submit.disabled = false; }
+    });
     box.append(form);
   }
+  box.append(help);
   if (c.decisions?.length) {
     const history = node("details"); history.append(node("summary", "Your recorded decisions"));
     for (const d of c.decisions) history.append(section(d.choice.replaceAll("_", " "), node("p", d.reason), node("p", `${d.operator} · ${d.recorded_at}`), node("p", d.next_step)));
@@ -1345,19 +1444,69 @@ function renderDecisionBrief(c) {
   return box;
 }
 
+function targetName(target) {
+  const id = String(target || "").split(":")[1];
+  if (String(target).startsWith("task:")) {
+    const task = state.catalog?.tasks?.find(t => String(t.Id) === id);
+    return task?.Name || `Task ${id}`;
+  }
+  return target || "Operation review";
+}
+function caseLabel(status) {
+  return ({VERIFIED_MATCH:"Evidence matched the request", VERIFIED_MISMATCH:"Evidence did not match", QUEUED:"Waiting for review", RUNNING:"Review in progress", RECOVERY_REQUIRED:"Review needs recovery", ADMISSION_UNCERTAIN:"Review admission unconfirmed", HELD_FOR_REVIEW:"Review needs clarification", HELD_FOR_EVIDENCE:"More evidence needed"})[status] || String(status || "Outcome unknown").replaceAll("_", " ").toLowerCase();
+}
 function renderNativeCases(root) {
-  root.append(node("p", "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate."), button("Refresh cases", () => loadNativeCases()));
-  if (state.nativeError) root.append(node("p", state.nativeError, "error-message"));
+  const toolbar = node("div", undefined, "case-toolbar");
+  if (state.caseId) toolbar.append(button("Back to cases", () => navigate("cases")));
+  else toolbar.append(node("p", "Understand the result. Find the next useful step.", "page-intro"));
+  toolbar.append(button("Refresh cases", () => loadNativeCases(state.caseId)));
+  root.append(toolbar);
+  if (state.nativeError) root.append(node("p", `Could not refresh cases: ${state.nativeError}. Any retained information below may be out of date.`, "error-message"));
   const list = state.nativeCases;
-  if (!list) { root.append(empty("Loading native cases…")); return; }
+  if (!list) { root.append(empty("Loading cases…")); return; }
   if (!list.available) { root.append(empty(list.detail)); return; }
-  if (list.budget) root.append(node("p", `Reviews admitted today: ${list.budget.operator_daily_used} / ${list.budget.operator_daily_limit}. Active limit: ${list.budget.operator_active_limit}. A recovered review needs an explicit new revision.`));
-  if (!list.items.length) root.append(empty("No native cases yet. Open an operation receipt and choose Review this receipt with AI Hub."));
-  else root.append(table(["Case", "State", "Updated (IRIS time)"], list.items.map(c => [button(`${c.target || "Review"} · ${c.id.slice(-8)}`, () => loadNativeCases(c.id)), c.state, c.updated_at])));
-  const c = state.nativeDetail;
-  if (!c) return;
+  if (!state.caseId) {
+    const controls = node("div", undefined, "case-filters"), label = node("label", "Find a case"), search = node("input");
+    search.id = "case-search"; search.type = "search"; search.value = state.caseSearch; label.htmlFor = search.id;
+    const filterLabel = node("label", "Show"), filter = node("select"); filter.id = "case-filter"; filterLabel.htmlFor = filter.id;
+    for (const [value,title] of [["all","All loaded cases"],["decision","Needs your decision · inspected"],["attention","Unresolved reviews"],["progress","In progress"],["finished","Finished"]]) { const o = node("option",title); o.value = value; filter.append(o); }
+    filter.value = state.caseFilter; controls.append(label,search,filterLabel,filter); root.append(controls);
+    search.addEventListener("input", () => { state.caseSearch = search.value; renderPage(); });
+    filter.addEventListener("change", () => { state.caseFilter = filter.value; renderPage(); });
+    root.append(node("p", "Initially newest first; new arrivals append while you read. Decision needs reflect inspected cases. Open a case to check its current evidence.", "quiet"));
+    for (const item of list.items) if (!state.caseOrder.includes(item.id)) state.caseOrder.push(item.id);
+    const items = [...list.items].sort((a,b) => state.caseOrder.indexOf(a.id)-state.caseOrder.indexOf(b.id)).filter(c => {
+      const match = `${targetName(c.target)} ${c.target} ${c.id}`.toLowerCase().includes(state.caseSearch.toLowerCase());
+      const active = ["RUNNING","QUEUED","ADMISSION_UNCERTAIN"].includes(c.state), done = c.state?.startsWith("VERIFIED_");
+      return match && (state.caseFilter === "all" || state.caseFilter === "decision" && state.inspectedKinds[c.id] === "CONTEXT_DECISION" || state.caseFilter === "attention" && !active && !done || state.caseFilter === "progress" && active || state.caseFilter === "finished" && done);
+    });
+    const cards = node("div", undefined, "case-cards");
+    for (const c of items) {
+      const card = node("article", undefined, "case-card"), open = button(targetName(c.target), () => openCase(c.id)); open.dataset.caseId = c.id;
+      card.append(node("p", c.source_scope === "synthetic" ? "Simulated operation" : "IRIS operation", "eyebrow"), open, node("p", caseLabel(c.state), "case-status"), node("p", `Review ${c.id.slice(-8)} · Updated ${c.updated_at || "time unavailable"} (IRIS time)`, "quiet")); cards.append(card);
+    }
+    root.append(cards, node("p", `${items.length} shown · ${list.items.length} loaded (up to 50 recent authorized reviews).`, "quiet"));
+    if (!items.length) root.append(empty(list.items.length ? "No cases match. Choose All loaded cases or clear the search." : "No reviews yet. Open an operation receipt to start an AI Hub review."));
+    if (list.budget) root.append(details("Review limits", list.budget));
+    return;
+  }
+  const c = state.nativeDetail?.id === state.caseId ? state.nativeDetail : null;
+  if (!c) { root.append(empty(state.nativeError ? "This case could not be opened. Return to cases or refresh." : "Loading the selected case…")); return; }
+  root.append(node("p", targetName(c.target), "case-target"));
   const r = c.result || {};
   if (c.brief) root.append(renderDecisionBrief(c));
+  else root.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "Open the technical evidence for the available record. A readable summary is not available yet.")));
+  const story = node("details"); story.append(node("summary", "What happened"));
+  const steps = node("ol", undefined, "case-story");
+  const history = Array.isArray(r.ReviewHistoryJSON) ? r.ReviewHistoryJSON : [];
+  for (const [i, entry] of history.entries()) {
+    steps.append(node("li", `Review ${i+1}: rule assessment ${entry.verdict || "not recorded"}; result ${entry.output || "not recorded"}. ${entry.explanation || "Read the technical record for the available interpretation."}`));
+  }
+  if (r.executed_probe) steps.append(node("li", `Evidence check: ${r.executed_probe === "CHECK_EFFECT_RECEIPT" ? "looked for the operation receipt" : r.executed_probe === "READ_CURRENT_TARGET" ? "read the current target" : r.executed_probe}.`));
+  steps.append(node("li", `Recorded review outcome: ${caseLabel(c.state)}.`));
+  story.append(steps, node("p", "This account covers the recorded review steps. It does not establish unrecorded actions or intent.", "quiet"));
+  root.append(story);
+  if (c.receipt_id) root.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
   const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
@@ -1368,6 +1517,7 @@ function renderNativeCases(root) {
   }
   box.append(empty("A measured match does not authorize another operation. Any further change uses the existing prepare, authorize, execute and verify workflow."));
   const technical = node("details");
+  if (list.budget) box.append(node("p", `Reviews admitted today: ${list.budget.operator_daily_used} / ${list.budget.operator_daily_limit}.`, "quiet"));
   technical.append(node("summary", "Technical details and full evidence"), box);
   root.append(technical);
 }
@@ -1391,6 +1541,7 @@ byId("new-request").addEventListener("click", () => startRequest());
 byId("refresh").addEventListener("click", () => {
   invalidate("Evidence refresh requested; prepare the current intent again.");
   load().catch(error => announce(error.message, true));
+  if (state.page === "cases") loadNativeCases(state.caseId);
 });
 document
   .querySelectorAll("[data-page]")
@@ -1430,5 +1581,6 @@ try {
 } catch {
   /* An unreadable browser hint grants no authority. */
 }
+initializeRoute();
 setInterval(tick, 1000);
 load().catch((error) => announce(error.message, true));

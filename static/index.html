@@ -4,24 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Armada Battery · Operations</title>
+    <link rel="icon" href="/static/battery-logo.png" />
     <link rel="stylesheet" href="/static/app.css" />
   </head>
   <body>
     <a class="skip" href="#workspace">Skip to workspace</a>
     <header class="status-bar">
-      <strong class="wordmark">Armada Battery</strong>
-      <span id="instance">Instance unknown</span
-      ><span id="adapter" class="badge unknown">? CONNECTING</span
-      ><span id="authority" class="badge unknown">? AUTHORITY UNKNOWN</span>
-      <span id="freshness" class="quiet">No observation yet</span>
-      <div class="header-actions">
-        <button id="refresh" type="button">Refresh evidence</button
-        ><button id="new-request" type="button">New request</button>
-        <button id="sign-out" type="button">Sign out</button>
-      </div>
+      <a class="brand" href="#cases" aria-label="Armada Battery — Cases"><img src="/static/battery-logo.png" width="48" height="48" alt="" /><span><strong class="wordmark">Armada Battery</strong><small>Understand. Decide. Continue.</small></span></a>
+      <span id="adapter" class="badge unknown">Connecting…</span>
+      <span id="authority" class="badge unknown">Authority unknown</span>
       <details class="instance-detail">
-        <summary>Connection details</summary>
+        <summary>Connection &amp; actions</summary>
+        <div class="connection-meta"><span id="instance">Instance unknown</span><span id="freshness" class="quiet">No observation yet</span></div>
         <div id="connection">Connecting…</div>
+        <div class="header-actions">
+          <button id="refresh" type="button">Refresh evidence</button>
+          <button id="new-request" type="button">New request</button>
+          <button id="sign-out" type="button">Sign out</button>
+        </div>
       </details>
     </header>
     <div class="shell">
@@ -32,10 +32,10 @@
           aria-expanded="false"
           aria-controls="nav-items"
         >
-          Management navigation
+          Menu · <span id="nav-current">Cases</span>
         </button>
         <div id="nav-items">
-          <button data-page="overview" aria-current="page">Overview</button>
+          <p>Workspace</p><button data-page="cases" aria-current="page">Cases</button><button data-page="overview">Overview</button>
           <p>Manage</p>
           <button data-page="tasks">
             Tasks <span data-quality="tasks"></span>
@@ -44,7 +44,7 @@
             Web applications <span data-quality="web_apps"></span>
           </button>
           <button data-page="rest">
-            REST APIs <span class="quiet">Not implemented</span>
+            REST API coverage <span class="quiet">Capability notes</span>
           </button>
           <button data-page="permissions">
             Permissions <span data-quality="users"></span>
@@ -58,8 +58,7 @@
           <button data-page="logs">
             Logs &amp; audit <span data-quality="audit"></span>
           </button>
-          <p>Proof</p>
-          <button data-page="cases">Agent cases</button>
+          <p>Evidence</p>
           <button data-page="receipts">Receipts</button>
           <button data-page="ledger">Evidence ledger</button>
           <button data-page="rules">Rules</button>
@@ -67,7 +66,7 @@
       </nav>
       <main id="workspace" tabindex="-1">
         <div class="page-heading">
-          <h1 id="page-title">Overview</h1>
+          <h1 id="page-title">Cases</h1>
           <span id="page-state" class="quiet">Loading observations…</span>
         </div>
         <div

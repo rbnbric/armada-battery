@@ -10,7 +10,14 @@ The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
 
-**Decision-brief update:** Agent Cases now starts with a readable summary and a
+**UX update:** Cases now leads with the current task, a readable result and the
+next useful action. The Battery logo anchors the refreshed dark theme; history
+and technical evidence expand beneath the summary. Case/receipt navigation keeps
+your draft and reading position, and explicit links survive sign-in. Verified:
+126 public Python tests, 13 UI handler tests, 143 browser assertions and 15 installed HTTP
+checks. [Screenshots, delivery proof and limits](docs/UX_REFINEMENT_EVIDENCE.md).
+
+**Earlier decision-brief qualification:** Cases now starts with a readable summary and a
 focused question when intent is unresolved. Human answers are bound to the evidence
 they saw. An optional third native AI Hub role explains the report; technical
 records remain expandable. Qualification passed 126 Python tests, 13 UI handler
@@ -116,8 +123,8 @@ docker compose run --rm proof
 Open `http://127.0.0.1:8080`. The default Compose path starts only the lightweight
 synthetic application; it does not download or wait for an IRIS image.
 
-The latest local check passed 86 backend tests, 13 UI lifecycle tests, and all
-eight scenario demonstrations. The optional Compose overlay below adds a real IRIS
+The latest application qualification is linked above. The earlier baseline also
+exercised all eight synthetic scenario demonstrations. The optional Compose overlay below adds a real IRIS
 Community Edition instance and starts conservatively with changes disabled.
 
 The management surface also collects bounded, read-only observations for

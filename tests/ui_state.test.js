@@ -57,7 +57,7 @@ function harness() {
   };
   const plan = {
     certificate: {
-      token: "private-certificate",
+      token: "fx-cert",
       expires_at: new Date(Date.now() + 60000).toISOString(),
     },
     finding: {
@@ -251,6 +251,7 @@ test("native review response loss retains its admission key and never invokes an
 test("recovery shows an explicit revision action and never replays work on render", () => {
   const h = harness();
   h.run(`state.nativeCases = {available:true, items:[], budget:{operator_daily_used:2,operator_daily_limit:20,operator_active_limit:2}};
+    state.caseId = 'abandoned-case';
     state.nativeDetail = {id:'abandoned-case',state:'RECOVERY_REQUIRED',receipt_id:'receipt-one',recovery_reason:'Expired RUNNING lease'};
     renderNativeCases(document.getElementById('fixture'))`);
   const words = (e) => [e.textContent, ...e.children.flatMap(words)];
