@@ -1,0 +1,115 @@
+{
+  "scope": "real native AI Hub review of a synthetic management operation",
+  "receipt": {
+    "id": "889e1589-ad0c-4aae-a947-41cb1c56efe1",
+    "intent_id": "80b04d83-4cbf-4493-96d5-987fb8b228bb",
+    "action_id": "task.run-once",
+    "target": "task:17",
+    "operator": "local-operator",
+    "idempotency_key": "ddd79c26-4bb4-4da9-9fa7-d3b72f411a15",
+    "started_at": "2026-11-05T02:03:45.123630+00:00",
+    "status": "VERIFIED_SUCCESS",
+    "transport_result": "Synthetic adapter accepted the run request",
+    "finished_at": "2026-11-05T02:03:45.297991+00:00",
+    "before_evidence": [
+      "168a0ac8-814c-4cf8-898c-d88f61e1c3c1",
+      "5fcc53ec-37d4-4340-8fc3-65ab6bf3bca5",
+      "43ef53f9-9608-469b-acff-91a1de7ff1f5"
+    ],
+    "after_evidence": [
+      "cb900f92-c3ee-47f4-9529-8b9cdfe2d62f"
+    ],
+    "explanation": "The isolated synthetic adapter's new terminal record establishes the outcome.",
+    "certificate_digest": "670aaa4abca87257d572938e11ba2d244aa43fd030137663e70372b95d044785",
+    "history_before": [],
+    "verification_deadline": "2026-11-05T02:08:45.123634+00:00"
+  },
+  "case": {
+    "id": "case-471eabcdf036b41aaa07c9ca12d07156",
+    "parent_id": "",
+    "state": "VERIFIED_MATCH",
+    "created_at": "2026-11-05 02:03:45",
+    "updated_at": "2026-11-05 02:04:00",
+    "recovery_reason": "",
+    "deadline": 5864753625,
+    "result": {
+      "state": "VERIFIED_MATCH",
+      "assertion": "YES",
+      "output": "PASS",
+      "reviewer_assertion": "YES",
+      "reviewer_output": "PASS",
+      "applicability": "APPLICABLE",
+      "explanation": "Fresh scoped receipt measurement",
+      "proposed_probe": "CHECK_EFFECT_RECEIPT",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "response_id": "1326",
+      "ProofJSON": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      },
+      "ReviewHistoryJSON": [
+        {
+          "state": "INVESTIGATION_PENDING_GATE",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "APPLICABLE",
+          "probe": "CHECK_EFFECT_RECEIPT",
+          "explanation": "The observation reports unavailable because no verified receipt for the scoped operation (partner/local-operator, attempt..., target/task:17, version...) was recorded, so the rule cannot confirm expected count/result.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":848,\"total_completion_tokens\":783,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":4430,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "{\"current_context_tokens\":687,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":939,\"total_interactions\":1,\"total_llm_duration_ms\":5826,\"total_prompt_tokens\":979,\"total_reasoning_tokens\":815,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1317\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"NO\\\",\\n  \\\"output_result\\\": \\\"UNKNOWN\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"summary\\\": \\\"Version matches, but observation is not available, so the rule prediction cannot be verified; verdict is NO and output result is UNKNOWN.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":572,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":783,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":4430,\\\"total_prompt_tokens\\\":848,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"1319\",\"content\":\"\\n\\n{\\n  \\\"next_probe\\\": \\\"CHECK_EFFECT_RECEIPT\\\",\\n  \\\"hypothesis\\\": \\\"The observation reports unavailable because no verified receipt for the scoped operation (partner/local-operator, attempt..., target/task:17, version...) was recorded, so the rule cannot confirm expected count/result.\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"uncertainty\\\": \\\"We do not know if a receipt exists for the exact scope; checking the durable receipt will clarify availability.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":687,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":939,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":5826,\\\"total_prompt_tokens\\\":979,\\\"total_reasoning_tokens\\\":815,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Rule version matches; observation available, exact partner/attempt/target/version, count=1 result=COMPLETE equals expected; timing 12ms < max_age 300s; therefore PASS.",
+          "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":1126,\"total_completion_tokens\":948,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":3552,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1323\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"YES\\\",\\n  \\\"output_result\\\": \\\"PASS\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\",\\n    \\\"B_EVALUATED_AT\\\"\\n  ],\\n  \\\"summary\\\": \\\"Rule version matches; observation available, exact partner/attempt/target/version, count=1 result=COMPLETE equals expected; timing 12ms < max_age 300s; therefore PASS.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":732,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":948,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":3552,\\\"total_prompt_tokens\\\":1126,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+        }
+      ],
+      "ProbeHistoryJSON": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864753025}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"CHECK_EFFECT_RECEIPT\",\"receipt_id\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"source\":\"durable operator-scoped receipt ledger\"}"
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+          "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864753025}",
+          "reason": "Authenticated management evidence read",
+          "tool": "{\"tool\":\"FINAL\",\"receipt_id\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"target_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"source\":\"configured management adapter target readback\"}"
+        }
+      ]
+    },
+    "receipt_id": "889e1589-ad0c-4aae-a947-41cb1c56efe1",
+    "source_scope": "synthetic",
+    "target": "task:17"
+  },
+  "state_transitions": [
+    "RUNNING",
+    "VERIFIED_MATCH"
+  ],
+  "elapsed_seconds": 16.094,
+  "duplicate_operation_receipt_equal": true,
+  "duplicate_case_id_equal": true
+}

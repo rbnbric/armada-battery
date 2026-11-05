@@ -1,0 +1,14 @@
+zn "BATTERY"
+set sc=##class(Ens.Director).StopProduction()
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/interop/Battery","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/qualification-tests","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Interop.CaseRecord).Migrate()
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.LifecycleSuite).Run()
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.SolverSuite).Run(0,1)
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "SERVICE_FINISHED",!
+halt

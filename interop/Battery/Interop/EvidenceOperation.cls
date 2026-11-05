@@ -30,6 +30,8 @@ Method Management(request As Battery.Interop.EvidenceRequest, binding As Battery
         If (host="")||($LENGTH(key)<32) { Set response.Reason="Management evidence adapter is not configured" Return $$$OK }
         Set http=##class(%Net.HttpRequest).%New(),http.Server=host,http.Port=8080,http.Timeout=5,http.OpenTimeout=3
         Do http.SetHeader("X-Battery-Adapter",key)
+        Set scope=##class(%DynamicObject).%FromJSON(binding.ContractJSON)
+        Do http.SetHeader("X-Battery-Operator",scope.partner)
         Set path="/api/native-evidence/"_##class(%CSP.Page).EscapeURL(request.CaseId)_"?phase="_request.Phase
         Set sc=http.Get(path)
         If $$$ISERR(sc) { Return sc }

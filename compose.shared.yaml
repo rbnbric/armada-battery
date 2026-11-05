@@ -1,0 +1,13 @@
+# Optional overlay: add -f compose.shared.yaml after compose.interop.yaml.
+# Operator registry is a local JSON file of name -> {key_sha256, role}.
+services:
+  battery-web:
+    environment:
+      BATTERY_OPERATORS_FILE: /run/battery/operators.json
+      BATTERY_SESSION_KEY: ${BATTERY_SESSION_KEY:?Set a random shared-session signing key}
+      BATTERY_OPERATOR_LEDGER_ROOT: /app/var/operators
+    volumes:
+      - type: bind
+        source: ${BATTERY_OPERATORS_FILE:?Set the absolute path to a private operator registry}
+        target: /run/battery/operators.json
+        read_only: true

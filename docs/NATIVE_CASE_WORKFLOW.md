@@ -73,7 +73,8 @@ Transport failures do not trigger an inference retry. The same validator applies
 to the repaired response. Each review has a 180-second budget; a repair call is
 limited to 45 seconds. The solver has at most two review rounds, so at most six
 agent calls, plus bounded evidence reads. This is not an inference cancellation
-guarantee or a shared-service admission/billing system.
+guarantee or a dollar billing system. Durable admission budgets and lease recovery
+are now described in [service controls](SERVICE_CONTROLS.md).
 
 Case admission and its evidence context are written to the management ledger
 before HTTP submission. Native cases claim QUEUED -> RUNNING once. Identical
@@ -82,7 +83,9 @@ serialization preserves request bytes across process restart. A new revision
 retains its parent and receipt. Native case IDs are separate from action
 idempotency keys.
 
-The two services are an explicit single-operator installation. The native
+The default is a single-operator installation. An optional shared-identity overlay
+adds signed sessions, read-only roles and separate operator ledgers; see
+[SERVICE_CONTROLS](SERVICE_CONTROLS.md). The native
 adapter identity can read/write the Battery data namespace. It is not a
 multi-tenant database ACL. Provisioning creates the adapter identity; it does
 not replace vendor-account/password management or network hardening. Qualification

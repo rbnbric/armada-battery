@@ -32,7 +32,8 @@ def digest(value):
 
 
 class NativeCases:
-    def __init__(self, engine, url=None, username=None, password=None):
+    def __init__(self, engine, url=None, username=None, password=None, operator=None):
+        self.operator = operator
         self.engine = engine
         self.url = (url if url is not None else os.getenv("BATTERY_NATIVE_URL", "")).rstrip("/")
         self.username = username if username is not None else os.getenv("BATTERY_NATIVE_USER", "")
@@ -48,6 +49,8 @@ class NativeCases:
         if not self.url:
             raise AdapterError("Native AI Hub is not connected to this installation")
         headers = {"Accept": "application/json", "Authorization": "Basic " + base64.b64encode(f"{self.username}:{self.password}".encode()).decode()}
+        if self.operator:
+            headers["X-Battery-Operator"] = self.operator
         data = None if body is None else json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
         if data is not None:
             headers["Content-Type"] = "application/json"
@@ -59,7 +62,7 @@ class NativeCases:
                     raise AdapterError("Native response exceeds the response budget")
                 return json.loads(raw)
         except urllib.error.HTTPError as exc:
-            raise AdapterError(f"Native API returned HTTP {exc.code}; the request was not confirmed") from exc
+            raise AdapterError("Native active or daily review budget exhausted; try later with the same request key" if exc.code == 429 else f"Native API returned HTTP {exc.code}; the request was not confirmed", http_status=exc.code if exc.code in {403, 404, 409, 429, 503} else 502) from exc
         except (urllib.error.URLError, TimeoutError, ValueError) as exc:
             # Do not print credential-bearing request objects or retry POST.
             raise AdapterError("Native request did not establish an outcome; refresh the same case ID") from exc

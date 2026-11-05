@@ -248,3 +248,21 @@ test("native review response loss retains its admission key and never invokes an
   assert.equal(requests[0].options.headers["Idempotency-Key"], requests[1].options.headers["Idempotency-Key"]);
   assert.match(h.get("error-message").textContent, /does not repeat the operation/);
 });
+test("recovery shows an explicit revision action and never replays work on render", () => {
+  const h = harness();
+  h.run(`state.nativeCases = {available:true, items:[], budget:{operator_daily_used:2,operator_daily_limit:20,operator_active_limit:2}};
+    state.nativeDetail = {id:'abandoned-case',state:'RECOVERY_REQUIRED',receipt_id:'receipt-one',recovery_reason:'Expired RUNNING lease'};
+    renderNativeCases(document.getElementById('fixture'))`);
+  const words = (e) => [e.textContent, ...e.children.flatMap(words)];
+  const text = words(h.get('fixture')).join(' ');
+  assert.match(text, /Expired RUNNING lease/);
+  assert.match(text, /Review refreshed evidence as a new revision/);
+  assert.match(text, /2 \/ 20/);
+  assert.equal(h.calls.length, 0);
+});
+test("read-only identity cannot send a mutation from the UI", async () => {
+  const h = harness();
+  h.run("state.server = {role:'observer'}");
+  await assert.rejects(h.run("api('/api/cases',{method:'POST'})"), /read-only/);
+  assert.equal(h.calls.length, 0);
+});

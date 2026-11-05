@@ -249,8 +249,9 @@ changes, Battery requires `BATTERY_ALLOW_CHANGES=true` and a `BATTERY_ACCESS_KEY
 of at least 32 characters; supply a random value outside source control. The UI
 accepts that key once and uses a one-hour HttpOnly, SameSite=Strict session cookie.
 Set `BATTERY_SECURE_COOKIE=true` behind HTTPS and `BATTERY_OPERATOR_NAME` to the
-accountable operator name. This is single-operator authentication, not multi-user
-RBAC. Never publicly expose the unauthenticated local mode. IRIS privileges still
+accountable operator name. Optional [shared-service controls](docs/SERVICE_CONTROLS.md)
+add individual sessions, isolated operator ledgers, read-only roles, durable
+admission budgets and abandoned-review recovery. Never publicly expose the unauthenticated local mode. IRIS privileges still
 belong to the configured backend account; use an appropriately restricted account.
 
 Set `BATTERY_RULE_VALIDATION` only after independently qualifying the corresponding

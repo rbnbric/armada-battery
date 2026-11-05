@@ -17,3 +17,5 @@ README.md
 *.cmd
 *.ps1
 interop/results
+
+operators.json

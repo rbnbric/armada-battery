@@ -1,0 +1,10 @@
+zn "BATTERY"
+set id="service-restart-"_$SYSTEM.Util.CreateGUID()
+set r=##class(Battery.Test.LifecycleSuite).Fixture(id,"restart-test","restart-test")
+set token=##class(Battery.Interop.CaseRecord).Begin(id)
+set r=##class(Battery.Interop.CaseRecord).%OpenId(id),r.Deadline=##class(Battery.Interop.OutcomeProof).Now()+5
+set sc=r.%Save()
+set ^BatteryRestartTest("id")=id,^BatteryRestartTest("lease")=token,^BatteryRestartTest("day")=+$HOROLOG
+set ^BatteryCaseBudget(+$HOROLOG,"restart-test","restart-test")=20
+write "RESTART_PREPARED",!
+halt

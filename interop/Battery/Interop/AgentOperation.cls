@@ -9,6 +9,7 @@ Parameter INVOCATION = "Queue";
 Method RunAgent(pRequest As Battery.Interop.AgentRequest, Output pResponse As Battery.Interop.AgentResponse) As %Status
 {
     Try {
+        If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Return $$$ERROR($$$GeneralError,"Case lease expired before provider call") }
         Set key = $SYSTEM.Util.GetEnviron("NEBIUS_API_KEY")
         If key = "" { Return $$$ERROR($$$GeneralError, "NEBIUS_API_KEY is not configured") }
         Set settings = {"api_key":(key), "base_url":"https://api.tokenfactory.nebius.com/v1"}

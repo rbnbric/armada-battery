@@ -1,0 +1,18 @@
+zn "BATTERY"
+set id="service-http-foreign"
+if ##class(Battery.Interop.CaseRecord).%ExistsId(id) { write "HTTP_FIXTURE_EXISTS",! halt }
+set r=##class(Battery.Test.LifecycleSuite).Fixture(id,"foreign-native-account","service-quota-test"),r.State="HELD_FOR_EVIDENCE"
+set sc=r.%Save()
+kill ^BatteryCaseActive(id)
+set ^BatteryCaseList(r.CreatedAt,id)=1,^BatteryHTTPTest("stamp")=r.CreatedAt,^BatteryHTTPTest("day")=+$HOROLOG
+set ^BatteryCaseBudget(+$HOROLOG,"BatteryAdapterUser","service-quota-test")=20
+set id="service-http-replay"
+if ##class(Battery.Interop.CaseRecord).%ExistsId(id) { write "HTTP_REPLAY_FIXTURE_EXISTS",! halt }
+set case={"id":(id),"rule":"one receipt","expected":"complete","acceptance":"complete","observed":"unavailable","facts":{"F1":"No evidence"}}
+set contract={"profile":"receipt-v1","partner":"service-quota-test","attempt":"fixture","target":"fixture","version":"1","rule_version":"1","expected_count":1,"expected_result":"COMPLETE","accepted_count":1,"accepted_result":"COMPLETE","max_age":300}
+set body={"case":(case),"contract":(contract),"initial":{"available":false},"parent_id":""}
+set replay=##class(Battery.Test.LifecycleSuite).Fixture(id,"BatteryAdapterUser","service-quota-test"),replay.State="HELD_FOR_EVIDENCE",replay.RequestJSON=body.%ToJSON()
+set sc=replay.%Save()
+kill ^BatteryCaseActive(id)
+write "HTTP_FIXTURE_READY",!
+halt

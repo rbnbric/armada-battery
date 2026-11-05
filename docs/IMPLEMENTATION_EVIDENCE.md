@@ -141,3 +141,9 @@ This is a qualified local preview, not a completed shared service.
 The normal shared-workspace SSH test route was attempted and failed resolving
 `ct200`. The isolated public checkout's Python/Node suites and the Windows EAP
 Docker qualifications did execute. No broad fleet deployment is claimed.
+
+## Subsequent service-controls work
+
+The results and open boundaries above describe the original integration run.
+[SERVICE_EVIDENCE](SERVICE_EVIDENCE.md) records the later lease recovery, admission
+budget and shared-identity qualification; it does not alter these historical results.

@@ -1,0 +1,6 @@
+zn "BATTERY"
+set sc=##class(Battery.Interop.CaseRecord).%DeleteId("service-http-foreign")
+kill ^BatteryCaseList(^BatteryHTTPTest("stamp"),"service-http-foreign"),^BatteryCaseBudget(^BatteryHTTPTest("day"),"BatteryAdapterUser","service-quota-test"),^BatteryHTTPTest
+set sc=##class(Battery.Interop.CaseRecord).%DeleteId("service-http-replay")
+write "HTTP_FIXTURE_REMOVED",!
+halt

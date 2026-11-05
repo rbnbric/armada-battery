@@ -1173,11 +1173,11 @@ class BatteryEngine(AdministrativeIntentMixin):
         )
 
 
-def engine_from_environment() -> BatteryEngine:
+def engine_from_environment(*, ledger_path=None) -> BatteryEngine:
     if os.environ.get("BATTERY_IRIS_URL"):
         adapter: TaskAdapter = IrisTaskAdapter.from_environment()
         allowed = os.environ.get("BATTERY_ALLOW_CHANGES", "").casefold() == "true"
-        if allowed and len(os.environ.get("BATTERY_ACCESS_KEY", "")) < 32:
+        if allowed and len(os.environ.get("BATTERY_ACCESS_KEY", "")) < 32 and not (os.environ.get("BATTERY_OPERATORS_FILE") and len(os.environ.get("BATTERY_SESSION_KEY", "")) >= 32):
             raise RuntimeError(
                 "Live changes require BATTERY_ACCESS_KEY of at least 32 characters"
             )
@@ -1190,7 +1190,7 @@ def engine_from_environment() -> BatteryEngine:
         adapter = SyntheticTaskAdapter()
         allowed = True
         validation = RuleValidation.SIMULATED
-    ledger_path = Path(os.environ.get("BATTERY_LEDGER_PATH", "var/ledger.jsonl"))
+    ledger_path = Path(ledger_path or os.environ.get("BATTERY_LEDGER_PATH", "var/ledger.jsonl"))
     return BatteryEngine(
         adapter,
         ledger=Ledger(ledger_path),

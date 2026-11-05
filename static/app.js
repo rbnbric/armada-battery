@@ -192,6 +192,7 @@ function evidenceQuality(value) {
   return value?.quality || "UNKNOWN";
 }
 async function api(path, options = {}) {
+  if (state.server?.role === "observer" && options.method && options.method !== "GET" && !path.startsWith("/api/session")) throw new Error("This identity has read-only access.");
   const { timeoutMs = options.method && options.method !== "GET" ? 30000 : 8000, ...request } = options;
   const controller = new AbortController();
   let timer;
@@ -380,6 +381,9 @@ async function load() {
 }
 function renderCollectors(changed) {
   const server = state.server;
+  const readOnly = server?.role === "observer";
+  byId("prepare").disabled = readOnly;
+  byId("new-request").disabled = readOnly;
   byId("instance").textContent = server?.instance || "Instance unavailable";
   byId("adapter").textContent = server
     ? server.mode.toUpperCase()
@@ -392,6 +396,7 @@ function renderCollectors(changed) {
         ? "CHANGES ENABLED"
         : "OBSERVATION ONLY"
     : "AUTHORITY UNKNOWN";
+  if (readOnly) byId("authority").textContent = "READ-ONLY IDENTITY";
   byId("authority").className =
     "badge " +
     (server?.mode === "synthetic"
@@ -1212,15 +1217,16 @@ function renderNativeCases(root) {
   const list = state.nativeCases;
   if (!list) { root.append(empty("Loading native cases…")); return; }
   if (!list.available) { root.append(empty(list.detail)); return; }
+  if (list.budget) root.append(node("p", `Reviews admitted today: ${list.budget.operator_daily_used} / ${list.budget.operator_daily_limit}. Active limit: ${list.budget.operator_active_limit}. A recovered review needs an explicit new revision.`));
   if (!list.items.length) root.append(empty("No native cases yet. Open an operation receipt and choose Review this receipt with AI Hub."));
   else root.append(table(["Case", "State", "Updated (IRIS time)"], list.items.map(c => [button(`${c.target || "Review"} · ${c.id.slice(-8)}`, () => loadNativeCases(c.id)), c.state, c.updated_at])));
   const c = state.nativeDetail;
   if (!c) return;
   const r = c.result || {};
-  const box = section("Case detail", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
+  const box = section("Case detail", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
-  if (c.state.startsWith("HELD_") && c.receipt_id) box.append(button("Review refreshed evidence as a new revision", () => submitNativeCase(c.receipt_id, c.id)));
+  if ((c.state.startsWith("HELD_") || c.state === "RECOVERY_REQUIRED") && c.receipt_id) box.append(button("Review refreshed evidence as a new revision", () => submitNativeCase(c.receipt_id, c.id)));
   if (c.state === "ADMISSION_UNCERTAIN") box.append(empty("Queue admission is uncertain. Inspect the native message trace before starting another revision."));
   for (const [label, key] of [["Measurement proof", "ProofJSON"], ["Reviews, rejected answers and usage", "ReviewHistoryJSON"], ["Evidence tool reads", "ProbeHistoryJSON"]]) {
     if (r[key]) box.append(details(label, r[key]));
@@ -1256,6 +1262,15 @@ document.querySelector(".nav-toggle").addEventListener("click", (event) => {
   const open = byId("navigation").dataset.open !== "true";
   byId("navigation").dataset.open = String(open);
   event.currentTarget.setAttribute("aria-expanded", String(open));
+});
+byId("sign-out").addEventListener("click", async () => {
+  try {
+    await api("/api/session/logout", {method: "POST"});
+    for (const storage of [localStorage, sessionStorage]) {
+      for (const key of Object.keys(storage)) if (key.startsWith("battery")) storage.removeItem(key);
+    }
+    window.location.reload();
+  } catch (error) { announce(error.message, true); }
 });
 byId("login-form").addEventListener("submit", async (event) => {
   event.preventDefault();

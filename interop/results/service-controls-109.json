@@ -1,0 +1,2074 @@
+{
+  "recorded_at": "2026-11-05",
+  "scope": "Native lease recovery and admission controls; shared identities qualified through real HTTP middleware using TestClient. Installed host retains original single-operator configuration.",
+  "python": {
+    "passed": 84,
+    "failed": 0,
+    "log_sha256": "db51f63960c4ee94f3389d664d2185b7f7bf5c0317dea1c9084476957db0cbe6"
+  },
+  "node": {
+    "passed": 10,
+    "failed": 0,
+    "log_sha256": "b079864b2597f99b165b06711098be537a220ae20208b51e7a6cd66711621692"
+  },
+  "native_lifecycle": [
+    {
+      "name": "two active cases exhaust operator slots",
+      "passed": 1
+    },
+    {
+      "name": "different operator retains capacity",
+      "passed": 1
+    },
+    {
+      "name": "queued case receives lease",
+      "passed": 1
+    },
+    {
+      "name": "duplicate delivery cannot claim running case",
+      "passed": 1
+    },
+    {
+      "name": "valid lease accepted",
+      "passed": 1
+    },
+    {
+      "name": "foreign lease denied",
+      "passed": 1
+    },
+    {
+      "name": "late successful completion rejected",
+      "passed": 1
+    },
+    {
+      "name": "expired run remains held without fabricated result",
+      "passed": 1
+    },
+    {
+      "name": "expired worker cannot dispatch further provider calls",
+      "passed": 1
+    },
+    {
+      "name": "queue gap recovers without replay",
+      "passed": 1
+    },
+    {
+      "name": "delayed queued delivery denied",
+      "passed": 1
+    },
+    {
+      "name": "expiry returns operator slots",
+      "passed": 1
+    },
+    {
+      "name": "current worker completes",
+      "passed": 1
+    },
+    {
+      "name": "completion releases active slot",
+      "passed": 1
+    },
+    {
+      "name": "duplicate completion cannot overwrite result",
+      "passed": 1
+    },
+    {
+      "name": "daily budget persists outside worker memory",
+      "passed": 1
+    },
+    {
+      "name": "daily operator budget does not block another operator",
+      "passed": 1
+    }
+  ],
+  "native_solver_faults": [
+    {
+      "case_id": "solver4-fault-match-1",
+      "mode": "match",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1035\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1038"
+    },
+    {
+      "case_id": "solver4-fault-missing-1",
+      "mode": "missing",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Outcome not observed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1044\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1048"
+    },
+    {
+      "case_id": "solver4-fault-recovered-1",
+      "mode": "recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1054\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1058\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1061"
+    },
+    {
+      "case_id": "solver4-fault-wrong_partner-1",
+      "mode": "wrong_partner",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: partner",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1067\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1071"
+    },
+    {
+      "case_id": "solver4-fault-wrong_attempt-1",
+      "mode": "wrong_attempt",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: attempt",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1077\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1081"
+    },
+    {
+      "case_id": "solver4-fault-wrong_target-1",
+      "mode": "wrong_target",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: target",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1087\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1091"
+    },
+    {
+      "case_id": "solver4-fault-wrong_version-1",
+      "mode": "wrong_version",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: version",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1097\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752514}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1101"
+    },
+    {
+      "case_id": "solver4-fault-stale-1",
+      "mode": "stale",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_FRESH_READBACK",
+      "explanation": "Observation expired",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1107\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864748914}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_FRESH_READBACK",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864748914}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864748914}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1111"
+    },
+    {
+      "case_id": "solver4-fault-future-1",
+      "mode": "future",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation is from the future",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1117\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752815}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752815}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752815}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1121"
+    },
+    {
+      "case_id": "solver4-fault-string_count-1",
+      "mode": "string_count",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Missing or malformed observation",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1127\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1131"
+    },
+    {
+      "case_id": "solver4-fault-zero-1",
+      "mode": "zero",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1137\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":0,\"expected_result\":\"NONE\",\"accepted_count\":0,\"accepted_result\":\"NONE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":0,\"result\":\"NONE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":0,\"expected_result\":\"NONE\",\"accepted_count\":0,\"accepted_result\":\"NONE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":0,\"result\":\"NONE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1140"
+    },
+    {
+      "case_id": "solver4-fault-wrong_rule-1",
+      "mode": "wrong_rule",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "NO",
+      "gate_output": "PASS",
+      "expected_verdict": "NO",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1146\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1150"
+    },
+    {
+      "case_id": "solver4-fault-duplicate-1",
+      "mode": "duplicate",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "NO",
+      "gate_output": "FAIL",
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1156\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752515}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1160"
+    },
+    {
+      "case_id": "solver4-fault-accurate_bad_output-1",
+      "mode": "accurate_bad_output",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "YES",
+      "gate_output": "FAIL",
+      "expected_verdict": "YES",
+      "expected_output": "FAIL",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1166\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752516}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752516}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752516}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1170"
+    },
+    {
+      "case_id": "solver4-fault-invalid_contract-1",
+      "mode": "invalid_contract",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Invalid adapter measurement contract",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752516}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1174"
+    },
+    {
+      "case_id": "solver4-fault-unbound-1",
+      "mode": "unbound",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "No adapter-owned evidence binding",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "No adapter-owned evidence binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "1178"
+    },
+    {
+      "case_id": "solver4-fault-input_tamper-1",
+      "mode": "input_tamper",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Case differs from adapter-owned binding",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "Case differs from adapter-owned binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "1182"
+    },
+    {
+      "case_id": "solver4-fault-provider_error-1",
+      "mode": "provider_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer call failed",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer call failed",
+          "reviewer_usage": "",
+          "investigator_usage": "",
+          "agent_calls": ""
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1189"
+    },
+    {
+      "case_id": "solver4-fault-invalid_model-1",
+      "mode": "invalid_model",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer repair rejected: evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer repair rejected: evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1195\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"invented\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"1196\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"invented\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1198"
+    },
+    {
+      "case_id": "solver4-fault-changed_contract-1",
+      "mode": "changed_contract",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1204\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":2,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1207"
+    },
+    {
+      "case_id": "solver4-fault-changed_case-1",
+      "mode": "changed_case",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1213\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "Case differs from adapter-owned binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "1216"
+    },
+    {
+      "case_id": "solver4-fault-changed_observation-1",
+      "mode": "changed_observation",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1222\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752517}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1225"
+    },
+    {
+      "case_id": "solver4-fault-initial_read_error-1",
+      "mode": "initial_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial evidence read failed",
+      "reviews": [],
+      "reads": [],
+      "response_id": "1228"
+    },
+    {
+      "case_id": "solver4-fault-probe_read_error-1",
+      "mode": "probe_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Evidence probe failed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1234\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1236"
+    },
+    {
+      "case_id": "solver4-fault-final_read_error-1",
+      "mode": "final_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Final evidence read failed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1242\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1244"
+    },
+    {
+      "case_id": "solver4-fault-investigator_bad_recovered-1",
+      "mode": "investigator_bad_recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Invalid investigator JSON",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "{}",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1250\",\"content\":\"{\\\"verdict\\\":\\\"NO\\\",\\\"output_result\\\":\\\"UNKNOWN\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"1252\",\"content\":\"{\",\"validation_error\":\"Invalid investigator JSON\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1256\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1259"
+    },
+    {
+      "case_id": "solver4-fault-investigator_error_recovered-1",
+      "mode": "investigator_error_recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Investigator call failed after escalation",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1265\",\"content\":\"{\\\"verdict\\\":\\\"NO\\\",\\\"output_result\\\":\\\"UNKNOWN\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1270\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1273"
+    },
+    {
+      "case_id": "solver4-fault-repair_ids-1",
+      "mode": "repair_ids",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1279\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"receipt-review\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"1280\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1283"
+    },
+    {
+      "case_id": "solver4-fault-repair_json-1",
+      "mode": "repair_json",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1289\",\"content\":\"{\",\"validation_error\":\"Expected one complete JSON object\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"1290\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1293"
+    },
+    {
+      "case_id": "solver4-fault-repair_extra-1",
+      "mode": "repair_extra",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1299\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"],\\\"execute\\\":\\\"SEND_NOW\\\"}\",\"validation_error\":\"Required keys: verdict, output_result, applicability, evidence_ids, summary; no extra keys\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"1300\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1303"
+    },
+    {
+      "case_id": "solver4-fault-repair_error-1",
+      "mode": "repair_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer call failed",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer call failed",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1309\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"receipt-review\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5864752518}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "1311"
+    }
+  ],
+  "http": {
+    "scope": "real native password-authenticated HTTP against disposable quota/foreign-owner fixtures; no model or business effects",
+    "foreign_owner_list_hidden": true,
+    "foreign_owner_get": 404,
+    "anonymous": 401,
+    "operator_contract_mismatch": 403,
+    "concurrent_exhausted_budget_statuses": [
+      429,
+      429,
+      429,
+      429,
+      429,
+      429,
+      429,
+      429
+    ],
+    "rejected_case_not_created": true,
+    "foreign_owner_replay": 404,
+    "replay_at_exhausted_budget": 200
+  },
+  "jobs": {
+    "dbbd2715-7cce-4b90-97e2-4fa65420deb8": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793843710050,
+      "finished": 1793843719188,
+      "output": "LIFECYCLE_CASE={\"name\":\"two active cases exhaust operator slots\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"different operator retains capacity\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"queued case receives lease\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"duplicate delivery cannot claim running case\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"valid lease accepted\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"foreign lease denied\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"late successful completion rejected\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"expired run remains held without fabricated result\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"expired worker cannot dispatch further provider calls\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"queue gap recovers without replay\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"delayed queued delivery denied\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"expiry returns operator slots\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"current worker completes\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"completion releases active slot\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"duplicate completion cannot overwrite result\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"daily budget persists outside worker memory\",\"passed\":1}\nLIFECYCLE_CASE={\"name\":\"daily operator budget does not block another operator\",\"passed\":1}\nLIFECYCLE_FINISHED\nSERVICE_FINISHED\n",
+      "sha256": "d8134941501bb9d22feeadada7d26adf842a1c2e8df89277a9edeff51985aacb"
+    },
+    "29249ef0-c145-4375-89b1-7795412b1d69": {
+      "status": "failed",
+      "exitCode": 1,
+      "started": 1793843757639,
+      "finished": 1793843781908,
+      "output": "",
+      "sha256": "8b33d9b2e40433ea90347b15a0a2dd3f803535ca25d4d3e58f5db729f29359eb"
+    },
+    "bde59d45-b6e8-4c9f-998f-657147399e2a": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793843858711,
+      "finished": 1793843858968,
+      "output": "RESTART_STATE=RECOVERY_REQUIRED\nRESTART_RESULT={\"state\":\"RECOVERY_REQUIRED\",\"late_completion_rejected\":1,\"persisted_daily_budget\":20,\"result_empty\":1}\nRESTART_VERIFIED\n",
+      "sha256": "bd601233e65f6697d23b74d959185c0e297a63c593f2172893504793b7238d53"
+    },
+    "e0356226-b180-4b48-a789-5b818db14950": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793843919527,
+      "finished": 1793844131182,
+      "output": "INTEGRATION_BUILD_OK\r\nINTEGRATION_SETUP_OK\r\n",
+      "sha256": "ea4f9615dc26321d595da955431a36784fb1ea62e3738a498f1727a1a6889456"
+    },
+    "938f8e44-a5fd-44ea-beff-526b27a61da7": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793844141217,
+      "finished": 1793844150296,
+      "output": "SERVICE_FINAL_LOADED\n",
+      "sha256": "c89f0bae6054bf2ae68fa98eaf8321c7d4510996b40acd8078b83efc5d9702b8"
+    },
+    "72321001-8e5b-41bd-abba-8b88eb153a90": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793844185633,
+      "finished": 1793844186639,
+      "output": "HTTP_FIXTURE_REMOVED\nSERVICE_HTTP_OK\n",
+      "sha256": "cca502685363f8bf3368d155657f7ee4f7483288b615c83868ec7e5ca10c2e30"
+    },
+    "912fae45-af29-4bfb-bad0-6a729906872a": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793844223483,
+      "finished": 1793844241965,
+      "output": "LAUNCHER_PARSE_OK\r\nNATIVE_INTEGRATION_OK\n",
+      "sha256": "17eb1c811cd54fc2c0f50793b685eb6df05b344882817e9cd14b0fb5d4b66037"
+    },
+    "6f28b95c-afd3-445f-bfba-95402d59f71b": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793844321528,
+      "finished": 1793844364756,
+      "output": "SERVICE_WEB_UPDATED\r\n",
+      "sha256": "6f92a2fff0353056ac3f523a06b4b8fe5a7e0c8bf39edd57ead6ac16ca3bb77a"
+    },
+    "b6a5ab06-68f0-494e-a291-1c84c9b5370e": {
+      "status": "completed",
+      "exitCode": 0,
+      "started": 1793844387618,
+      "finished": 1793844388928,
+      "output": "SERVICE_READBACK_OK\n",
+      "sha256": "2816132ef2a0428f8461f390979f9c969d109b185154f5d912d0ba14f0cbda19"
+    }
+  },
+  "readback": {
+    "health": {
+      "ok": true,
+      "ledger_valid": true,
+      "scope": "local event store; IRIS connectivity is not established by this check"
+    },
+    "budget": {
+      "operator_daily_used": 1,
+      "operator_daily_limit": 20,
+      "service_daily_used": 1,
+      "service_daily_limit": 100,
+      "operator_active_limit": 2,
+      "service_active_limit": 4
+    },
+    "installed_runtime_sha256": {
+      "app.py": "415c44b435032c916cdba6dcf0c1a916be69564ce0a7f79ec7784faf51a729e4",
+      "battery/ledger.py": "d41a1ebbe284f2f7a60fb254c65de52e17f31240b1306a48c7d964e0aeed99e5",
+      "battery/models.py": "8582d2ed2ae3b4a9737ca46fc0f4bc7545c8899e34e92b2b0ab73d91f5c3b628",
+      "battery/ship_native_cases.py": "fd9ea229b6d151fc0fedd77410a86118936d54fc8f960f342323ec5401048e12",
+      "battery/scenarios.py": "fbf6687a643f3e6c504046a4d2a356718cd7c618d8cb9baa604ad05c21a37a19",
+      "battery/task_slice.py": "9c30fbf50df4045734e784607231a7e4ec54a1c96a9c8018c3c6b4836ae06977",
+      "battery/admin_slice.py": "fe6aa5b7b2ec85ac08f3b04856096e217f8c453840985a70ba040a69a0e5e0db",
+      "battery/errors.py": "358ba4bd562986421f9ab190addd93f4859fa1ac8c30df910c83de817cf233b7",
+      "battery/ship_operator_sessions.py": "4f34437b708a8a014b388b0b08c39216ad772596f2f083fdf0a2f7ebe71aa094",
+      "battery/__init__.py": "c9fbad07c9dc583be68993de547700eed730964940f3badcf3a7555dc2ce472e",
+      "static/app.js": "ea318421cac063ea0a86e68e1312b058998aa19054af128a0032416fd3799fd2",
+      "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+      "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed"
+    }
+  },
+  "installed_native_source_sha256": {
+    "interop/Battery/Interop/AgentOperation.cls": "ff88c987127d45d9ef945fc96c1a873a14774c763ad398a644218657aa741e91",
+    "interop/Battery/Interop/AgentRequest.cls": "726881fda85ee24b596bb6f410dcd04686904e46e418f17cc612a3f7cd7663b0",
+    "interop/Battery/Interop/AgentResponse.cls": "a0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456",
+    "interop/Battery/Interop/CaseAPI.cls": "77a5248c8777d7c26d3938da217e7a1d4e561891d4c476d22e9c90e845e50123",
+    "interop/Battery/Interop/CaseProcess.cls": "e66ef25c859c7dec0008d66281342cce4038135362201c7b9fb5224fffc7c09f",
+    "interop/Battery/Interop/CaseRecord.cls": "ea989ff46457debdc53fb361cff49ec1e8cbc4b6ece17baf33181e688e416aa6",
+    "interop/Battery/Interop/CaseRequest.cls": "0287bc6a57c1e35adc7538185a6d97303be15acacfaabeff440ff144c9ecddcd",
+    "interop/Battery/Interop/CaseResponse.cls": "2d5be08b22864489a39b54bf6a9e7be46fbf8b824db048e0db21c1683a59954a",
+    "interop/Battery/Interop/Demo.cls": "f13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705",
+    "interop/Battery/Interop/EvidenceBinding.cls": "0dabb2ade12f0242cdf17a74ea7ceb2cd51260ba929af5eb5c582420f3617cf7",
+    "interop/Battery/Interop/EvidenceOperation.cls": "612242a8e41f52a64f40c98bf502ffa86a5a53f61e7691e1a51c2f3adb1ef300",
+    "interop/Battery/Interop/EvidenceRequest.cls": "4d985e611f4800f3b7c13be0e9b0774760fcf52f539bf317b2fb5688e786b780",
+    "interop/Battery/Interop/EvidenceResponse.cls": "08d7b5a793a6b37b8b6eecf99297a0104bc93152af65148286f46576186c783a",
+    "interop/Battery/Interop/IntakeService.cls": "8159e286829ba3be1a5a15b20d22e03576eea44d2801da764ec8c020cdaf3ce6",
+    "interop/Battery/Interop/OutcomeProof.cls": "b00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455",
+    "interop/Battery/Interop/Production.cls": "0fd708c00ec924809a29e7da637bcbac26ac69b8101d9a7f6f18070aeb15c3f9",
+    "interop/Battery/Interop/SolverProcess.cls": "b194073321de2d2224708571a8138b110b32f7326ed4a957ab215dd620fec0b1"
+  },
+  "browser": {
+    "recovery-phone": {
+      "url": "about:blank",
+      "status_code": 200,
+      "title": "Armada Battery \u00b7 Operations",
+      "elapsed_seconds": 0.95,
+      "evaluate_result": {
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\n\nReviews admitted today: 2 / 20. Active limit: 2. A recovered review needs an explicit new revision.\n\ntask:17 \u00b7 89abcdef\nRECOVERY_REQUIRED\n2026-11-05 00:01:00\nCase detail\nCase\ncase-0123456789abcdef0123456789abcdef\nState\nRECOVERY_REQUIRED\nSource scope\nSYNTHETIC LAYOUT FIXTURE\nTarget\ntask:17\nParent revision\nUnavailable / not recorded\nRule assertion\nUnavailable / not recorded\nMeasured output\nUnavailable / not recorded\nReviewer assertion\nUnavailable / not recorded\nReviewer output\nUnavailable / not recorded\nReason\nExpired RUNNING lease. No operation was replayed.\nProposed probe\nUnavailable / not recorded\nExecuted probe\nUnavailable / not recorded\nNative response ID\nUnavailable / not recorded\nInspect operation receiptReview refreshed evidence as a new revision\n\nA measured match does not authorize another operation. Any further change uses the existing prepare, authorize, execute and verify workflow.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 106.65625,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 44,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 128.515625,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 89abcdef",
+            "width": 161.34375,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 214.671875,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Review refreshed evidence as a new revision",
+            "width": 336,
+            "height": 66,
+            "font": "16px"
+          }
+        ],
+        "overflow": []
+      },
+      "injection_scan": {
+        "flagged": false,
+        "score": 0.0,
+        "severity": 0.0,
+        "categories": [
+          "ai_targeted"
+        ],
+        "summary": "clean",
+        "matches": [
+          {
+            "category": "ai_targeted",
+            "pattern_name": "ai_targeting",
+            "matched_text": "AI",
+            "severity": 0.8,
+            "channel": "decoded:rot13>rot13"
+          }
+        ],
+        "scanned_lengths": {
+          "html": 80865,
+          "markdown": 0,
+          "intercepted": 0
+        }
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed",
+        "static/app.js": "ea318421cac063ea0a86e68e1312b058998aa19054af128a0032416fd3799fd2",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    },
+    "recovery-desktop": {
+      "url": "about:blank",
+      "status_code": 200,
+      "title": "Armada Battery \u00b7 Operations",
+      "elapsed_seconds": 0.94,
+      "evaluate_result": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\n\nReviews admitted today: 2 / 20. Active limit: 2. A recovered review needs an explicit new revision.\n\nCase\tState\tUpdated (IRIS time)\ntask:17 \u00b7 89abcdef\tRECOVERY_REQUIRED\t2026-11-05 00:01:00\nCase detail\nCase\ncase-0123456789abcdef0123456789abcdef\nState\nRECOVERY_REQUIRED\nSource scope\nSYNTHETIC LAYOUT FIXTURE\nTarget\ntask:17\nParent revision\nUnavailable / not recorded\nRule assertion\nUnavailable / not recorded\nMeasured output\nUnavailable / not recorded\nReviewer assertion\nUnavailable / not recorded\nReviewer output\nUnavailable / not recorded\nReason\nExpired RUNNING lease. No operation was replayed.\nProposed probe\nUnavailable / not recorded\nExecuted probe\nUnavailable / not recorded\nNative response ID\nUnavailable / not recorded\nInspect operation receiptReview refreshed evidence as a new revision\n\nA measured match does not authorize another operation. Any further change uses the existing prepare, authorize, execute and verify workflow.",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 137.9375,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 109.21875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 80.390625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 1400,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Overview",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Tasks \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Web applications \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "REST APIs Not implemented",
+            "width": 193,
+            "height": 55.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Permissions \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Security \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Operating system \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Logs & audit \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Agent cases",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Receipts",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Evidence ledger",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Rules",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 115.703125,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 89abcdef",
+            "width": 135.96875,
+            "height": 37.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 191.078125,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Review refreshed evidence as a new revision",
+            "width": 316.078125,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "injection_scan": {
+        "flagged": false,
+        "score": 0.0,
+        "severity": 0.0,
+        "categories": [
+          "ai_targeted"
+        ],
+        "summary": "clean",
+        "matches": [
+          {
+            "category": "ai_targeted",
+            "pattern_name": "ai_targeting",
+            "matched_text": "AI",
+            "severity": 0.8,
+            "channel": "decoded:rot13>rot13"
+          }
+        ],
+        "scanned_lengths": {
+          "html": 80865,
+          "markdown": 0,
+          "intercepted": 0
+        }
+      },
+      "fixture_note": "Unmodified application HTML/CSS/JS with existing labeled synthetic demo API. Fixture URL base adjusted for about:blank. No live IRIS integration.",
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "fcba963bc07d7198193a760fee687b4dc103e63344e4ebe707439cd8f9af10ed",
+        "static/app.js": "ea318421cac063ea0a86e68e1312b058998aa19054af128a0032416fd3799fd2",
+        "docs/demo-api.js": "d6c932493cb047e4e7b5012818d1d56415200b357fee0cb0cd6c2e58b017c609"
+      }
+    }
+  },
+  "normal_fleet_gate": {
+    "executed": false,
+    "reason": "ssh ct200 failed hostname resolution"
+  },
+  "limitations": [
+    "Injected running lease across real container restart; did not cancel an active paid provider request",
+    "Concurrent exhausted-budget rejection is not a throughput or fair-queue benchmark",
+    "No per-target database tenant ACL, automated retention/purge or dollar billing enforcement"
+  ]
+}

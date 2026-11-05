@@ -1,0 +1,13 @@
+zn "BATTERY"
+set id=^BatteryRestartTest("id"),token=^BatteryRestartTest("lease"),day=^BatteryRestartTest("day")
+set sc=##class(Battery.Interop.CaseRecord).Sweep()
+set r=##class(Battery.Interop.CaseRecord).%OpenId(id)
+write "RESTART_STATE=",r.State,!
+set response=##class(Battery.Interop.CaseResponse).%New(),response.State="VERIFIED_MATCH"
+set sc=##class(Battery.Interop.CaseRecord).Complete(id,response,token)
+set fenced=$SYSTEM.Status.IsError(sc),budget=$get(^BatteryCaseBudget(day,"restart-test","restart-test"))
+write "RESTART_RESULT=",{"state":(r.State),"late_completion_rejected":(fenced),"persisted_daily_budget":(budget),"result_empty":(r.ResultJSON="")}.%ToJSON(),!
+if (r.State="RECOVERY_REQUIRED")&&fenced&&(budget=20)&&(r.ResultJSON="") { write "RESTART_VERIFIED",! }
+set sc=##class(Battery.Interop.CaseRecord).%DeleteId(id)
+kill ^BatteryCaseActive(id),^BatteryCaseBudget(day,"restart-test","restart-test"),^BatteryRestartTest
+halt

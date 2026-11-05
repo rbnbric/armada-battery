@@ -21,7 +21,7 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
         Set pResponse.CaseId = case.%Get("id")
         Set facts = case.%Get("facts")
         Set reviewRequest = ##class(Battery.Interop.AgentRequest).%New()
-        Set reviewRequest.Role = "reviewer"
+        Set reviewRequest.Role = "reviewer",reviewRequest.RunId=pRequest.RunId,reviewRequest.Lease=pRequest.Lease
         Set reviewRequest.CaseJSON = pRequest.CaseJSON
         Set calls=[],started=##class(Battery.Interop.OutcomeProof).Now(),usage={}
         For attempt=1:1:2 {
@@ -52,7 +52,7 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
             Return $$$OK
         }
         Set investigateRequest = ##class(Battery.Interop.AgentRequest).%New()
-        Set investigateRequest.Role = "investigator"
+        Set investigateRequest.Role = "investigator",investigateRequest.RunId=pRequest.RunId,investigateRequest.Lease=pRequest.Lease
         Set handoff = ##class(%DynamicObject).%New()
         Do handoff.%Set("case", case)
         Do handoff.%Set("review", review)

@@ -8,12 +8,13 @@ Parameter REVIEWTIMEOUT = 200;
 Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Battery.Interop.CaseResponse) As %Status
 {
     If pRequest.RunId'="" {
-        If '##class(Battery.Interop.CaseRecord).Begin(pRequest.RunId) { Return $$$OK }
+        Set pRequest.Lease=##class(Battery.Interop.CaseRecord).Begin(pRequest.RunId)
+        If pRequest.Lease="" { Return $$$OK }
     }
     Set sc=..Solve(pRequest,.pResponse)
     If pRequest.RunId'="" {
         If $IsObject(pResponse) {
-            Set saved=##class(Battery.Interop.CaseRecord).Complete(pRequest.RunId,pResponse)
+            Set saved=##class(Battery.Interop.CaseRecord).Complete(pRequest.RunId,pResponse,pRequest.Lease)
             If $$$ISERR(saved) { Return saved }
         }
     }
@@ -30,6 +31,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
         Set pResponse.CaseId=case.id
         Set er=##class(Battery.Interop.EvidenceRequest).%New()
         Set er.CaseId=case.id,er.CaseJSON=pRequest.CaseJSON,er.Phase="INITIAL"
+        If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
         Set sc=..SendRequestSync("Battery.Evidence",er,.initial,10)
         If $$$ISERR(sc) { Set pResponse.Explanation="Initial evidence read failed" Return $$$OK }
         If '$IsObject(initial) { Set pResponse.Explanation="Initial evidence read returned no response" Return $$$OK }
@@ -38,7 +40,8 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
         If '##class(Battery.Interop.OutcomeProof).Contract(initial.ContractJSON,.contract) { Set pResponse.Explanation="Invalid adapter measurement contract",pResponse.ProbeHistoryJSON=reads.%ToJSON() Return $$$OK }
         Set proof=##class(Battery.Interop.OutcomeProof).Assess(initial.ContractJSON,initial.ObservationJSON)
         Set enriched=..Enrich(case,initial.ContractJSON,initial.ObservationJSON)
-        Set rr=##class(Battery.Interop.CaseRequest).%New(),rr.CaseJSON=enriched
+        Set rr=##class(Battery.Interop.CaseRequest).%New(),rr.CaseJSON=enriched,rr.RunId=pRequest.RunId,rr.Lease=pRequest.Lease
+        If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
         Set sc=..SendRequestSync("Battery.Review",rr,.review,..#REVIEWTIMEOUT)
         If $$$ISERR(sc) { Set pResponse.Explanation="Initial review failed" Return $$$OK }
         If '$IsObject(review) { Set pResponse.Explanation="Initial review returned no response" Return $$$OK }
@@ -60,6 +63,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
                 }
             }
             Set pResponse.ExecutedProbe=er.Phase
+            If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
             Set sc=..SendRequestSync("Battery.Evidence",er,.probed,10)
             If $$$ISERR(sc) { Set pResponse.Explanation="Evidence probe failed" Return $$$OK }
             If '$IsObject(probed) { Set pResponse.Explanation="Evidence probe returned no response" Return $$$OK }
@@ -70,6 +74,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
             Set proof=##class(Battery.Interop.OutcomeProof).Assess(probed.ContractJSON,probed.ObservationJSON)
             If proof.usable&&(probed.ObservationJSON'=initial.ObservationJSON) {
                 Set rr.CaseJSON=..Enrich(case,probed.ContractJSON,probed.ObservationJSON)
+                If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
                 Set sc=..SendRequestSync("Battery.Review",rr,.followup,..#REVIEWTIMEOUT)
                 If $$$ISERR(sc) { Set pResponse.Explanation="Follow-up review failed" Return $$$OK }
                 If '$IsObject(followup) { Set pResponse.Explanation="Follow-up review returned no response" Return $$$OK }
@@ -79,6 +84,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
             }
         }
         Set er.Phase="FINAL"
+        If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
         Set sc=..SendRequestSync("Battery.Evidence",er,.fresh,10)
         If $$$ISERR(sc) { Set pResponse.Explanation="Final evidence read failed" Return $$$OK }
         If '$IsObject(fresh) { Set pResponse.Explanation="Final evidence read returned no response" Return $$$OK }

@@ -104,3 +104,10 @@ devlathe run venture_sandbox --venture armada-battery --profile full
 Independent replicas/network filesystems, automatic ledger repair, per-rule
 validation-artifact enforcement, and effective inherited-access calculation remain
 unsupported. The README describes the supported local persistent-store boundary.
+
+## Service controls follow-up
+
+Abandoned native reviews now use expiring leases and reject late completions.
+Shared identities, independent ledgers, observer roles and durable admission
+budgets are specified in [SERVICE_CONTROLS](SERVICE_CONTROLS.md); executed
+qualification is recorded in [SERVICE_EVIDENCE](SERVICE_EVIDENCE.md).

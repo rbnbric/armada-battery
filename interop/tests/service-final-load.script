@@ -1,0 +1,11 @@
+zn "BATTERY"
+set sc=##class(Ens.Director).StopProduction()
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_FINAL_ERROR",! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/interop/Battery","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_FINAL_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Interop.CaseRecord).Migrate()
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_FINAL_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Ens.Director).StartProduction("Battery.Interop.Production")
+if $SYSTEM.Status.IsError(sc) { write "SERVICE_FINAL_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "SERVICE_FINAL_LOADED",!
+halt
