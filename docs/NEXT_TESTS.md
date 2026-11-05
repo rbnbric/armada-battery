@@ -244,3 +244,97 @@ inspection of the underlying result or start another business operation.
 Implementation and these new tests are pending. The visual presentation will be
 refined using the new codices; defining this reporting role does not complete the
 UX work or establish that a third model improves outcomes.
+
+## Human decision point: context and consequences
+
+Design hypothesis to test: human judgment contributes most when the observations
+are established but intent, competing requirements or acceptable consequences
+still determine the right next action. A missing receipt that an admitted tool
+can retrieve is primarily an evidence task. An unreadable model response is
+primarily a recovery task. Neither by itself establishes a useful human decision.
+
+### Where the current implementation falls short
+
+`SolverProcess.Solve` handles `HOLD_FOR_HUMAN`, unavailable proposed probes and
+changed evidence. Provider/contract failures also return HELD_FOR_REVIEW. Those
+states therefore cannot alone determine that a human policy decision is needed.
+`renderNativeCases` currently renders fields/JSON and offers another review
+revision. It does not build a choice with context and consequences.
+
+Add explicit reason categories and an accountable decision owner; retain the
+existing disposition separately. Distinguish missing observable evidence,
+recoverable system failure, unresolved intent/context, conflicting requirements,
+and a choice among admissible corrective actions. Route technical failures to
+recovery or an operator task without presenting them as business judgment.
+
+The decision brief sits after available evidence has been gathered and before
+an intent/rule revision or a further authorized operation is prepared. It is
+not another permission step for every successful review. New evidence invalidates
+a stale brief and prompts reconciliation before a choice is committed.
+
+### The decision brief: one focused overview
+
+Show these in this order, with progressive access to the full records:
+
+1. **The exact question:** one choice the user can actually make, why it matters
+   now and who owns it. If urgency has no recorded basis, do not invent a deadline.
+2. **Intended versus observed:** the requested state, current state and material
+   difference; exact scope, revision, source and observation age.
+3. **What changes the decision:** decisive supporting and opposing evidence,
+   the applicable rule's preconditions, what changed since the prior decision,
+   and any competing requirement. Separate observed facts from hypotheses.
+4. **Relevant patterns:** similar prior cases with both similarities and important
+   differences visible. Precedent suggests a hypothesis; it does not prove this case.
+5. **Choices and consequences:** only admitted actions; expected consequences,
+   uncertainty, affected systems/people, reversibility and the consequence of
+   waiting. Use conditional language when outcomes have not been measured.
+6. **Recommendation with a challenge:** explain the proposed choice and the
+   strongest relevant reason it could be wrong. State which missing observation
+   or human-provided context would change the recommendation. No unsupported
+   confidence percentage or preselected consequential approval.
+7. **Decision and follow-through:** allow correction of assumptions, requesting
+   evidence, deferral, referral to the owner or choosing an admitted next action.
+   Bind the choice and reason to the evidence revision, then show the actual
+   subsequent outcome. Human input cannot rewrite the earlier observation.
+
+The Explainer assembles this brief from the bounded report. The Investigator can
+answer specific requests for evidence. Only the existing execution workflow can
+prepare/authorize/execute a further change. A person supplies missing context or
+chooses a course; they are not asked to certify an unsupported fact as true.
+
+### Example pressure point (future acceptance fixture)
+
+A saved receipt proves configuration A was applied. The current target is B.
+The record does not establish whether B is an intentional later change or drift.
+Read the revision history and available change authorization first. If intent
+remains unresolved, ask the responsible person:
+
+**Was the later configuration intentional, and which state should now be kept?**
+
+Put the A/B difference, timing, known owner, change references and gaps beside
+that question. If B is intentional, record the supplied context and prepare a
+new intent/review against B. If A remains required, prepare a corrective change
+against the current revision. If the user cannot establish intent, seek the owner
+or further evidence. Never automatically undo B or reinterpret the old success
+receipt as proof that B is currently correct. These are proposed acceptance
+branches, not a claim that this complete workflow already exists.
+
+### How to test whether the human contribution helps
+
+Freeze matched cases differing in one decisive context fact: authorized later
+change versus unexplained drift; current rule versus obsolete rule; complete
+versus conflicting evidence. Include ambiguous cases whose correct next step is
+to request context, and settled cases that should not demand a human decision.
+Use the same underlying facts for raw-record and decision-brief presentations.
+Counterbalance order or use equivalent variants to limit learning effects.
+
+Measure correct admissible next actions where an oracle exists, appropriate
+requests for context, missed decisive contradictions, unnecessary interruptions,
+time to an informed decision and the owner's explanation of their choice. Record
+reading difficulty separately from factual correctness. Do not call a coached
+answer an independent comprehension pass. Do not infer a human's ability or
+mental state from a slow or mistaken response. A brief helps only if it improves
+understanding or decisions without hiding uncertainty or contrary evidence.
+
+All additions in this section are specifications; runtime work and human
+comparison results remain pending.
