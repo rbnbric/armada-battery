@@ -4,6 +4,8 @@
 
 ## Version 1.0.3 — interoperability agent preview for contest 49
 
+**[Read the illustrated community guide: An AI agent can be wrong and still be useful](docs/community/2026-11-05/)** — the investigation, REST repairs, screenshots and measured results. [Copyable article Markdown](docs/community/2026-11-05/article.md).
+
 The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip) branch connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
