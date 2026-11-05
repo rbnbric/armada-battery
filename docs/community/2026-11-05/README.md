@@ -107,7 +107,7 @@ The agent is allowed to be wrong and so are you, but hopefully, together, you ne
 
 My standard for total augmentation is simple: the conventional system must make the facts, permissions, and possible actions understandable before an agent is allowed to improvise. Its reasoning should help the operator move forward—make progress to completing real tasks—even when its first answer fails. A person should be able to recover from an uncertain result without learning the internals of every service. Try, try, and try again. We will succeed, together.
 
-Battery is a narrow experiment in that direction. We still need broader real adapter coverage, unfamiliar test cases, and a comparison against the same workflow without agent investigation. That comparison will help establish where the extra reasoning earns its time and cost.
+Battery is a narrow experiment in that direction. We still need broader real adapter coverage, unfamiliar test cases, and a comparison against the same workflow without agent investigation. The comparison will help establish where the extra reasoning earns its time and cost. In all honesty, it really needs to look prettier and have a better user experience, but I hope you enjoy the tools doing what they're intended for in the meantime.
 
 ## Try it and give us a difficult case
 
