@@ -23,6 +23,7 @@ Method OnRequest(pRequest As Battery.Interop.CaseRequest, Output pResponse As Ba
 Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Battery.Interop.CaseResponse) As %Status
 {
     Set pResponse=##class(Battery.Interop.CaseResponse).%New()
+    Set pResponse.ReasonCode="TECHNICAL_RECOVERY"
     Set pResponse.State="HELD_FOR_REVIEW",pResponse.GateVerdict="NO",pResponse.GateOutput="UNKNOWN"
     Set history=[],reads=[]
     Try {
@@ -36,7 +37,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
         If $$$ISERR(sc) { Set pResponse.Explanation="Initial evidence read failed" Return $$$OK }
         If '$IsObject(initial) { Set pResponse.Explanation="Initial evidence read returned no response" Return $$$OK }
         Do ..RecordRead(reads,er.Phase,initial)
-        If 'initial.Found { Set pResponse.State="HELD_FOR_EVIDENCE",pResponse.Explanation=initial.Reason,pResponse.ProbeHistoryJSON=reads.%ToJSON() Return $$$OK }
+        If 'initial.Found { Set pResponse.ReasonCode="EVIDENCE_NEEDED",pResponse.State="HELD_FOR_EVIDENCE",pResponse.Explanation=initial.Reason,pResponse.ProbeHistoryJSON=reads.%ToJSON() Return $$$OK }
         If '##class(Battery.Interop.OutcomeProof).Contract(initial.ContractJSON,.contract) { Set pResponse.Explanation="Invalid adapter measurement contract",pResponse.ProbeHistoryJSON=reads.%ToJSON() Return $$$OK }
         Set proof=##class(Battery.Interop.OutcomeProof).Assess(initial.ContractJSON,initial.ObservationJSON)
         Set enriched=..Enrich(case,initial.ContractJSON,initial.ObservationJSON)
@@ -56,7 +57,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
             Set er.Phase=$SELECT(proof.reason="Observation expired":"CHECK_FRESH_READBACK",1:"CHECK_EFFECT_RECEIPT")
             If pRequest.RunId'="" {
                 Set proposed=review.InvestigatorProbe
-                If proposed="HOLD_FOR_HUMAN" { Set pResponse.Explanation="Investigator requested human review; no probe executed" Return $$$OK }
+                If proposed="HOLD_FOR_HUMAN" { Set pResponse.ReasonCode="CONTEXT_DECISION",pResponse.Explanation="Investigator requested human review; no probe executed" Return $$$OK }
                 If proposed'="" {
                     If (proposed'="CHECK_EFFECT_RECEIPT")&&(proposed'="CHECK_TARGET_VERSION")&&(proposed'="CHECK_FRESH_READBACK") { Set pResponse.Explanation="Proposed probe is unavailable in this adapter: "_proposed Return $$$OK }
                     Set er.Phase=proposed
@@ -90,12 +91,13 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
         If '$IsObject(fresh) { Set pResponse.Explanation="Final evidence read returned no response" Return $$$OK }
         Do ..RecordRead(reads,er.Phase,fresh)
         Set pResponse.ProbeHistoryJSON=reads.%ToJSON()
-        If ('fresh.Found)||(fresh.ContractJSON'=initial.ContractJSON)||(fresh.ObservationJSON'=selected.ObservationJSON) { Set pResponse.Explanation="Evidence changed after reasoning; resubmit against new snapshot" Return $$$OK }
+        If ('fresh.Found)||(fresh.ContractJSON'=initial.ContractJSON)||(fresh.ObservationJSON'=selected.ObservationJSON) { Set pResponse.ReasonCode="EVIDENCE_NEEDED",pResponse.Explanation="Evidence changed after reasoning; resubmit against new snapshot" Return $$$OK }
         Set proof=##class(Battery.Interop.OutcomeProof).Assess(fresh.ContractJSON,fresh.ObservationJSON)
         Set pResponse.ProofJSON=proof.%ToJSON(),pResponse.GateVerdict=proof.verdict,pResponse.GateOutput=proof.output
         Set pResponse.Explanation=proof.reason
-        If 'proof.usable { Set pResponse.State="HELD_FOR_EVIDENCE" Return $$$OK }
+        If 'proof.usable { Set pResponse.ReasonCode="EVIDENCE_NEEDED",pResponse.State="HELD_FOR_EVIDENCE" Return $$$OK }
         Set pResponse.State=$SELECT((proof.verdict="YES")&&(proof.output="PASS"):"VERIFIED_MATCH",1:"VERIFIED_MISMATCH")
+        Set pResponse.ReasonCode=$SELECT(pResponse.State="VERIFIED_MATCH":"COMPLETE",1:"CONTEXT_DECISION")
         // Verified means this bounded measurement only. This process performs no business mutation.
         Return $$$OK
     } Catch ex {

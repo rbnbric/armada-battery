@@ -26,6 +26,7 @@ from urllib.parse import urlsplit, quote
 
 from .ledger import sanitize
 from .errors import AdapterError
+from .ship_decision_brief import build_brief, explanation_input, validate_explanation
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -45,7 +46,7 @@ class NativeCases:
             if not self.username or not self.password:
                 raise ValueError("Native API credentials are required")
 
-    def request(self, path, body=None):
+    def request(self, path, body=None, timeout=6):
         if not self.url:
             raise AdapterError("Native AI Hub is not connected to this installation")
         headers = {"Accept": "application/json", "Authorization": "Basic " + base64.b64encode(f"{self.username}:{self.password}".encode()).decode()}
@@ -56,7 +57,7 @@ class NativeCases:
             headers["Content-Type"] = "application/json"
         request = urllib.request.Request(self.url + path, data=data, headers=headers)
         try:
-            with urllib.request.urlopen(request, timeout=6) as response:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
                 raw = response.read(2_000_001)
                 if len(raw) > 2_000_000:
                     raise AdapterError("Native response exceeds the response budget")
@@ -93,6 +94,25 @@ class NativeCases:
         result["receipt_id"] = context["receipt_id"]
         result["source_scope"] = context["source_scope"]
         result["target"] = context["target"]
+        read_error, current = "", {}
+        try:
+            current = sanitize(self.target(context["target"]))
+        except (AdapterError, ValueError, KeyError) as exc:
+            read_error = "Current target could not be read; inspect the adapter connection and access."
+            import logging
+            logging.getLogger(__name__).error("Decision target read failed for %s: %s", case_id, type(exc).__name__)
+        contexts = self._contexts()
+        successor = next((k for k, v in reversed(list(contexts.items())) if v.get("parent_id") == case_id and v["operator"] == operator), "")
+        result["brief"] = build_brief(result, context, current, read_error, successor)
+        with self.engine.ledger.locked():
+            history = [r["payload"] for r in self.engine.ledger.records if r["event_type"] == "native_human_decision" and r["payload"].get("case_id") == case_id and r["payload"].get("operator") == operator]
+            result["decisions"] = history[-10:]
+            result["decisions_omitted"] = max(0, len(history)-10)
+            for record in reversed(self.engine.ledger.records):
+                value = record["payload"]
+                if record["event_type"] == "native_explanation_finished" and value.get("case_id") == case_id and value.get("revision") == result["brief"]["revision"] and value.get("operator") == operator:
+                    result["explanation"] = value
+                    break
         return result
 
     def target(self, target):
@@ -166,3 +186,69 @@ class NativeCases:
             observed_at = int((stamp.astimezone(timezone.utc) - datetime(1840, 12, 31, tzinfo=timezone.utc)).total_seconds())
             observation = {"available": True, "partner": context["operator"], "attempt": receipt["id"], "target": context["target"], "version": version, "count": 1, "result": "COMPLETE" if receipt["status"] == "VERIFIED_SUCCESS" else "FAILED", "source": "management-adapter:" + context["source_scope"], "observed_at": observed_at}
         return {"contract": contract, "observation": observation, "tool": details}
+
+    def decide(self, case_id, operator, revision, choice, reason):
+        if not isinstance(reason, str) or not reason.strip() or len(reason) > 2000:
+            raise ValueError("Explain your choice in 1–2000 characters")
+        # Serialize duplicate answers and review admission. All facts are re-read before acceptance.
+        with self.engine.ledger.locked():
+            case = self.get(case_id, operator)
+            brief = case["brief"]
+            payload = {"case_id": case_id, "operator": operator, "revision": revision, "choice": choice, "reason": sanitize(reason.strip())}
+            decision_id = digest(payload)
+            for row in self.engine.ledger.records:
+                if row["event_type"] == "native_human_decision" and row["payload"].get("decision_id") == decision_id:
+                    return row["payload"]
+            if revision != brief["revision"]:
+                raise ValueError("Evidence changed. Refresh the decision brief before answering.")
+            if choice not in {x["id"] for x in brief["choices"]}:
+                raise ValueError("This choice is not available for the current evidence")
+            payload.update(decision_id=decision_id, recorded_at=datetime.now(timezone.utc).isoformat(), next_step=next(x["consequence"] for x in brief["choices"] if x["id"] == choice))
+            if choice == "request_evidence":
+                # Persist the decision before dispatch; retry uses the same stable review key.
+                child_key = "decision-" + decision_id
+                payload["review_key"] = child_key
+            self.engine.ledger.append("native_human_decision", payload)
+        return payload
+
+    def follow_decision(self, decision, operator):
+        if decision["choice"] == "request_evidence":
+            context = self._contexts()[decision["case_id"]]
+            child = self.submit(context["receipt_id"], decision["review_key"], operator, decision["case_id"])
+            return {**decision, "child_id": child["id"]}
+        return decision
+
+    def explain(self, case_id, operator, revision, retry=False):
+        case = self.get(case_id, operator)
+        brief = case["brief"]
+        if brief["revision"] != revision:
+            raise ValueError("Evidence changed. Refresh before requesting an explanation.")
+        if brief["kind"] in {"IN_PROGRESS", "SUPERSEDED"}:
+            raise ValueError("Wait for the current review to finish before requesting an explanation")
+        with self.engine.ledger.locked():
+            attempt = 1
+            for row in reversed(self.engine.ledger.records):
+                p = row["payload"]
+                if p.get("case_id") == case_id and p.get("revision") == revision and p.get("operator") == operator:
+                    if row["event_type"] == "native_explanation_finished":
+                        prior_attempt = p.get("attempt", 1)
+                        if p.get("status") == "ready" or not retry or prior_attempt >= 2:
+                            return p
+                        attempt = prior_attempt + 1
+                        break
+                    if row["event_type"] == "native_explanation_started":
+                        return {"status": "unconfirmed", "detail": "An explanation was requested. Its result is not confirmed; refresh later. The evidence brief remains available."}
+            self.engine.ledger.append("native_explanation_started", {"case_id": case_id, "operator": operator, "revision": revision, "attempt": attempt})
+        output = {"case_id": case_id, "operator": operator, "revision": revision, "attempt": attempt}
+        try:
+            response = self.request("/cases/" + quote(case_id, safe="") + "/explain", {"revision": revision, "attempt": attempt, "brief": explanation_input(brief)}, timeout=100)
+            output.update(status="ready", content=validate_explanation(json.loads(response["content"]), brief), usage=response.get("usage"), response_id=response.get("response_id"))
+        except (AdapterError, ValueError, KeyError, TypeError) as exc:
+            import logging
+            logging.getLogger(__name__).error("Explanation unavailable for %s: %s", case_id, type(exc).__name__)
+            output.update(status="unavailable", detail="The AI explanation was unavailable or failed its response contract. The evidence brief remains available.")
+        self.engine.ledger.append("native_explanation_finished", output)
+        # The result is retained for audit, but never presented as current after an intervening change.
+        if self.get(case_id, operator)["brief"]["revision"] != revision:
+            raise ValueError("Evidence changed while the explanation was being prepared. Refresh the brief.")
+        return output

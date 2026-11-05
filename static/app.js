@@ -7,6 +7,7 @@ const state = {
   nativeCases: null,
   nativeDetail: null,
   nativeError: "",
+  decisionDrafts: {},
   revision: 0,
   plan: null,
   certificate: null,
@@ -202,6 +203,7 @@ function clearOperatorView() {
   for (const key of ["server", "catalog", "observations", "trail", "assurance", "demonstrationFinding", "nativeCases", "nativeDetail", "pending"]) state[key] = null;
   state.receipts = [];
   state.nativeError = "";
+  state.decisionDrafts = {};
   state.errors = {};
   state.busy = false;
   for (const id of ["page-content", "receipt", "task-detail"]) byId(id).replaceChildren();
@@ -1251,6 +1253,98 @@ async function submitNativeCase(receiptId, parentId = "") {
     announce(`Case admission not confirmed: ${error.message}. Retrying this review keeps its request key and does not repeat the operation.`, true);
   }
 }
+function renderDecisionBrief(c) {
+  const b = c.brief;
+  const box = section(b.question, node("p", b.summary));
+  box.className += " decision-brief";
+  box.append(node("p", `${b.scope === "synthetic" ? "Simulated operation" : "IRIS operation"} · Decision owner: ${b.owner}`));
+  box.append(node("p", b.next_step, "decision-next"));
+  if (b.successor) box.append(button("Open newer review", () => loadNativeCases(b.successor)));
+  if (b.differences.length) box.append(table(["What changed", "Retained with receipt", "Current value"], b.differences.map(d => [d.field, JSON.stringify(d.retained), JSON.stringify(d.current)])));
+  if (b.differences_omitted) box.append(node("p", `${b.differences_omitted} additional changed fields omitted. Inspect the target before deciding.`));
+  for (const unknown of b.unknowns) box.append(node("p", unknown));
+  const evidence = node("details");
+  evidence.append(node("summary", "Why is Battery showing this?"));
+  for (const fact of b.facts) {
+    const item = section(fact.label, fields(fact.value));
+    item.id = `decision-fact-${fact.id}`;
+    evidence.append(item);
+  }
+  evidence.append(node("p", `Configuration read: ${b.read_at}. ${b.history_note}`));
+  box.append(evidence);
+  if (c.explanation?.status === "ready") {
+    const e = c.explanation.content;
+    const explanation = section("AI explanation — interpretation of the evidence", node("p", e.summary), node("p", e.meaning), node("p", e.missing));
+    for (const id of e.evidence_ids) {
+      const link = node("a", `Evidence: ${id}`); link.href = `#decision-fact-${id}`;
+      link.addEventListener("click", () => { evidence.open = true; });
+      explanation.append(link, node("span", " "));
+    }
+    box.append(explanation);
+  } else if (c.explanation) box.append(node("p", c.explanation.detail));
+  if (!["IN_PROGRESS", "SUPERSEDED"].includes(b.kind) && (!c.explanation || (c.explanation.status === "unavailable" && (c.explanation.attempt || 1) < 2))) {
+    const status = node("p", "Optional: ask AI Hub to explain these observations in everyday language.");
+    status.setAttribute("role", "status");
+    const explain = button(c.explanation ? "Retry explanation once" : "Explain this evidence", async () => {
+      const epoch = sessionEpoch, revision = b.revision;
+      explain.disabled = true; status.textContent = "Preparing an explanation. You can still inspect the evidence.";
+      try {
+        const response = await api(`/api/cases/${encodeURIComponent(c.id)}/explain`, {timeoutMs: 110000, method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({revision, retry: !!c.explanation})});
+        if (epoch !== sessionEpoch || state.nativeDetail?.id !== c.id || state.nativeDetail?.brief?.revision !== revision) return;
+        if (response.status === "unconfirmed") { status.textContent = response.detail; return; }
+        state.nativeDetail.explanation = response;
+        if (state.page === "cases") renderPage();
+      } catch (error) {
+        if (epoch === sessionEpoch) { status.textContent = error.message; explain.disabled = false; }
+      }
+    });
+    box.append(explain, status);
+  }
+  if (b.choices.length) {
+    const form = node("form"), label = node("label", "What do you know about the intended outcome or missing context?");
+    const reason = node("textarea"); reason.id = "decision-reason"; reason.maxLength = 2000; reason.required = true; reason.rows = 3;
+    label.htmlFor = reason.id; reason.value = state.decisionDrafts[c.id] || "";
+    reason.addEventListener("input", () => { state.decisionDrafts[c.id] = reason.value; });
+    form.append(label, reason);
+    const controls = [];
+    for (const option of b.choices) {
+      const control = button(option.label, async () => {
+        if (!reason.reportValidity()) return;
+        const epoch = sessionEpoch;
+        controls.forEach(x => x.disabled = true);
+        try {
+          const response = await api(`/api/cases/${encodeURIComponent(c.id)}/decision`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({revision: b.revision, choice: option.id, reason: reason.value})});
+          if (epoch !== sessionEpoch) return;
+          delete state.decisionDrafts[c.id];
+          await loadNativeCases(response.child_id || c.id);
+          announce(response.child_id ? "Your request was recorded and a new review was admitted. The business operation was not repeated." : response.next_step);
+        } catch (error) { if (epoch === sessionEpoch) announce(error.message, true); }
+        finally { controls.forEach(x => x.disabled = false); }
+      });
+      controls.push(control);
+      form.append(control, node("p", option.consequence));
+    }
+    form.addEventListener("submit", e => e.preventDefault());
+    box.append(form);
+  }
+  if (c.decisions?.length) {
+    const history = node("details"); history.append(node("summary", "Your recorded decisions"));
+    for (const d of c.decisions) history.append(section(d.choice.replaceAll("_", " "), node("p", d.reason), node("p", `${d.operator} · ${d.recorded_at}`), node("p", d.next_step)));
+    box.append(history);
+    const last = c.decisions[c.decisions.length-1];
+    if (last.revision === b.revision) box.append(node("p", `Your decision is recorded: ${last.next_step}`));
+    if (last.choice === "restore_intent") box.append(button("Inspect target before preparing a correction", () => navigate(c.target?.startsWith("task:") ? "tasks" : c.target?.startsWith("web-app:") ? "webapps" : "permissions")));
+    if (last.choice === "request_evidence") box.append(button("Check the requested review", async () => {
+      const epoch = sessionEpoch;
+      try {
+        const response = await api(`/api/cases/${encodeURIComponent(c.id)}/decision`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({revision: last.revision, choice: last.choice, reason: last.reason})});
+        if (epoch === sessionEpoch) await loadNativeCases(response.child_id);
+      } catch (error) { if (epoch === sessionEpoch) announce(error.message, true); }
+    }));
+  }
+  return box;
+}
+
 function renderNativeCases(root) {
   root.append(node("p", "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate."), button("Refresh cases", () => loadNativeCases()));
   if (state.nativeError) root.append(node("p", state.nativeError, "error-message"));
@@ -1263,7 +1357,8 @@ function renderNativeCases(root) {
   const c = state.nativeDetail;
   if (!c) return;
   const r = c.result || {};
-  const box = section("Case detail", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
+  if (c.brief) root.append(renderDecisionBrief(c));
+  const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
   if ((c.state.startsWith("HELD_") || c.state === "RECOVERY_REQUIRED") && c.receipt_id) box.append(button("Review refreshed evidence as a new revision", () => submitNativeCase(c.receipt_id, c.id)));
@@ -1272,7 +1367,9 @@ function renderNativeCases(root) {
     if (r[key]) box.append(details(label, r[key]));
   }
   box.append(empty("A measured match does not authorize another operation. Any further change uses the existing prepare, authorize, execute and verify workflow."));
-  root.append(box);
+  const technical = node("details");
+  technical.append(node("summary", "Technical details and full evidence"), box);
+  root.append(technical);
 }
 
 byId("intent-form").addEventListener("input", () => invalidate());

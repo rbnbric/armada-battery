@@ -1,0 +1,1141 @@
+{
+  "date": "2026-11-05",
+  "runtime": "IRIS AI Hub EAP build 109",
+  "scope": "Decision-brief first slice: deterministic summaries, operator decisions, explicit native explanation. Synthetic management source; native AI inference is real.",
+  "python": {
+    "passed": 126,
+    "new_decision_tests": 24,
+    "log": "decision-brief-python.log"
+  },
+  "javascript": {
+    "passed": 13,
+    "log": "decision-brief-ui.log"
+  },
+  "browser": {
+    "scope": "Real Chromium, actual application source, server-produced synthetic brief fixtures and explicit network boundary fixture. No live IRIS inference in browser runs.",
+    "checks": [
+      {
+        "fixture": "complete-phone",
+        "check": "no horizontal overflow",
+        "passed": true
+      },
+      {
+        "fixture": "complete-phone",
+        "check": "brief visible",
+        "passed": true
+      },
+      {
+        "fixture": "complete-phone",
+        "check": "technical detail collapsed",
+        "passed": true
+      },
+      {
+        "fixture": "complete-phone",
+        "check": "no UI error",
+        "passed": true
+      },
+      {
+        "fixture": "complete-phone",
+        "check": "model failure retains brief",
+        "passed": true
+      },
+      {
+        "fixture": "decision-desktop",
+        "check": "no horizontal overflow",
+        "passed": true
+      },
+      {
+        "fixture": "decision-desktop",
+        "check": "brief visible",
+        "passed": true
+      },
+      {
+        "fixture": "decision-desktop",
+        "check": "technical detail collapsed",
+        "passed": true
+      },
+      {
+        "fixture": "decision-desktop",
+        "check": "no UI error",
+        "passed": true
+      },
+      {
+        "fixture": "decision-text200",
+        "check": "no horizontal overflow",
+        "passed": true
+      },
+      {
+        "fixture": "decision-text200",
+        "check": "brief visible",
+        "passed": true
+      },
+      {
+        "fixture": "decision-text200",
+        "check": "technical detail collapsed",
+        "passed": true
+      },
+      {
+        "fixture": "decision-text200",
+        "check": "no UI error",
+        "passed": true
+      },
+      {
+        "fixture": "decision-tablet",
+        "check": "no horizontal overflow",
+        "passed": true
+      },
+      {
+        "fixture": "decision-tablet",
+        "check": "brief visible",
+        "passed": true
+      },
+      {
+        "fixture": "decision-tablet",
+        "check": "technical detail collapsed",
+        "passed": true
+      },
+      {
+        "fixture": "decision-tablet",
+        "check": "no UI error",
+        "passed": true
+      },
+      {
+        "fixture": "decision-phone",
+        "check": "no horizontal overflow",
+        "passed": true
+      },
+      {
+        "fixture": "decision-phone",
+        "check": "brief visible",
+        "passed": true
+      },
+      {
+        "fixture": "decision-phone",
+        "check": "technical detail collapsed",
+        "passed": true
+      },
+      {
+        "fixture": "decision-phone",
+        "check": "no UI error",
+        "passed": true
+      },
+      {
+        "fixture": "decision-phone",
+        "check": "choice, revision and reason submitted",
+        "passed": true
+      }
+    ]
+  },
+  "browser_runs": {
+    "complete-phone": {
+      "measurements": {
+        "decisionPosts": [],
+        "briefPresent": true,
+        "technicalClosed": true,
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\ntask:17 \u00b7 5e9342a7\nVERIFIED_MATCH\n2026-11-05 02:04:00\nThis review is complete\n\nThe saved evidence passed this review\u2019s checks. The settings we can read now match those saved with the request.\n\nSimulated operation \u00b7 Decision owner: owner\n\nYou do not need to repeat the operation because of this review.\n\nMatching settings alone do not prove that the service works in use.\n\nWhy is Battery showing this?\n\nModel unavailable; the evidence brief remains usable.\n\nRetry explanation once\n\nOptional: ask AI Hub to explain these observations in everyday language.\n\nTechnical details and full evidence",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 106.65625,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 44,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 128.515625,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 5e9342a7",
+            "width": 165.078125,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Why is Battery showing this?",
+            "width": 336,
+            "height": 49.59375,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Retry explanation once",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Technical details and full evidence",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 214.671875,
+            "height": 44,
+            "font": "16px"
+          }
+        ],
+        "overflow": []
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+        "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "decision-desktop": {
+      "measurements": {
+        "decisionPosts": [],
+        "briefPresent": true,
+        "technicalClosed": true,
+        "width": 1440,
+        "scrollWidth": 1440,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\nCase\tState\tUpdated (IRIS time)\ntask:17 \u00b7 5e9342a7\tVERIFIED_MATCH\t2026-11-05 02:04:00\nWas the later configuration intentional?\n\nThe settings are different from those saved with this request. We do not yet know who changed them or why.\n\nSimulated operation \u00b7 Decision owner: owner\n\nCheck the difference and record the intended outcome, or request more evidence.\n\nWhat changed\tRetained with receipt\tCurrent value\nName\t\"Battery Demonstration Task\"\t\"Intentionally changed elsewhere\"\n\nMatching settings alone do not prove that the service works in use.\n\nThe author, authorization and purpose of the later change are not established by this comparison.\n\nWhy is Battery showing this?\nExplain this evidence\n\nOptional: ask AI Hub to explain these observations in everyday language.\n\nWhat do you know about the intended outcome or missing context?\nThe current configuration is intended\n\nRecords your intent. It does not change the earlier measurement or apply a configuration.\n\nThe earlier outcome is still required\n\nRecords the need for a corrective request. Prepare and authorize that request separately against current evidence.\n\nRequest a fresh evidence review\n\nCreates one new review revision using the current adapter. It can use model calls; it does not repeat the business operation.\n\nWait for more context\n\nRecords what is missing and who you need to ask. No review or operation is started.\n\nTechnical details and full evidence",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 137.9375,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 109.21875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 80.390625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 1400,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Overview",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Tasks \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Web applications \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "REST APIs Not implemented",
+            "width": 193,
+            "height": 55.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Permissions \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Security \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Operating system \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Logs & audit \u2713 VALID",
+            "width": 193,
+            "height": 57.5,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Agent cases",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Receipts",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Evidence ledger",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Rules",
+            "width": 193,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 115.703125,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 5e9342a7",
+            "width": 139,
+            "height": 37.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Why is Battery showing this?",
+            "width": 1152,
+            "height": 46.59375,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Explain this evidence",
+            "width": 162.953125,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "The current configuration is intended",
+            "width": 271.140625,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "The earlier outcome is still required",
+            "width": 258.515625,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Request a fresh evidence review",
+            "width": 236.09375,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Wait for more context",
+            "width": 169.1875,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Technical details and full evidence",
+            "width": 1166,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 191.078125,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+        "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "decision-text200": {
+      "measurements": {
+        "decisionPosts": [],
+        "briefPresent": true,
+        "technicalClosed": true,
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\ntask:17 \u00b7 5e9342a7\nVERIFIED_MATCH\n2026-11-05 02:04:00\nWas the later configuration intentional?\n\nThe settings are different from those saved with this request. We do not yet know who changed them or why.\n\nSimulated operation \u00b7 Decision owner: owner\n\nCheck the difference and record the intended outcome, or request more evidence.\n\nName\n\"Battery Demonstration Task\"\n\"Intentionally changed elsewhere\"\n\nMatching settings alone do not prove that the service works in use.\n\nThe author, authorization and purpose of the later change are not established by this comparison.\n\nWhy is Battery showing this?\nExplain this evidence\n\nOptional: ask AI Hub to explain these observations in everyday language.\n\nWhat do you know about the intended outcome or missing context?\nThe current configuration is intended\n\nRecords your intent. It does not change the earlier measurement or apply a configuration.\n\nThe earlier outcome is still required\n\nRecords the need for a corrective request. Prepare and authorize that request separately against current evidence.\n\nRequest a fresh evidence review\n\nCreates one new review revision using the current adapter. It can use model calls; it does not repeat the business operation.\n\nWait for more context\n\nRecords what is missing and who you need to ask. No review or operation is started.\n\nTechnical details and full evidence",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 106.65625,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 44,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 128.515625,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 5e9342a7",
+            "width": 165.078125,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Why is Battery showing this?",
+            "width": 336,
+            "height": 147.1875,
+            "font": "32px"
+          },
+          {
+            "id": "",
+            "text": "Explain this evidence",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "The current configuration is intended",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "The earlier outcome is still required",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Request a fresh evidence review",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Wait for more context",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Technical details and full evidence",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 214.671875,
+            "height": 44,
+            "font": "16px"
+          }
+        ],
+        "overflow": []
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+        "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "decision-tablet": {
+      "measurements": {
+        "decisionPosts": [],
+        "briefPresent": true,
+        "technicalClosed": true,
+        "width": 768,
+        "scrollWidth": 768,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\nCase\tState\tUpdated (IRIS time)\ntask:17 \u00b7 5e9342a7\tVERIFIED_MATCH\t2026-11-05 02:04:00\nWas the later configuration intentional?\n\nThe settings are different from those saved with this request. We do not yet know who changed them or why.\n\nSimulated operation \u00b7 Decision owner: owner\n\nCheck the difference and record the intended outcome, or request more evidence.\n\nWhat changed\tRetained with receipt\tCurrent value\nName\t\"Battery Demonstration Task\"\t\"Intentionally changed elsewhere\"\n\nMatching settings alone do not prove that the service works in use.\n\nThe author, authorization and purpose of the later change are not established by this comparison.\n\nWhy is Battery showing this?\nExplain this evidence\n\nOptional: ask AI Hub to explain these observations in everyday language.\n\nWhat do you know about the intended outcome or missing context?\nThe current configuration is intended\n\nRecords your intent. It does not change the earlier measurement or apply a configuration.\n\nThe earlier outcome is still required\n\nRecords the need for a corrective request. Prepare and authorize that request separately against current evidence.\n\nRequest a fresh evidence review\n\nCreates one new review revision using the current adapter. It can use model calls; it does not repeat the business operation.\n\nWait for more context\n\nRecords what is missing and who you need to ask. No review or operation is started.\n\nTechnical details and full evidence",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 137.9375,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 109.21875,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 80.390625,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 728,
+            "height": 19.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 736,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 115.703125,
+            "height": 39,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 5e9342a7",
+            "width": 139,
+            "height": 37.5,
+            "font": "13px"
+          },
+          {
+            "id": "",
+            "text": "Why is Battery showing this?",
+            "width": 728,
+            "height": 46.59375,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Explain this evidence",
+            "width": 162.953125,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "The current configuration is intended",
+            "width": 271.140625,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "The earlier outcome is still required",
+            "width": 258.515625,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Request a fresh evidence review",
+            "width": 236.09375,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Wait for more context",
+            "width": 169.1875,
+            "height": 44,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Technical details and full evidence",
+            "width": 728,
+            "height": 21,
+            "font": "14px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 191.078125,
+            "height": 39,
+            "font": "14px"
+          }
+        ],
+        "overflow": []
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+        "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    },
+    "decision-phone": {
+      "measurements": {
+        "decisionPosts": [
+          {
+            "revision": "7c0ce3f703145627c7638fe64dcfd44f89f1a8ceef0bf930101abf165746d910",
+            "choice": "keep_current",
+            "reason": "The later configuration was intentional; preserve it."
+          }
+        ],
+        "briefPresent": true,
+        "technicalClosed": true,
+        "width": 360,
+        "scrollWidth": 360,
+        "page": "Agent cases",
+        "status": "Synthetic demonstration \u00b7 0s ago",
+        "content": "Review an operation receipt through the native AI Hub production. Rule accuracy and measured output remain separate.\n\nRefresh cases\ntask:17 \u00b7 5e9342a7\nVERIFIED_MATCH\n2026-11-05 02:04:00\nWas the later configuration intentional?\n\nThe settings are different from those saved with this request. We do not yet know who changed them or why.\n\nSimulated operation \u00b7 Decision owner: owner\n\nCheck the difference and record the intended outcome, or request more evidence.\n\nName\n\"Battery Demonstration Task\"\n\"Intentionally changed elsewhere\"\n\nMatching settings alone do not prove that the service works in use.\n\nThe author, authorization and purpose of the later change are not established by this comparison.\n\nWhy is Battery showing this?\nExplain this evidence\n\nOptional: ask AI Hub to explain these observations in everyday language.\n\nWhat do you know about the intended outcome or missing context?\nThe current configuration is intended\n\nRecords your intent. It does not change the earlier measurement or apply a configuration.\n\nThe earlier outcome is still required\n\nRecords the need for a corrective request. Prepare and authorize that request separately against current evidence.\n\nRequest a fresh evidence review\n\nCreates one new review revision using the current adapter. It can use model calls; it does not repeat the business operation.\n\nWait for more context\n\nRecords what is missing and who you need to ask. No review or operation is started.\n\nTechnical details and full evidence",
+        "refreshDisabled": false,
+        "error": "",
+        "controls": [
+          {
+            "id": "refresh",
+            "text": "Refresh evidence",
+            "width": 106.65625,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "new-request",
+            "text": "New request",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "sign-out",
+            "text": "Sign out",
+            "width": 106.671875,
+            "height": 66,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Connection details",
+            "width": 336,
+            "height": 44,
+            "font": "12px"
+          },
+          {
+            "id": "",
+            "text": "Management navigation",
+            "width": 328,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Refresh cases",
+            "width": 128.515625,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "task:17 \u00b7 5e9342a7",
+            "width": 165.078125,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Why is Battery showing this?",
+            "width": 336,
+            "height": 49.59375,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Explain this evidence",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "The current configuration is intended",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "The earlier outcome is still required",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Request a fresh evidence review",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Wait for more context",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Technical details and full evidence",
+            "width": 336,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "id": "",
+            "text": "Inspect operation receipt",
+            "width": 214.671875,
+            "height": 44,
+            "font": "16px"
+          }
+        ],
+        "overflow": []
+      },
+      "source_sha256": {
+        "static/index.html": "b6bbf95ec3641c32ef3a0b9f2f5edaa1b9b3d7c2915e7471d1a1c325f8b43b41",
+        "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+        "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+        "docs/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+      }
+    }
+  },
+  "installed_checks": {
+    "checks": [
+      {
+        "name": "operator sign-in",
+        "passed": true
+      },
+      {
+        "name": "case list",
+        "passed": true
+      },
+      {
+        "name": "structured decision brief",
+        "passed": true
+      },
+      {
+        "name": "no gratuitous approval",
+        "passed": true
+      },
+      {
+        "name": "synthetic scope preserved",
+        "passed": true
+      },
+      {
+        "name": "real native explainer returned validated content",
+        "passed": true
+      },
+      {
+        "name": "native explanation identifies simulation",
+        "passed": true
+      },
+      {
+        "name": "explicit repeat returns retained explanation",
+        "passed": true
+      },
+      {
+        "name": "stale decision rejected",
+        "passed": true
+      },
+      {
+        "name": "invented action rejected",
+        "passed": true
+      },
+      {
+        "name": "unowned missing case hidden",
+        "passed": true
+      },
+      {
+        "name": "case result unchanged",
+        "passed": true
+      },
+      {
+        "name": "operation receipts unchanged",
+        "passed": true
+      },
+      {
+        "name": "native malformed JSON",
+        "passed": true
+      },
+      {
+        "name": "native scalar JSON",
+        "passed": true
+      },
+      {
+        "name": "native foreign operator",
+        "passed": true
+      }
+    ],
+    "scope": "Installed service, existing synthetic case, one optional native explanation. No business operation submitted.",
+    "explanation": {
+      "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+      "operator": "local-operator",
+      "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+      "attempt": 1,
+      "status": "ready",
+      "content": {
+        "summary": "The saved evidence passed this review\u2019s checks. The settings we can read now match those saved with the request.",
+        "meaning": "The review confirms that the current synthetic configuration matches the recorded configuration, but it does not prove the service works in use.",
+        "missing": "Matching settings alone do not prove that the service works in use.",
+        "evidence_ids": [
+          "review",
+          "scope",
+          "configuration"
+        ]
+      },
+      "usage": "{\"current_context_tokens\":446,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":724,\"total_interactions\":1,\"total_llm_duration_ms\":6986,\"total_prompt_tokens\":676,\"total_reasoning_tokens\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+      "response_id": "1334"
+    },
+    "case": {
+      "id": "case-471eabcdf036b41aaa07c9ca12d07156",
+      "parent_id": "",
+      "state": "VERIFIED_MATCH",
+      "created_at": "2026-11-05 02:03:45",
+      "updated_at": "2026-11-05 02:04:00",
+      "recovery_reason": "",
+      "deadline": 5864753625,
+      "result": {
+        "state": "VERIFIED_MATCH",
+        "assertion": "YES",
+        "output": "PASS",
+        "reviewer_assertion": "YES",
+        "reviewer_output": "PASS",
+        "applicability": "APPLICABLE",
+        "explanation": "Fresh scoped receipt measurement",
+        "proposed_probe": "CHECK_EFFECT_RECEIPT",
+        "executed_probe": "CHECK_EFFECT_RECEIPT",
+        "response_id": "1326",
+        "ProofJSON": {
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "usable": true,
+          "reason": "Fresh scoped receipt measurement"
+        },
+        "ReviewHistoryJSON": [
+          {
+            "state": "INVESTIGATION_PENDING_GATE",
+            "verdict": "NO",
+            "output": "UNKNOWN",
+            "applicability": "APPLICABLE",
+            "probe": "CHECK_EFFECT_RECEIPT",
+            "explanation": "The observation reports unavailable because no verified receipt for the scoped operation (partner/local-operator, attempt..., target/task:17, version...) was recorded, so the rule cannot confirm expected count/result.",
+            "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":848,\"total_completion_tokens\":783,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":4430,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+            "investigator_usage": "{\"current_context_tokens\":687,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":939,\"total_interactions\":1,\"total_llm_duration_ms\":5826,\"total_prompt_tokens\":979,\"total_reasoning_tokens\":815,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+            "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1317\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"NO\\\",\\n  \\\"output_result\\\": \\\"UNKNOWN\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"summary\\\": \\\"Version matches, but observation is not available, so the rule prediction cannot be verified; verdict is NO and output result is UNKNOWN.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":572,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":783,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":4430,\\\"total_prompt_tokens\\\":848,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"1319\",\"content\":\"\\n\\n{\\n  \\\"next_probe\\\": \\\"CHECK_EFFECT_RECEIPT\\\",\\n  \\\"hypothesis\\\": \\\"The observation reports unavailable because no verified receipt for the scoped operation (partner/local-operator, attempt..., target/task:17, version...) was recorded, so the rule cannot confirm expected count/result.\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\"\\n  ],\\n  \\\"uncertainty\\\": \\\"We do not know if a receipt exists for the exact scope; checking the durable receipt will clarify availability.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":687,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":939,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":5826,\\\"total_prompt_tokens\\\":979,\\\"total_reasoning_tokens\\\":815,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+          },
+          {
+            "state": "AGREED_PENDING_GATE",
+            "verdict": "YES",
+            "output": "PASS",
+            "applicability": "APPLICABLE",
+            "probe": "",
+            "explanation": "Rule version matches; observation available, exact partner/attempt/target/version, count=1 result=COMPLETE equals expected; timing 12ms < max_age 300s; therefore PASS.",
+            "reviewer_usage": "{\"total_interactions\":1,\"total_prompt_tokens\":1126,\"total_completion_tokens\":948,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":3552,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+            "investigator_usage": "",
+            "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"1323\",\"content\":\"\\n{\\n  \\\"verdict\\\": \\\"YES\\\",\\n  \\\"output_result\\\": \\\"PASS\\\",\\n  \\\"applicability\\\": \\\"APPLICABLE\\\",\\n  \\\"evidence_ids\\\": [\\n    \\\"B_CONTRACT\\\",\\n    \\\"B_OBSERVATION\\\",\\n    \\\"B_EVALUATED_AT\\\"\\n  ],\\n  \\\"summary\\\": \\\"Rule version matches; observation available, exact partner/attempt/target/version, count=1 result=COMPLETE equals expected; timing 12ms < max_age 300s; therefore PASS.\\\"\\n}\",\"validation_error\":\"\",\"usage\":\"{\\\"current_context_tokens\\\":732,\\\"model_context_size\\\":200000,\\\"total_cache_creation_tokens\\\":0,\\\"total_cache_read_tokens\\\":0,\\\"total_completion_tokens\\\":948,\\\"total_interactions\\\":1,\\\"total_llm_duration_ms\\\":3552,\\\"total_prompt_tokens\\\":1126,\\\"total_reasoning_tokens\\\":0,\\\"total_tool_calls\\\":0,\\\"total_tool_duration_ms\\\":0}\"}]"
+          }
+        ],
+        "ProbeHistoryJSON": [
+          {
+            "phase": "INITIAL",
+            "found": 1,
+            "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+            "observation": "{\"available\":false}",
+            "reason": "Read persisted adapter snapshot",
+            "tool": ""
+          },
+          {
+            "phase": "CHECK_EFFECT_RECEIPT",
+            "found": 1,
+            "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+            "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864753025}",
+            "reason": "Authenticated management evidence read",
+            "tool": "{\"tool\":\"CHECK_EFFECT_RECEIPT\",\"receipt_id\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"source\":\"durable operator-scoped receipt ledger\"}"
+          },
+          {
+            "phase": "FINAL",
+            "found": 1,
+            "contract": "{\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"max_age\":300,\"partner\":\"local-operator\",\"profile\":\"receipt-v1\",\"rule_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\"}",
+            "observation": "{\"available\":true,\"partner\":\"local-operator\",\"attempt\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"target\":\"task:17\",\"version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"management-adapter:synthetic\",\"observed_at\":5864753025}",
+            "reason": "Authenticated management evidence read",
+            "tool": "{\"tool\":\"FINAL\",\"receipt_id\":\"889e1589-ad0c-4aae-a947-41cb1c56efe1\",\"receipt_status\":\"VERIFIED_SUCCESS\",\"source_scope\":\"synthetic\",\"complete\":true,\"target_version\":\"ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0\",\"source\":\"configured management adapter target readback\"}"
+          }
+        ]
+      },
+      "receipt_id": "889e1589-ad0c-4aae-a947-41cb1c56efe1",
+      "source_scope": "synthetic",
+      "target": "task:17",
+      "brief": {
+        "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+        "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+        "kind": "COMPLETE",
+        "question": "This review is complete",
+        "summary": "The saved evidence passed this review\u2019s checks. The settings we can read now match those saved with the request.",
+        "next_step": "You do not need to repeat the operation because of this review.",
+        "owner": "local-operator",
+        "scope": "synthetic",
+        "facts": [
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "state": "VERIFIED_MATCH",
+              "assertion": "YES",
+              "output": "PASS",
+              "reason": "Fresh scoped receipt measurement"
+            },
+            "observed_at": "2026-11-05 02:04:00"
+          },
+          {
+            "id": "scope",
+            "label": "Source and target",
+            "value": {
+              "scope": "synthetic",
+              "target": "task:17",
+              "receipt": "889e1589-ad0c-4aae-a947-41cb1c56efe1"
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current configuration comparison",
+            "value": {
+              "changed": false,
+              "read_error": "",
+              "retained_digest": "ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0",
+              "current_digest": "ad864eaee48fe350467ad90c6305845c50e7124bec990a3d3364c4fa93fc37e0"
+            }
+          }
+        ],
+        "differences": [],
+        "differences_omitted": 0,
+        "choices": [],
+        "successor": "",
+        "read_at": "2026-11-05T20:36:32.192735+00:00",
+        "unknowns": [
+          "Matching settings alone do not prove that the service works in use."
+        ],
+        "history_note": "No comparison with similar cases has been performed."
+      },
+      "decisions": [],
+      "decisions_omitted": 0,
+      "explanation": {
+        "attempt": 1,
+        "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+        "content": {
+          "evidence_ids": [
+            "review",
+            "scope",
+            "configuration"
+          ],
+          "meaning": "The review confirms that the current synthetic configuration matches the recorded configuration, but it does not prove the service works in use.",
+          "missing": "Matching settings alone do not prove that the service works in use.",
+          "summary": "The saved evidence passed this review\u2019s checks. The settings we can read now match those saved with the request."
+        },
+        "operator": "local-operator",
+        "response_id": "1334",
+        "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+        "status": "ready",
+        "usage": "{\"current_context_tokens\":446,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":724,\"total_interactions\":1,\"total_llm_duration_ms\":6986,\"total_prompt_tokens\":676,\"total_reasoning_tokens\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}"
+      }
+    },
+    "installed_source_sha256": {
+      "app.py": "b05dba9a03a4e622bfc9a057bc35ec288b52df44ed19d60b832605b6a7974e85",
+      "battery/ship_native_cases.py": "6d32693e2af0b58c6b1a52927be972e81335320999d14ad071d67db9c09d2a7b",
+      "battery/ship_decision_brief.py": "70d3f4e2739206cd6d256cbcceb99677ce18a44ec3e7985d7b4dde20e9b42fb6",
+      "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+      "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08"
+    },
+    "passed": true
+  },
+  "source_sha256": {
+    "app.py": "b05dba9a03a4e622bfc9a057bc35ec288b52df44ed19d60b832605b6a7974e85",
+    "battery/ship_native_cases.py": "6d32693e2af0b58c6b1a52927be972e81335320999d14ad071d67db9c09d2a7b",
+    "battery/ship_decision_brief.py": "70d3f4e2739206cd6d256cbcceb99677ce18a44ec3e7985d7b4dde20e9b42fb6",
+    "static/app.js": "733ecdd66d244d5e49c266b40d8f7a65e2e4d08c0e0d08757ab0e51ea63dd7d0",
+    "static/app.css": "bf617ea27df02c45fa49704c9b259e8d1193547adeb2d3d353b2acfa7a691d08",
+    "interop/Battery/Interop/AgentOperation.cls": "9bb6650720ad210662bb0249e718d3fd4a9df797948a8cb3f7c36b7ba076c4e7",
+    "interop/Battery/Interop/CaseAPI.cls": "8345284ce1a50327c35d7ff480d97c6baf09db6c561a8cf155b79f4bfdadc481",
+    "interop/Battery/Interop/CaseRecord.cls": "e5057c6bc8d13e584dc8b1ec0258401c2ecfe790e15fdc2ae4c5591041aea5e5",
+    "interop/Battery/Interop/CaseResponse.cls": "2cd3db1a1801380c60beb7ceabc3c95a5c60b6090a81dcece0b6d3e5e0c1b73e",
+    "interop/Battery/Interop/IntakeService.cls": "4c05c846bcac4891c81e42bf37b66b615271a375d016cb21adb5f9a901f5d905",
+    "interop/Battery/Interop/SolverProcess.cls": "c83e124d9ee4ffd00e1402fe887f236f6deeaf855c382947e293cb5e0d190c00"
+  },
+  "initial_failure": {
+    "observed": "Explanation admitted while native production was Troubled (state 4); request had no response. Structured fallback stayed usable.",
+    "receipt": {
+      "checks": [
+        {
+          "name": "operator sign-in",
+          "passed": true
+        },
+        {
+          "name": "case list",
+          "passed": true
+        },
+        {
+          "name": "structured decision brief",
+          "passed": true
+        },
+        {
+          "name": "no gratuitous approval",
+          "passed": true
+        },
+        {
+          "name": "synthetic scope preserved",
+          "passed": true
+        },
+        {
+          "name": "real native explainer returned validated content",
+          "passed": false
+        }
+      ],
+      "scope": "Installed service, existing synthetic case, one optional native explanation. No business operation submitted.",
+      "explanation": {
+        "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+        "operator": "local-operator",
+        "revision": "5e07d9fc139c2733c9299e4eafcc67a711027ff94806bc485e531c282ab8f021",
+        "status": "unavailable",
+        "detail": "The AI explanation was unavailable or failed its response contract. The evidence brief remains available."
+      }
+    },
+    "recovery": "No active reviews found. Ens.Director.RecoverProduction followed by StartProduction restored running state 1. Original failure retained. Explicit bounded retry then passed; final plain-language prompt/schema run passed separately."
+  },
+  "delivery": {
+    "compile_and_restart_exit_code": 0,
+    "native_run_exit_code": 0,
+    "application_source_hashes_match_installed": true
+  },
+  "limits": [
+    "One retained synthetic operation case exercised the real native explainer; this is not broad model accuracy evidence.",
+    "Context-changing human choices use real engine/ledger/API tests against an explicit loopback native protocol fixture; no claim of a real IRIS configuration correction.",
+    "Browser runs use actual application source and server-produced synthetic brief fixtures with a network-boundary fixture.",
+    "Citation and shape checks do not prove semantic faithfulness. Human comprehension and comparative decision quality remain unmeasured.",
+    "No similar-case retrieval, arbitrary evidence tools, inferred intent, or automatic correction is implemented.",
+    "The reported 200% text test changes root text sizing; it is not a complete browser zoom/accessibility audit."
+  ]
+}

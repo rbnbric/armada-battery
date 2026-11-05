@@ -461,6 +461,43 @@ def submit_native_case(body: NativeCaseRequest, idempotency_key: str = Header(..
         raise HTTPException(getattr(exc, "http_status", None) or 502, str(exc)) from exc
 
 
+class DecisionRequest(BaseModel):
+    revision: str
+    choice: str
+    reason: str
+
+
+class ExplanationRequest(BaseModel):
+    revision: str
+    retry: bool = False
+
+
+@app.post("/api/cases/{case_id}/decision")
+def decide_native_case(case_id: str, body: DecisionRequest):
+    try:
+        bridge = native_cases()
+        decision = bridge.decide(case_id, current_operator(), body.revision, body.choice, body.reason)
+        return bridge.follow_decision(decision, current_operator())
+    except KeyError as exc:
+        raise HTTPException(404, "Case not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except AdapterError as exc:
+        raise HTTPException(getattr(exc, "http_status", None) or 502, str(exc)) from exc
+
+
+@app.post("/api/cases/{case_id}/explain")
+def explain_native_case(case_id: str, body: ExplanationRequest):
+    try:
+        return native_cases().explain(case_id, current_operator(), body.revision, retry=body.retry)
+    except KeyError as exc:
+        raise HTTPException(404, "Case not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except AdapterError as exc:
+        raise HTTPException(getattr(exc, "http_status", None) or 502, str(exc)) from exc
+
+
 @app.get("/api/native-evidence/{case_id}")
 def native_evidence(case_id: str, phase: str, x_battery_adapter: str = Header(default=""), x_battery_operator: str = Header(default="")):
     expected = os.environ.get("BATTERY_ADAPTER_KEY", "")

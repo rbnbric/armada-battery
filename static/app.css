@@ -680,3 +680,15 @@ dl.fields {
     scroll-behavior: auto !important;
   }
 }
+
+/* Decision briefs use the existing theme; working controls remain readable. */
+.decision-brief { max-width: 72rem; overflow-wrap: anywhere; }
+.decision-brief textarea { display: block; width: 100%; box-sizing: border-box; margin: .6rem 0 1rem; font: inherit; color: inherit; background: var(--bg, #101315); padding: .7rem; }
+.decision-brief button { white-space: normal; min-height: 44px; margin: .3rem .5rem .3rem 0; }
+.decision-brief summary { cursor: pointer; padding: .8rem 0; }
+.decision-brief .decision-next { font-weight: 600; }
+.decision-brief td { overflow-wrap: anywhere; white-space: normal; }
+@media (max-width: 600px) { .decision-brief { font-size: 1rem; } .decision-brief button { width: 100%; } }
+
+.decision-brief button { max-width: 100%; box-sizing: border-box; }
+@media (max-width: 600px) { .decision-brief button { margin-right: 0; } }

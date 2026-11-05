@@ -2,6 +2,7 @@
 Class Battery.Interop.CaseResponse Extends Ens.Response
 {
 Property CaseId As %String(MAXLEN = 120);
+Property ReasonCode As %String(MAXLEN = 40);
 Property State As %String(MAXLEN = 60);
 Property ReviewerVerdict As %String(MAXLEN = 8);
 Property ReviewerApplicability As %String(MAXLEN = 20);

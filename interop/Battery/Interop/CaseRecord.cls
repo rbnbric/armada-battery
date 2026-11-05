@@ -152,7 +152,7 @@ ClassMethod Complete(id As %String, response As Battery.Interop.CaseResponse, le
         If '$IsObject(r) { Throw ##class(%Exception.General).%New("Case record missing") }
         If (r.State'="RUNNING")||(r.Lease'=lease)||(lease="") { Lock -^BatteryCaseService Return $$$ERROR($$$GeneralError,"Expired or foreign case lease; completion rejected") }
         Set sc=response.%Save() If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
-        Set result={"state":(response.State),"assertion":(response.GateVerdict),"output":(response.GateOutput),"reviewer_assertion":(response.ReviewerVerdict),"reviewer_output":(response.OutputResult),"applicability":(response.ReviewerApplicability),"explanation":(response.Explanation),"proposed_probe":(response.InvestigatorProbe),"executed_probe":(response.ExecutedProbe),"response_id":(response.%Id())}
+        Set result={"state":(response.State),"reason_code":(response.ReasonCode),"assertion":(response.GateVerdict),"output":(response.GateOutput),"reviewer_assertion":(response.ReviewerVerdict),"reviewer_output":(response.OutputResult),"applicability":(response.ReviewerApplicability),"explanation":(response.Explanation),"proposed_probe":(response.InvestigatorProbe),"executed_probe":(response.ExecutedProbe),"response_id":(response.%Id())}
         For key="ProofJSON","ReviewHistoryJSON","ProbeHistoryJSON" {
             Set raw=$PROPERTY(response,key)
             If raw'="" { Do result.%Set(key,##class(%DynamicObject).%FromJSON(raw)) }

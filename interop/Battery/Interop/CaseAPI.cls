@@ -1,4 +1,4 @@
-Include %occStatus
+Include (%occStatus, Ensemble)
 /// Private adapter API. Password-authenticated application; never expose IRIS credentials in the browser.
 Class Battery.Interop.CaseAPI Extends %CSP.REST
 {
@@ -9,6 +9,7 @@ XData UrlMap
 <Routes>
 <Route Url="/cases" Method="GET" Call="List"/>
 <Route Url="/cases/:id" Method="GET" Call="Get"/>
+<Route Url="/cases/:id/explain" Method="POST" Call="Explain"/>
 <Route Url="/cases" Method="POST" Call="Submit"/>
 </Routes>
 }
@@ -48,6 +49,67 @@ ClassMethod Get(id As %String) As %Status
     If (operator'="")&&(r.Operator'=operator) { Return ..Reply({"detail":"Case not found"},"404 Not Found") }
     Return ..Reply(##class(Battery.Interop.CaseRecord).View(r))
 }
+/// One explicit explanation attempt per evidence revision, separate from the solver.
+/// A failed explanation never changes the case outcome or dispatches an operation.
+ClassMethod Explain(id As %String) As %Status
+{
+    Set locked=0
+    Try {
+        If %request.Content.Size>16384 { Return ..Reply({"detail":"Brief too large"},"413 Content Too Large") }
+        Try { Set body=##class(%DynamicObject).%FromJSON(%request.Content) }
+        Catch parseError { Return ..Reply({"detail":"Invalid explanation request"},"400 Bad Request") }
+        If '$IsObject(body) { Return ..Reply({"detail":"Invalid explanation request"},"400 Bad Request") }
+        If 'body.%IsA("%DynamicObject") { Return ..Reply({"detail":"Invalid explanation request"},"400 Bad Request") }
+        Set revision=body.%Get("revision"),brief=body.%Get("brief"),operator=%request.GetCgiEnv("HTTP_X_BATTERY_OPERATOR")
+        If (body.%GetTypeOf("revision")'="string")||($LENGTH(revision)'=64)||(revision'?64AN) { Return ..Reply({"detail":"Invalid revision"},"400 Bad Request") }
+        If '$IsObject(brief) { Return ..Reply({"detail":"Missing brief"},"400 Bad Request") }
+        If 'brief.%IsA("%DynamicObject") { Return ..Reply({"detail":"Invalid brief"},"400 Bad Request") }
+        If (brief.%Get("case_id")'=id)||(brief.%Get("revision")'=revision) { Return ..Reply({"detail":"Brief binding mismatch"},"409 Conflict") }
+        Set r=##class(Battery.Interop.CaseRecord).%OpenId(id)
+        If '$IsObject(r) { Return ..Reply({"detail":"Case not found"},"404 Not Found") }
+        If (r.Owner'=$USERNAME)||(operator="")||(r.Operator'=operator) { Return ..Reply({"detail":"Case not found"},"404 Not Found") }
+        If ##class(Battery.Interop.CaseRecord).Active(r.State) { Return ..Reply({"detail":"Review still active"},"409 Conflict") }
+        Set attempt=body.%Get("attempt",1)
+        If (attempt'=1)&&(attempt'=2) { Return ..Reply({"detail":"Invalid explanation attempt"},"400 Bad Request") }
+        Set cacheKey=revision_$SELECT(attempt=1:"",1:"-retry")
+        Set sc=##class(Ens.Director).GetProductionStatus(.productionName,.productionState)
+        If $$$ISERR(sc)||(productionState'=$$$eProductionStateRunning) { Return ..Reply({"detail":"Native production is not running; inspect production recovery"},"503 Service Unavailable") }
+        Set raw=brief.%ToJSON()
+        Lock +^BatteryExplainService:2
+        If '$TEST { Return ..Reply({"detail":"Explanation service busy"},"409 Conflict") }
+        Set locked=1
+        If $DATA(^BatteryExplanation(id,cacheKey)) {
+            Set cached=^BatteryExplanation(id,cacheKey)
+            Lock -^BatteryExplainService Set locked=0
+            If cached="pending" { Return ..Reply({"detail":"Prior explanation attempt is unconfirmed"},"409 Conflict") }
+            If cached="failed" { Return ..Reply({"detail":"Prior explanation failed; use the structured brief"},"503 Service Unavailable") }
+            Return ..Reply(##class(%DynamicObject).%FromJSON(cached))
+        }
+        Set day=+$HOROLOG
+        If ($Get(^BatteryExplanationBudget(day,"all"),0)>=100)||($Get(^BatteryExplanationBudget(day,$USERNAME,operator),0)>=20) {
+            Lock -^BatteryExplainService Set locked=0
+            Return ..Reply({"detail":"Explanation budget exhausted"},"429 Too Many Requests")
+        }
+        Set ^BatteryExplanation(id,cacheKey)="pending"
+        Set n=$INCREMENT(^BatteryExplanationBudget(day,"all")),n=$INCREMENT(^BatteryExplanationBudget(day,$USERNAME,operator))
+        Lock -^BatteryExplainService Set locked=0
+        Set sc=##class(Ens.Director).CreateBusinessService("Battery.Intake",.service)
+        If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
+        Set request=##class(Battery.Interop.AgentRequest).%New(),request.Role="explainer",request.CaseJSON=raw
+        Set sc=service.Explain(request,.answer)
+        If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
+        If '$IsObject(answer) { Throw ##class(%Exception.General).%New("No explainer response") }
+        Set out={"content":(answer.Content),"usage":(answer.UsageJSON),"response_id":(answer.%Id())}
+        Set ^BatteryExplanation(id,cacheKey)=out.%ToJSON()
+        Return ..Reply(out)
+    } Catch ex {
+        If locked { Lock -^BatteryExplainService }
+        If $Get(cacheKey)'="" { If $Get(^BatteryExplanation(id,cacheKey))="pending" { Set ^BatteryExplanation(id,cacheKey)="failed" } }
+        Set ^BatteryExplanationErrors($INCREMENT(^BatteryExplanationErrors))=$SYSTEM.Status.GetErrorText(ex.AsStatus())
+        Return ..Reply({"detail":"Explanation failed; structured brief remains available"},"503 Service Unavailable")
+    }
+}
+
 ClassMethod Submit() As %Status
 {
     Set locked=0

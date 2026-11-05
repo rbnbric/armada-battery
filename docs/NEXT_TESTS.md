@@ -1,5 +1,13 @@
 # Battery: next tests and one-step walkthrough
 
+## Decision-brief implementation update
+
+The first implementation is delivered: structured briefs and current-state
+comparisons, durable human answers, explicit follow-up review, and a native AI Hub
+Explainer. [Executed evidence and remaining scope](DECISION_BRIEF_EVIDENCE.md).
+This does not establish a human-comprehension pass or complete every later design
+requirement below. The broader codex-led visual redesign remains deferred.
+
 ## Current status
 
 T1 completed on 2026-11-05 using the installed IRIS AI Hub build 109. All
@@ -44,7 +52,7 @@ The UI/UX pass is deliberately waiting for the owner's new design codices.
 | T3 | Test cases that distinguish rule assertion from observed success | Frozen expected outcomes; all four YES/NO × PASS/FAIL combinations, UNKNOWN, context changes, stale and wrong-scope evidence, restart and malformed provider response | Existing cases inventoried; new independent cases pending |
 | T4 | Walk through one real retained case with the owner | Person identifies source scope, initial answer, evidence read, final outcome and next action; record confusion verbatim | Navigation exercised; comprehension and continuity findings below |
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
-| T7 | Add the third agent role: Explainer | Evidence-linked plain-language progress and outcome explanations; comprehension and grounding tests below | Specified; runtime implementation pending |
+| T7 | Add the third agent role: Explainer | Evidence-linked plain-language progress and outcome explanations; comprehension and grounding tests below | First slice implemented; native qualification and limits in DECISION_BRIEF_EVIDENCE.md |
 | T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Waiting for codices; no redesign now |
 
 We walk through one task at a time. Docker is now running and the existing native and web containers were restarted.
@@ -168,7 +176,7 @@ Requirements for the later codex-guided UX pass:
 5. Bind success/error messages to the action and record they describe; expire or
    relabel them when navigating to a different context.
 
-These are observed findings and acceptance requirements, not implemented fixes.
+These were the observed findings. The readable brief and expandable technical records are now implemented; navigation continuity and the other findings remain open.
 Visual redesign remains deferred until the owner's new codices are available.
 
 ## Third agent role: Explainer
@@ -336,5 +344,4 @@ answer an independent comprehension pass. Do not infer a human's ability or
 mental state from a slow or mistaken response. A brief helps only if it improves
 understanding or decisions without hiding uncertainty or contrary evidence.
 
-All additions in this section are specifications; runtime work and human
-comparison results remain pending.
+The structured brief, bounded current-state comparison, recorded human answers and explicit follow-up review are implemented. Broader history retrieval and human comparison results remain pending; see DECISION_BRIEF_EVIDENCE.md.

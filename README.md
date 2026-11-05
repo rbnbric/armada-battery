@@ -10,7 +10,14 @@ The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
 
-**Latest application qualification:** 86 Python tests and 13 UI tests passed,
+**Decision-brief update:** Agent Cases now starts with a readable summary and a
+focused question when intent is unresolved. Human answers are bound to the evidence
+they saw. An optional third native AI Hub role explains the report; technical
+records remain expandable. Qualification passed 126 Python tests, 13 UI handler
+tests, 22 browser assertions and 16 installed service checks.
+[Decision-brief evidence, screenshots and limits](docs/DECISION_BRIEF_EVIDENCE.md).
+
+**Previous application qualification:** 86 Python tests and 13 UI tests passed,
 plus phone/desktop session-expiry browser checks and four installed HTTP checks.
 [Latest bug-check evidence](docs/PREPUBLICATION_BUGCHECK.md).
 
