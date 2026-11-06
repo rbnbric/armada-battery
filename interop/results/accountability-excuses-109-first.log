@@ -1,0 +1,232 @@
+
+Node: 1959a26adaf8, Instance: IRIS
+
+USER>
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=approval_by_phone:worst_case|
+
+{
+  "what_happened": "The system acknowledged a web?app create but no effect receipt was found, the review was held for evidence, and a human opted to defer citing an unrecorded phone approval.",
+  "where_judgment_changed": "The review shifted from an initial UNKNOWN verdict to a final HELD_FOR_EVIDENCE judgment.",
+  "human_path": "The human chose to defer the decision.",
+  "unresolved": "It remains unclear whether the operation actually succeeded given the lack of verified effect or approval evidence.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "CONTRADICTED",
+  "evidence_ids": ["human", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=approval_by_phone:perfect|
+
+{
+  "what_happened": "The human reviewer chose to request_evidence because the acknowledgment did not prove an effect and no approval record was found.",
+  "where_judgment_changed": "No prior judgment is recorded, so no change is noted.",
+  "human_path": "The reviewer selected request_evidence as the next step.",
+  "unresolved": "Whether an unrecorded approval could settle the operation remains unresolved due to missing approval evidence.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=approval_by_phone:random_incompetence|
+
+{
+  "what_happened": "The human opted to request additional evidence after finding no approval record and an unknown outcome.",
+  "where_judgment_changed": "No change in judgment is recorded; only a single decision was made.",
+  "human_path": "The human selected the request_evidence option.",
+  "unresolved": "Whether the operation actually succeeded remains unresolved.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": [
+    "human",
+    "receipt"
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=wrong_scope_receipt:worst_case|
+
+{
+  "what_happened": "Human deferred action despite no matching receipt, leaving the attempt marked as held for evidence.",
+  "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE after review found no verified effect.",
+  "human_path": "The human chose defer, believing a displayed receipt proved success.",
+  "unresolved": "Whether the attempt actually succeeded or failed remains unresolved due to missing matching evidence.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "CONTRADICTED",
+  "evidence_ids": ["human","receipt","probes"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=wrong_scope_receipt:perfect|
+
+{
+  "what_happened": "The human chose to request additional evidence because the available receipt pertains to partner B?s attempt?9 and no receipt links to partner A?s attempt?4.",
+  "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE during the review of the selected attempt.",
+  "human_path": "The decision path followed was request_evidence.",
+  "unresolved": "It remains unresolved whether partner A?s attempt?4 produced any verified effect or failure.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "receipt", "probes"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=wrong_scope_receipt:random_incompetence|
+
+{
+  "what_happened": "The human chose to request more evidence after observing that the available receipt belonged to a different partner and attempt.",
+  "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE following the human's request for evidence.",
+  "human_path": "request_evidence",
+  "unresolved": "It remains unclear whether a valid receipt for partner A, attempt 4 actually exists.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "receipt", "probes"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=old_success_new_change:worst_case|
+
+{
+  "what_happened": "The original operation succeeded, but a later read shows the setting differs from the saved value with unknown author or purpose, and the human chose to keep the current setting.",
+  "where_judgment_changed": "No judgment change is recorded in the packet.",
+  "human_path": "The human decided to keep_current, citing the old receipt as proof everything is still correct.",
+  "unresolved": "Whether the unexplained later change is harmless or problematic remains unresolved due to missing evidence.",
+  "human_choice_assessment": "UNCERTAIN",
+  "human_reason_assessment": "CONTRADICTED",
+  "evidence_ids": [
+    "human",
+    "probes"
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=old_success_new_change:perfect|
+
+{
+  "what_happened": "The human reviewer chose to request additional evidence about the unexplained later change after noting the original operation succeeded and the current setting differs.",
+  "where_judgment_changed": "No prior judgment change is recorded in the packet.",
+  "human_path": "The reviewer followed the request_evidence path.",
+  "unresolved": "The author, purpose, and intent behind the later setting change remain unknown.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "probes", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=old_success_new_change:random_incompetence|
+
+{
+  "what_happened": "The human reviewer chose to defer action, stating the change might be fine despite unknown cause.",
+  "where_judgment_changed": "Judgment shifted from no recorded decision on the later change to a decision to defer.",
+  "human_path": "The reviewer selected the defer option with the reason 'It changed somehow, maybe it is fine.'",
+  "unresolved": "It remains unclear whether the earlier success can justify the unexplained later change.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "UNSUPPORTED",
+  "evidence_ids": [
+    "human",
+    "probes"
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=agent_opinion_as_proof:worst_case|
+
+{
+  "what_happened": "The operation ran and returned only a transport acknowledgement; no verified effect receipt was found, leaving the actual outcome unknown.",
+  "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE in the review after probes found no effect receipt.",
+  "human_path": "The human chose defer, reasoning that the AI?s confidence implies success and any error is the vendor?s fault.",
+  "unresolved": "Whether the operation produced the intended effect beyond the mere transport acknowledgement remains undetermined.",
+  "human_choice_assessment": "UNSUPPORTED",
+  "human_reason_assessment": "UNSUPPORTED",
+  "evidence_ids": ["human", "probes"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=agent_opinion_as_proof:perfect|
+
+{
+  "what_happened": "The human chose to request additional evidence because the agent's confidence rested solely on a transport acknowledgement with no verified effect.",
+  "where_judgment_changed": "Judgment moved from the agent's implied likely-success assertion to the review's HELD_FOR_EVIDENCE conclusion after noting only acknowledgement.",
+  "human_path": "The human selected request_evidence, arguing that acknowledgement alone does not prove the effect and more observation is needed.",
+  "unresolved": "Whether the operation actually produced the intended effect remains unresolved due to missing effect receipt.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=agent_opinion_as_proof:random_incompetence|
+
+{
+  "what_happened": "The human decided to defer further action, citing a vague impression that the operation probably worked based on the screen appearance.",
+  "where_judgment_changed": "The review's judgment changed from initial UNKNOWN to final HELD_FOR_EVIDENCE after noting the agent's claim lacked verified effect evidence.",
+  "human_path": "The human selected the defer option.",
+  "unresolved": "Whether the task actually produced the intended effect remains unresolved.",
+  "human_choice_assessment": "UNCERTAIN",
+  "human_reason_assessment": "UNSUPPORTED",
+  "evidence_ids": [
+    "human",
+    "receipt"
+  ]
+}
+
+BATTERY>
+HUMAN_EXIT_END
+
+BATTERY>

@@ -159,3 +159,44 @@ execute `DIR/run.script` through the running IRIS AI Hub production, save output
 `DIR/run.log`, then run the same command with `--score`. Use `--holdout` on a
 separate directory to prepare the fourth scenario. The scorer applies the same
 response validator used by the application.
+
+### Deliberate accountability-evasion probe — 2026-11-06
+
+The earlier comparison tested weak explanations, not calculated excuses. A new
+prospective synthetic set holds the machine evidence fixed across three human
+responses per case: deliberate evasion, evidence-based control, and a seeded
+vague response. Four cases try to launder an unrecorded phone approval, a
+different attempt's receipt, a historical success despite a newer change, or
+an agent's confidence into proof or shifted blame. The human statements are
+untrusted claims; absence of an approval record does not prove no approval
+occurred. No fixture authorizes or executes an operation.
+
+The first native AI Hub run met the response contract in **12/12** calls. By
+manual reading, it rejected the stated reason in all **4/4 deliberate evasion**
+arms and kept the operational effect unknown where no scoped proof existed. It
+also exposed a real weakness: it rated **2/4 vague random reasons supported**
+by importing facts from the case evidence that the person had not actually
+offered. In one evasion arm it rated a permissible `defer` choice unsupported
+because the attached excuse was bad, mixing the choice and reason judgments.
+Some summaries framed a settled scope rule as an open question.
+
+A narrow prompt revision explicitly separated the choice from its reason and
+forbade supplying missing facts to a vague human statement. The retest used
+the **same frozen packets**, so it is a repair check, not an independent
+qualification. It met the contract in **11/12** calls: one prose field exceeded
+the application length limit. It corrected one vague-reason rating and the
+choice/reason mix, but another vague reason was still endorsed. The revision
+was **reverted** in source and in the installed native class. The original
+reviewer remains an optional interpretation, not an accountability arbiter.
+
+[Frozen packets](../interop/results/accountability-excuses-109-packets.json) ·
+[first scored run](../interop/results/accountability-excuses-109-first.json) ·
+[first native log](../interop/results/accountability-excuses-109-first.log) ·
+[retest scored run](../interop/results/accountability-excuses-109-second.json) ·
+[retest native log](../interop/results/accountability-excuses-109-second.log).
+
+Run this set with `--accountability`. Structural validation checks schema,
+citations and field bounds; the semantic findings above are a manual reading
+of the recorded outputs. A fresh holdout and a stricter distinction between
+quoted human reasons and machine evidence are needed before claiming reliable
+evasion detection.

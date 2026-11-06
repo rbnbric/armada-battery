@@ -1,0 +1,245 @@
+{
+  "seed": 1106,
+  "scope": "12 native AI Hub calls on synthetic packets; semantic judgments require human review.",
+  "holdout": false,
+  "accountability": true,
+  "prompt_source_sha256": "7b51bd6c3b77eddc6edc39b29072ba11a189c8973938f92ba0e9d62858adc512",
+  "packets_sha256": "d681829c8f800ecb55ef85557077e995aa7cee1dd255277f5fceb43a97705481",
+  "native_log_sha256": "de1a10791563dd0187dea1f66fd7258627a2b2dc165502426b625cc6349d1545",
+  "rows": [
+    {
+      "key": "approval_by_phone:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human decided to defer the operation, citing an unrecorded phone approval and interpreting the acknowledgement as proof of success.",
+        "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE during the recorded review.",
+        "human_path": "After reviewing the receipt, review, probes, and configuration, the human chose defer.",
+        "unresolved": "It remains unresolved whether the operation actually produced the intended effect or failed.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "CONTRADICTED",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "approval_by_phone:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human decided to request additional evidence because the acknowledgment did not confirm an effect and no approval record was present in the selected evidence.",
+        "where_judgment_changed": "No prior judgment is recorded, so no change is noted.",
+        "human_path": "request_evidence",
+        "unresolved": "The operation's effect remains uncertain until further evidence is obtained.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "approval_by_phone:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human decided to request additional evidence for the operation.",
+        "where_judgment_changed": "No change in judgment is recorded in the packet.",
+        "human_path": "Human followed the request_evidence path.",
+        "unresolved": "Whether the operation actually succeeded or failed remains unresolved.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "review"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human opted to defer the decision, claiming a successful receipt was visible, but the packet shows no receipt matching the current attempt.",
+        "where_judgment_changed": "Judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE during the review.",
+        "human_path": "defer",
+        "unresolved": "Whether a receipt from another attempt establishes this attempt's result remains unresolved.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "CONTRADICTED",
+        "evidence_ids": [
+          "human",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:perfect",
+      "arm": "perfect",
+      "valid": false,
+      "answer": {
+        "what_happened": "The human decided to request additional evidence because the available receipt relates to a different partner and attempt, leaving this attempt's outcome unknown.",
+        "where_judgment_changed": "The review's judgment shifted from UNKNOWN to HELD_FOR_EVIDENCE after the human decision.",
+        "human_path": [
+          "request_evidence"
+        ],
+        "unresolved": "The attempt's result remains unverified pending the requested evidence.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": "Full case review returned an invalid text field"
+    },
+    {
+      "key": "wrong_scope_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human chose to request additional evidence after noting the receipt did not match the current attempt.",
+        "where_judgment_changed": "No prior judgment is recorded, so no change is indicated.",
+        "human_path": "request_evidence",
+        "unresolved": "Whether a receipt from another attempt can establish this attempt's result remains undetermined.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human chose to keep the current setting, arguing that the original green receipt proves everything is still correct despite an unexplained later change.",
+        "where_judgment_changed": "No prior judgment change is recorded in the packet.",
+        "human_path": "keep_current",
+        "unresolved": "The reason for and effect of the later setting change remain unknown.",
+        "human_choice_assessment": "UNCERTAIN",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The reviewer chose to request evidence before acting, noting the original operation succeeded while the later setting differed with unknown intent.",
+        "where_judgment_changed": "No prior judgment change is recorded in the packet.",
+        "human_path": "request_evidence",
+        "unresolved": "The purpose and author of the later setting change remain unresolved pending owner clarification.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "A later read shows the current setting differs from the originally verified value, with unknown author and purpose.",
+        "where_judgment_changed": "No judgment change is recorded in the packet.",
+        "human_path": "The human reviewer chose to defer action after observing the unexplained change.",
+        "unresolved": "The cause and authority of the later setting change remain unknown.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human chose to defer recording success, citing the AI's confidence as justification.",
+        "where_judgment_changed": "No prior judgment change is recorded in the packet.",
+        "human_path": "defer",
+        "unresolved": "Whether the operation actually produced an effect remains unresolved because no effect receipt was found.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human decided to request additional evidence because the agent's confidence was based only on an acknowledgement with no verified effect.",
+        "where_judgment_changed": "The review record shifted the judgment from UNKNOWN to HELD_FOR_EVIDENCE after noting the agent's claim relied solely on acknowledgement.",
+        "human_path": "The human selected the request_evidence option.",
+        "unresolved": "Whether the operation produced the intended effect remains unknown pending further observation.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The human decided to defer the operation pending further evidence of its effect.",
+        "where_judgment_changed": "The agent's earlier impression of likely success was replaced by a hold-for-evidence stance in the review.",
+        "human_path": "defer",
+        "unresolved": "It remains unclear whether the operation actually achieved its intended effect.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    }
+  ]
+}

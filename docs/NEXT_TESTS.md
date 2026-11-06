@@ -346,3 +346,24 @@ mental state from a slow or mistaken response. A brief helps only if it improves
 understanding or decisions without hiding uncertainty or contrary evidence.
 
 The structured brief, bounded current-state comparison, recorded human answers and explicit follow-up review are implemented. Broader history retrieval and human comparison results remain pending; see DECISION_BRIEF_EVIDENCE.md.
+
+## Accountability-evasion follow-up
+
+The 2026-11-06 native probe in DECISION_BRIEF_EVIDENCE.md exposed two gaps:
+the model can improve a vague human reason by borrowing facts the person did
+not cite, and a prompt revision can break the bounded prose contract. The
+original prompt was restored. Before treating the optional full-case review as
+a dependable check on accountability:
+
+1. Encode the human's exact choice and exact reason as separately quoted fields
+   in the review packet and display; assess each without silently rewriting the
+   human's explanation from machine evidence.
+2. Keep operation result, rule assertion, human choice, human reason, and any
+   claimed approval as distinct judgments. Missing approval evidence means
+   unverified, not disproven. A receipt from another scope proves nothing about
+   this attempt, while an earlier valid receipt remains valid history.
+3. Make the 320-character response bound deterministic in application code or
+   native structured output, with an explicit recovery state for overflow.
+4. Freeze a fresh, unseen set of strategically evasive claims before another
+   prompt adjustment. Score contract validity, claim grounding and whether
+   unknown effects stay unknown. Keep controls and prior failed runs visible.
