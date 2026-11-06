@@ -37,7 +37,9 @@ window.fetch = async (input, options={}) => {
   return response({next_step:'Your intention was recorded. No configuration was changed.'});
  }
  if(path.startsWith('/api/cases/')) { const id=decodeURIComponent(path.split('/').pop());const c=Object.values(fixtureCases).find(c=>c.id===id);return response(c||{detail:'Case not found'},c?200:404); }
- if(path.startsWith('/api/receipts/') && !path.endsWith('/reconcile')) return response({receipt:{id:path.split('/').pop(),status:'VERIFIED_SUCCESS',target:'task:17',operator:'owner',action_id:'task.run-once',before_evidence:[],after_evidence:[],explanation:'Synthetic task history established the result.'},evidence:[{source:'synthetic history',id:'fixture-evidence',captured_at:'2026-11-05',value:{result:'success'}}],ledger:[]});
+ if(path.startsWith('/api/receipts/') && cfg.receiptFailure) return response({detail:'Receipt service unavailable'},503);
+ if(path.startsWith('/api/receipts/') && cfg.wrongReceipt) return response({receipt:{id:'different-receipt',target:'task:99',status:'VERIFIED_SUCCESS'}});
+ if(path.startsWith('/api/receipts/') && !path.endsWith('/reconcile')) return response({receipt:{id:path.split('/').pop(),status:cfg.receiptStatus||'VERIFIED_SUCCESS',target:'task:17',operator:'owner',action_id:'task.run-once',before_evidence:[],after_evidence:[],explanation:'Synthetic task history established the result.'},evidence:[{source:'synthetic history',id:'fixture-evidence',captured_at:'2026-11-05',value:{result:'success'}}],ledger:[]});
  return oldFetch(input,options);
 };
 '''.replace('CASES',json.dumps(CASES))
@@ -67,9 +69,16 @@ def run(out):
             for width in [320,360,390,768,1440]:
                 context=browser.new_context(viewport={'width':width,'height':900},reduced_motion='reduce')
                 page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
-                page.goto(origin);page.locator('.case-card').first.wait_for()
+                page.goto(origin);page.locator('.case-receipt').wait_for()
                 check(f'{width}: cases first',page.locator('#page-title').inner_text()=='Cases')
                 check(f'{width}: logo loaded',page.locator('.brand img').evaluate('(e)=>e.complete && e.naturalWidth>0'))
+                check(f'{width}: latest review opens directly',page.url.endswith('#cases/'+CASES['complete']['id']))
+                check(f'{width}: linked receipt visible',page.locator('.case-receipt').get_by_text('The requested result was verified.',exact=True).is_visible())
+                check(f'{width}: what happened visible',page.get_by_role('heading',name='What happened',exact=True).is_visible())
+                check(f'{width}: receipt details closed',not page.get_by_text('Receipt details',exact=True).evaluate('(e)=>e.parentElement.open'))
+                positions=page.evaluate('''()=>{const a=document.querySelector('.case-receipt').getBoundingClientRect(),b=document.querySelector('.review-story').getBoundingClientRect();return {left:a.x,right:b.x,top:a.y,next:b.y,bottom:a.bottom}}''')
+                check(f'{width}: receipt and story reading order',positions['right']>positions['left'] if width>900 else positions['next']>=positions['bottom'])
+                page.get_by_role('button',name='Back to cases',exact=True).click()
                 page.locator('[data-case-id="case-context"]').click();page.locator('#decision-reason').wait_for()
                 check(f'{width}: choices not preselected',page.locator('input[name=decision-choice]:checked').count()==0)
                 check(f'{width}: technical initially closed',not page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))
@@ -89,7 +98,7 @@ def run(out):
                 # Enter context; keep it through receipt navigation and browser history.
                 page.locator('#decision-reason').fill('The later configuration is intentional.')
                 page.locator('input[value=keep_current]').check()
-                page.get_by_text('What happened',exact=True).click()
+                page.get_by_text('Review conclusion details',exact=True).click()
                 page.get_by_text('Technical details and full evidence',exact=True).click()
                 page.get_by_role('button',name='Inspect operation receipt',exact=True).first.click()
                 page.locator('.receipt-document').wait_for()
@@ -97,7 +106,7 @@ def run(out):
                 page.get_by_role('button',name='Back to case',exact=True).click();page.locator('#decision-reason').wait_for()
                 check(f'{width}: draft retained',page.locator('#decision-reason').input_value()=='The later configuration is intentional.')
                 check(f'{width}: choice retained',page.locator('input[value=keep_current]').is_checked())
-                check(f'{width}: history disclosure retained',page.get_by_text('What happened',exact=True).evaluate('(e)=>e.parentElement.open'))
+                check(f'{width}: history disclosure retained',page.get_by_text('Review conclusion details',exact=True).evaluate('(e)=>e.parentElement.open'))
                 check(f'{width}: technical disclosure retained',page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))
                 check(f'{width}: no carried receipt success',not page.locator('#status-message').inner_text())
                 # Browser history follows the same case/receipt routes.
@@ -105,7 +114,7 @@ def run(out):
                 page.go_forward();page.locator('#decision-reason').wait_for()
                 check(f'{width}: browser history restores case',page.url.endswith('#cases/case-context'))
                 # Keyboard expands history without moving away from the case.
-                history=page.get_by_text('What happened',exact=True)
+                history=page.get_by_text('Review conclusion details',exact=True)
                 history.focus();history.press('Enter')
                 check(f'{width}: keyboard disclosure works',not history.evaluate('(e)=>e.parentElement.open'))
                 history.press('Enter')
@@ -152,19 +161,38 @@ def run(out):
             context.close()
             # Repeated switching across the actual app screens, including unavailable coverage.
             context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
-            page.goto(origin);page.locator('.case-card').first.wait_for()
+            page.goto(origin);page.locator('.case-receipt').wait_for()
             import random
             names=['overview','tasks','webapps','rest','permissions','security','os','logs','receipts','ledger','rules','cases']
             random.Random(49).shuffle(names)
             for name in names:
                 page.locator('.nav-toggle').click()
                 page.locator(f'[data-page={name}]').click()
-                check(f'navigation: {name}',page.url.endswith('#'+name) and page.locator('#page-title').inner_text())
+                check(f'navigation: {name}',(page.url.endswith('#'+name) or name=='cases' and '#cases/' in page.url) and page.locator('#page-title').inner_text())
                 check(f'navigation reflow: {name}',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
             page.goto(origin+'/#cases/case-context');page.locator('#decision-reason').wait_for()
             page.evaluate('fixtureCases.changed.brief.differences[0].current="X".repeat(300); fixtureCases.changed.brief.summary="<img src=x onerror=alert(1)>";loadNativeCases(state.caseId)')
             check('hostile evidence is rendered as text',page.locator('.decision-brief img').count()==0 and '<img' in page.locator('.decision-brief').inner_text())
             check('long values reflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+            page.evaluate('uxTest.receiptFailure=true; loadNativeCases(state.caseId)')
+            page.get_by_text('The receipt could not be displayed.',exact=True).wait_for()
+            check('receipt failure keeps review and exposes gap',page.locator('.decision-brief').is_visible() and 'Receipt service unavailable' in page.locator('.case-receipt').inner_text())
+            check('failed receipt never presents saved success', 'The requested result was verified.' not in page.locator('.case-receipt').inner_text())
+            page.evaluate('uxTest.receiptFailure=false;uxTest.wrongReceipt=true;loadNativeCases(state.caseId)')
+            page.get_by_text('The returned receipt does not match this review.',exact=True).wait_for()
+            check('wrong receipt rejected', 'The requested result was verified.' not in page.locator('.case-receipt').inner_text())
+            page.evaluate('uxTest.wrongReceipt=false;uxTest.receiptStatus="OUTCOME_UNKNOWN";loadNativeCases(state.caseId)')
+            page.get_by_text('We do not yet know whether the operation completed.',exact=True).wait_for()
+            check('operation uncertainty distinct from review match',page.locator('.review-story').get_by_text('Evidence matched the request.',exact=True).is_visible())
+            check('reading does not submit reviews or operations',page.evaluate('uxTest.posts.length')==0)
+            page.goto(origin+'/#cases/all');page.locator('#case-search').wait_for()
+            check('explicit case list survives reload',page.url.endswith('#cases/all'))
+            page.reload();page.locator('#case-search').wait_for()
+            check('case list stays browsable',page.url.endswith('#cases/all'))
+            page.goto(origin+'/#cases/missing');page.get_by_text('This case could not be opened. Return to cases or refresh.',exact=True).wait_for()
+            check('missing route never substitutes another case',page.locator('.case-receipt').count()==0)
+            page.get_by_role('button',name='Back to cases',exact=True).click();page.locator('#case-search').wait_for()
+            check('missing case can return to list',page.url.endswith('#cases/all'))
             context.close();browser.close()
         check('no browser exceptions',not errors)
     finally:

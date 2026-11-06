@@ -827,3 +827,25 @@ pre { font-size: .875rem; line-height: 1.6; max-height: 32rem; overflow: auto; b
 /* Working input boundaries stay distinguishable on both field and card surfaces. */
 :root { --control-border: #778574; }
 input, select, textarea, .decision-brief textarea, .decision-option { border-color: var(--control-border); }
+
+/* Read the operation record, follow its review, then decide what comes next. */
+.receipt-review { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 1.5rem; align-items: start; }
+.receipt-review > *, .review-explanation { min-width: 0; }
+.case-receipt, .review-story { margin: 0 0 1.25rem; padding: 1.5rem; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); overflow-wrap: anywhere; }
+.case-receipt { border-top: 3px solid var(--verify); }
+.case-receipt > .eyebrow { margin-top: 0; }
+.case-receipt h2, .review-story h2 { margin-top: 0; font-size: 1.5rem; }
+.case-receipt h3, .case-story h3 { font-size: 1.05rem; margin: .5rem 0; }
+.case-receipt details, .case-story details { border-top: 1px solid var(--rule); margin-top: .8rem; }
+.case-receipt .fields { grid-template-columns: minmax(0,1fr); }
+.case-receipt .fields dd { margin-bottom: .7rem; }
+.case-story { margin: 0; }
+.case-story p { margin: .4rem 0; }
+.review-explanation .decision-brief { padding: 1.5rem; }
+.receipt-review pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .receipt-review { grid-template-columns: minmax(0,1fr); gap: 0; }
+}
+@media (max-width: 600px) {
+  .case-receipt, .review-story, .review-explanation .decision-brief { padding: 1.1rem; }
+}

@@ -4,7 +4,7 @@ let sessionEpoch = 0;
 let requiresSignIn = false;
 const state = {
   page: "cases",
-  caseId: "", receiptId: "", caseFilter: "all", caseSearch: "",
+  caseId: "", caseBrowse: false, nativeReceipt: null, receiptError: "", receiptId: "", caseFilter: "all", caseSearch: "",
   views: {}, caseOrder: [], inspectedKinds: {}, decisionChoices: {},
   nativeCases: null,
   nativeDetail: null,
@@ -202,9 +202,9 @@ function clearOperatorView() {
   loadEpoch++;
   nativeLoadEpoch++;
   invalidate("Sign in again. Inspect Receipts for any unfinished operation before making another change.");
-  for (const key of ["server", "catalog", "observations", "trail", "assurance", "demonstrationFinding", "nativeCases", "nativeDetail", "pending"]) state[key] = null;
+  for (const key of ["server", "catalog", "observations", "trail", "assurance", "demonstrationFinding", "nativeCases", "nativeDetail", "nativeReceipt", "pending"]) state[key] = null;
   state.receipts = [];
-  state.nativeError = "";
+  state.nativeError = ""; state.receiptError = "";
   state.decisionDrafts = {};
   state.views = {}; state.inspectedKinds = {}; state.caseOrder = []; state.caseFilter = "all"; state.caseSearch = ""; state.decisionChoices = {}; paintedView = "";
   state.errors = {};
@@ -299,7 +299,7 @@ function invalidate(
 }
 // View memory is scoped to this signed-in page. Only the destination name is persisted.
 let paintedView = "";
-function viewKey() { return `${state.page}/${state.page === "cases" ? state.caseId : state.page === "receipts" ? state.receiptId : ""}`; }
+function viewKey() { return `${state.page}/${state.page === "cases" ? (state.caseId || (state.caseBrowse ? "all" : "")) : state.page === "receipts" ? state.receiptId : ""}`; }
 function rememberView() {
   const root = byId("page-content");
   if (!paintedView || !root.querySelectorAll || requiresSignIn) return;
@@ -331,7 +331,7 @@ function navigate(page, focus = true, id = "", historyMode = "push") {
   rememberView();
   const previous = viewKey();
   state.page = page;
-  if (page === "cases") state.caseId = id;
+  if (page === "cases") { state.caseBrowse = id === "all"; state.caseId = state.caseBrowse ? "" : id; }
   if (page === "receipts") state.receiptId = id;
   if (previous !== viewKey()) { byId("status-message").textContent = ""; clearError(); }
   if (window.history && historyMode !== "none" && window.location?.hash !== routeHash())
@@ -349,7 +349,7 @@ function navigate(page, focus = true, id = "", historyMode = "push") {
   paintedView = "";
   renderPage();
   if (!state.views[viewKey()] && focus) { byId("workspace").focus({preventScroll:true}); window.scrollTo?.(0,0); }
-  if (page === "cases" && !requiresSignIn) loadNativeCases(id);
+  if (page === "cases" && !requiresSignIn) loadNativeCases(state.caseId);
   if (page === "receipts" && id && !requiresSignIn) openReceipt(id, byId("page-content"));
 }
 function openCase(id) { navigate("cases", true, id); }
@@ -1301,18 +1301,35 @@ async function loadNativeCases(id = null) {
     if (epoch !== nativeLoadEpoch) return;
     state.nativeCases = list;
     const selected = id || state.caseId;
+    if (!selected && !state.caseBrowse && list.available && list.items?.length && state.page === "cases") {
+      navigate("cases", false, list.items[0].id, "replace");
+      return;
+    }
     const previousRevision = state.nativeDetail?.brief?.revision;
     if (selected) {
       const detail = await api(`/api/cases/${encodeURIComponent(selected)}`);
       if (epoch !== nativeLoadEpoch) return;
       state.nativeDetail = detail;
+      state.nativeReceipt = null; state.receiptError = "";
+      if (detail.receipt_id) {
+        try {
+          const packet = await api(`/api/receipts/${encodeURIComponent(detail.receipt_id)}`);
+          if (epoch !== nativeLoadEpoch) return;
+          if (packet.receipt?.id !== detail.receipt_id || packet.receipt?.target !== detail.target)
+            throw new Error("The returned receipt does not match this review.");
+          state.nativeReceipt = packet;
+        } catch (error) {
+          if (epoch !== nativeLoadEpoch) return;
+          state.receiptError = error.message;
+        }
+      }
       if (detail.brief) state.inspectedKinds[detail.id] = detail.brief.kind;
       if (previousRevision && detail.brief?.revision !== previousRevision && state.decisionDrafts[detail.id])
         announce("Evidence changed. Your draft is preserved; compare the current facts before recording your decision.");
     }
     state.nativeError = "";
   } catch (error) {
-    if (epoch === nativeLoadEpoch) { state.nativeError = error.message; if (id || state.caseId) state.nativeDetail = null; }
+    if (epoch === nativeLoadEpoch) { state.nativeError = error.message; if (id || state.caseId) { state.nativeDetail = null; state.nativeReceipt = null; } }
   }
   if (epoch === nativeLoadEpoch && state.page === "cases") renderPage();
 }
@@ -1455,9 +1472,54 @@ function targetName(target) {
 function caseLabel(status) {
   return ({VERIFIED_MATCH:"Evidence matched the request", VERIFIED_MISMATCH:"Evidence did not match", QUEUED:"Waiting for review", RUNNING:"Review in progress", RECOVERY_REQUIRED:"Review needs recovery", ADMISSION_UNCERTAIN:"Review admission unconfirmed", HELD_FOR_REVIEW:"Review needs clarification", HELD_FOR_EVIDENCE:"More evidence needed"})[status] || String(status || "Outcome unknown").replaceAll("_", " ").toLowerCase();
 }
+// The receipt is an operation record; the review is a separate interpretation.
+function renderCaseReceipt(c) {
+  const box = node("section", undefined, "section case-receipt");
+  box.append(node("p", c.source_scope === "synthetic" ? "Simulated operation" : "IRIS operation", "eyebrow"), node("h2", "Operation receipt"));
+  const packet = state.nativeReceipt, r = packet?.receipt;
+  if (!r || r.id !== c.receipt_id || r.target !== c.target) {
+    box.append(node("p", c.receipt_id ? "The receipt could not be displayed." : "No operation receipt is linked to this review."));
+    if (state.receiptError) box.append(node("p", state.receiptError, "error-message"));
+    box.append(node("p", "The review summary alone does not establish what the operation did.", "quiet"));
+    return box;
+  }
+  const outcome = ({VERIFIED_SUCCESS:"The requested result was verified.", VERIFIED_FAILURE:"The result did not meet the request.", OUTCOME_UNKNOWN:"We do not yet know whether the operation completed.", EXECUTED_UNVERIFIED:"The operation ran; its result has not been verified.", BLOCKED_BEFORE_EXECUTION:"The operation was blocked before it ran.", CANCELLED:"The operation was cancelled."})[r.status] || "The operation outcome needs inspection.";
+  const action = ({"task.run-once":"Run the task once", "web-app.create":"Create a web application"})[r.action_id] || r.action_id || "Action not recorded";
+  box.append(node("h3", targetName(r.target)), node("p", action), node("p", outcome, "receipt-verdict"));
+  if (r.explanation) box.append(node("p", r.explanation));
+  if (r.finished_at || r.started_at) box.append(node("p", `${r.finished_at ? "Finished" : "Started"} (UTC): ${r.finished_at || r.started_at}`, "quiet"));
+  if (r.status === "VERIFIED_SUCCESS") box.append(node("p", "This verifies the recorded configuration or task history. It does not by itself prove that a downstream service works.", "brief-limit"));
+  const properties = node("details"); properties.append(node("summary", "Receipt details"), fields(r));
+  const observations = node("details"); observations.append(node("summary", "Receipt evidence"));
+  for (const o of packet.evidence || []) observations.append(details(`${o.source || "Observation"} · ${o.captured_at || "time not recorded"}`, o));
+  if (!packet.evidence?.length) observations.append(node("p", "Supporting observations are unavailable in this response."));
+  box.append(properties, observations, button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
+  return box;
+}
+function renderCaseStory(c) {
+  const r = c.result || {}, story = section("What happened"); story.className += " review-story";
+  const steps = node("ol", undefined, "case-story");
+  const add = (title, text, label, record) => {
+    const step = node("li"); step.append(node("h3", title), node("p", text));
+    if (record) step.append(details(label, record));
+    steps.append(step);
+  };
+  const history = Array.isArray(r.ReviewHistoryJSON) ? r.ReviewHistoryJSON : [];
+  const first = history[0];
+  let assessment = "No earlier agent assessment is included in this record.";
+  if (first) {
+    assessment = first.verdict === "NO" ? "The first review did not support the rule’s assertion." : first.verdict === "YES" ? "The first review supported the rule’s assertion." : "The first review left the rule’s assertion unresolved.";
+    assessment += first.output === "PASS" ? " It reported that the result passed." : first.output === "FAIL" ? " It reported that the result failed." : " It could not establish whether the result passed.";
+  }
+  add("The initial review", assessment, "Earlier review details", history.length ? history : null);
+  const probe = ({CHECK_EFFECT_RECEIPT:"Battery checked the saved receipt for this operation.", READ_CURRENT_TARGET:"Battery read the target’s current settings."})[r.executed_probe];
+  add("The evidence check", probe || (r.executed_probe ? "Battery recorded an additional evidence check." : "No separate investigation step is recorded here."), "Evidence check details", r.ProbeHistoryJSON || (r.executed_probe ? {executed_probe:r.executed_probe} : null));
+  add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON});
+  story.append(steps); return story;
+}
 function renderNativeCases(root) {
   const toolbar = node("div", undefined, "case-toolbar");
-  if (state.caseId) toolbar.append(button("Back to cases", () => navigate("cases")));
+  if (state.caseId) toolbar.append(button("Back to cases", () => navigate("cases", true, "all")));
   else toolbar.append(node("p", "Understand the result. Find the next useful step.", "page-intro"));
   toolbar.append(button("Refresh cases", () => loadNativeCases(state.caseId)));
   root.append(toolbar);
@@ -1494,19 +1556,13 @@ function renderNativeCases(root) {
   if (!c) { root.append(empty(state.nativeError ? "This case could not be opened. Return to cases or refresh." : "Loading the selected case…")); return; }
   root.append(node("p", targetName(c.target), "case-target"));
   const r = c.result || {};
-  if (c.brief) root.append(renderDecisionBrief(c));
-  else root.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "Open the technical evidence for the available record. A readable summary is not available yet.")));
-  const story = node("details"); story.append(node("summary", "What happened"));
-  const steps = node("ol", undefined, "case-story");
-  const history = Array.isArray(r.ReviewHistoryJSON) ? r.ReviewHistoryJSON : [];
-  for (const [i, entry] of history.entries()) {
-    steps.append(node("li", `Review ${i+1}: rule assessment ${entry.verdict || "not recorded"}; result ${entry.output || "not recorded"}. ${entry.explanation || "Read the technical record for the available interpretation."}`));
-  }
-  if (r.executed_probe) steps.append(node("li", `Evidence check: ${r.executed_probe === "CHECK_EFFECT_RECEIPT" ? "looked for the operation receipt" : r.executed_probe === "READ_CURRENT_TARGET" ? "read the current target" : r.executed_probe}.`));
-  steps.append(node("li", `Recorded review outcome: ${caseLabel(c.state)}.`));
-  story.append(steps, node("p", "This account covers the recorded review steps. It does not establish unrecorded actions or intent.", "quiet"));
-  root.append(story);
-  if (c.receipt_id) root.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
+  const layout = node("div", undefined, "receipt-review");
+  layout.append(renderCaseReceipt(c));
+  const explanation = node("div", undefined, "review-explanation");
+  explanation.append(renderCaseStory(c));
+  if (c.brief) explanation.append(renderDecisionBrief(c));
+  else explanation.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
+  layout.append(explanation); root.append(layout);
   const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));

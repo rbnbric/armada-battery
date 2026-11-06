@@ -10,6 +10,26 @@
       "passed": true
     },
     {
+      "name": "320: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "320: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "320: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "320: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "320: receipt and story reading order",
+      "passed": true
+    },
+    {
       "name": "320: choices not preselected",
       "passed": true
     },
@@ -95,6 +115,26 @@
     },
     {
       "name": "360: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "360: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "360: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "360: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "360: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "360: receipt and story reading order",
       "passed": true
     },
     {
@@ -190,6 +230,26 @@
       "passed": true
     },
     {
+      "name": "390: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "390: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "390: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "390: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "390: receipt and story reading order",
+      "passed": true
+    },
+    {
       "name": "390: choices not preselected",
       "passed": true
     },
@@ -278,6 +338,26 @@
       "passed": true
     },
     {
+      "name": "768: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "768: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "768: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "768: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "768: receipt and story reading order",
+      "passed": true
+    },
+    {
       "name": "768: choices not preselected",
       "passed": true
     },
@@ -363,6 +443,26 @@
     },
     {
       "name": "1440: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "1440: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "1440: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "1440: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt and story reading order",
       "passed": true
     },
     {
@@ -570,6 +670,42 @@
       "passed": true
     },
     {
+      "name": "receipt failure keeps review and exposes gap",
+      "passed": true
+    },
+    {
+      "name": "failed receipt never presents saved success",
+      "passed": true
+    },
+    {
+      "name": "wrong receipt rejected",
+      "passed": true
+    },
+    {
+      "name": "operation uncertainty distinct from review match",
+      "passed": true
+    },
+    {
+      "name": "reading does not submit reviews or operations",
+      "passed": true
+    },
+    {
+      "name": "explicit case list survives reload",
+      "passed": true
+    },
+    {
+      "name": "case list stays browsable",
+      "passed": true
+    },
+    {
+      "name": "missing route never substitutes another case",
+      "passed": true
+    },
+    {
+      "name": "missing case can return to list",
+      "passed": true
+    },
+    {
       "name": "no browser exceptions",
       "passed": true
     }
@@ -579,12 +715,6 @@
       "width": 320,
       "scrollWidth": 320,
       "controls": [
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 142.40625,
-          "h": 62.78125
-        },
         {
           "tag": "BUTTON",
           "type": "button",
@@ -613,6 +743,12 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -655,12 +791,6 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 255.625,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -698,12 +828,6 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 162.40625,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
           "w": 332.8125,
           "h": 44
         },
@@ -723,6 +847,12 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -765,12 +895,6 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 295.625,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -802,12 +926,6 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 115.59375,
-          "h": 62.78125
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
           "w": 115.609375,
           "h": 62.78125
         },
@@ -833,6 +951,12 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -875,12 +999,6 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 325.625,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -912,12 +1030,6 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 172.046875,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
           "w": 134.8125,
           "h": 45.171875
         },
@@ -943,6 +1055,12 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -972,7 +1090,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 673.875,
+          "w": 671.9375,
           "h": 101.15625
         },
         {
@@ -985,12 +1103,6 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 204.484375,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -1019,12 +1131,6 @@
       "width": 1440,
       "scrollWidth": 1440,
       "controls": [
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 63.25,
-          "h": 179.515625
-        },
         {
           "tag": "BUTTON",
           "type": "button",
@@ -1122,6 +1228,12 @@
           "h": 45.171875
         },
         {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
           "tag": "INPUT",
           "type": "radio",
           "w": 24,
@@ -1148,7 +1260,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 1047.625,
+          "w": 613.375,
           "h": 101.15625
         },
         {
@@ -1161,12 +1273,6 @@
           "tag": "BUTTON",
           "type": "button",
           "w": 204.484375,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
           "h": 45.171875
         },
         {
@@ -1195,8 +1301,8 @@
   "browser_errors": [],
   "source_sha256": {
     "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "cea35384ce13f1b7ed35ba5f2199a9f7918fd18ad53a9e643d335a0dd8f83a00",
-    "static/app.css": "e5d98fde96e10c65cf992df486538d78ac94a5041427dbf46959a2abe052af8e",
+    "static/app.js": "fad68e57221a3e3e23bf4641a28e0a078cffbc45b3cd9d0156b143dcfc8db5a4",
+    "static/app.css": "d84e5ff9fffecf3cfdddfe4237e63e470cc19c4c31282b510f3dfd040eb19414",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"

@@ -131,6 +131,6 @@ test_entry_serves_current_ui_with_local_assets (test_ui_assets.UIAssetsTests.tes
 test_logo_is_served_as_the_exact_existing_brand_asset (test_ui_assets.UIAssetsTests.test_logo_is_served_as_the_exact_existing_brand_asset) ... ok
 
 ----------------------------------------------------------------------
-Ran 126 tests in 13.500s
+Ran 126 tests in 13.819s
 
 OK

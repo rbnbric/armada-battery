@@ -10,11 +10,12 @@ The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
 
-**UX update:** Cases now leads with the current task, a readable result and the
+**UX update:** Cases opens the latest review with its receipt and a plain-language
+“What happened” sequence, followed by the current task and the
 next useful action. The Battery logo anchors the refreshed dark theme; history
 and technical evidence expand beneath the summary. Case/receipt navigation keeps
 your draft and reading position, and explicit links survive sign-in. Verified:
-126 public Python tests, 13 UI handler tests, 143 browser assertions and 15 installed HTTP
+126 public Python tests, 13 UI handler tests, 177 browser assertions and 15 installed HTTP
 checks. [Screenshots, delivery proof and limits](docs/UX_REFINEMENT_EVIDENCE.md).
 
 **Earlier decision-brief qualification:** Cases now starts with a readable summary and a
