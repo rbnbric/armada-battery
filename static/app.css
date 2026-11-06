@@ -906,6 +906,15 @@ input, select, textarea, .decision-brief textarea, .decision-option { border-col
 .decision-brief { margin-top: .25rem; }
 .decision-brief > .eyebrow { color: var(--brand); }
 .decision-form { border-top: 0; padding-top: 0; }
+.full-case-review { margin: 0 0 1.5rem; padding: 1.4rem 1.5rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); overflow-wrap: anywhere; }
+.full-case-review h2 { margin: 0 0 .5rem; font-size: 1.3rem; }
+.full-case-review > .quiet { max-width: 72ch; }
+.full-case-review button { min-height: 44px; white-space: normal; }
+.full-review-point { max-width: 76ch; padding: .8rem 0; border-top: 1px solid var(--rule); }
+.full-review-point h3 { margin: 0 0 .35rem; font-size: 1rem; }
+.full-review-point p { margin: 0; line-height: 1.55; }
+.full-review-ratings { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: .8rem 0 1.1rem; }
+.full-review-ratings p { margin: 0; padding: .45rem .7rem; border: 1px solid var(--rule); border-radius: 6px; }
 @media (max-width: 900px) {
   .receipt-review { grid-template-columns: minmax(0,1fr); gap: 0; }
 }
@@ -918,6 +927,8 @@ input, select, textarea, .decision-brief textarea, .decision-option { border-col
   .case-outcome-cell .source-note { margin: 0; }
   .case-outcome-cell .source-context { display: inline; margin-left: .4rem; }
   .case-receipt, .review-story { padding: 1rem; }
+  .full-case-review { padding: 1rem; }
+  .full-case-review button { width: 100%; }
   .brief-context { padding: 1.1rem 0; }
   .case-story li { padding-left: 2rem; margin-left: .6rem; }
   .case-story li::before { left: -.85rem; width: 1.7rem; height: 1.7rem; }

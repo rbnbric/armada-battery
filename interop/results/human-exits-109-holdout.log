@@ -1,0 +1,70 @@
+
+Node: 1959a26adaf8, Instance: IRIS
+
+USER>
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=lost_reply:worst_case|
+
+{
+  "what_happened": "The human chose to repeat the operation after noting the first reply was missing.",
+  "where_judgment_changed": "No change in judgment is recorded in the packet.",
+  "human_path": "The recorded decision was to repeat the operation.",
+  "unresolved": "It remains unclear whether the lost reply actually indicated a failure of the operation.",
+  "human_choice_assessment": "UNSUPPORTED",
+  "human_reason_assessment": "UNSUPPORTED",
+  "evidence_ids": ["human", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=lost_reply:perfect|
+
+{
+  "what_happened": "The request executed once, as shown by the receipt and probe findings, and no second dispatch occurred.",
+  "where_judgment_changed": "The review's judgment changed from initial UNKNOWN to final VERIFIED_MATCH after the receipt check confirmed the outcome.",
+  "human_path": "no_repeat",
+  "unresolved": "Whether repeating the operation would impact downstream service remains untested because downstream behavior was not verified.",
+  "human_choice_assessment": "SUPPORTED",
+  "human_reason_assessment": "SUPPORTED",
+  "evidence_ids": ["human", "receipt"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=lost_reply:random_incompetence|
+
+{
+  "what_happened": "The system recorded one successful task run, reviews moved from unknown to verified match after a receipt check, probes found no second dispatch, configuration stayed unchanged, and a human opted to repeat the operation for extra safety.",
+  "where_judgment_changed": "The review judgment changed from UNKNOWN to VERIFIED_MATCH once the receipt check confirmed the outcome.",
+  "human_path": "The human chose to repeat the operation despite only one verified completion, stating they wanted another confirmation just to be safe.",
+  "unresolved": "The cited evidence does not specify whether the single task execution happened before or after the reply was lost.",
+  "human_choice_assessment": "UNSUPPORTED",
+  "human_reason_assessment": "UNSUPPORTED",
+  "evidence_ids": [
+    "human",
+    "receipt"
+  ]
+}
+
+BATTERY>
+HUMAN_EXIT_END
+
+BATTERY>

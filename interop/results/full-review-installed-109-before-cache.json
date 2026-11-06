@@ -1,0 +1,78 @@
+{
+  "scope": "Installed web and native AI Hub; existing synthetic case only; no business operation submitted.",
+  "checks": [
+    {
+      "name": "operator sign-in",
+      "passed": true
+    },
+    {
+      "name": "retained synthetic case",
+      "passed": true
+    },
+    {
+      "name": "case brief available",
+      "passed": true
+    },
+    {
+      "name": "native full review returned validated content",
+      "passed": true
+    },
+    {
+      "name": "no human choice invented",
+      "passed": true
+    },
+    {
+      "name": "sources are cited",
+      "passed": true
+    },
+    {
+      "name": "repeat uses saved answer",
+      "passed": true
+    },
+    {
+      "name": "case result unchanged",
+      "passed": true
+    },
+    {
+      "name": "operation receipts unchanged",
+      "passed": true
+    }
+  ],
+  "first_attempt": {
+    "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+    "operator": "local-operator",
+    "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+    "attempt": 1,
+    "status": "unavailable",
+    "detail": "The bounded full review was unavailable. The saved case and human decisions remain available."
+  },
+  "answer": {
+    "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+    "operator": "local-operator",
+    "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+    "attempt": 2,
+    "status": "ready",
+    "content": {
+      "what_happened": "The synthetic adapter ran task.run-once, succeeded, and a review later confirmed the receipt matched expectations after an initial unknown state.",
+      "where_judgment_changed": "The review judgment shifted from UNKNOWN in the first round to PASS in the second round after the receipt became available.",
+      "human_path": "No explicit human decision or reasoning is recorded in the packet.",
+      "unresolved": "It remains uncertain whether the verified receipt was present during the first check, leaving the initial UNKNOWN verdict unexplained.",
+      "human_choice_assessment": "NO_DECISION",
+      "human_reason_assessment": "NO_DECISION",
+      "evidence_ids": [
+        "receipt",
+        "review"
+      ]
+    },
+    "usage": "{\"current_context_tokens\":803,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":1184,\"total_completion_tokens\":1320,\"total_interactions\":1,\"total_llm_duration_ms\":8938,\"total_prompt_tokens\":1204,\"total_reasoning_tokens\":1157,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+    "response_id": "1410",
+    "source_ids": [
+      "receipt",
+      "review",
+      "probes",
+      "configuration"
+    ]
+  },
+  "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+  "passed": true
+}

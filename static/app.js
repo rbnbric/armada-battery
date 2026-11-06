@@ -1486,7 +1486,7 @@ function renderDecisionBrief(c) {
   }
   box.append(help);
   if (c.decisions?.length) {
-    const history = node("details"); history.append(node("summary", "Your recorded decisions"));
+    const history = node("details"); history.id = "case-human-decisions"; history.append(node("summary", "Your recorded decisions"));
     for (const d of c.decisions) history.append(section(d.choice.replaceAll("_", " "), node("p", d.reason), node("p", `${d.operator} · ${d.recorded_at}`), node("p", d.next_step)));
     box.append(history);
     const last = c.decisions[c.decisions.length-1];
@@ -1593,6 +1593,54 @@ function renderCaseOverview(c, receipt, story, context) {
   if (b?.next_step) box.append(node("p", b.next_step, "case-next-step"));
   return box;
 }
+function renderFullCaseReview(c, receipt, story, context, decision) {
+  const box = section("Review the whole case");
+  box.className += " full-case-review";
+  box.append(node("p", "Optional AI Hub interpretation of the saved receipt, review trail, evidence checks, current settings, and any recorded human decision. It cannot approve or repeat an operation.", "quiet"));
+  const source = {
+    receipt: ["Saved operation receipt", receipt.querySelector("#receipt-source")],
+    review: ["Recorded review", story.querySelector("#story-source-2")],
+    probes: ["Evidence checks", story.querySelector("#story-source-1")],
+    configuration: ["Current settings comparison", decision?.querySelector("#decision-fact-configuration")],
+    human: ["Recorded human decisions", decision?.querySelector("#case-human-decisions")],
+  };
+  const result = c.full_review;
+  if (result?.status === "ready") {
+    const out = result.content;
+    box.append(node("p", "AI interpretation · Check the cited records before relying on this reading. The case outcome above remains the official record.", "eyebrow"));
+    const assessment = {SUPPORTED:"Supported by selected sources", UNSUPPORTED:"Support missing", CONTRADICTED:"Conflicts with a selected source", UNCERTAIN:"Cannot be settled from these sources", NO_DECISION:"No decision recorded"};
+    const ratings = node("div", undefined, "full-review-ratings");
+    ratings.append(node("p", `Agent's reading of choice: ${assessment[out.human_choice_assessment] || "Assessment unavailable"}`), node("p", `Agent's reading of reason: ${assessment[out.human_reason_assessment] || "Assessment unavailable"}`));
+    box.append(ratings);
+    for (const [label, key] of [["What happened", "what_happened"], ["Where judgment changed", "where_judgment_changed"], ["Your recorded path", "human_path"], ["What remains unresolved", "unresolved"]]) {
+      const item = node("div", undefined, "full-review-point"); item.append(node("h3", label), node("p", out[key])); box.append(item);
+    }
+    box.append(node("p", "Sources cited for this interpretation:", "quiet"));
+    for (const id of out.evidence_ids) {
+      const ref = source[id];
+      box.append(ref?.[1] ? sourceNote(ref[0], ref[1], c.updated_at ? `Review updated ${c.updated_at} (IRIS time)` : "Time not recorded") : node("p", "A cited source is unavailable in this view.", "brief-limit"));
+    }
+  } else {
+    if (result?.detail) box.append(node("p", result.detail, "brief-limit"));
+    if (result?.status !== "unconfirmed" && result?.attempt !== 2 && c.brief?.kind !== "IN_PROGRESS") {
+      const status = node("p", "Up to 6,144 bytes of selected records and 2,200 output tokens. One explicit retry is available if the response fails.", "quiet"); status.setAttribute("role", "status");
+      const action = button(result ? "Retry full case review once" : "Review full case with AI Hub", async () => {
+        const epoch = sessionEpoch, revision = c.brief.revision;
+        action.disabled = true; status.textContent = "Reviewing the saved trail. You can still inspect the case.";
+        try {
+          const response = await api(`/api/cases/${encodeURIComponent(c.id)}/full-review`, {timeoutMs: 110000, method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({revision, retry: !!result})});
+          if (epoch !== sessionEpoch || state.nativeDetail?.id !== c.id || state.nativeDetail?.brief?.revision !== revision) return;
+          state.nativeDetail.full_review = response;
+          if (state.page === "cases") renderPage();
+        } catch (error) {
+          if (epoch === sessionEpoch) { status.textContent = error.message; action.disabled = false; }
+        }
+      });
+      box.append(action, status);
+    }
+  }
+  return box;
+}
 function renderNativeCases(root) {
   const toolbar = node("div", undefined, "case-toolbar");
   if (state.caseId) toolbar.append(button("Back to cases", () => navigate("cases", true, "all")));
@@ -1640,7 +1688,7 @@ function renderNativeCases(root) {
   explanation.append(story);
   layout.append(explanation);
   root.append(renderCaseOverview(c, receipt, story, brief?.context), layout);
-  if (brief) root.append(brief.context, brief.box);
+  if (brief) root.append(brief.context, renderFullCaseReview(c, receipt, story, brief.context, brief.box), brief.box);
   else root.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
   const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));

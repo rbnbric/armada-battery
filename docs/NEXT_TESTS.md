@@ -54,6 +54,7 @@ The new design codices have been reviewed. [UX refinement spec](UX_REFINEMENT_SP
 | T5 | Make the current workflow easy to find | Fresh visitor reaches current source/setup and distinguishes native workflow from old synthetic demo without guessing | Pending T4 findings |
 | T7 | Add the third agent role: Explainer | Evidence-linked plain-language progress and outcome explanations; comprehension and grounding tests below | First slice implemented; native qualification and limits in DECISION_BRIEF_EVIDENCE.md |
 | T6 | Apply new UX/UI codices | Design decisions cite supplied rules; desktop and phone journeys, keyboard/focus, readable history, error/recovery and scroll continuity checked | Implemented and installed; UX_REFINEMENT_EVIDENCE.md records qualification, owner comprehension pending |
+| T8 | Compare bounded full case reviews of human exits | Same evidence across worst, control and random arms; model and installed evidence retained; old reviews invalidated after new decisions | Implemented; final seeded 9/9 and held-out 3/3 contracts, semantic misses in earlier passes retained in DECISION_BRIEF_EVIDENCE.md; browser rerun and unfamiliar cases remain |
 
 We walk through one task at a time. Docker is now running and the existing native and web containers were restarted.
 The next owner check is to open the installed app and confirm access to Agent cases.

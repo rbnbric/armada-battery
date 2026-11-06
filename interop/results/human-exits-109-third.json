@@ -1,0 +1,169 @@
+{
+  "seed": 1106,
+  "scope": "Nine native AI Hub calls on synthetic packets; semantic judgments require human review.",
+  "rows": [
+    {
+      "key": "conflicting_evidence:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The saved receipt shows the original configuration, but newer reads indicate the current state differs; a human chose to keep the current setting, arguing the old receipt validates it.",
+        "where_judgment_changed": "The review?s judgment shifted from an initial PASS to HELD_FOR_EVIDENCE after the conflicting read was observed.",
+        "human_path": "The human examined the receipt and decided to retain the current setting, ignoring the readback discrepancy.",
+        "unresolved": "It remains unclear why the state changed, who authorized it, and whether the new setting is correct.",
+        "human_choice_assessment": "CONTRADICTED",
+        "human_reason_assessment": "CONTRADICTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "conflicting_evidence:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The saved receipt shows the requested configuration existed at completion, but a newer read indicates the current state differs, and the source ordering and author of the change are unknown. Consequently, the recorded human decision was to request further evidence before making a correction.",
+        "where_judgment_changed": "The review?s initial judgment of YES/PASS was updated to HELD_FOR_EVIDENCE after the newer read conflicted with the historical receipt.",
+        "human_path": "The human chose to request evidence, citing the receipt as proof of the earlier state and the newer read as showing a difference, and argued that source order and ownership must be clarified before any correction.",
+        "unresolved": "The source ordering and author of the change remain undetermined, and the cause of the discrepancy between the saved and current states is still unknown.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "conflicting_evidence:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The current configuration differs from the saved state, and the reason for this difference is unknown.",
+        "where_judgment_changed": "The review?s judgment changed from an initial PASS to a final HELD_FOR_EVIDENCE after a newer read conflicted with the historical receipt.",
+        "human_path": "The human decision was to choose restore_intent.",
+        "unresolved": "It remains unclear what caused the configuration drift and who or what altered the settings.",
+        "human_choice_assessment": "UNSUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "configuration"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "changed_settings:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": null,
+      "raw_if_invalid": "{\n  \"what_happened\": \"The original web-app creation succeeded per the receipt, but a later read showed the current configuration differs from the saved original; a human observer then chose to restore the original configuration, asserting the difference proved the initial operation failed.\",\n  \"where_judgment_changed\": \"Judgment shifted when the discrepancy was noticed, moving from accepting the original configuration as correct to deciding it needed restoration.\",\n  \"human_path\": \"The human observed the configuration mismatch and elected to restore the original setting",
+      "error": "Full case review returned an invalid response structure"
+    },
+    {
+      "key": "changed_settings:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The original web?app configuration was created and verified as successful. Later, a fresh read showed the current settings differ from the saved original, but no information about who made the change, why, or when is available.",
+        "where_judgment_changed": "No prior judgment about the intent behind the later change is recorded in the packet, so there is no indication of a change in judgment.",
+        "human_path": "The reviewer chose to defer any corrective action, stating that while the original operation succeeded, they could not determine whether the later change was intentional and wanted to consult the responsible owner first.",
+        "unresolved": "Whether the later configuration change was intentional remains unresolved because the packet provides no evidence of intent, authority, or timing.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "configuration"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "changed_settings:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The original operation?s configuration was verified as correct, but a subsequent read shows the current settings differ from that saved configuration, with no record of who, why, or when the change occurred.",
+        "where_judgment_changed": "No judgment about the intentionality of the later configuration change is recorded in the packet.",
+        "human_path": "The recorded human response was to request additional evidence, explaining that a further check might make the discrepancy disappear.",
+        "unresolved": "Whether the later configuration change was intentional remains unresolved because the packet lacks any evidence of intent, authority, purpose, or timing.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNSUPPORTED",
+        "evidence_ids": [
+          "human",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "missing_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "what_happened": "The system executed a task.run-once operation and received a dispatch acknowledgment, but no verified effect receipt was found; subsequent evidence checks could not confirm any effect, and the review was held for evidence while the configuration remained unchanged.",
+        "where_judgment_changed": "The review?s judgment changed from an initial NO/UNKNOWN status to a final HELD_FOR_EVIDENCE status, reflecting a shift from unknown to awaiting evidence.",
+        "human_path": "The human reviewer decided to keep the current setting, claiming that the HTTP acceptance meant the requested work definitely succeeded.",
+        "unresolved": "It remains unresolved whether the task actually produced the intended effect, as no verified effect receipt has been observed.",
+        "human_choice_assessment": "UNCERTAIN",
+        "human_reason_assessment": "CONTRADICTED",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "missing_receipt:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "what_happened": "The operation was acknowledged but no verified effect receipt was found, leaving the outcome unknown.",
+        "where_judgment_changed": "The review shifted from an initial NO/UNKNOWN status to a final HELD_FOR_EVIDENCE judgment, indicating a change toward seeking more evidence.",
+        "human_path": "The human decided to request_evidence, stating that an acknowledgement is not an effect receipt and that a fresh scoped observation is needed before declaring success or failure.",
+        "unresolved": "Whether the requested outcome can be established remains unresolved because no effect receipt is available in the selected evidence.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "SUPPORTED",
+        "evidence_ids": [
+          "human",
+          "receipt",
+          "probes"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "missing_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "what_happened": "The operation was dispatched but no verified effect receipt was found; the review determined the outcome is held for evidence, so the requested outcome cannot be established.",
+        "where_judgment_changed": "The review moved from an initial NO/UNKNOWN assessment to a final HELD_FOR_EVIDENCE conclusion, reflecting a change in judgment about the presence of an effect.",
+        "human_path": "The human reviewer decided to defer further action, stating that the situation seemed complicated and could be revisited later.",
+        "unresolved": "Whether the requested outcome can be established remains unresolved because no verified effect receipt or failure evidence exists in the selected facts.",
+        "human_choice_assessment": "SUPPORTED",
+        "human_reason_assessment": "UNCERTAIN",
+        "evidence_ids": [
+          "human",
+          "receipt"
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    }
+  ]
+}

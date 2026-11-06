@@ -29,6 +29,7 @@ window.fetch = async (input, options={}) => {
  if(new URL(location.href).searchParams.has('login') && sessionStorage.getItem('ux-auth')!=='yes') cfg.signedIn=false;
  if(!cfg.signedIn) return response({detail:'Operator sign-in required.'},401);
  if(path==='/api/cases') return response({available:true,items:Object.values(fixtureCases),budget:{operator_daily_used:1,operator_daily_limit:20,operator_active_limit:2}});
+ if(path.endsWith('/full-review')) { cfg.posts.push({path,body:JSON.parse(options.body)}); return response({status:'ready',content:{what_happened:'The saved receipt says the original request succeeded; a later read shows different settings.',where_judgment_changed:'The historical review remains recorded, while the current settings need separate interpretation.',human_path:'No human decision is recorded.',unresolved:'The author and purpose of the later change are unknown.',human_choice_assessment:'NO_DECISION',human_reason_assessment:'NO_DECISION',evidence_ids:['receipt','review','configuration']}}); }
  if(path.endsWith('/explain')) { cfg.posts.push({path,body:JSON.parse(options.body)}); return response({status:'unavailable',detail:'Model unavailable. Your evidence summary remains usable.'}); }
  if(path.endsWith('/decision')) {
   cfg.posts.push({path,body:JSON.parse(options.body)});
@@ -80,8 +81,15 @@ def run(out):
                 check(f'{width}: receipt and story reading order',positions['right']>positions['left'] if width>900 else positions['next']>=positions['bottom'])
                 page.get_by_role('button',name='Back to cases',exact=True).click()
                 page.locator('[data-case-id="case-context"]').click();page.locator('#decision-reason').wait_for()
-                order=page.evaluate('''() => [...document.querySelectorAll('.case-overview,.receipt-review,.brief-context,.decision-brief')].map(e=>['case-overview','receipt-review','brief-context','decision-brief'].find(name=>e.classList.contains(name)))''')
-                check(f'{width}: status, record, evidence, decision order',order==['case-overview','receipt-review','brief-context','decision-brief'])
+                order=page.evaluate('''() => [...document.querySelectorAll('.case-overview,.receipt-review,.brief-context,.full-case-review,.decision-brief')].map(e=>['case-overview','receipt-review','brief-context','full-case-review','decision-brief'].find(name=>e.classList.contains(name)))''')
+                check(f'{width}: status, record, evidence, optional review, decision order',order==['case-overview','receipt-review','brief-context','full-case-review','decision-brief'])
+                check(f'{width}: full review is opt in',page.evaluate('uxTest.posts.filter(p=>p.path.endsWith("/full-review")).length')==0)
+                page.get_by_role('button',name='Review full case with AI Hub',exact=True).click()
+                page.locator('.full-case-review').get_by_text('The author and purpose of the later change are unknown.',exact=True).wait_for()
+                check(f'{width}: bounded review uses one explicit request',page.evaluate('uxTest.posts.filter(p=>p.path.endsWith("/full-review")).length')==1)
+                page.locator('.full-case-review').get_by_role('button',name='Saved operation receipt',exact=True).click()
+                check(f'{width}: full review citation opens receipt',page.locator('#receipt-source').evaluate('(e)=>e.open'))
+                page.get_by_text('Receipt details',exact=True).click()
                 check(f'{width}: original operation and current settings distinguished','Verified result' in page.locator('.case-outcome-rail').inner_text() and 'Different now' in page.locator('.case-outcome-rail').inner_text())
                 check(f'{width}: choices not preselected',page.locator('input[name=decision-choice]:checked').count()==0)
                 check(f'{width}: technical initially closed',not page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))

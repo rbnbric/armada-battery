@@ -9,7 +9,7 @@ from pathlib import Path
 from battery.ledger import Ledger
 from battery.task_slice import BatteryEngine, SyntheticTaskAdapter
 from battery.ship_native_cases import NativeCases
-from battery.ship_decision_brief import validate_explanation, explanation_input
+from battery.ship_decision_brief import validate_explanation, explanation_input, full_case_review_input, validate_full_case_review
 
 class Peer:
     # seam: native network boundary. Protocol fixtures, not a native AI claim.
@@ -17,6 +17,8 @@ class Peer:
         self.cases, self.posts = {}, []
         self.answer = {"summary": "This is a simulated operation.", "meaning": "The recorded review matched its criterion.", "missing": "Downstream effects have not been established.", "evidence_ids": ["review", "scope"]}
         self.explanation_reads = 0
+        self.full_review_reads = 0
+        self.full_answer = {"what_happened":"The saved operation completed.", "where_judgment_changed":"No change in judgment is recorded.", "human_path":"No human decision is recorded.", "unresolved":"Downstream effects remain untested.", "human_choice_assessment":"NO_DECISION", "human_reason_assessment":"NO_DECISION", "evidence_ids":["receipt","review"]}
         self.on_explain = None
         owner = self
         class Handler(BaseHTTPRequestHandler):
@@ -27,7 +29,10 @@ class Peer:
             def do_POST(self):
                 body=json.loads(self.rfile.read(int(self.headers['Content-Length'])))
                 owner.posts.append(body)
-                if self.path.endswith('/explain'):
+                if self.path.endswith('/full-review'):
+                    owner.full_review_reads += 1
+                    self.reply({'content':json.dumps(owner.full_answer),'usage':'{}','response_id':'fixture-full'})
+                elif self.path.endswith('/explain'):
                     owner.explanation_reads += 1
                     if owner.on_explain: owner.on_explain()
                     self.reply({'content':json.dumps(owner.answer),'usage':'{}','response_id':'fixture'})
@@ -133,6 +138,36 @@ class DecisionTests(unittest.TestCase):
         self.engine.ledger.append('native_explanation_started',{'case_id':self.id,'operator':'owner','revision':b['revision'],'attempt':1})
         self.assertEqual(self.bridge.explain(self.id,'owner',b['revision'],retry=True)['status'],'unconfirmed')
         self.assertEqual(self.peer.explanation_reads,0)
+    def test_full_review_is_bounded_cached_and_does_not_repeat_operation(self):
+        c=self.detail();packet=full_case_review_input(c,self.receipt)
+        self.assertLessEqual(len(json.dumps(packet,sort_keys=True,separators=(',',':')).encode()),6144)
+        one=self.bridge.full_review(self.id,'owner',c['brief']['revision'])
+        self.assertEqual(one['status'],'ready');self.assertEqual(one,self.bridge.full_review(self.id,'owner',c['brief']['revision']))
+        self.assertEqual(self.peer.full_review_reads,1);self.assertEqual(self.adapter.run_calls,1)
+        self.assertEqual(self.detail()['full_review']['content']['what_happened'],self.peer.full_answer['what_happened'])
+    def test_full_review_rejects_bad_citation_and_stale_revision(self):
+        c=self.detail();packet=full_case_review_input(c,self.receipt)
+        with self.assertRaises(ValueError):validate_full_case_review({**self.peer.full_answer,'evidence_ids':[{}]},packet)
+        with self.assertRaises(ValueError):validate_full_case_review({**self.peer.full_answer,'human_choice_assessment':'SUPPORTED'},packet)
+        packet['sources'].append({'id':'human','value':{'responses':[{'choice':'defer','reason':'Need owner context'}]}})
+        with self.assertRaises(ValueError):validate_full_case_review({**self.peer.full_answer,'human_choice_assessment':'SUPPORTED','human_reason_assessment':'SUPPORTED','evidence_ids':['receipt']},packet)
+        self.peer.full_answer['evidence_ids']=['invented']
+        self.assertEqual(self.bridge.full_review(self.id,'owner',c['brief']['revision'])['status'],'unavailable')
+        self.change()
+        with self.assertRaisesRegex(ValueError,'Evidence changed'):self.bridge.full_review(self.id,'owner',c['brief']['revision'])
+    def test_full_review_excludes_raw_transcripts(self):
+        self.peer.cases[self.id]['result']['ReviewHistoryJSON']=[{'content':'private raw transcript','verdict':'YES'}]
+        packet=full_case_review_input(self.detail(),self.receipt)
+        self.assertNotIn('private raw transcript',json.dumps(packet))
+    def test_new_human_decision_invalidates_old_full_review(self):
+        self.change();c=self.detail();revision=c['brief']['revision']
+        self.assertEqual(self.bridge.full_review(self.id,'owner',revision)['status'],'ready')
+        self.assertEqual(self.peer.full_review_reads,1)
+        self.bridge.decide(self.id,'owner',revision,'defer','Ask the responsible owner about the changed setting')
+        self.assertNotIn('full_review',self.detail())
+        self.peer.full_answer.update(human_choice_assessment='SUPPORTED',human_reason_assessment='SUPPORTED',evidence_ids=['human','configuration'])
+        self.assertEqual(self.bridge.full_review(self.id,'owner',revision)['status'],'ready')
+        self.assertEqual(self.peer.full_review_reads,2)
 
 class DecisionHttpTests(unittest.TestCase):
     def setUp(self):
@@ -170,6 +205,13 @@ class DecisionHttpTests(unittest.TestCase):
         self.client.post('/api/session/logout')
         self.assertEqual(self.client.post(self.url+'/explain',json=body).status_code,401)
         self.assertEqual(self.client.post(self.url+'/decision',json={'revision':body['revision'],'choice':'defer','reason':'no session'}).status_code,401)
+    def test_http_full_review_is_explicit_and_scoped(self):
+        c=self.client.get(self.url).json();body={'revision':c['brief']['revision']}
+        self.assertEqual(self.peer.full_review_reads,0)
+        r=self.client.post(self.url+'/full-review',json=body);self.assertEqual(r.status_code,200,r.text)
+        self.assertEqual(r.json()['status'],'ready');self.assertEqual(self.peer.full_review_reads,1)
+        self.assertEqual(self.client.post(self.url+'/full-review',json=body).json(),r.json())
+        self.assertEqual(self.peer.full_review_reads,1);self.assertEqual(self.engine.adapter.run_calls,1)
     def test_http_follow_up_review_retains_parent_without_new_operation(self):
         self.engine.adapter.tasks[17]['Name']='Later intent';c=self.client.get(self.url).json()
         body={'revision':c['brief']['revision'],'choice':'request_evidence','reason':'Read the changed target'}

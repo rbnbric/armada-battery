@@ -1,0 +1,71 @@
+{
+  "scope": "Installed web and native AI Hub; existing synthetic case only; no business operation submitted.",
+  "checks": [
+    {
+      "name": "operator sign-in",
+      "passed": true
+    },
+    {
+      "name": "retained synthetic case",
+      "passed": true
+    },
+    {
+      "name": "case brief available",
+      "passed": true
+    },
+    {
+      "name": "native full review returned validated content",
+      "passed": true
+    },
+    {
+      "name": "no human choice invented",
+      "passed": true
+    },
+    {
+      "name": "sources are cited",
+      "passed": true
+    },
+    {
+      "name": "repeat uses saved answer",
+      "passed": true
+    },
+    {
+      "name": "case result unchanged",
+      "passed": true
+    },
+    {
+      "name": "operation receipts unchanged",
+      "passed": true
+    }
+  ],
+  "answer": {
+    "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+    "operator": "local-operator",
+    "revision": "bd1576a9c471ae8ff7dc63c3efaccbb921205ed3ca4f582d8dabb8bea01ec30e",
+    "attempt": 1,
+    "packet_digest": "1487c91a0b2f1c0247e5cf0fca2915901ac1ec82cd45b3b8fb2a0ef58d38fc94",
+    "status": "ready",
+    "content": {
+      "what_happened": "The synthetic adapter's task.run-once completed successfully and the review confirmed the receipt matched expectations after an initial unknown verdict.",
+      "where_judgment_changed": "Judgment shifted from UNKNOWN in the first review round to PASS in the second round after verifying the receipt.",
+      "human_path": "No human decision was recorded in the packet.",
+      "human_choice_assessment": "NO_DECISION",
+      "human_reason_assessment": "NO_DECISION",
+      "unresolved": "No unresolved issues remain given the verified receipt and matching review.",
+      "evidence_ids": [
+        "receipt",
+        "review"
+      ]
+    },
+    "usage": "{\"current_context_tokens\":777,\"model_context_size\":200000,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0,\"total_completion_tokens\":716,\"total_interactions\":1,\"total_llm_duration_ms\":4419,\"total_prompt_tokens\":1271,\"total_reasoning_tokens\":591,\"total_tool_calls\":0,\"total_tool_duration_ms\":0}",
+    "response_id": "1436",
+    "source_ids": [
+      "receipt",
+      "review",
+      "probes",
+      "configuration"
+    ]
+  },
+  "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
+  "passed": true
+}

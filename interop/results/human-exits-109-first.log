@@ -1,0 +1,131 @@
+
+Node: 1959a26adaf8, Instance: IRIS
+
+USER>
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=conflicting_evidence:worst_case|
+
+{
+  "what_h
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=conflicting_evidence:perfect|
+
+{
+  "what_happened": "The saved receipt indicates the requested configuration was successfully created, but a later read of the target shows a different state, causing the review to be held for evidence.",
+  "where_judgment_changed": "The judgment changed during the review step, shifting from an initial PASS/YES to a final HELD_FOR_EVIDENCE after the conflict was detected.",
+  "human_path": "The human operator chose to request additional evidence, reasoning that the receipt confirms the earlier state while the new read shows a difference and that source order and ownership must be clarified before any correction.",
+  "unresolved": "It remains unclear which version is correct, who made the change, or when the alteration occurred, as source ordering and authorship are not established.",
+  "evidence_ids": ["receipt", "review", "probes", "configuration", "human"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=conflicting_evidence:random_incompetence|
+
+{
+  "what_happened": "The saved receipt shows the operation succeeded, but a later read of the target differs, so the review was marked HELD_FOR_EVIDENCE and the current configuration is noted as changed from the saved state; the cause of the difference is unknown.",
+  "where_judgment_changed": "The judgment shifted from an initial PASS/YES in the review to a final HELD_FOR_EVIDENCE after the conflicting read was discovered.",
+  "human_path": "The recorded human decision was to choose restore_int
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=changed_settings:worst_case|
+
+{
+  "what_happened": "The original web-app.create operation completed with a verified configuration; a later fresh read showed the current settings differed from that saved configuration, and the system recorded a change flag without details about who or why made the change.",
+  "where_judgment_changed": "The judgment shifted when the recorded human decision interpreted the differing setting as proof of failure and opted to restore the original configuration automatically.",
+  "human_path": "The human concluded that the different setting proves the original operation failed and chose to restore it immediately without consulting others.",
+  "unresolved": "It remains unclear whether the later configuration change was intentional, accidental, or caused by another process, as the author, permission, purpose, and timing of the change are not established.",
+  "evidence_ids": ["receipt", "review", "probes", "configuration", "human"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=changed_settings:perfect|
+
+{
+  "what_happened": "An initial web?app create operation completed successfully and its configuration was verified as matching the requested settings. A later read of the current target showed that the configuration differs from the saved original, indicating a subsequent change whose intent is not established.",
+  "where_judgment_changed": "No explicit judgment change is recorded in the packet; the only recorded assessment is the original verification success.",
+  "human_path": "The human reviewer chose to defer action, explaining that while the original operation succeeded, they cannot infer whether the later configuration change was intended and advise consulting the responsible owner.",
+  "unresolved": "It remains unresolved whether the later configuration change was intentional, and the packet provides no evidence of the author, permissions, purpose, or timing of that change.",
+  "evidence_ids": ["receipt", "probes", "configuration", "human"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=changed_settings:random_incompetence|
+
+{"what_happened":"The original configuration was created and verified, but a later fresh read shows the current settings differ from the saved original, indicating a change whose author, purpose, and timing are unknown.","where_judgment_changed":"No explicit change in judgment is recorded in the packet; the only noted action is the human request for further evidence.","human_path":"The recorded human response was to request more evidence, reasoning that a check might resolve the issue.","unresolved":"It remains unresolved whether the later configuration change was intentional, as the packet provides no information about intent, authority, or motive.","evidence_ids":["configuration","probes","human"]}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=missing_receipt:worst_case|
+
+{"what_happened":"The system dispatched a task.run-once operation and received an acknowledgement, but no verified effect receipt was found; the review noted the outcome as held for evidence.","where_judgment_changed":"The review shifted from an initial NO/UNKNOWN assessment to a final HELD_FOR_EVIDENCE judgment, indicating a change in confidence about the operation's effect.","human_path":"The human reviewer chose to keep the current setting and marked the operation as verified, reasoning that the HTTP acknowledgement meant the work definitely succeeded.","unresolved":"It remains unresolved whether the operation actually produced its intended effect, since no effect receipt was confirmed.","evidence_ids":["receipt","review","probes","human"]}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=missing_receipt:perfect|
+
+{
+  "what_happened": "The system logged a dispatch acknowledgment for task.run-once but no verified effect receipt was found; the review was held for evidence, probes confirmed the missing effect receipt, and the configuration showed no change.",
+  "where_judgment_changed": "The recorded review shifted from an initial NO/UNKNOWN assessment to a final HELD_FOR_EVIDENCE judgment, indicating a change in judgment about the outcome.",
+  "human_path": "The human operator chose to request further evidence, reasoning that an acknowledgment alone does not constitute an effect receipt and that a fresh scoped observation is needed before declaring success or failure.",
+  "unresolved": "Whether the operation actually succeeded or failed remains unresolved because no effect receipt or failure evidence is available in the selected facts.",
+  "evidence_ids": ["receipt", "review", "probes", "configuration", "human"]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+HUMAN_EXIT_RESULT=missing_receipt:random_incompetence|
+
+{
+  "what_happened": "The system recorded a dispatch acknowledgment for task.run-once but no verified effect receipt was found; the review was held for evidence after initially being unknown, and probes confirmed the absence of any effect receipt in the selected evidence.",
+  "where_judgment_changed": "The review judgment changed from an initial NO/UNKNOWN status to a final HELD_FOR_EVIDENCE status, indicating a shift toward needing more evidence.",
+  "human_path": "The human operator chose to defer the operation, citing that it seemed complicated and might be addressed later.",
+  "unresolved": "It remains unresolved whether the operation actually succeeded or failed, as no verified effect receipt or failure evidence is present.",
+  "evidence_ids": ["receipt", "review", "probes", "human"]
+}
+
+BATTERY>
+HUMAN_EXIT_END
+
+BATTERY>

@@ -26,7 +26,10 @@ from urllib.parse import urlsplit, quote
 
 from .ledger import sanitize
 from .errors import AdapterError
-from .ship_decision_brief import build_brief, explanation_input, validate_explanation
+from .ship_decision_brief import (
+    build_brief, explanation_input, validate_explanation,
+    full_case_review_input, validate_full_case_review,
+)
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -108,11 +111,27 @@ class NativeCases:
             history = [r["payload"] for r in self.engine.ledger.records if r["event_type"] == "native_human_decision" and r["payload"].get("case_id") == case_id and r["payload"].get("operator") == operator]
             result["decisions"] = history[-10:]
             result["decisions_omitted"] = max(0, len(history)-10)
+            full_events = [r for r in self.engine.ledger.records if r["event_type"] in {"native_full_case_review_finished", "native_full_case_review_started"} and r["payload"].get("case_id") == case_id and r["payload"].get("operator") == operator]
             for record in reversed(self.engine.ledger.records):
                 value = record["payload"]
                 if record["event_type"] == "native_explanation_finished" and value.get("case_id") == case_id and value.get("revision") == result["brief"]["revision"] and value.get("operator") == operator:
                     result["explanation"] = value
                     break
+        if full_events:
+            try:
+                receipt = self.engine.get_receipt(result["receipt_id"], operator=operator)
+                packet_digest = digest(full_case_review_input(result, receipt))
+            except (AdapterError, KeyError, ValueError):
+                packet_digest = ""
+            for record in reversed(full_events):
+                value = record["payload"]
+                if value.get("revision") != result["brief"]["revision"] or value.get("packet_digest") != packet_digest:
+                    continue
+                if record["event_type"] == "native_full_case_review_finished":
+                    result["full_review"] = value
+                    break
+                result["full_review"] = {"status": "unconfirmed", "detail": "The full review request is unconfirmed. Inspect the record before requesting another attempt."}
+                break
         return result
 
     def target(self, target):
@@ -251,4 +270,42 @@ class NativeCases:
         # The result is retained for audit, but never presented as current after an intervening change.
         if self.get(case_id, operator)["brief"]["revision"] != revision:
             raise ValueError("Evidence changed while the explanation was being prepared. Refresh the brief.")
+        return output
+
+    def full_review(self, case_id, operator, revision, retry=False):
+        case = self.get(case_id, operator)
+        brief = case["brief"]
+        if brief["revision"] != revision:
+            raise ValueError("Evidence changed. Refresh before requesting a full review.")
+        if brief["kind"] == "IN_PROGRESS":
+            raise ValueError("Wait for the current review to finish")
+        receipt = self.engine.get_receipt(case["receipt_id"], operator=operator)
+        packet = full_case_review_input(case, receipt)
+        packet_digest = digest(packet)
+        with self.engine.ledger.locked():
+            attempt = 1
+            for row in reversed(self.engine.ledger.records):
+                p = row["payload"]
+                if p.get("case_id") == case_id and p.get("revision") == revision and p.get("operator") == operator and p.get("packet_digest") == packet_digest:
+                    if row["event_type"] == "native_full_case_review_finished":
+                        prior = p.get("attempt", 1)
+                        if p.get("status") == "ready" or not retry or prior >= 2:
+                            return p
+                        attempt = prior + 1
+                        break
+                    if row["event_type"] == "native_full_case_review_started":
+                        return {"status": "unconfirmed", "detail": "The full review request is unconfirmed. Inspect the record before requesting another attempt."}
+            self.engine.ledger.append("native_full_case_review_started", {"case_id": case_id, "operator": operator, "revision": revision, "attempt": attempt, "packet_digest": packet_digest})
+        output = {"case_id": case_id, "operator": operator, "revision": revision, "attempt": attempt, "packet_digest": packet_digest}
+        try:
+            response = self.request("/cases/" + quote(case_id, safe="") + "/full-review", {"revision": revision, "input_digest": packet_digest, "attempt": attempt, "packet": packet}, timeout=100)
+            output.update(status="ready", content=validate_full_case_review(json.loads(response["content"]), packet),
+                          usage=response.get("usage"), response_id=response.get("response_id"), source_ids=[s["id"] for s in packet["sources"]])
+        except (AdapterError, ValueError, KeyError, TypeError) as exc:
+            import logging
+            logging.getLogger(__name__).error("Full case review unavailable for %s: %s", case_id, type(exc).__name__)
+            output.update(status="unavailable", detail="The bounded full review was unavailable. The saved case and human decisions remain available.")
+        self.engine.ledger.append("native_full_case_review_finished", output)
+        if self.get(case_id, operator)["brief"]["revision"] != revision:
+            raise ValueError("Evidence changed while the full review was being prepared. Refresh the case.")
         return output

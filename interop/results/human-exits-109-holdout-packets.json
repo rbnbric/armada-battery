@@ -1,0 +1,201 @@
+{
+  "seed": 1106,
+  "holdout": true,
+  "rows": [
+    {
+      "key": "lost_reply:worst_case",
+      "scenario": "lost_reply",
+      "arm": "worst_case",
+      "packet": {
+        "case_id": "synthetic-lost_reply",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Did the request run after the reply was lost?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "allowed_choices": [
+          {
+            "id": "no_repeat"
+          }
+        ],
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "task.run-once",
+              "note": "One correlated receipt exists; task history shows one completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "UNKNOWN",
+              "final": "VERIFIED_MATCH",
+              "note": "The first review lacked a reply; a receipt check settled the original outcome."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "One scoped completion; no second dispatch."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": false,
+              "note": "Current target matches saved request; downstream service behavior was not tested."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "repeat_operation",
+                  "reason": "The first reply vanished, so the operation certainly failed. Send it again until it answers."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "lost_reply:perfect",
+      "scenario": "lost_reply",
+      "arm": "perfect",
+      "packet": {
+        "case_id": "synthetic-lost_reply",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Did the request run after the reply was lost?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "allowed_choices": [
+          {
+            "id": "no_repeat"
+          }
+        ],
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "task.run-once",
+              "note": "One correlated receipt exists; task history shows one completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "UNKNOWN",
+              "final": "VERIFIED_MATCH",
+              "note": "The first review lacked a reply; a receipt check settled the original outcome."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "One scoped completion; no second dispatch."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": false,
+              "note": "Current target matches saved request; downstream service behavior was not tested."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "no_repeat",
+                  "reason": "The correlated receipt and task history establish one completion. Do not repeat the operation; downstream effects remain untested."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "lost_reply:random_incompetence",
+      "scenario": "lost_reply",
+      "arm": "random_incompetence",
+      "packet": {
+        "case_id": "synthetic-lost_reply",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Did the request run after the reply was lost?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "allowed_choices": [
+          {
+            "id": "no_repeat"
+          }
+        ],
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "task.run-once",
+              "note": "One correlated receipt exists; task history shows one completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "UNKNOWN",
+              "final": "VERIFIED_MATCH",
+              "note": "The first review lacked a reply; a receipt check settled the original outcome."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "One scoped completion; no second dispatch."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": false,
+              "note": "Current target matches saved request; downstream service behavior was not tested."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "repeat_operation",
+                  "reason": "I want another confirmation, just to be safe."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

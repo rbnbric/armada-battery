@@ -503,6 +503,18 @@ def explain_native_case(case_id: str, body: ExplanationRequest):
         raise HTTPException(getattr(exc, "http_status", None) or 502, str(exc)) from exc
 
 
+@app.post("/api/cases/{case_id}/full-review")
+def full_review_native_case(case_id: str, body: ExplanationRequest):
+    try:
+        return native_cases().full_review(case_id, current_operator(), body.revision, retry=body.retry)
+    except KeyError as exc:
+        raise HTTPException(404, "Case not found") from exc
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    except AdapterError as exc:
+        raise HTTPException(getattr(exc, "http_status", None) or 502, str(exc)) from exc
+
+
 @app.get("/api/native-evidence/{case_id}")
 def native_evidence(case_id: str, phase: str, x_battery_adapter: str = Header(default=""), x_battery_operator: str = Header(default="")):
     expected = os.environ.get("BATTERY_ADAPTER_KEY", "")

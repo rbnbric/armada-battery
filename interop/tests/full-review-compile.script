@@ -1,0 +1,15 @@
+zn "BATTERY"
+set sc=##class(Battery.Interop.CaseRecord).Sweep()
+if $SYSTEM.Status.IsError(sc) { write "FULL_REVIEW_BUSY=maintenance",! halt }
+if $order(^BatteryCaseActive(""))'="" { write "FULL_REVIEW_BUSY=active_case",! halt }
+set sc=##class(Ens.Director).StopProduction()
+if $SYSTEM.Status.IsError(sc) { write "FULL_REVIEW_STOP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set ok=1
+set sc=$SYSTEM.OBJ.Load("/home/irisowner/dev/interop/Battery/Interop/AgentOperation.cls","ck")
+if $SYSTEM.Status.IsError(sc) { set ok=0 write "FULL_REVIEW_COMPILE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! }
+set sc=$SYSTEM.OBJ.Load("/home/irisowner/dev/interop/Battery/Interop/CaseAPI.cls","ck")
+if $SYSTEM.Status.IsError(sc) { set ok=0 write "FULL_REVIEW_COMPILE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! }
+set sc=##class(Ens.Director).StartProduction("Battery.Interop.Production")
+if $SYSTEM.Status.IsError(sc) { set ok=0 write "FULL_REVIEW_RESTART_ERROR=",$SYSTEM.Status.GetErrorText(sc),! }
+if ok { write "FULL_REVIEW_COMPILE_OK",! }
+halt

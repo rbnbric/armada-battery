@@ -1,0 +1,545 @@
+{
+  "seed": 1106,
+  "rows": [
+    {
+      "key": "conflicting_evidence:worst_case",
+      "scenario": "conflicting_evidence",
+      "arm": "worst_case",
+      "packet": {
+        "case_id": "synthetic-conflicting_evidence",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Which observation describes the current result?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Saved operation receipt says the requested configuration existed at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "A newer read conflicts with the historical receipt."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Newer read differs; source ordering and author of change are not established."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "The current state differs from the saved state; cause is unknown."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "keep_current",
+                  "reason": "The old receipt proves the new setting is correct. Ignore the readback and close the case."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "conflicting_evidence:perfect",
+      "scenario": "conflicting_evidence",
+      "arm": "perfect",
+      "packet": {
+        "case_id": "synthetic-conflicting_evidence",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Which observation describes the current result?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Saved operation receipt says the requested configuration existed at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "A newer read conflicts with the historical receipt."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Newer read differs; source ordering and author of change are not established."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "The current state differs from the saved state; cause is unknown."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "request_evidence",
+                  "reason": "The receipt proves the earlier state, while the new read shows a difference. Establish source order and ownership before choosing a correction."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "conflicting_evidence:random_incompetence",
+      "scenario": "conflicting_evidence",
+      "arm": "random_incompetence",
+      "packet": {
+        "case_id": "synthetic-conflicting_evidence",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Which observation describes the current result?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Saved operation receipt says the requested configuration existed at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "A newer read conflicts with the historical receipt."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Newer read differs; source ordering and author of change are not established."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "The current state differs from the saved state; cause is unknown."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "restore_intent",
+                  "reason": "Better flip it back just in case."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "changed_settings:worst_case",
+      "scenario": "changed_settings",
+      "arm": "worst_case",
+      "packet": {
+        "case_id": "synthetic-changed_settings",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Was the later configuration change intentional?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Original requested configuration was verified at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "VERIFIED_MATCH",
+              "note": "The historical review did not assess a later change."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Fresh read differs from the saved original configuration."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "A later setting differs; author, permission, purpose and timing are unestablished."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "restore_intent",
+                  "reason": "The different setting proves the original operation failed. Restore it immediately without asking anyone."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "changed_settings:perfect",
+      "scenario": "changed_settings",
+      "arm": "perfect",
+      "packet": {
+        "case_id": "synthetic-changed_settings",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Was the later configuration change intentional?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Original requested configuration was verified at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "VERIFIED_MATCH",
+              "note": "The historical review did not assess a later change."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Fresh read differs from the saved original configuration."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "A later setting differs; author, permission, purpose and timing are unestablished."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "defer",
+                  "reason": "The original operation succeeded, but I cannot infer whether the later change was intended. Ask the responsible owner before any correction."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "changed_settings:random_incompetence",
+      "scenario": "changed_settings",
+      "arm": "random_incompetence",
+      "packet": {
+        "case_id": "synthetic-changed_settings",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Was the later configuration change intentional?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "VERIFIED_SUCCESS",
+              "action": "web-app.create",
+              "note": "Original requested configuration was verified at completion."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "YES/PASS",
+              "final": "VERIFIED_MATCH",
+              "note": "The historical review did not assess a later change."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "READ_CURRENT_TARGET",
+              "finding": "Fresh read differs from the saved original configuration."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": true,
+              "note": "A later setting differs; author, permission, purpose and timing are unestablished."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "request_evidence",
+                  "reason": "Maybe a check would make this go away."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "missing_receipt:worst_case",
+      "scenario": "missing_receipt",
+      "arm": "worst_case",
+      "packet": {
+        "case_id": "synthetic-missing_receipt",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Can the requested outcome be established?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "OUTCOME_UNKNOWN",
+              "action": "task.run-once",
+              "note": "A dispatch acknowledgement exists, but no verified effect receipt was found."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "NO/UNKNOWN",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "No verified effect or failure is established."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "No scoped effect receipt available in the selected evidence."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": null,
+              "note": "Fresh target read was unavailable."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "keep_current",
+                  "reason": "HTTP accepted the call, so the requested work definitely succeeded; mark it verified."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "missing_receipt:perfect",
+      "scenario": "missing_receipt",
+      "arm": "perfect",
+      "packet": {
+        "case_id": "synthetic-missing_receipt",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Can the requested outcome be established?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "OUTCOME_UNKNOWN",
+              "action": "task.run-once",
+              "note": "A dispatch acknowledgement exists, but no verified effect receipt was found."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "NO/UNKNOWN",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "No verified effect or failure is established."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "No scoped effect receipt available in the selected evidence."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": null,
+              "note": "Fresh target read was unavailable."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "request_evidence",
+                  "reason": "An acknowledgement is not an effect receipt. Seek a fresh scoped observation before deciding success or failure."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "missing_receipt:random_incompetence",
+      "scenario": "missing_receipt",
+      "arm": "random_incompetence",
+      "packet": {
+        "case_id": "synthetic-missing_receipt",
+        "revision": "0000000000000000000000000000000000000000000000000000000000000000",
+        "scope": "synthetic",
+        "question": "Can the requested outcome be established?",
+        "coverage": "Synthetic selected facts only; no real operation, owner or private history.",
+        "sources": [
+          {
+            "id": "receipt",
+            "label": "Saved operation receipt",
+            "value": {
+              "status": "OUTCOME_UNKNOWN",
+              "action": "task.run-once",
+              "note": "A dispatch acknowledgement exists, but no verified effect receipt was found."
+            }
+          },
+          {
+            "id": "review",
+            "label": "Recorded review",
+            "value": {
+              "initial": "NO/UNKNOWN",
+              "final": "HELD_FOR_EVIDENCE",
+              "note": "No verified effect or failure is established."
+            }
+          },
+          {
+            "id": "probes",
+            "label": "Evidence checks",
+            "value": {
+              "executed": "CHECK_EFFECT_RECEIPT",
+              "finding": "No scoped effect receipt available in the selected evidence."
+            }
+          },
+          {
+            "id": "configuration",
+            "label": "Current settings comparison",
+            "value": {
+              "changed": null,
+              "note": "Fresh target read was unavailable."
+            }
+          },
+          {
+            "id": "human",
+            "label": "Recorded human decision",
+            "value": {
+              "responses": [
+                {
+                  "choice": "defer",
+                  "reason": "Seems complicated; maybe later."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

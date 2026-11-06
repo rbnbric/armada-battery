@@ -10,6 +10,7 @@ XData UrlMap
 <Route Url="/cases" Method="GET" Call="List"/>
 <Route Url="/cases/:id" Method="GET" Call="Get"/>
 <Route Url="/cases/:id/explain" Method="POST" Call="Explain"/>
+<Route Url="/cases/:id/full-review" Method="POST" Call="FullReview"/>
 <Route Url="/cases" Method="POST" Call="Submit"/>
 </Routes>
 }
@@ -107,6 +108,69 @@ ClassMethod Explain(id As %String) As %Status
         If $Get(cacheKey)'="" { If $Get(^BatteryExplanation(id,cacheKey))="pending" { Set ^BatteryExplanation(id,cacheKey)="failed" } }
         Set ^BatteryExplanationErrors($INCREMENT(^BatteryExplanationErrors))=$SYSTEM.Status.GetErrorText(ex.AsStatus())
         Return ..Reply({"detail":"Explanation failed; structured brief remains available"},"503 Service Unavailable")
+    }
+}
+
+/// Explicit, bounded second look at one case trail. It cannot dispatch an operation.
+/// A successful result is cached by case, revision and attempt; a retry is explicit.
+ClassMethod FullReview(id As %String) As %Status
+{
+    Set locked=0
+    Try {
+        If %request.Content.Size>8192 { Return ..Reply({"detail":"Case review packet too large"},"413 Content Too Large") }
+        Try { Set body=##class(%DynamicObject).%FromJSON(%request.Content) }
+        Catch parseError { Return ..Reply({"detail":"Invalid full review request"},"400 Bad Request") }
+        If '$IsObject(body) { Return ..Reply({"detail":"Invalid full review request"},"400 Bad Request") }
+        If 'body.%IsA("%DynamicObject") { Return ..Reply({"detail":"Invalid full review request"},"400 Bad Request") }
+        Set revision=body.%Get("revision"),inputDigest=body.%Get("input_digest"),packet=body.%Get("packet"),operator=%request.GetCgiEnv("HTTP_X_BATTERY_OPERATOR")
+        If (body.%GetTypeOf("revision")'="string")||($LENGTH(revision)'=64)||(revision'?64AN) { Return ..Reply({"detail":"Invalid revision"},"400 Bad Request") }
+        If (body.%GetTypeOf("input_digest")'="string")||($LENGTH(inputDigest)'=64)||(inputDigest'?64AN) { Return ..Reply({"detail":"Invalid case review input digest"},"400 Bad Request") }
+        If '$IsObject(packet) { Return ..Reply({"detail":"Missing case review packet"},"400 Bad Request") }
+        If 'packet.%IsA("%DynamicObject") { Return ..Reply({"detail":"Invalid case review packet"},"400 Bad Request") }
+        If (packet.%Get("case_id")'=id)||(packet.%Get("revision")'=revision) { Return ..Reply({"detail":"Case review binding mismatch"},"409 Conflict") }
+        Set r=##class(Battery.Interop.CaseRecord).%OpenId(id)
+        If '$IsObject(r) { Return ..Reply({"detail":"Case not found"},"404 Not Found") }
+        If (r.Owner'=$USERNAME)||(operator="")||(r.Operator'=operator) { Return ..Reply({"detail":"Case not found"},"404 Not Found") }
+        If ##class(Battery.Interop.CaseRecord).Active(r.State) { Return ..Reply({"detail":"Review still active"},"409 Conflict") }
+        Set attempt=body.%Get("attempt",1)
+        If (attempt'=1)&&(attempt'=2) { Return ..Reply({"detail":"Invalid full review attempt"},"400 Bad Request") }
+        Set cacheKey=inputDigest_$SELECT(attempt=1:"",1:"-retry")
+        Set sc=##class(Ens.Director).GetProductionStatus(.productionName,.productionState)
+        If $$$ISERR(sc)||(productionState'=$$$eProductionStateRunning) { Return ..Reply({"detail":"Native production is not running"},"503 Service Unavailable") }
+        Set raw=packet.%ToJSON()
+        If $LENGTH(raw)>6144 { Return ..Reply({"detail":"Case review input budget exceeded"},"413 Content Too Large") }
+        Lock +^BatteryFullReviewService:2
+        If '$TEST { Return ..Reply({"detail":"Full review service busy"},"409 Conflict") }
+        Set locked=1
+        If $DATA(^BatteryFullReview(id,cacheKey)) {
+            Set cached=^BatteryFullReview(id,cacheKey)
+            Lock -^BatteryFullReviewService Set locked=0
+            If cached="pending" { Return ..Reply({"detail":"Prior full review attempt is unconfirmed"},"409 Conflict") }
+            If cached="failed" { Return ..Reply({"detail":"Prior full review failed; inspect the saved case"},"503 Service Unavailable") }
+            Return ..Reply(##class(%DynamicObject).%FromJSON(cached))
+        }
+        Set day=+$HOROLOG
+        If ($Get(^BatteryFullReviewBudget(day,"all"),0)>=20)||($Get(^BatteryFullReviewBudget(day,$USERNAME,operator),0)>=3) {
+            Lock -^BatteryFullReviewService Set locked=0
+            Return ..Reply({"detail":"Full review daily budget exhausted"},"429 Too Many Requests")
+        }
+        Set ^BatteryFullReview(id,cacheKey)="pending"
+        Set n=$INCREMENT(^BatteryFullReviewBudget(day,"all")),n=$INCREMENT(^BatteryFullReviewBudget(day,$USERNAME,operator))
+        Lock -^BatteryFullReviewService Set locked=0
+        Set sc=##class(Ens.Director).CreateBusinessService("Battery.Intake",.service)
+        If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
+        Set request=##class(Battery.Interop.AgentRequest).%New(),request.Role="full_case_review",request.CaseJSON=raw
+        Set sc=service.Explain(request,.answer)
+        If $$$ISERR(sc) { Throw ##class(%Exception.StatusException).CreateFromStatus(sc) }
+        If '$IsObject(answer) { Throw ##class(%Exception.General).%New("No full review response") }
+        Set out={"content":(answer.Content),"usage":(answer.UsageJSON),"response_id":(answer.%Id())}
+        Set ^BatteryFullReview(id,cacheKey)=out.%ToJSON()
+        Return ..Reply(out)
+    } Catch ex {
+        If locked { Lock -^BatteryFullReviewService }
+        If $Get(cacheKey)'="" { If $Get(^BatteryFullReview(id,cacheKey))="pending" { Set ^BatteryFullReview(id,cacheKey)="failed" } }
+        Set ^BatteryFullReviewErrors($INCREMENT(^BatteryFullReviewErrors))=$SYSTEM.Status.GetErrorText(ex.AsStatus())
+        Return ..Reply({"detail":"Full case review failed; saved evidence remains available"},"503 Service Unavailable")
     }
 }
 

@@ -93,3 +93,69 @@ python interop/tests/verify-decision-brief.py
 The installed verification script requires an existing completed synthetic case
 and configured native service. It explicitly requests an explanation (or returns
 its cached result) and exercises rejection paths; it submits no business action.
+
+## Bounded full case review — 2026-11-06
+
+Agent Cases now offers **Review full case with AI Hub** after the receipt,
+investigation trail and current-setting comparison. It is explicit and optional.
+The input contains at most 6,144 bytes of selected records, the allowed exits,
+first/latest review rounds and recent human responses. Omitted counts are stated;
+raw model transcripts and unrelated cases are excluded. The native agent has a
+2,200 output-token ceiling. The response rates the recorded choice and its reason
+separately, explains what happened and what remains unknown, and cites the exact
+source records. It cannot authorize or repeat a business action. A full review
+is cached against the exact input digest, so a new human response cannot inherit
+an older AI assessment. One failed response permits one explicit retry; an
+unconfirmed response is not automatically replayed. Native admission is limited
+to 3 attempts per operator and 20 per service per day.
+
+### Adversarial native-model comparison
+
+A seeded draw (`1106`) selected three of four authored synthetic cases. For each,
+the agent saw identical operation evidence with three different human exits in
+this order: **worst case, perfect control, random incompetence**. The arm labels
+were absent from its input. The fourth, lost-reply case was held out until after
+prompt refinement. These fixtures test the agent's reading of a person’s choice
+and explanation; they are not evidence that the business operation ran.
+
+| Pass | Contract result | Finding |
+| --- | ---: | --- |
+| First, 850-token output cap | 7/9 | Two truncated JSON responses; the agent often repeated bad reasons without challenging them. |
+| Separate choice/reason ratings | 5/9 against the app contract | Four answers failed to cite the human record they graded. |
+| Citation instruction, 1,600-token cap | 8/9 | One response still truncated. |
+| Shorter prose, 2,200-token cap | 9/9 | One unsupported choice and one vacuous reason were incorrectly endorsed. |
+| Allowed-exit packet and final prompt | 9/9 | All three control pairs rated supported; all six flawed reasons rated unsupported or contradicted. Worst-case choices were contradicted, unsupported, or uncertain; the random choices were judged independently from their reasons. |
+| Held-out lost-reply case | 3/3 | Bad repeat and vague exit rejected; receipt-based no-repeat control supported. |
+
+The final result is a pass **on these authored cases only**. Earlier misses remain
+in the record. Structural validation checks citations, schema and length; it
+cannot prove that an agent's assessment is correct. The page labels these ratings
+as an AI interpretation and keeps the saved receipt and official case result
+visibly separate.
+
+[Final scored run](../interop/results/human-exits-109.json) ·
+[held-out run](../interop/results/human-exits-109-holdout.json) ·
+[frozen packets](../interop/results/human-exits-109-packets.json) ·
+[native output](../interop/results/human-exits-109.log). Earlier logs and scored
+reports are retained beside them with `first`, `second`, `third` and `fourth`
+suffixes.
+
+### Installed check and remaining limit
+
+The installed build-109 test passed 9/9 checks on an existing synthetic case:
+operator sign-in, case/brief access, a native validated full review, no invented
+human choice, citations, cached repeat, unchanged case result, and unchanged
+operation receipts. The first installed attempt before the input-digest repair
+failed its response contract; an explicit retry succeeded. After the repair,
+a new packet produced a fresh native answer on its first attempt.
+[Installed report](../interop/results/full-review-installed-109.json) and
+[earlier report](../interop/results/full-review-installed-109-before-cache.json)
+retain both outcomes. The UI browser fixture test has been updated for the new
+button and citations, but Playwright was unavailable in this execution environment;
+that browser run remains outstanding. Local Python and Node suites passed.
+
+To reproduce the seeded trial, run `python interop/tests/human_exit_eval.py DIR`,
+execute `DIR/run.script` through the running IRIS AI Hub production, save output as
+`DIR/run.log`, then run the same command with `--score`. Use `--holdout` on a
+separate directory to prepare the fourth scenario. The scorer applies the same
+response validator used by the application.

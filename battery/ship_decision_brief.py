@@ -103,3 +103,82 @@ def validate_explanation(value, brief):
         raise ValueError("Explainer cited unsupported evidence")
     # Contract validity is not semantic proof: prose stays attributed as model interpretation.
     return value
+
+
+def _short(value, limit=320):
+    text = str(value if value is not None else "")
+    return text if len(text) <= limit else text[:limit] + "… [truncated]"
+
+
+def _bookends(rows, limit=4):
+    if not isinstance(rows, list):
+        return [], 0
+    if len(rows) <= limit:
+        return rows, 0
+    return rows[:1] + rows[-(limit - 1):], len(rows) - limit
+
+
+def full_case_review_input(case, receipt):
+    """Build a bounded, cited case trail; never send raw model transcripts."""
+    result, brief = case.get("result") or {}, case["brief"]
+    reviews, reviews_omitted = _bookends(result.get("ReviewHistoryJSON"))
+    probes, probes_omitted = _bookends(result.get("ProbeHistoryJSON"))
+    decisions, decisions_omitted = _bookends(case.get("decisions"))
+    sources = [
+        {"id": "receipt", "label": "Saved operation receipt", "value": {
+            "id": receipt.get("id"), "target": receipt.get("target"), "action": receipt.get("action_id"),
+            "status": receipt.get("status"), "explanation": _short(receipt.get("explanation")),
+            "finished_at": receipt.get("finished_at")}},
+        {"id": "review", "label": "Recorded review", "value": {
+            "state": case.get("state"), "assertion": result.get("assertion"), "output": result.get("output"),
+            "reason": _short(result.get("explanation")), "proof": {
+                key: _short((result.get("ProofJSON") or {}).get(key), 160)
+                for key in ("verdict", "output", "reason")},
+            "rounds": [{key: _short(row.get(key), 240) for key in ("state", "verdict", "output", "applicability", "probe", "explanation")}
+                       for row in reviews if isinstance(row, dict)],
+            "rounds_omitted": reviews_omitted}},
+        {"id": "probes", "label": "Evidence checks", "value": {
+            "proposed": result.get("proposed_probe"), "executed": result.get("executed_probe"),
+            "reads": [{key: _short(row.get(key), 180) for key in ("phase", "found", "reason")}
+                      for row in probes if isinstance(row, dict)], "reads_omitted": probes_omitted}},
+        {"id": "configuration", "label": "Current settings comparison", "value": {
+            "comparison": next((f.get("value") for f in brief["facts"] if f.get("id") == "configuration"), {}),
+            "differences": [{"field": _short(d.get("field"), 80), "retained": _short(d.get("retained"), 160), "current": _short(d.get("current"), 160)}
+                            for d in brief.get("differences", [])[:4]],
+            "differences_omitted": brief.get("differences_omitted", 0) + max(0, len(brief.get("differences", [])) - 4)}},
+    ]
+    if decisions:
+        sources.append({"id": "human", "label": "Recorded human decisions", "value": {
+            "responses": [{"choice": d.get("choice"), "reason": _short(d.get("reason"), 300), "recorded_at": d.get("recorded_at"), "revision": d.get("revision")}
+                          for d in decisions if isinstance(d, dict)],
+            "responses_omitted": case.get("decisions_omitted", 0) + decisions_omitted}})
+    packet = sanitize({"case_id": case["id"], "revision": brief["revision"], "scope": brief["scope"],
+                       "parent_id": case.get("parent_id"), "successor_id": brief.get("successor"),
+                       "question": brief["question"], "allowed_choices": [{"id": c["id"], "label": _short(c.get("label"), 100), "consequence": _short(c.get("consequence"), 180)} for c in brief.get("choices", [])], "sources": sources,
+                       "coverage": "Selected first/latest review rounds, evidence checks, saved receipt, current comparison and latest human responses. Counts report omitted records. No raw model transcripts, unrelated cases, or hidden reasoning."})
+    if len(json.dumps(packet, sort_keys=True, separators=(",", ":")).encode()) > 6144:
+        raise ValueError("Case exceeds the bounded AI review input budget")
+    return packet
+
+
+def validate_full_case_review(value, packet):
+    required = {"what_happened", "where_judgment_changed", "human_path", "unresolved", "human_choice_assessment", "human_reason_assessment", "evidence_ids"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError("Full case review returned an invalid response structure")
+    for key in required - {"evidence_ids", "human_choice_assessment", "human_reason_assessment"}:
+        if not isinstance(value[key], str) or not value[key].strip() or len(value[key]) > 320:
+            raise ValueError("Full case review returned an invalid text field")
+    for key in ("human_choice_assessment", "human_reason_assessment"):
+        if not isinstance(value[key], str) or value[key] not in {"SUPPORTED", "UNSUPPORTED", "CONTRADICTED", "UNCERTAIN", "NO_DECISION"}:
+            raise ValueError("Full case review returned an invalid human assessment")
+    ids = value["evidence_ids"]
+    allowed = {source["id"] for source in packet["sources"]}
+    if not isinstance(ids, list) or not ids or any(not isinstance(x, str) for x in ids) or len(ids) != len(set(ids)) or not set(ids) <= allowed:
+        raise ValueError("Full case review cited unsupported evidence")
+    has_human = "human" in allowed
+    grades = (value["human_choice_assessment"], value["human_reason_assessment"])
+    if has_human and ("NO_DECISION" in grades or "human" not in ids or len(ids) < 2):
+        raise ValueError("Full case review did not ground the human assessment")
+    if not has_human and grades != ("NO_DECISION", "NO_DECISION"):
+        raise ValueError("Full case review invented a human decision")
+    return value
