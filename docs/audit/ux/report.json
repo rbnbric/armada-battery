@@ -30,6 +30,14 @@
       "passed": true
     },
     {
+      "name": "320: status, record, evidence, decision order",
+      "passed": true
+    },
+    {
+      "name": "320: original operation and current settings distinguished",
+      "passed": true
+    },
+    {
       "name": "320: choices not preselected",
       "passed": true
     },
@@ -159,6 +167,14 @@
     },
     {
       "name": "360: receipt and story reading order",
+      "passed": true
+    },
+    {
+      "name": "360: status, record, evidence, decision order",
+      "passed": true
+    },
+    {
+      "name": "360: original operation and current settings distinguished",
       "passed": true
     },
     {
@@ -298,6 +314,14 @@
       "passed": true
     },
     {
+      "name": "390: status, record, evidence, decision order",
+      "passed": true
+    },
+    {
+      "name": "390: original operation and current settings distinguished",
+      "passed": true
+    },
+    {
       "name": "390: choices not preselected",
       "passed": true
     },
@@ -430,6 +454,14 @@
       "passed": true
     },
     {
+      "name": "768: status, record, evidence, decision order",
+      "passed": true
+    },
+    {
+      "name": "768: original operation and current settings distinguished",
+      "passed": true
+    },
+    {
       "name": "768: choices not preselected",
       "passed": true
     },
@@ -559,6 +591,14 @@
     },
     {
       "name": "1440: receipt and story reading order",
+      "passed": true
+    },
+    {
+      "name": "1440: status, record, evidence, decision order",
+      "passed": true
+    },
+    {
+      "name": "1440: original operation and current settings distinguished",
       "passed": true
     },
     {
@@ -884,6 +924,18 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 196.578125,
           "h": 44
         },
@@ -926,8 +978,8 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 255.625,
-          "h": 58
+          "w": 273.609375,
+          "h": 44
         },
         {
           "tag": "INPUT",
@@ -980,11 +1032,7 @@
       ],
       "fonts": [
         "16.8px",
-        "16px",
-        "16px",
-        "16px",
-        "15.2px",
-        "15.2px"
+        "14px"
       ],
       "contrast": {
         "text": 14.990117593342424,
@@ -1030,6 +1078,18 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 196.578125,
           "h": 44
         },
@@ -1126,11 +1186,7 @@
       ],
       "fonts": [
         "16.8px",
-        "16px",
-        "16px",
-        "16px",
-        "15.2px",
-        "15.2px"
+        "14px"
       ],
       "contrast": {
         "text": 14.990117593342424,
@@ -1176,6 +1232,18 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 196.578125,
           "h": 44
         },
@@ -1272,11 +1340,7 @@
       ],
       "fonts": [
         "16.8px",
-        "16px",
-        "16px",
-        "16px",
-        "15.2px",
-        "15.2px"
+        "14px"
       ],
       "contrast": {
         "text": 14.990117593342424,
@@ -1322,6 +1386,18 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 196.578125,
           "h": 44
         },
@@ -1394,7 +1470,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 671.9375,
+          "w": 673.875,
           "h": 101.15625
         },
         {
@@ -1418,11 +1494,7 @@
       ],
       "fonts": [
         "16.8px",
-        "16px",
-        "16px",
-        "16px",
-        "15.2px",
-        "15.2px"
+        "14px"
       ],
       "contrast": {
         "text": 14.990117593342424,
@@ -1534,6 +1606,18 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 196.578125,
           "h": 44
         },
@@ -1606,7 +1690,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 613.375,
+          "w": 1047.625,
           "h": 101.15625
         },
         {
@@ -1630,11 +1714,7 @@
       ],
       "fonts": [
         "16.8px",
-        "16px",
-        "16px",
-        "16px",
-        "15.2px",
-        "15.2px"
+        "14px"
       ],
       "contrast": {
         "text": 14.990117593342424,
@@ -1647,8 +1727,8 @@
   "browser_errors": [],
   "source_sha256": {
     "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "0350cd6e2775006925e7fac57e4350fc0dd2fcc72dca2333a901687e4d435443",
-    "static/app.css": "274fab7ff9f2a70e6122392f76833eb94cb177468dc2effcdc8d7e3fabd328e7",
+    "static/app.js": "fd868abfa3b77b79aea8ef8b855b762738d9d70b0423def5398c19bde19dfe65",
+    "static/app.css": "1f09cb8dcf4b97048228770ea18ac35c6eb8e8be850fda719069026719db4067",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"

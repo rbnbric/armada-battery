@@ -166,3 +166,42 @@ verification report was recovered from the Work folder without replaying the
 command. It reports all 15 HTTP checks passed, and all five recorded hashes match
 the current tested source and public checkout. No native production restart or
 model inference was requested.
+
+## Case reading order and visual refinement — 2026-11-06
+
+The case now starts with the question, a one-sentence explanation, and three
+separate, sourced states: the original operation, the agent review, and the
+current settings. This keeps a verified original receipt distinct from a later
+configuration difference. The receipt and the plain-language progression appear
+side by side on desktop and stack on phones. The evidence comparison follows
+them, then the human decision. Detailed records remain behind named source
+links and disclosures. The visible evidence summary translates status codes
+into ordinary words; the original fields remain inspectable.
+
+For visual research, Courier's proxy browser reached Dribbble's AWS WAF
+challenge (HTTP 202). Through the same proxy, indexed Dribbble image results
+for incident and audit dashboards were visible. Those examples suggested a
+legible case headline and an audit detail rhythm. The Battery layout, step
+markers, typography, colors and interaction order were built for this workflow;
+no shot or asset was copied. The Battery logo remains in the application header.
+
+The final synthetic-fixture Chromium pass recorded **221/221 checks** with no
+browser exceptions, including 320, 360, 390, 768 and 1440px layouts, citation
+destinations, status distinctions, evidence-before-decision reading order,
+keyboard focus, reflow, draft persistence, response loss and stale-review
+handling. The 13 UI handler tests and 126 Python tests passed. The installed
+Windows Docker service then passed **15/15 read-only checks**. Served JavaScript
+and CSS hashes match this source exactly. This pass did not request inference
+or repeat an operation.
+
+[Final browser report](audit/ux/report.json) ·
+[Installed check](audit/ux/installed.json) ·
+[Phone decision](audit/ux/decision-390.png) ·
+[Desktop decision](audit/ux/decision-1440.png) ·
+[Phone completed case](audit/ux/complete-390.png) ·
+[Desktop completed case](audit/ux/complete-1440.png).
+
+An owner comprehension test remains: open the retained case on phone, say what
+the original operation did, whether the current settings match it, and what
+you would do next. The machine checks cannot establish whether that explanation
+is understandable without prompting.

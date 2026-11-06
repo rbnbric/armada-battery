@@ -1390,19 +1390,29 @@ function renderDecisionBrief(c) {
     factViews.set(fact.id, item); evidence.append(item);
   }
   evidence.append(node("p", `Configuration read: ${b.read_at}. ${b.history_note}`));
-  const box = section(b.question, node("p", b.summary));
+  const box = section(b.choices.length ? "Your decision" : "Review follow-up");
+  const context = section("Evidence at a glance");
+  context.className += " brief-context";
   const sources = node("div", undefined, "brief-sources");
   for (const fact of b.facts) sources.append(sourceNote(fact.label, factViews.get(fact.id), briefSourceContext(fact, b)));
-  box.append(sources);
   box.className += " decision-brief";
   box.dataset.kind = b.kind;
-  box.prepend(node("p", b.choices.length ? "Your next decision" : "Current task", "eyebrow"));
-  box.append(node("p", `${b.scope === "synthetic" ? "Simulated operation" : "IRIS operation"} · Decision owner: ${b.owner}`));
-  box.append(node("p", b.next_step, "decision-next"));
+  box.prepend(node("p", b.choices.length ? "Decision needed" : "Review outcome", "eyebrow"));
+  box.append(node("p", `${b.scope === "synthetic" ? "Simulated operation" : "IRIS operation"} · Decision owner: ${b.owner}`, "brief-meta"));
+  const comparison = b.facts.find(f => f.id === "configuration")?.value || {};
+  const evidenceSummary = node("div", undefined, "brief-evidence-summary");
+  evidenceSummary.append(fields({
+    "Review state": caseLabel(c.state),
+    "Measured output": ({PASS:"Passed", FAIL:"Failed", UNKNOWN:"Unknown"})[c.result?.output] || "Not recorded",
+    "Executed check": ({CHECK_EFFECT_RECEIPT:"Saved receipt checked", READ_CURRENT_TARGET:"Current settings read"})[c.result?.executed_probe] || "No separate check recorded",
+    "Current settings": comparison.read_error ? "Read unavailable" : comparison.changed === true ? "Different from saved request" : comparison.changed === false ? "Match saved request" : "Not compared",
+    "Configuration read": sourceTime(b.read_at),
+  }));
+  context.append(evidenceSummary, sources);
   if (b.successor) box.append(button("Open newer review", () => openCase(b.successor)));
-  if (b.differences.length) box.append(table(["What changed", "Retained with receipt", "Current value"], b.differences.map(d => [d.field, JSON.stringify(d.retained), JSON.stringify(d.current)])));
-  if (b.differences_omitted) box.append(node("p", `${b.differences_omitted} additional changed fields omitted. Inspect the target before deciding.`));
-  for (const unknown of b.unknowns) box.append(node("p", unknown, "brief-limit"));
+  if (b.differences.length) context.append(table(["What changed", "Retained with receipt", "Current value"], b.differences.map(d => [d.field, JSON.stringify(d.retained), JSON.stringify(d.current)])));
+  if (b.differences_omitted) context.append(node("p", `${b.differences_omitted} additional changed fields omitted. Inspect the target before deciding.`));
+  for (const unknown of b.unknowns) context.append(node("p", unknown, "brief-limit"));
   const help = node("details"); help.append(node("summary", "More explanation"), evidence);
   if (c.explanation?.status === "ready") {
     const e = c.explanation.content;
@@ -1490,7 +1500,7 @@ function renderDecisionBrief(c) {
       } catch (error) { if (epoch === sessionEpoch) announce(error.message, true); }
     }));
   }
-  return box;
+  return {box, context};
 }
 
 function targetName(target) {
@@ -1533,9 +1543,10 @@ function renderCaseReceipt(c) {
 function renderCaseStory(c) {
   const r = c.result || {}, story = section("What happened"); story.className += " review-story";
   const steps = node("ol", undefined, "case-story");
-  const add = (title, text, label, record) => {
+  const add = (title, text, label, record, summary) => {
     const step = node("li"); step.append(node("h3", title), node("p", text));
-    const supporting = details(label, record);
+    const supporting = node("details");
+    supporting.append(node("summary", label), fields(summary), details("Complete source record (JSON)", record));
     const sourceLabels = {"Earlier review details":"Review history", "Evidence check details":"Evidence check record", "Review conclusion details":"Recorded review result"};
     supporting.id = `story-source-${steps.children.length}`;
     step.append(sourceNote(sourceLabels[label], supporting, `Review updated ${c.updated_at || "at an unrecorded time"}${c.updated_at ? " (IRIS time)" : ""}`), supporting);
@@ -1548,11 +1559,39 @@ function renderCaseStory(c) {
     assessment = first.verdict === "NO" ? "The first review did not support the rule’s assertion." : first.verdict === "YES" ? "The first review supported the rule’s assertion." : "The first review left the rule’s assertion unresolved.";
     assessment += first.output === "PASS" ? " It reported that the result passed." : first.output === "FAIL" ? " It reported that the result failed." : " It could not establish whether the result passed.";
   }
-  add("The initial review", assessment, "Earlier review details", {case_id:c.id, initial_assessment:first || null, review_history:history});
+  add("The initial review", assessment, "Earlier review details", {case_id:c.id, initial_assessment:first || null, review_history:history}, {Verdict:first?.verdict, Output:first?.output, "Proposed check":first?.probe || first?.proposed_probe});
   const probe = ({CHECK_EFFECT_RECEIPT:"Battery checked the saved receipt for this operation.", READ_CURRENT_TARGET:"Battery read the target’s current settings."})[r.executed_probe];
-  add("The evidence check", probe || (r.executed_probe ? "Battery recorded an additional evidence check." : "No separate investigation step is recorded here."), "Evidence check details", {case_id:c.id, executed_probe:r.executed_probe || null, evidence_reads:r.ProbeHistoryJSON || null});
-  add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {case_id:c.id, state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON});
+  add("The evidence check", probe || (r.executed_probe ? "Battery recorded an additional evidence check." : "No separate investigation step is recorded here."), "Evidence check details", {case_id:c.id, executed_probe:r.executed_probe || null, evidence_reads:r.ProbeHistoryJSON || null}, {"Executed probe":r.executed_probe, "Evidence reads":Array.isArray(r.ProbeHistoryJSON) ? r.ProbeHistoryJSON.length : undefined});
+  add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {case_id:c.id, state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON}, {"Case ID":c.id, State:c.state, Assertion:r.assertion, Output:r.output, "Proof verdict":r.ProofJSON?.verdict, "Proof reason":r.ProofJSON?.reason});
   story.append(steps); return story;
+}
+function renderCaseOverview(c, receipt, story, context) {
+  const b = c.brief;
+  const box = node("section", undefined, "case-overview");
+  box.append(node("p", c.source_scope === "synthetic" ? "Simulated case" : "IRIS case", "eyebrow"));
+  box.append(node("h2", b?.question || caseLabel(c.state)));
+  if (b) box.append(node("p", b.summary, "case-overview-summary"));
+  else if (c.recovery_reason) box.append(node("p", c.recovery_reason, "case-overview-summary"));
+  const rail = node("div", undefined, "case-outcome-rail");
+  const item = (label, value, sourceLabel, source, caption) => {
+    const cell = node("div", undefined, "case-outcome-cell");
+    cell.append(node("span", label, "case-outcome-label"), node("strong", value));
+    if (source) cell.append(sourceNote(sourceLabel, source, caption));
+    rail.append(cell);
+  };
+  const packet = state.nativeReceipt, operation = packet?.receipt;
+  const receiptMatches = operation?.id === c.receipt_id && operation?.target === c.target;
+  const operationText = !receiptMatches ? "Receipt unavailable" : ({VERIFIED_SUCCESS:"Verified result", VERIFIED_FAILURE:"Result failed", OUTCOME_UNKNOWN:"Outcome unknown", EXECUTED_UNVERIFIED:"Result unverified", BLOCKED_BEFORE_EXECUTION:"Blocked before execution", CANCELLED:"Cancelled"})[operation.status] || "Inspect receipt";
+  item("Original operation", operationText, "Operation record", receipt.querySelector?.("#receipt-source"), receiptMatches ? `Receipt ${c.receipt_id}` : "Receipt could not be verified");
+  item("Agent review", caseLabel(c.state), "Review record", story.querySelector?.("#story-source-2"), c.updated_at ? `Updated ${c.updated_at} (IRIS time)` : "Review time not recorded");
+  if (b) {
+    const comparison = b.facts.find(f => f.id === "configuration")?.value;
+    const currentText = !comparison ? "Not compared" : comparison.read_error ? "Read unavailable" : comparison.changed === true ? "Different now" : comparison.changed === false ? "Matches saved request" : "Not compared";
+    item("Current settings", currentText, "Current settings read", context.querySelector?.("#decision-fact-configuration"), `Compared ${sourceTime(b.read_at)}`);
+  }
+  box.append(rail);
+  if (b?.next_step) box.append(node("p", b.next_step, "case-next-step"));
+  return box;
 }
 function renderNativeCases(root) {
   const toolbar = node("div", undefined, "case-toolbar");
@@ -1593,13 +1632,16 @@ function renderNativeCases(root) {
   if (!c) { root.append(empty(state.nativeError ? "This case could not be opened. Return to cases or refresh." : "Loading the selected case…")); return; }
   root.append(node("p", targetName(c.target), "case-target"));
   const r = c.result || {};
+  const brief = c.brief ? renderDecisionBrief(c) : null;
   const layout = node("div", undefined, "receipt-review");
-  layout.append(renderCaseReceipt(c));
+  const receipt = renderCaseReceipt(c), story = renderCaseStory(c);
+  layout.append(receipt);
   const explanation = node("div", undefined, "review-explanation");
-  explanation.append(renderCaseStory(c));
-  if (c.brief) explanation.append(renderDecisionBrief(c));
-  else explanation.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
-  layout.append(explanation); root.append(layout);
+  explanation.append(story);
+  layout.append(explanation);
+  root.append(renderCaseOverview(c, receipt, story, brief?.context), layout);
+  if (brief) root.append(brief.context, brief.box);
+  else root.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
   const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));

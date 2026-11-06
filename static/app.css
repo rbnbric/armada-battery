@@ -732,7 +732,7 @@ nav p { font-size: .875rem; letter-spacing: .02em; color: var(--brand); }
 nav button { padding: .7rem .85rem; border-radius: 8px; }
 nav button span { font-size: .875rem; font-weight: 400; }
 nav [aria-current=page] { border-left: 3px solid var(--brand); background: #30382d; color: #fff4d9; }
-main { max-width: 1480px; padding: clamp(1.25rem,3vw,3rem); }
+main { max-width: 1800px; padding: clamp(1.25rem,3vw,3rem); }
 .page-heading { gap: 1rem; margin-bottom: 1.75rem; }
 .page-heading > span { max-width: 32ch; font-size: .875rem; color: var(--text-2); }
 .fields, table, .quiet, .empty, small { font-size: .875rem; }
@@ -829,7 +829,7 @@ pre { font-size: .875rem; line-height: 1.6; max-height: 32rem; overflow: auto; b
 input, select, textarea, .decision-brief textarea, .decision-option { border-color: var(--control-border); }
 
 /* Read the operation record, follow its review, then decide what comes next. */
-.receipt-review { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 1.5rem; align-items: start; }
+.receipt-review { display: grid; grid-template-columns: minmax(18rem, .8fr) minmax(0, 1.2fr); gap: 1.5rem; align-items: start; }
 .receipt-review > *, .review-explanation { min-width: 0; }
 .case-receipt, .review-story { margin: 0 0 1.25rem; padding: 1.5rem; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); overflow-wrap: anywhere; }
 .case-receipt { border-top: 3px solid var(--verify); }
@@ -841,6 +841,20 @@ input, select, textarea, .decision-brief textarea, .decision-option { border-col
 .case-receipt .fields dd { margin-bottom: .7rem; }
 .case-story { margin: 0; }
 .case-story p { margin: .4rem 0; }
+.case-story .fields { margin: .25rem 0 .75rem; grid-template-columns: minmax(8rem, .35fr) minmax(0, 1fr); }
+.case-story .fields dt { color: var(--text-2); }
+.case-story .fields dd { margin-bottom: .55rem; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; }
+.case-story details details { margin: .5rem 0 0; }
+.case-story details details summary { color: var(--text-2); font-size: .875rem; }
+.case-story details details pre { max-height: 20rem; }
+.brief-meta { color: var(--text-2); font-size: .875rem; }
+.brief-evidence-summary { padding: 1rem 1.2rem; margin: 1rem 0; background: var(--raised); border: 1px solid var(--rule); border-radius: 10px; }
+.brief-evidence-summary h3 { margin: 0 0 .8rem; font-size: 1rem; }
+.brief-evidence-summary .fields { grid-template-columns: minmax(10rem, .35fr) minmax(0, 1fr); max-width: 50rem; gap: .35rem 1rem; }
+.brief-evidence-summary .fields dt { color: var(--text-2); }
+.brief-evidence-summary .fields dd { margin: 0 0 .5rem; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: .85rem; overflow-wrap: anywhere; }
+.brief-sources { display: flex; gap: .25rem 1rem; flex-wrap: wrap; }
+.brief-sources .source-note { margin: 0; }
 .review-explanation .decision-brief { padding: 1.5rem; }
 .receipt-review pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 900px) {
@@ -848,6 +862,8 @@ input, select, textarea, .decision-brief textarea, .decision-option { border-col
 }
 @media (max-width: 600px) {
   .case-receipt, .review-story, .review-explanation .decision-brief { padding: 1.1rem; }
+  .case-story .fields { grid-template-columns: minmax(0, 1fr); }
+  .brief-evidence-summary .fields { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Evidence references read like captions; their controls open the cited record. */
@@ -857,3 +873,52 @@ input, select, textarea, .decision-brief textarea, .decision-option { border-col
 .decision-brief .source-link { width: auto; }
 .brief-sources { margin: .75rem 0 1rem; }
 .source-note .source-link:hover { background: var(--raised); }
+
+/* A case reads as one account: outcome, receipt, explanation, then decision. */
+.case-overview { margin: .25rem 0 1.5rem; padding: 0 0 1.5rem; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.case-overview > .eyebrow { margin: 0 0 .35rem; }
+.case-overview h2 { margin: 0 0 .65rem; max-width: 36ch; font-size: clamp(1.65rem, 3vw, 2.5rem); line-height: 1.14; }
+.case-overview-summary { margin: 0; max-width: 64ch; font-size: clamp(1.05rem, 1.35vw, 1.2rem); line-height: 1.55; }
+.case-outcome-rail { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); margin: 1.5rem 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.case-outcome-cell { min-width: 0; padding: 1rem 1.25rem 1rem 0; }
+.case-outcome-cell + .case-outcome-cell { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+.case-outcome-label { display: block; color: var(--text-2); font-size: .875rem; }
+.case-outcome-cell strong { display: block; margin: .2rem 0 0; font-size: 1.08rem; font-weight: 650; line-height: 1.35; }
+.case-outcome-cell .source-note { margin: .25rem 0 0; }
+.case-outcome-cell .source-context { font-size: .8rem; }
+.case-next-step { max-width: 72ch; margin: 1.25rem 0 0; padding: .7rem 0 .7rem 1rem; border-left: 3px solid var(--brand); font-weight: 550; }
+.receipt-review { grid-template-columns: minmax(18rem, .9fr) minmax(0, 1.1fr); gap: 1rem; }
+.case-receipt, .review-story, .brief-context { border-radius: 10px; }
+.case-receipt { border-top-color: var(--brand); }
+.review-story { border-top: 3px solid var(--verify); }
+.case-story { list-style: none; counter-reset: case-step; padding: 0; max-width: none; }
+.case-story li { position: relative; counter-increment: case-step; padding: .2rem 0 1.15rem 3rem; margin-left: .8rem; border-left: 1px solid var(--rule); }
+.case-story li:last-child { border-left-color: transparent; padding-bottom: .15rem; }
+.case-story li::before { content: counter(case-step, decimal-leading-zero); position: absolute; left: -1rem; top: .15rem; width: 2rem; height: 2rem; display: grid; place-items: center; border: 1px solid var(--rule); border-radius: 50%; background: var(--surface); color: var(--brand); font-size: .75rem; font-weight: 700; }
+.case-story h3 { margin: .1rem 0 .4rem; }
+.case-story .fields dd, .brief-evidence-summary .fields dd { font-family: inherit; font-size: .95rem; }
+.brief-context { margin: 0 0 1.25rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: transparent; overflow-wrap: anywhere; }
+.brief-context h2 { margin: 0; font-size: 1.25rem; }
+.brief-evidence-summary { margin: .9rem 0 .5rem; padding: 0; background: none; border: 0; }
+.brief-evidence-summary .fields { max-width: 68rem; }
+.brief-context .brief-sources { border-top: 1px solid var(--rule); padding-top: .5rem; }
+.brief-context table { width: 100%; }
+.decision-brief { margin-top: .25rem; }
+.decision-brief > .eyebrow { color: var(--brand); }
+.decision-form { border-top: 0; padding-top: 0; }
+@media (max-width: 900px) {
+  .receipt-review { grid-template-columns: minmax(0,1fr); gap: 0; }
+}
+@media (max-width: 600px) {
+  .case-overview { margin-top: 0; }
+  .case-overview h2 { font-size: 1.75rem; }
+  .case-outcome-rail { grid-template-columns: minmax(0,1fr); }
+  .case-outcome-cell, .case-outcome-cell + .case-outcome-cell { padding: .65rem 0; border-left: 0; }
+  .case-outcome-cell + .case-outcome-cell { border-top: 1px solid var(--rule); }
+  .case-outcome-cell .source-note { margin: 0; }
+  .case-outcome-cell .source-context { display: inline; margin-left: .4rem; }
+  .case-receipt, .review-story { padding: 1rem; }
+  .brief-context { padding: 1.1rem 0; }
+  .case-story li { padding-left: 2rem; margin-left: .6rem; }
+  .case-story li::before { left: -.85rem; width: 1.7rem; height: 1.7rem; }
+}
