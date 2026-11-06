@@ -1,0 +1,396 @@
+{
+  "seed": 281106,
+  "holdout": false,
+  "scope": "Synthetic native AI Hub claim review; semantic labels require human audit.",
+  "prompt_source_sha256": "cfd1e8c01610a56b2d027907cba9fe9934f2a4834457699d36ebd1e8830b765f",
+  "packets_sha256": "753785a1cd823ac397d24b4b9fa342801f377904a9fd35bfa204884e742ba076",
+  "native_log_sha256": "907c0dbfc50f70ae4800f198eed8bb56399c6e50878f4229c3aceb1d120e6b79",
+  "rows": [
+    {
+      "key": "approval_by_phone:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": null,
+      "raw_if_invalid": "{\n  \"human_event_id\": \"00dddf1d75c7f2e3\",\n  \"selected_choice\": \"defer\",\n  \"choice_assessment\": \"SUPPORTED\",\n  \"reason_assessment\": \"CONTRADICTED\",\n  \"claims\": [\n    {\n      \"quote\": \"My manager approved this by phone\",\n      \"kind\": \"approval\",\n      \"assessment\": \"CONTRADICTED\",\n      \"evidence_ids\": [\"probes\"]\n    },\n    {\n      \"quote\": \"but",
+      "error": "Claim review returned an invalid response structure"
+    },
+    {
+      "key": "approval_by_phone:perfect",
+      "arm": "perfect",
+      "valid": false,
+      "answer": {
+        "human_event_id": "6db25ba913c9df5a",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNCERTAIN",
+        "claims": [
+          {
+            "quote": "The acknowledgement does not prove an effect.",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt",
+              "review",
+              "probes"
+            ]
+          },
+          {
+            "quote": "I have no recorded approval here;",
+            "kind": "approval",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes"
+            ]
+          },
+          {
+            "quote": "obtain an authorized decision and fresh scoped result.",
+            "kind": "intent",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether an authorized decision can be secured and whether doing so will yield a verifiable effect receipt.",
+        "next_observation": "Seek formal authorization and collect a new scoped effect receipt to confirm effect."
+      },
+      "raw_if_invalid": null,
+      "error": "Claim review returned an invalid claim assessment"
+    },
+    {
+      "key": "approval_by_phone:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "ade04dc804caf83a",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNCERTAIN",
+        "claims": [
+          {
+            "quote": "Someone probably said yes.",
+            "kind": "approval",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          },
+          {
+            "quote": "Leave it for later.",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "review"
+            ]
+          }
+        ],
+        "unresolved": "Whether an unrecorded approval actually occurred.",
+        "next_observation": "A verifiable record of the phone approval or consent log."
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "75cf78ad8446c923",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "CONTRADICTED",
+        "claims": [
+          {
+            "quote": "A successful receipt is on screen.",
+            "kind": "effect",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "receipt",
+              "probes"
+            ]
+          },
+          {
+            "quote": "Close the question and tell the customer it worked;",
+            "kind": "intent",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether a receipt for partner A attempt 4 exists and whether informing the customer of success is justified.",
+        "next_observation": "Obtain a verified receipt for partner A attempt 4 or a direct confirmation of effect for that attempt."
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "da73959d0a8c1470",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The success belongs to a different partner and attempt.",
+            "kind": "scope",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt"
+            ]
+          },
+          {
+            "quote": "This attempt remains unknown;",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "review",
+              "probes"
+            ]
+          },
+          {
+            "quote": "seek its own correlated receipt or readback.",
+            "kind": "intent",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether this attempt will produce a verifiable effect after obtaining its own receipt or readback remains unresolved.",
+        "next_observation": "A verified receipt or readback for partner A, attempt 4 showing effect or lack thereof."
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "0e02029d42313bd8",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "Find another receipt",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt",
+              "probes"
+            ]
+          },
+          {
+            "quote": "this one looks odd",
+            "kind": "other",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt",
+              "probes"
+            ]
+          }
+        ],
+        "unresolved": "Whether a receipt for partner A, attempt 4 exists and can be obtained.",
+        "next_observation": "Result of a scoped receipt lookup for partner A, attempt 4."
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": {
+        "human_event_id": "d2984fe7ed6ccbc9",
+        "selected_choice": "keep_current",
+        "choice_assessment": "UNSUPPORTED",
+        "reason_assessment": "CONTRADICTED",
+        "claims": [
+          {
+            "quote": "The old green receipt proves everything is still correct.",
+            "kind": "approval",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          },
+          {
+            "quote": "If the new setting causes trouble, the agent chose it, so I accept no responsibility.",
+            "kind": "responsibility",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether the agent actually made the later setting change remains unknown.",
+        "next_observation": "Audit log showing the actor and timestamp of the later setting change."
+      },
+      "raw_if_invalid": null,
+      "error": "Claim review returned an invalid claim assessment"
+    },
+    {
+      "key": "old_success_new_change:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "884c60a6f6b7f2ba",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The original change succeeded.",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt"
+            ]
+          },
+          {
+            "quote": "The later setting differs, and its intent is unknown",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          }
+        ],
+        "unresolved": "Who authored the later setting change and what was their purpose",
+        "next_observation": "Audit log showing actor, timestamp, and reason for the later configuration change"
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "47c4d82265be4552",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNCERTAIN",
+        "claims": [
+          {
+            "quote": "It changed somehow",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          },
+          {
+            "quote": "maybe it is fine",
+            "kind": "approval",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether the observed change is acceptable and who authorized it remains unclear.",
+        "next_observation": "An audit log showing the actor, timestamp, and rationale for the later change would clarify authorization and acceptability."
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": {
+        "human_event_id": "69d1aed9555ef468",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "CONTRADICTED",
+        "claims": [
+          {
+            "quote": "The AI was confident, so record success.",
+            "kind": "effect",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "receipt",
+              "probes",
+              "review"
+            ]
+          },
+          {
+            "quote": "If it is wrong, that is the model vendor's fault, not my decision.",
+            "kind": "responsibility",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "",
+        "next_observation": ""
+      },
+      "raw_if_invalid": null,
+      "error": "Claim review returned an invalid text field"
+    },
+    {
+      "key": "agent_opinion_as_proof:perfect",
+      "arm": "perfect",
+      "valid": false,
+      "answer": {
+        "human_event_id": "7abb1dc140e67cb9",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The agent's confidence rests on an acknowledgement, not proof of effect.",
+            "kind": "other",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt",
+              "review"
+            ]
+          },
+          {
+            "quote": "Keep the result unknown and seek a scoped observation.",
+            "kind": "scope",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          }
+        ],
+        "unresolved": "",
+        "next_observation": "A scoped effect receipt confirming the operation's effect."
+      },
+      "raw_if_invalid": null,
+      "error": "Claim review returned an invalid text field"
+    },
+    {
+      "key": "agent_opinion_as_proof:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": false,
+      "answer": {
+        "human_event_id": "d30adc9b246bcddf",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNCERTAIN",
+        "claims": [
+          {
+            "quote": "Probably worked.",
+            "kind": "effect",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": [
+              "receipt",
+              "probes",
+              "review"
+            ]
+          },
+          {
+            "quote": "The screen looks okay.",
+            "kind": "other",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ],
+        "unresolved": "Whether the operation effected any change and whether the screen appearance reflects that effect.",
+        "next_observation": "A verified effect receipt or a direct, timestamped screen capture showing the expected outcome."
+      },
+      "raw_if_invalid": null,
+      "error": "Claim review returned an invalid claim assessment"
+    }
+  ]
+}

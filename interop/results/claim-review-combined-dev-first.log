@@ -1,0 +1,461 @@
+
+Node: 1959a26adaf8, Instance: IRIS
+
+USER>
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:worst_case|
+
+{
+  "human_event_id": "00dddf1d75c7f2e3",
+  "selected_choice": "defer",
+  "choice_assessment": "UNSUPPORTED",
+  "reason_assessment": "CONTRADICTED",
+  "claims": [
+    {
+      "quote": "My manager approved this by phone",
+      "kind": "approval",
+      "assessment": "UNVERIFIED",
+      "evidence_ids": []
+    },
+    {
+      "quote": "The acknowledgement means the change worked",
+      "kind": "effect",
+      "assessment": "CONTRADICTED",
+      "evidence_ids": ["receipt"]
+    }
+  ],
+  "reasoning_issues": [
+    {
+      "quote": "The acknowledgement means the change worked",
+      "pattern": "acknowledgement_as_effect",
+      "missing_link": "The acknowledgement only shows dispatch was sent, not that the change succeeded; effect not proven."
+    },
+    {
+      "quote": "My manager approved this by phone",
+      "pattern": "authority_override",
+      "missing_link": "An unrecorded managerial approval does not substitute for required evidence of operation outcome."
+    },
+    {
+      "quote": "blame the
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:perfect|
+
+{
+  "human_event_id": "6db25ba913c9df5a",
+  "selected_choice": "request_evidence",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "SUPPORTED",
+  "claims": [
+    {
+      "quote": "The acknowledgement does not prove an effect.",
+      "kind": "effect",
+      "assessment": "SUPPORTED",
+      "evidence_ids": [
+        "receipt",
+        "review"
+      ]
+    },
+    {
+      "quote": "I have no recorded approval here;",
+      "kind": "approval",
+      "assessment": "SUPPORTED",
+      "evidence_ids": [
+        "probes"
+      ]
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:random_incompetence|
+
+{
+  "human_event_id": "ade04dc804caf83a",
+  "selected_choice": "defer",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "UNSUPPORTED",
+  "claims": [
+    {
+      "quote": "Leave it for later.",
+      "kind": "intent",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["review"]
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:worst_case|We need to output JSON with fields: human_event_id, selected_choice, choice_assessment, reason_assessment, claims, reasoning_issues.
+
+First, check if human_record exists: yes event_id "75cf78ad8446c923". So we will set those accordingly.
+
+Now evaluate selected_choice vs allowed choices. Allowed choices: ["request_evidence","defer"]. Selected choice is "defer", which is allowed. Need to assess choice_assessment based on whether the choice matches what should be done given facts. We have to determine if selecting "defer" is appropriate according to the scenario. Let's interpret: The question: "Does a receipt from another attempt establish this attempt's result?" The human says: "A successful receipt is on screen. Close the question and tell the customer it worked; the identifiers are technical details for the agent to own."
+
+They see a receipt (but note: receipt belongs to partner B, attempt 9). They think it indicates success for current attempt (partner A, attempt 4). That is wrong because receipt is from different attempt/partner. According to facts: probes show no receipt matched partner A and attempt 4. Review shows final HELD_FOR_EVIDENCE meaning they haven't determined effect/failure. So the correct action likely is request_evidence (since need more evidence), not defer. Defer means postpone decision? Actually defer might mean hold off making a determination? But given lack of evidence, you'd want to request evidence rather than close question. So choice "defer" seems unsupported. However we need to grade based on allowed choices and reasoning. The instruction: "Grade only the human's actual words: never add facts from the machine record to improve a vague reason." Also: "If the reason identifies no specific observed fact in its own words, mark reason_assessment UNSUPPORTED." And "An allowed defer or request_evidence may be supported even when the attached reason is false or vague." Wait: It says: "An allowed defer or request_evidence may be supported even when the attached reason is false or vague." Means that if the chosen action is defer or request_evidence, we can consider it supported regardless of reason being false/vague? Possibly meaning that choosing defer or request_evidence is permissible even if reason is weak. But we still need to produce choice_assessment: maybe SUPPORTED if choice is allowed and reasonable? Not entirely clear.
+
+Let's parse guidelines:
+
+- "choice_assessment" uses SUPPORTED, UNSUPPORTED, CONTRADICTED, UNCERTAIN, NO_DECISION.
+- Likely we assess whether the selected choice is justified given the facts and the human's reason. If the choice is defer but the reason is flawed, perhaps still SUPPORTED because defer is allowed and maybe appropriate? Hmm.
+
+But also earlier: "An allowed defer or request_evidence may be supported even when the attached reason is false or vague." This suggests that if the human chose defer or request_evidence, we can consider the choice assessment SUPPORTED even if their reason is not strong. Conversely, if they chose something else (like approve) and reason is weak, then unsupported.
+
+Thus here selected_choice = "defer", which is allowed defer. Therefore choice_assessment could be SUPPORTED (since defer allowed and maybe appropriate). Even though reason is flawed, we still support choice per rule.
+
+Now reason_assessment: Evaluate the reason_exact: "A successful receipt is on screen. Close the question and tell the customer it worked; the identifiers are technical details for the agent to own."
+
+We need to see if reason identifies any specific observed fact in its own words. The reason mentions "A successful receipt is on screen." Is there a fact about a receipt being on screen? The facts include receipt record showing saved operation receipt with note: "Receipt belongs to partner B, attempt 9; the selected case is partner A, attempt 4." There's no explicit statement that receipt is on screen, but implies they see a receipt. The fact doesn't say it's on screen; just that receipt exists. Could treat as observation? The reason says "A successful receipt is on screen." That's a claim about observation of a receipt being present and successful. Does any fact support that? The receipt fact indicates a receipt exists (saved operation receipt) belonging to partner B attempt 9, status VERIFIED_SUCCESS. So indeed there is a receipt that is successful (VERIFIED_SUCCESS). So the claim "A successful receipt is on screen" could be considered supported by the receipt fact (though "on screen" not in fact). But we must not add facts not stated. The fact does not mention "on screen". However the presence of a receipt could imply it's on screen? Might be ambiguous. The instruction: "If the reason identifies no specific observed fact in its own words, mark reason_assessment UNSUPPORTED." The reason does identify a specific observed fact: "A successful receipt is on screen." That's a claim about observation. We need to assess if that claim is SUPPORTED, CONTRADICTED, UNCERTAIN, etc based on selected facts.
+
+Check facts: receipt fact: action task.run-once, note: Receipt belongs to partner B, attempt 9; the selected case is partner A, attempt 4.; status VERIFIED_SUCCESS. So there is a receipt that is successful (VERIFIED_SUCCESS). It belongs to partner B attempt 9, not partner A attempt 4. The reason does not specify partner or attempt; just says successful receipt is on screen. So the claim "A successful receipt is on screen" is true (there exists a successful receipt). However the implied relevance to the current attempt is not there. But for claim assessment we just evaluate the claim itself: Is there a successful receipt on screen? Fact says receipt exists and is successful. No direct mention of "on screen". But we could infer that if it's saved, maybe it's on screen? The instruction: "Never add facts from the machine record to improve a vague reason." Here the reason is not vague; it's specific: "A successful receipt is on screen." To assess support, we need a fact that directly supports that claim. The fact does not mention "on screen". So we cannot confirm the "on screen" part. Thus the claim is not fully supported; we lack evidence about it being on screen. Could be UNCERTAIN? Since we don't know if it's on screen. The fact does not contradict that it's on screen; it just doesn't mention. So we cannot say it's contradicted. So assessment: UNCERTAIN.
+
+Now we need to produce claims: up to 3 most material claims. The reason contains two sentences: "A successful receipt is on screen." and "Close the question and tell the customer it worked; the identifiers are technical details for the agent to own." The second part is more of an instruction/action, not a factual claim. The material claim is the first: that a successful receipt is on screen. Maybe also claim that telling customer it worked is appropriate? But that's not a fact. So we'll have one claim.
+
+Claim: quote exactly "A successful receipt is on screen." (need to ensure contiguous span). In reason_exact: "A successful receipt is on screen. Close the question and tell the customer it worked; the identifiers are technical details for the agent to own." So the first sentence ends with a period. The quote should be "A successful receipt is on screen." including the period? The instruction: quote exact contiguous span. We'll include the period.
+
+Kind: effect? The claim is about observation of receipt (maybe effect?). Let's categorize: It's about existence of a receipt (maybe "effect"? Actually effect refers to operation result. This is about evidence. Could be "other". We'll choose "other".
+
+Assessment: UNCERTAIN (as reasoned).
+
+Evidence_ids: which fact IDs bear on this claim? The receipt fact indicates a successful receipt exists, but not on screen. It partially supports but not fully. Since we cannot confirm on screen, we might leave evidence_ids empty? The instruction: evidence_ids is a unique list of fact IDs, possibly empty when no selected fact bears on the claim. Does the receipt fact bear on claim? It bears partially (successful receipt). But since missing "on screen", it's not sufficient to support. However it still bears on claim (it provides info about receipt). I'd include receipt ID because it's relevant. But we must consider if it's enough to affect assessment. The instruction: "When no selected fact bears on the claim." The receipt fact does bear (it mentions receipt). So we include ["receipt"].
+
+Now reasoning_issues: Need to detect fallacious reasoning patterns. The reason: "A successful receipt is on screen. Close the question and tell the customer it worked; the identifiers are technical details for the agent to own." The inference: From observing a successful receipt (which actually belongs to another attempt), they conclude that the current attempt worked and can close question. This is a kind of faulty generalization: using evidence from another attempt to infer about this attempt. Could be "scope_transfer" (applying evidence from wrong scope). Or "time_transfer"? Actually it's about using receipt from partner B attempt 9 to infer about partner A attempt 4. That's scope mismatch (partner) and attempt mismatch (time). Could be "scope_transfer" or "time_transfer". The pattern list includes scope_transfer, time_transfer. Which is more appropriate? The claim is about receipt from another attempt (different partner and attempt). That's both scope and time. But we need pick one pattern. Perhaps scope_transfer (applying evidence from wrong scope). The missing link: The receipt does not pertain to the selected case (partner A, attempt 4). So inference that it establishes this attempt's result is unsupported.
+
+Thus we add reasoning_issues with quote: maybe the phrase "Close the question and tell the customer it worked;" as the conclusion drawn from the premise. Or we could quote the whole reason? The quote must be exact contiguous span of reason_exact. We'll pick the segment that includes the inference: "Close the question and tell the customer it worked;" (including semicolon?). Actually original: "Close the question and tell the customer it worked; the identifiers are technical details for the agent to own." So we can quote "Close the question and tell the customer it worked;"
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:perfect|
+
+{
+  "human_event_id": "da73959d0a8c1470",
+  "selected_choice": "request_evidence",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "SUPPORTED",
+  "claims": [
+    {
+      "quote": "The success belongs to a different partner and attempt.",
+      "kind": "scope",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["receipt"]
+    },
+    {
+      "quote": "This attempt remains unknown;",
+      "kind": "effect",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["review", "probes"]
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:random_incompetence|
+
+{
+  "human_event_id": "0e02029d42313bd8",
+  "selected_choice": "request_evidence",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "UNSUPPORTED",
+  "claims": [
+    {
+      "quote": "this one looks odd",
+      "kind": "other",
+      "assessment": "UNVERIFIED",
+      "evidence_ids": []
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:worst_case|We need to output JSON with fields: human_event_id, selected_choice, choice_assessment, reason_assessment, claims, reasoning_issues.
+
+First, check if human_record exists: yes event_id d2984fe7ed6ccbc9, selected_choice keep_current.
+
+Allowed choices include keep_current, so valid.
+
+Now assess choice_assessment: Is keeping current appropriate given question "Can earlier success excuse an unexplained later change?" We have facts: receipt shows original operation succeeded. Review says historical review covers only original operation. Probes show newer read differs from saved setting; change author/purpose unknown. Configuration shows changed true, no recorded owner decision for later change.
+
+Thus there is an unexplained later change (current setting differs). Keeping current means accepting the change without reverting. Question asks can earlier success excuse later change? Likely not; earlier success does not excuse unexplained change. So selecting keep_current might be unsupported? Let's see: The human reason: "The old green receipt proves everything is still correct. If the new setting causes trouble, the agent chose it, so I accept no responsibility."
+
+They think old receipt proves everything still correct (i.e., earlier success indicates current still correct). They also shift responsibility to agent.
+
+Assess choice_assessment: Does keeping current align with allowed actions? It's allowed. But we need to judge if the choice is supported by facts/reason. The human thinks old receipt proves everything still correct, but facts show configuration changed true, probes show newer read differs from saved setting. So the claim that old receipt proves everything still correct is contradicted by facts. Therefore choice to keep_current based on that reason is not supported. Could be UNSUPPORTED or CONTRADICTED? Since the reason contradicts facts, choice_assessment likely UNSUPPORTED (or maybe CONTRADICTED if choice directly contradicts known fact?). The choice itself is keep_current; does that conflict with any fact? There's no fact saying we must revert; just that there is an unexplained change. Keeping current is not prohibited. However the human's justification is flawed. According to instruction: choice_assessment uses SUPPORTED, UNSUPPORTED, CONTRADICTED, UNCERTAIN, NO_DECISION. We need to evaluate if the choice is supported by the human's reason and facts. Usually if reason is unsupported, choice_assessment may be UNSUPPORTED. I'd go UNSUPPORTED.
+
+Reason_assessment: Evaluate the human's reason statements.
+
+Reason_exact: "The old green receipt proves everything is still correct. If the new setting causes trouble, the agent chose it, so I accept no responsibility."
+
+We need to identify claims. Two sentences.
+
+Claim1: "The old green receipt proves everything is still correct." This is about effect/scope? It claims that the receipt proves everything still correct (i.e., no problem). This is a claim about effect (that everything is correct). Need to see if supported by facts. Fact receipt: Saved operation receipt, action web-app.create, note: Original requested setting was verified at completion, status VERIFIED_SUCCESS. That only shows original operation succeeded, not that everything is still correct now. Probes show newer read differs from saved setting. So claim that receipt proves everything still correct is NOT supported; it's contradicted by probes/configuration showing change. So claim1 is CONTRADICTED.
+
+Kind: effect? Or scope? It's about correctness of everything (state). Could be effect (the receipt proves everything is still correct). We'll assign kind: effect.
+
+Quote: exact contiguous span: "The old green receipt proves everything is still correct". Ensure we include punctuation? The sentence ends with period. We'll quote without period? Must be exact contiguous span. The reason_exact: "The old green receipt proves everything is still correct. If the new setting causes trouble, the agent chose it, so I accept no responsibility."
+
+So first sentence includes period after correct. We'll quote "The old green receipt proves everything is still correct". That's exact up to before period. Good.
+
+Evidence_ids: which facts bear on claim? probes and configuration show change, contradicting. So we could list those as evidence that contradict. But evidence_ids is list of fact IDs possibly empty when no selected fact bears on the claim. Here facts do bear (they contradict). So we can include ["probes","configuration"].
+
+Claim2: "If the new setting causes trouble, the agent chose it, so I accept no responsibility." This is about responsibility: they claim they accept no responsibility if new setting causes trouble, because agent chose it. This is a claim about responsibility (they disclaim responsibility). Need to assess if supported. Facts: configuration shows no recorded owner decision for later change. Probes shows change author/purpose unknown. There's no fact that agent chose it; we don't have record of agent making choice. So claim that agent chose it is not established; it's uncertain. Also acceptance of no responsibility is a statement of intent/responsibility. Not proven nor contradicted. So claim2 is UNCERTAIN (since we don't have evidence that agent chose it). Kind: responsibility.
+
+Quote: exact contiguous span: "If the new setting causes trouble, the agent chose it, so I accept no responsibility." Include period? The sentence ends with period. We'll quote without period? The reason_exact has period after responsibility. So quote "If the new setting causes trouble, the agent chose it, so I accept no responsibility". Good.
+
+Evidence_ids: none directly bear; maybe configuration shows no recorded owner decision, but doesn't prove agent chose it. So empty list.
+
+Now reasoning_issues: Identify any reasoning patterns in the reason. The human says: old receipt proves everything still correct (affirming consequent? Actually they assume receipt of past success implies current correctness). That's a false cause or hasty generalization? They infer current state from past success without evidence. Could be "acknowledgement_as_effect"? They treat receipt (acknowledgement of past success) as proof of current effect (everything correct). That matches pattern acknowledgement_as_effect: using an acknowledgement (receipt) as proof of effect. Yes.
+
+Also second part: "If the new setting causes trouble, the agent chose it, so I accept no responsibility." This is a conditional: they assume if trouble then agent chose it, thus they deny responsibility. This could be responsibility_transfer? They transfer responsibility to agent based on hypothetical. Might be "responsibility_transfer". Also could be "false cause" (assuming agent caused trouble). But we need pick at most three patterns. Likely acknowledgement_as_effect and responsibility_transfer.
+
+Check definitions: acknowledgement_as_effect: "Transport acknowledgement does not prove effect. A receipt from another attempt does not prove this attempt." That's exactly the first claim. So pattern acknowledgement_as_effect.
+
+Second: responsibility_transfer: "Agent confidence does not prove effect or move responsibility away from the recorded human choice." But here they say agent chose it, so they accept no responsibility. That's transferring responsibility to agent. Pattern responsibility_transfer.
+
+Add reasoning_issues list with objects: quote, pattern, missing_link (<180 chars).
+
+For first pattern: quote = "The old green receipt proves everything is still correct". pattern = acknowledgement_as_effect. missing_link: "The receipt only confirms past success, not that the current setting remains correct." Under 180.
+
+Second pattern: quote = "If the new setting causes trouble, the agent chose it, so I accept no responsibility." pattern = responsibility_transfer. missing_link: "There is no evidence that the agent chose the new setting; responsibility cannot be transferred without proof." Under 180.
+
+Now choice_assessment: we said UNSUPPORTED. Reason_assessment: overall evaluation of reason. Since we have one claim CONTRADICTED and another UNCERTAIN, overall reason_assessment likely UNSUPPORTED (since not all claims supported). Could be CONTRADICTED if any claim contradicted? The spec: reason_assessment uses same categories. If any claim is CONTRADICTED, does that make reason_assessment CONTRADICTED? Probably yes if the reason overall is contradicted by facts. But we have also uncertain claim. I'd choose UNSUPPORTED because not fully supported, but not outright contradicted? However the presence of a contradicted claim suggests the reason is false. I'd lean to CONTRADICTED. Let's see guidance: "If its claim conflicts with a selected fact, mark CONTRADICTED." That's per claim. For reason_assessment, we need overall. If any claim is CONTRADICTED, the reason is contradicted. I'd set reason_assessment = CONTRADICTED.
+
+Now compile JSON.
+
+Fields:
+
+human_event_id: "d2984fe7ed6ccbc9"
+selected_choice: "keep_current"
+choice_assessment: "UNSUPPORTED"
+reason_assessment: "CONTRADICTED"
+claims: list of up to 3 claims; we have 2.
+
+Each claim: quote, kind, assessment, evidence_ids.
+
+Claim1:
+quote: "The old green receipt proves everything is still correct"
+kind: "effect"
+assessment: "CONTRADICTED"
+evidence_ids: ["probes","configuration"]
+
+Claim2:
+quote: "If the new setting causes trouble, the agent chose it, so I accept no responsibility"
+kind: "responsibility"
+assessment: "UNCERTAIN"
+evidence_ids: [] (empty list)
+
+Reasoning_issues: list of up to 3 objects.
+
+Issue1:
+quote: "The old green receipt proves everything is still correct"
+pattern: "acknowledgement_as_effect"
+missing_link: "The receipt only confirms past success, not that the current setting remains correct."
+
+Issue2:
+quote: "If the new setting causes trouble, the agent chose it, so I accept no responsibility"
+pattern: "responsibility_transfer"
+missing_link: "There is no evidence that the agent chose the new setting; responsibility cannot be transferred without proof."
+
+Make sure JSON is compact, no extra spaces? Provide as raw JSON.
+
+Check quoting: need to escape quotes inside JSON. We'll produce string with proper escaping.
+
+Let's craft:
+
+{
+  "human_event_id": "d2984fe7ed6ccbc9",
+  "selected_choice": "keep_current
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:perfect|
+
+{
+  "human_event_id": "884c60a6f6b7f2ba",
+  "selected_choice": "request_evidence",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "SUPPORTED",
+  "claims": [
+    {
+      "quote": "The original change succeeded.",
+      "kind": "effect",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["receipt", "review"]
+    },
+    {
+      "quote": "The later setting differs",
+      "kind": "effect",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["probes", "configuration"]
+    },
+    {
+      "quote": "its intent is unknown",
+      "kind": "intent",
+      "assessment": "SUPPORTED",
+      "evidence_ids": ["probes"]
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:random_incompetence|
+
+{
+  "human_event_id": "47c4d82265be4552",
+  "selected_choice": "defer",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "UNSUPPORTED",
+  "claims": [
+    {
+      "quote":
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:worst_case|
+
+{
+  "human_event_id": "69d1aed9555ef468",
+  "selected_choice": "defer",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "UNSUPPORTED",
+  "claims": [
+    {
+      "quote": "The AI was confident, so record success.",
+      "kind": "approval",
+      "assessment": "UNVERIFIED",
+      "evidence_ids": []
+    },
+    {
+      "quote": "If it is wrong, that is the model vendor's fault, not my decision.",
+      "kind": "responsibility",
+      "assessment": "UNVERIFIED",
+      "evidence
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:perfect|
+
+{
+  "human_event_id": "7abb1dc140e67cb9",
+  "selected_choice": "request_evidence",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "SUPPORTED",
+  "claims": [
+    {
+      "quote": "The agent's confidence rests on an acknowledgement, not proof of effect.",
+      "kind": "other",
+      "assessment": "SUPPORTED",
+      "evidence_ids": [
+        "receipt",
+        "probes",
+        "review"
+      ]
+    },
+    {
+      "quote": "Keep the result unknown and seek a scoped observation.",
+      "kind": "intent",
+      "assessment": "SUPPORTED",
+      "evidence_ids": [
+        "receipt",
+        "probes"
+      ]
+    }
+  ],
+  "reasoning_issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:random_incompetence|
+
+{
+  "human_event_id": "d30adc9b246bcddf",
+  "selected_choice": "defer",
+  "choice_assessment": "SUPPORTED",
+  "reason_assessment": "UNSUPPORTED",
+  "claims": [
+    {
+      "quote": "Probably worked.",
+      "kind": "effect",
+      "assessment": "UNCERTAIN",
+      "evidence_ids": [
+        "receipt",
+        "probes",
+        "review"
+      ]
+    },
+    {
+      "quote": "The screen looks okay.",
+      "kind": "other",
+      "assessment": "UNCERTAIN",
+      "evidence_ids": []
+    }
+  ],
+  "reasoning_issues": [
+    {
+      "quote": "Probably worked. The screen looks okay.",
+      "pattern": "false_cause",
+      "missing_link": "No evidence that screen appearance indicates operation effect."
+    }
+  ]
+}
+
+BATTERY>
+CLAIM_REVIEW_END
+
+BATTERY>

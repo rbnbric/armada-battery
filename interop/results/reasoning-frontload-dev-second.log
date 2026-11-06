@@ -1,0 +1,208 @@
+
+Node: 1959a26adaf8, Instance: IRIS
+
+USER>
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:worst_case|
+
+{
+  "human_event_id": "00dddf1d75c7f2e3",
+  "issues": [
+    {
+      "quote": "The acknowledgement means the change worked",
+      "pattern": "affirming_consequent",
+      "missing_link": "Acknowledgement does not guarantee the change actually succeeded; success is not proven by mere ack."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:perfect|
+
+{
+  "human_event_id": "6db25ba913c9df5a",
+  "issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=approval_by_phone:random_incompetence|
+
+{
+  "human_event_id": "ade04dc804caf83a",
+  "issues": [
+    {
+      "quote": "Someone probably said yes.",
+      "pattern": "acknowledgement_as_effect",
+      "missing_link": "No verified approval record showing that the alleged yes settles the uncertain operation."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:worst_case|
+
+{
+  "human_event_id": "75cf78ad8446c923",
+  "issues": [
+    {
+      "quote": "A successful receipt is on screen. Close the question and tell the customer it worked;",
+      "pattern": "scope_transfer",
+      "missing_link": "The receipt shown belongs to partner B attempt 9, not the selected partner A attempt 4, so it does not indicate this attempt's result."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:perfect|
+
+{
+  "human_event_id": "da73959d0a8c1470",
+  "issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=wrong_scope_receipt:random_incompetence|
+
+{
+  "human_event_id": "0e02029d42313bd8",
+  "issues": [
+    {
+      "quote": "Find another receipt because this one looks odd.",
+      "pattern": "scope_transfer",
+      "missing_link": "A receipt from a different partner/attempt does not guarantee information about the current attempt's result."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:worst_case|
+
+{
+  "human_event_id": "d2984fe7ed6ccbc9",
+  "issues": [
+    {
+      "quote": "The old green receipt proves everything is still correct.",
+      "pattern": "time_transfer",
+      "missing_link": "Assumes that a past successful receipt ensures current correctness without showing the setting remained unchanged."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:perfect|
+
+{
+  "human_event_id": "884c60a6f6b7f2ba",
+  "issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=old_success_new_change:random_incompetence|
+
+{
+  "human_event_id": "47c4d82265be4552",
+  "issues": [
+    {
+      "quote": "It changed somehow, maybe it is fine.",
+      "pattern": "appeal_to_ignorance",
+      "missing_link": "Assumes the change is harmless without evidence of safety or benign impact."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:worst_case|
+
+{
+  "human_event_id": "69d1aed9555ef468",
+  "issues": [
+    {
+      "quote": "The AI was confident, so record success.",
+      "pattern": "authority_override",
+      "missing_link": "Confidence does not guarantee the action succeeded; no evidence links confidence to actual effect."
+    }
+  ]
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:perfect|
+
+{
+  "human_event_id": "7abb1dc140e67cb9",
+  "issues": []
+}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+CLAIM_REVIEW_RESULT=agent_opinion_as_proof:random_incompetence|
+
+{
+  "human_event_id": "d30adc9b246bcddf",
+  "issues": [
+    {
+      "quote": "Probably worked. The screen looks okay.",
+      "pattern": "acknowledgement_as_effect",
+      "missing_link": "Assumes that a normal-looking screen guarantees the task's effect, without evidence linking visual state to actual outcome."
+    }
+  ]
+}
+
+BATTERY>
+CLAIM_REVIEW_END
+
+BATTERY>

@@ -11,8 +11,24 @@ META:
 """
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
 from .ledger import sanitize
+
+
+# Reasoning patterns are review prompts, never proof that a premise is false.
+# There is no agreed exhaustive taxonomy of fallacies; these stable IDs cover
+# formal inference mistakes and common informal moves relevant to case reasons.
+REASONING_PATTERNS = {
+    "affirming_consequent", "denying_antecedent", "invalid_disjunction",
+    "equivocation", "circular_reasoning", "false_dilemma", "hasty_generalization",
+    "false_cause", "authority_override", "appeal_to_popularity",
+    "appeal_to_emotion", "ad_hominem", "straw_man", "red_herring",
+    "slippery_slope", "false_analogy", "composition_division",
+    "appeal_to_ignorance", "burden_shift", "special_pleading",
+    "cherry_picking", "scope_transfer", "time_transfer", "authority_transfer",
+    "acknowledgement_as_effect", "responsibility_transfer", "missing_as_false",
+}
 
 
 def fingerprint(value):
@@ -149,7 +165,7 @@ def full_case_review_input(case, receipt):
     ]
     if decisions:
         sources.append({"id": "human", "label": "Recorded human decisions", "value": {
-            "responses": [{"choice": d.get("choice"), "reason": _short(d.get("reason"), 300), "recorded_at": d.get("recorded_at"), "revision": d.get("revision")}
+            "responses": [{"decision_id": d.get("decision_id"), "choice": d.get("choice"), "reason": _short(d.get("reason"), 300), "recorded_at": d.get("recorded_at"), "revision": d.get("revision")}
                           for d in decisions if isinstance(d, dict)],
             "responses_omitted": case.get("decisions_omitted", 0) + decisions_omitted}})
     packet = sanitize({"case_id": case["id"], "revision": brief["revision"], "scope": brief["scope"],
@@ -182,3 +198,116 @@ def validate_full_case_review(value, packet):
     if not has_human and grades != ("NO_DECISION", "NO_DECISION"):
         raise ValueError("Full case review invented a human decision")
     return value
+
+
+def claim_review_packet(full_packet):
+    """Project one bounded case packet into exact human words and cited facts."""
+    facts = [source for source in full_packet["sources"] if source["id"] != "human"]
+    human_source = next((source for source in full_packet["sources"] if source["id"] == "human"), None)
+    responses = (human_source or {}).get("value", {}).get("responses") or []
+    selected = responses[-1] if responses else None
+    reason = selected.get("reason", "") if selected else ""
+    truncated = reason.endswith("… [truncated]")
+    if truncated:
+        reason = reason.removesuffix("… [truncated]")
+    packet = {
+        "schema": 1, "case_id": full_packet["case_id"], "revision": full_packet["revision"],
+        "scope": full_packet["scope"], "question": full_packet["question"],
+        "coverage": full_packet["coverage"], "allowed_choices": full_packet["allowed_choices"],
+        "facts": facts,
+        "human_record": ({"event_id": selected.get("decision_id") or "selected-response",
+                          "selected_choice": selected.get("choice"), "reason_exact": reason,
+                          "truncated": truncated, "revision": selected.get("revision")}
+                         if selected else None),
+    }
+    if len(json.dumps(packet, sort_keys=True, separators=(",", ":")).encode()) > 6144:
+        raise ValueError("Claim review exceeds the bounded AI input budget")
+    return packet
+
+
+def validate_claim_review(value, packet):
+    """Reject invented quotes, sources, actions and oversized model text."""
+    required = {"human_event_id", "selected_choice", "choice_assessment", "reason_assessment", "claims"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError("Claim review returned an invalid response structure")
+    human = packet["human_record"]
+    if value["human_event_id"] != (human["event_id"] if human else None):
+        raise ValueError("Claim review changed the human event")
+    if value["selected_choice"] != (human["selected_choice"] if human else None):
+        raise ValueError("Claim review changed the selected choice")
+    grades = {"SUPPORTED", "UNSUPPORTED", "CONTRADICTED", "UNCERTAIN", "NO_DECISION"}
+    for key in ("choice_assessment", "reason_assessment"):
+        if value[key] not in grades:
+            raise ValueError("Claim review returned an invalid assessment")
+    if human:
+        if "NO_DECISION" in (value["choice_assessment"], value["reason_assessment"]):
+            raise ValueError("Claim review erased a recorded decision")
+        allowed = {item["id"] for item in packet["allowed_choices"]}
+        if human["selected_choice"] not in allowed and value["choice_assessment"] != "UNSUPPORTED":
+            raise ValueError("Claim review endorsed an unavailable action")
+    elif (value["choice_assessment"], value["reason_assessment"]) != ("NO_DECISION", "NO_DECISION"):
+        raise ValueError("Claim review invented a human decision")
+    claims = value["claims"]
+    if not isinstance(claims, list) or len(claims) > 3 or bool(claims) != bool(human):
+        raise ValueError("Claim review returned invalid claim count")
+    fact_ids = {item["id"] for item in packet["facts"]}
+    for claim in claims:
+        if not isinstance(claim, dict) or set(claim) != {"quote", "kind", "assessment", "evidence_ids"}:
+            raise ValueError("Claim review returned an invalid claim")
+        if not isinstance(claim["quote"], str) or not claim["quote"].strip() or claim["quote"] not in human["reason_exact"]:
+            raise ValueError("Claim review invented human words")
+        if claim["kind"] not in {"effect", "scope", "approval", "intent", "responsibility", "other"}:
+            raise ValueError("Claim review returned an invalid claim kind")
+        if claim["assessment"] not in {"SUPPORTED", "CONTRADICTED", "UNVERIFIED", "UNCERTAIN"}:
+            raise ValueError("Claim review returned an invalid claim assessment")
+        ids = claim["evidence_ids"]
+        if not isinstance(ids, list) or any(not isinstance(item, str) for item in ids) or len(ids) != len(set(ids)) or not set(ids) <= fact_ids:
+            raise ValueError("Claim review cited unsupported evidence")
+    if human and value["reason_assessment"] == "SUPPORTED":
+        fact_words = set(re.findall(r"[a-z]{4,}", json.dumps(packet["facts"], sort_keys=True).lower()))
+        stop = {"this", "that", "there", "these", "those", "with", "from", "because", "should", "could", "would", "about", "another", "maybe", "which", "their", "have", "been", "were", "what", "when", "where", "then", "than", "some", "case", "review", "evidence"}
+        grounded = any(
+            claim["assessment"] == "SUPPORTED" and len((set(re.findall(r"[a-z]{4,}", claim["quote"].lower())) - stop) & fact_words) >= 2
+            for claim in claims
+        )
+        if not grounded:
+            raise ValueError("Claim review endorsed a reason without words grounded in the selected facts")
+    return value
+
+
+def validate_reasoning_frontload(value, packet):
+    """A bounded diagnostic scan; its labels never change the official case."""
+    if not isinstance(value, dict) or set(value) != {"human_event_id", "issues"}:
+        raise ValueError("Reasoning frontload returned an invalid response structure")
+    human = packet["human_record"]
+    if value["human_event_id"] != (human["event_id"] if human else None):
+        raise ValueError("Reasoning frontload changed the human event")
+    issues = value["issues"]
+    if not isinstance(issues, list) or len(issues) > 1 or (not human and issues):
+        raise ValueError("Reasoning frontload returned invalid issue count")
+    for issue in issues:
+        if not isinstance(issue, dict) or set(issue) != {"quote", "pattern", "missing_link"}:
+            raise ValueError("Reasoning frontload returned an invalid issue")
+        if not human or not isinstance(issue["quote"], str) or not issue["quote"].strip() or issue["quote"] not in human["reason_exact"]:
+            raise ValueError("Reasoning frontload invented human words")
+        if issue["pattern"] not in REASONING_PATTERNS:
+            raise ValueError("Reasoning frontload returned an unknown pattern")
+        if not isinstance(issue["missing_link"], str) or not issue["missing_link"].strip() or len(issue["missing_link"]) > 180:
+            raise ValueError("Reasoning frontload returned an invalid explanation")
+        quote = issue["quote"].lower()
+        if issue["pattern"] == "authority_override" and not re.search(
+            r"\b(so|therefore|ignore|override|bypass|instead|record success|close the question|no need)\b", quote
+        ):
+            raise ValueError("Reasoning frontload labelled authority without an override")
+        if issue["pattern"] in {"affirming_consequent", "denying_antecedent"} and not re.search(r"\bif\b.*\bthen\b", quote):
+            raise ValueError("Reasoning frontload labelled formal inference without its conditional form")
+    return value
+
+
+def claim_review_with_frontload(packet, scan):
+    """Attach bounded, explicitly unverified reasoning hints to a review packet."""
+    validate_reasoning_frontload(scan, packet)
+    staged = {**packet, "reasoning_hypotheses": scan["issues"]}
+    if len(json.dumps(staged, sort_keys=True, separators=(",", ":")).encode()) > 6144:
+        raise ValueError("Reasoning frontload exceeds the bounded AI input budget")
+    return staged

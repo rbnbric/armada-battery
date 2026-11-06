@@ -1,6 +1,51 @@
 # Accountability review experiment
 
-Status: design proposal, 2026-11-06. No runtime behavior is changed by this document.
+Status: experimental candidate, 2026-11-06. The native `claim_review` role is
+not exposed in the installed application; [the first holdout failed the
+claim-level promotion gate](DECISION_BRIEF_EVIDENCE.md#exact-claim-candidate-and-release-decision--2026-11-06).
+
+## Semantic frontloader revision
+
+An independent `reasoning_frontload` candidate reconstructs the person's
+**stated** premise and conclusion before claim grading. It checks whether a cited fact establishes every material
+qualifier in the claim: actor, authority, attempt, target, time and result. A
+generic approval record cannot silently become “the boss approved it.” A
+transport acknowledgement cannot silently become an effect receipt.
+
+Its bounded response may name the most consequential reasoning pattern, with an
+exact quote and the missing inference link. The registry covers common formal
+errors (such as affirming the consequent) and informal errors of relevance,
+presumption, ambiguity, causal inference, scope and responsibility. The pattern
+is a **diagnostic hypothesis**, not a judgment that the premise is false. In
+particular, `authority_override` applies only when an authority claim is used
+to bypass a required evidence, permission or accountability check; a mere
+mention of a manager is not enough. The application validates the quote and
+pattern ID but cannot validate the model's semantic interpretation.
+
+There is no agreed exhaustive taxonomy of fallacies; a growing label list
+cannot replace checking the actual premise-to-conclusion link. See the
+[Stanford Encyclopedia of Philosophy on informal logic](https://plato.stanford.edu/entries/logic-informal/)
+and the [Internet Encyclopedia of Philosophy on fallacies](https://iep.utm.edu/fallacy/).
+The first attempt combined this scan with the claim review and returned only
+7/12 valid development responses, so that shape was discarded. The scan is now
+a separate diagnostic role; its output is not yet an official finding. It
+requires a valid development run, a new frozen holdout and a paired real-case
+comparison before any promotion.
+
+### Test whether grounding helps the higher-order solver
+
+Synthetic trials can expose schema errors and invented support, but cannot
+establish an improvement in real decisions. Use prospective, legitimate IRIS
+administration cases with an actual operator decision and a separately verified
+receipt/readback. Freeze each case at the point the decision was made. Give the
+same facts, choices and model budget to (A) the higher-order reviewer alone and
+(B) that reviewer with the validated fact sheet and reasoning scan. Keep the
+scan's hypotheses labelled as such. Compare both answers with the subsequent
+independently checked effect and the operator's recorded reason; count false
+success, borrowed authority, unsupported blame, unresolved holds, useful
+corrections, latency and token use. The application's deterministic receipt
+remains authoritative in both arms. Report ties and failures. One connected
+fixture does not establish a general benefit.
 
 ## The failure to solve
 

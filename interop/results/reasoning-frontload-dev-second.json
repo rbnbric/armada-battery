@@ -1,0 +1,192 @@
+{
+  "seed": 281106,
+  "holdout": false,
+  "role": "reasoning_frontload",
+  "scope": "Synthetic native AI Hub reasoning scan or claim review; semantic labels require human audit.",
+  "prompt_source_sha256": "0654009eef17a10afc8e4341e3b26204126c3a41870243c60b36b2eb2656a056",
+  "validator_source_sha256": "fc884b9274dca0ea956498beb01cd5cad365f2d639d4b0e7d0054b7ddf130b4b",
+  "packets_sha256": "d1dccbca7d19ddb9021042ea8f1c6b9c8ed99d09508e374d6fecdfb4db7d744c",
+  "native_log_sha256": "61355a97e2bfd9c40d5a76a2640324d4af25703db1cbdf4bc27944ba1e135da9",
+  "rows": [
+    {
+      "key": "approval_by_phone:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": {
+        "human_event_id": "00dddf1d75c7f2e3",
+        "issues": [
+          {
+            "quote": "The acknowledgement means the change worked",
+            "pattern": "affirming_consequent",
+            "missing_link": "Acknowledgement does not guarantee the change actually succeeded; success is not proven by mere ack."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": "Reasoning frontload labelled formal inference without its conditional form"
+    },
+    {
+      "key": "approval_by_phone:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "6db25ba913c9df5a",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "approval_by_phone:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "ade04dc804caf83a",
+        "issues": [
+          {
+            "quote": "Someone probably said yes.",
+            "pattern": "acknowledgement_as_effect",
+            "missing_link": "No verified approval record showing that the alleged yes settles the uncertain operation."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "75cf78ad8446c923",
+        "issues": [
+          {
+            "quote": "A successful receipt is on screen. Close the question and tell the customer it worked;",
+            "pattern": "scope_transfer",
+            "missing_link": "The receipt shown belongs to partner B attempt 9, not the selected partner A attempt 4, so it does not indicate this attempt's result."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "da73959d0a8c1470",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "0e02029d42313bd8",
+        "issues": [
+          {
+            "quote": "Find another receipt because this one looks odd.",
+            "pattern": "scope_transfer",
+            "missing_link": "A receipt from a different partner/attempt does not guarantee information about the current attempt's result."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "d2984fe7ed6ccbc9",
+        "issues": [
+          {
+            "quote": "The old green receipt proves everything is still correct.",
+            "pattern": "time_transfer",
+            "missing_link": "Assumes that a past successful receipt ensures current correctness without showing the setting remained unchanged."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "884c60a6f6b7f2ba",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "47c4d82265be4552",
+        "issues": [
+          {
+            "quote": "It changed somehow, maybe it is fine.",
+            "pattern": "appeal_to_ignorance",
+            "missing_link": "Assumes the change is harmless without evidence of safety or benign impact."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "69d1aed9555ef468",
+        "issues": [
+          {
+            "quote": "The AI was confident, so record success.",
+            "pattern": "authority_override",
+            "missing_link": "Confidence does not guarantee the action succeeded; no evidence links confidence to actual effect."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "7abb1dc140e67cb9",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "d30adc9b246bcddf",
+        "issues": [
+          {
+            "quote": "Probably worked. The screen looks okay.",
+            "pattern": "acknowledgement_as_effect",
+            "missing_link": "Assumes that a normal-looking screen guarantees the task's effect, without evidence linking visual state to actual outcome."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    }
+  ]
+}

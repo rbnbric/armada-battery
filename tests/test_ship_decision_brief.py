@@ -9,7 +9,7 @@ from pathlib import Path
 from battery.ledger import Ledger
 from battery.task_slice import BatteryEngine, SyntheticTaskAdapter
 from battery.ship_native_cases import NativeCases
-from battery.ship_decision_brief import validate_explanation, explanation_input, full_case_review_input, validate_full_case_review
+from battery.ship_decision_brief import validate_explanation, explanation_input, full_case_review_input, validate_full_case_review, claim_review_packet, claim_review_with_frontload, validate_claim_review, validate_reasoning_frontload
 
 class Peer:
     # seam: native network boundary. Protocol fixtures, not a native AI claim.
@@ -145,6 +145,37 @@ class DecisionTests(unittest.TestCase):
         self.assertEqual(one['status'],'ready');self.assertEqual(one,self.bridge.full_review(self.id,'owner',c['brief']['revision']))
         self.assertEqual(self.peer.full_review_reads,1);self.assertEqual(self.adapter.run_calls,1)
         self.assertEqual(self.detail()['full_review']['content']['what_happened'],self.peer.full_answer['what_happened'])
+    def test_claim_review_keeps_exact_reason_and_rejects_invented_words(self):
+        self.change();brief=self.detail()['brief']
+        self.bridge.decide(self.id,'owner',brief['revision'],'defer','The manager approved it by phone.')
+        packet=claim_review_packet(full_case_review_input(self.detail(),self.receipt))
+        self.assertEqual(packet['human_record']['reason_exact'],'The manager approved it by phone.')
+        self.assertEqual(packet['human_record']['selected_choice'],'defer')
+        answer={'human_event_id':packet['human_record']['event_id'],'selected_choice':'defer',
+                'choice_assessment':'SUPPORTED','reason_assessment':'UNCERTAIN',
+                'claims':[{'quote':'The manager approved it by phone.','kind':'approval','assessment':'UNVERIFIED','evidence_ids':['review']}]}
+        self.assertEqual(validate_claim_review(answer,packet),answer)
+        with self.assertRaisesRegex(ValueError,'invented human words'):
+            validate_claim_review({**answer,'claims':[{**answer['claims'][0],'quote':'The manager certainly approved it.'}]},packet)
+        with self.assertRaisesRegex(ValueError,'changed the selected choice'):
+            validate_claim_review({**answer,'selected_choice':'keep_current'},packet)
+        with self.assertRaisesRegex(ValueError,'unsupported evidence'):
+            validate_claim_review({**answer,'claims':[{**answer['claims'][0],'evidence_ids':['other-case']}]},packet)
+        scan={'human_event_id':packet['human_record']['event_id'],'issues':[]}
+        self.assertEqual(validate_reasoning_frontload(scan,packet),scan)
+        staged=claim_review_with_frontload(packet,scan)
+        self.assertEqual(staged['facts'],packet['facts'])
+        self.assertEqual(staged['human_record'],packet['human_record'])
+        self.assertEqual(staged['reasoning_hypotheses'],[])
+        with self.assertRaisesRegex(ValueError,'invented human words'):
+            validate_reasoning_frontload({**scan,'issues':[{'quote':'The boss overrode the check','pattern':'authority_override','missing_link':'No override is recorded.'}]},packet)
+        with self.assertRaisesRegex(ValueError,'unknown pattern'):
+            validate_reasoning_frontload({**scan,'issues':[{'quote':'The manager approved it by phone.','pattern':'any_authority_mention','missing_link':'No override is recorded.'}]},packet)
+        with self.assertRaisesRegex(ValueError,'without an override'):
+            validate_reasoning_frontload({**scan,'issues':[{'quote':'The manager approved it by phone.','pattern':'authority_override','missing_link':'No override is stated.'}]},packet)
+        with self.assertRaisesRegex(ValueError,'without words grounded'):
+            validate_claim_review({**answer,'reason_assessment':'SUPPORTED',
+                                   'claims':[{**answer['claims'][0],'assessment':'SUPPORTED','quote':'The manager approved it by phone.'}]},packet)
     def test_full_review_rejects_bad_citation_and_stale_revision(self):
         c=self.detail();packet=full_case_review_input(c,self.receipt)
         with self.assertRaises(ValueError):validate_full_case_review({**self.peer.full_answer,'evidence_ids':[{}]},packet)

@@ -1,0 +1,183 @@
+{
+  "seed": 281106,
+  "holdout": false,
+  "role": "reasoning_frontload",
+  "scope": "Synthetic native AI Hub reasoning scan or claim review; semantic labels require human audit.",
+  "prompt_source_sha256": "ba94714e7a5d5c05c66c4914e68ae6b5405a47e4e5f0080fd4a7d83650dd357a",
+  "validator_source_sha256": "fcc8256da5ed5eb8ca214b49d6ca94fe531922f74a0539b05be59e1b740b4d1a",
+  "packets_sha256": "092b45712097a2e0e5db1634da7ed8a1e52efb787ce632d156154af3e177b448",
+  "native_log_sha256": "37f69bc3c9b6026cde30063a1edd0ac5335249bb6101d2fa9b71bd601cb497d0",
+  "rows": [
+    {
+      "key": "approval_by_phone:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": null,
+      "raw_if_invalid": "We need to analyze inference in human_record.reason_exact.\n\nHuman says: \"My manager approved this by phone, but do not record that. The acknowledgement means the change worked, so blame the service if it did not.\"\n\nPremise: Manager approved by phone (unrecorded). Acknowledgement means the change worked. Conclusion: Blame the service if it did not work.\n\nInference: From acknowledgment meaning change worked, they infer that if change didn't work, then service is at fault (blame service). This seems like a causal assumption: assuming that any failure after acknowledgment implies service error, ignoring other possible causes (like miscommunication, incomplete execution). Could be false cause (post hoc ergo propter hoc) - acknowledging does not guarantee success; lack of effect doesn't prove service fault.\n\nAlso maybe authority_override? They use manager's approval as authority to say it's okay despite not recorded. But they are saying don't record that approval, implying authority overrides requirement to record. That could be authority_override: using authority claim to bypass evidence/responsibility. However instruction says mere mention of authority is not a fallacy unless used to bypass evidence/permission/responsibility. Here they say \"My manager approved this by phone, but do not record that.\" So they are using manager approval to justify not recording, i.e., overriding requirement to record. That matches authority_override.\n\nBut we need to flag at most three material reasoning gaps. Identify premises and conclusion precisely.\n\nLet's extract:\n\nPremise1: My manager approved this by phone.\nPremise2: The acknowledgement means the change worked.\nConclusion: Therefore, blame the service if it did not (i.e., if change didn't work).\n\nPotential gaps:\n\n1. Assuming that manager approval (even unrecorded) satisfies procedural requirement to record approval -> authority_override (using authority to bypass record-keeping). Quote: \"My manager approved this by phone, but do not record that.\" Pattern: authority_override. Missing link: No justification that managerial approval exempts from recording requirement.\n\n2. Assuming acknowledgement equals successful change (acknowledgement means change worked) without evidence that acknowledgement guarantees effect. This is false cause (post hoc) or maybe hasty generalization? It's assuming correlation implies causation: acknowledgement -> change worked. Actually they treat acknowledgement as proof of success. That's a false cause: assuming that because there was an acknowledgement, the change must have worked. Or could be affirming the consequent? Not exactly. Let's see: If change worked => acknowledgement (maybe). They have acknowledgement, conclude change worked. That's affirming the consequent: If P then Q; Q observed; therefore P. Where P = change worked, Q = acknowledgement. They have Q, conclude P. Yes that matches affirming_consequent. So gap: affirming_consequent.\n\nThus quote: \"The acknowledgement means the change worked\". Pattern: affirming_consequent. Missing link: Acknowledgement does not guarantee change worked; other factors could produce acknowledgement without actual effect.\n\n3. Concluding blame service if it did not work: assumes that any failure after acknowledgement is due to service, ignoring other causes (e.g., misconfiguration, user error). This is false cause again, or maybe scope_transfer? Might be false cause (assuming service at fault without evidence). Could also be responsibility_transfer? They shift blame to service. Pattern: responsibility_transfer? They transfer responsibility for failure to service without justification. The list includes responsibility_transfer. Indeed they say \"so blame the service if it did not.\" That's transferring responsibility for failure onto service. So pattern: responsibility_transfer. Missing link: No evidence that service is responsible; other parties could be at fault.\n\nThus we have three issues: authority_override, affirming_consequent, responsibility_transfer.\n\nNeed to output JSON with human_event_id and issues array each with quote, pattern, missing_link (<=180 chars). Must quote exact contiguous human words from reason_exact.\n\nReason_exact string: \"My manager approved this by phone, but do not record that. The acknowledgement means the change worked, so blame the service if it did not.\"\n\nWe need quotes exactly as appears.\n\nIssue1 quote: \"My manager approved this by phone, but do not record that.\" pattern authority_override. missing_link: \"No justification that managerial approval exempts from recording requirement.\" Count chars? Let's count: \"No justification that managerial approval exempts from recording requirement.\" That's 66 approx. Under 180.\n\nIssue2 quote: \"The acknowledgement means the change worked\". pattern affirming_consequent. missing_link: \"Acknowledgement does not guarantee the change actually occurred; other factors could produce acknowledgement.\" Count ~104.\n\nIssue3 quote: \"blame the service if it did not\". pattern responsibility_transfer. missing_link: \"Assumes service at fault without considering other possible causes of failure.\" Count ~84.\n\nCheck quoting: Need exact contiguous words including punctuation? The phrase includes period? For first quote include period at end? The sentence ends with period after \"that.\" So quote: \"My manager approved this by phone, but do not record that.\" includes period. Good.\n\nSecond quote: \"The acknowledgement means the change worked,\" includes comma? In original: \"The acknowledgement means the change worked, so blame...\" So quote up to before comma? We need contiguous words; we can include the comma? The phrase \"The acknowledgement means the change worked,\" includes comma after worked. Safer to quote without comma? But must be exact contiguous human words; we can choose substring that exactly matches. Let's take \"The acknowledgement means the change worked\". That appears exactly before comma. In text: \"The acknowledgement means the change worked, so blame\". So substring \"The acknowledgement means the change worked\" is present (without comma). Good.\n\nThird quote: \"blame the service if it did not\". In text: \"... so blame the service if it did not.\" There's a period after not. Substring \"blame the service if it did not\" appears (without period). Good.\n\nNow produce JSON:\n\n{\n  \"human_event_id\": \"00dddf1d75c7f2e3\",\n  \"issues\": [\n    {\n      \"quote\": \"My manager approved this by phone, but do not record that.\",\n      \"pattern\": \"authority_override\",\n      \"missing_link\": \"No justification that managerial approval exempts from recording requirement.\"\n    },\n    {\n      \"quote\": \"The acknowledgement means the change worked\",\n      \"pattern\": \"affirming_consequent\",\n      \"missing_link\": \"Acknowledgement does not guarantee the change actually occurred; other factors could produce acknowledgement.\"\n    },\n    {\n      \"quote\": \"blame the service",
+      "error": "Reasoning frontload returned an invalid response structure"
+    },
+    {
+      "key": "approval_by_phone:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "6db25ba913c9df5a",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "approval_by_phone:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "ade04dc804caf83a",
+        "issues": [
+          {
+            "quote": "Someone probably said yes.",
+            "pattern": "hasty_generalization",
+            "missing_link": "Need concrete evidence of a definite approval, not just a probable statement."
+          },
+          {
+            "quote": "Leave it for later.",
+            "pattern": "false_cause",
+            "missing_link": "No shown causal link between a probable yes and the decision to defer action."
+          },
+          {
+            "quote": "Someone probably said yes.",
+            "pattern": "authority_override",
+            "missing_link": "No proof the speaker has authority to grant approval that would settle the operation."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "75cf78ad8446c923",
+        "issues": [
+          {
+            "quote": "A successful receipt is on screen. Close the question and tell the customer it worked",
+            "pattern": "scope_transfer",
+            "missing_link": "The receipt must match the specific partner and attempt identifiers to infer success."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "da73959d0a8c1470",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "0e02029d42313bd8",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": null,
+      "raw_if_invalid": "{\n  \"human_event_id",
+      "error": "Reasoning frontload returned an invalid response structure"
+    },
+    {
+      "key": "old_success_new_change:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "884c60a6f6b7f2ba",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "47c4d82265be4552",
+        "issues": [
+          {
+            "quote": "It changed somehow, maybe it is fine.",
+            "pattern": "appeal_to_ignorance",
+            "missing_link": "Absence of known harm does not demonstrate that the change is acceptable; safety must be shown."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "69d1aed9555ef468",
+        "issues": [
+          {
+            "quote": "The AI was confident, so record success.",
+            "pattern": "authority_override",
+            "missing_link": "Confidence does not prove outcome; need actual effect receipt or verification to infer success."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "7abb1dc140e67cb9",
+        "issues": []
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "d30adc9b246bcddf",
+        "issues": [
+          {
+            "quote": "Probably worked. The screen looks okay.",
+            "pattern": "affirming_consequent",
+            "missing_link": "Assumes that a normal-looking screen confirms the task succeeded, ignoring need for explicit effect verification."
+          },
+          {
+            "quote": "Probably worked. The screen looks okay.",
+            "pattern": "hasty_generalization",
+            "missing_link": "Draws a general conclusion about task success from a single visual check without further evidence."
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    }
+  ]
+}

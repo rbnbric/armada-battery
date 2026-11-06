@@ -200,3 +200,89 @@ citations and field bounds; the semantic findings above are a manual reading
 of the recorded outputs. A fresh holdout and a stricter distinction between
 quoted human reasons and machine evidence are needed before claiming reliable
 evasion detection.
+
+### Exact-claim candidate and release decision — 2026-11-06
+
+The experimental `claim_review` AI Hub role receives the selected machine facts
+and the person's exact recorded reason in separate fields. The application
+checks the returned event ID, selected choice, exact quoted spans, cited fact
+IDs and response shape. The role is **not connected to the user interface** and
+does not alter receipts, permissions or official case outcomes.
+
+The first development run met that contract in **6/12** calls. One vague reason
+was still endorsed. After shortening the response shape and adding a
+conservative grounding check, a rerun on the **same** cases met the contract in
+**11/12** calls. The remaining response was unfinished JSON. All four deliberate
+excuses were rejected at the overall reason level; all four evidence-based
+controls were supported; the four vague reasons were rated unsupported. Those
+are manual semantic readings, not independent ground truth about real people.
+
+With that candidate frozen, the first holdout run met the response contract in
+**12/12** native AI Hub calls. Its four deliberate excuses were not endorsed at
+the overall reason level, its four evidence-based controls were supported, and
+its four vague responses were rated unsupported. The claim-level audit found a
+material miss: `authorized_but_unmeasured:random_incompetence` marked the exact
+claim “The boss approved it” as `SUPPORTED`. The selected record established an
+approval for an operator and attempt; it did not identify a boss. Other replies
+classified requests or feelings as `SUPPORTED` atomic claims while correctly
+rating the overall reason unsupported. This inconsistency makes the detailed
+claim review unsuitable as an authoritative explanation.
+
+**Release decision:** hold promotion of `claim_review`. The candidate did not
+eliminate authority borrowing or achieve a clean development response contract.
+It has no installed API/UI path. The holdout has been opened and cannot be
+reused as an unseen test after a repair; a later candidate needs new frozen
+cases. This trial used authored case facts with real native model calls. It
+does not show that a grounded baseline improves a higher-order solver, nor that
+people make better decisions under real consequences. A paired comparison on
+independently verified, consequential cases remains necessary. The earlier
+connected IRIS configuration test establishes a real system effect, but did
+not test this new claim-review role or human decision quality.
+
+[Development packets](../interop/results/claim-review-dev-packets.json) ·
+[first development result](../interop/results/claim-review-dev-first.json) ·
+[revised development result](../interop/results/claim-review-dev-second.json) ·
+[holdout packets](../interop/results/claim-review-holdout-packets.json) ·
+[first holdout result](../interop/results/claim-review-holdout-first.json).
+The corresponding native logs are retained beside the scored results.
+
+### Semantic frontloader development check — 2026-11-06
+
+A broad reasoning-pattern catalog was tried as part of the same `claim_review`
+response. This combined shape met its response contract in only **7/12** known
+development calls; long or unfinished answers made it worse than the smaller
+claim contract. That shape was discarded. The retained candidate uses a
+separate `reasoning_frontload` role with an exact-quote validator and no ability
+to change receipts, official judgments or allowed exits.
+
+The separate role's first development run met its initial structural contract
+in **10/12** calls. Manual audit found an authority false positive: “Someone
+probably said yes” was labelled `authority_override` despite no stated
+override. A conservative validator then rejected that label and formal
+conditional labels without an explicit conditional; only **8/12** of the same
+recorded outputs passed that stricter contract. This re-score made no new model
+calls.
+
+A shorter, one-issue prompt with a 2,000-token cap met the stricter contract in
+**11/12** fresh development calls. The remaining response called “The
+acknowledgement means the change worked” `affirming_consequent` without a
+stated if-then form. Manual audit also found wrong labels in structurally valid
+answers: “Someone probably said yes” and “Probably worked. The screen looks
+okay” were called `acknowledgement_as_effect`, although neither mentioned an
+acknowledgement; “Find another receipt because this one looks odd” was called
+`scope_transfer` without a stated transfer across scopes. The good controls
+received empty issue lists. These are known cases, not a new holdout.
+
+**Decision:** the frontloader remains experimental and is not wired to the
+installed claim reviewer or UI. Its labels are hypotheses, and current false
+positives could mislead an operator. The candidate helper can attach a validated
+scan as unverified context in a later paired experiment, but no model result
+from that two-stage path is claimed here. The opened holdout is spent; a new
+frozen holdout and real, consequential operator cases are needed to test whether
+the scan helps the higher-order reviewer rather than merely adding labels,
+latency and token cost.
+
+[Combined development result](../interop/results/claim-review-combined-dev-first.json) ·
+[first separate scan](../interop/results/reasoning-frontload-dev-first.json) ·
+[shorter separate scan](../interop/results/reasoning-frontload-dev-second.json).
+Their packets and native logs are retained alongside the results.

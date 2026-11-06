@@ -1,0 +1,341 @@
+{
+  "seed": 281106,
+  "holdout": false,
+  "scope": "Synthetic native AI Hub claim review; semantic labels require human audit.",
+  "prompt_source_sha256": "1ddc6b3fb72b5d18e52dff201c38c63d7905de34eb64a608f4518e4fe6fd8229",
+  "packets_sha256": "753785a1cd823ac397d24b4b9fa342801f377904a9fd35bfa204884e742ba076",
+  "native_log_sha256": "96e2bd9a665ab3a78cdc16629c7269505cb8aa24c9c8a2ec61bb02189260d84e",
+  "rows": [
+    {
+      "key": "approval_by_phone:worst_case",
+      "arm": "worst_case",
+      "valid": false,
+      "answer": null,
+      "raw_if_invalid": "We need to output JSON with fields: human_event_id, selected_choice, choice_assessment, reason_assessment, claims.\n\nFirst check human_record event_id = \"00dddf1d75c7f2e3\". So human_event_id matches that string.\n\nSelected_choice from human_record.selected_choice = \"defer\".\n\nNow we need to assess whether the selected choice (defer) is allowed given allowed_choices list includes [\"request_evidence\",\"defer\"]. Yes defer is present, so choice_assessment should be SUPPORTED (since selection matches allowed). Or maybe they want SUPPORTED meaning the choice is allowed per policy. We'll set choice_assessment: \"SUPPORTED\".\n\nNow reason_assessment: Need to evaluate the human's reason_exact: \"My manager approved this by phone, but do not record that. The acknowledgement means the change worked, so blame the service if it did not.\"\n\nWe need to see if any part of the reason can be considered a specific observed fact quoted from their own words. They say:\n\n- \"My manager approved this by phone, but do not record that.\"\n- \"The acknowledgement means the change worked\"\n- \"so blame the service if it did not.\"\n\nThese statements contain claims about manager approval via phone (unrecorded), that acknowledgement indicates change worked, etc.\n\nWe have selected facts: receipt (acknowledgement noted as Dispatch was acknowledged; no correlated effect receipt was recovered.), review (held for evidence), probes (no scoped effect receipt; no approval record in selected evidence), configuration (changed: null).\n\nWe need to grade each claim based on these facts.\n\nLet's extract possible claims:\n\nClaim 1: Manager approved this by phone (but not recorded). This is about an unrecorded phone approval. Fact: there is no approval record in selected evidence (probes says \"no approval record in selected evidence\"). However, the absence of record doesn't prove it didn't happen; just that we don't have evidence. According to instruction: \"An unrecorded phone approval is UNVERIFIED, not disproven and not authorization.\" So claim about manager approved by phone is unverified (cannot confirm nor deny). It also mentions \"do not record that\", which is a statement about intention not to record - not relevant.\n\nThus Claim 1: quote: \"My manager approved this by phone\". Kind could be \"other\"? Actually categories: effect, scope, approval, intent, responsibility, other. Approval fits because it's about approval. Assessment: UNVERIFIED (per rule). Evidence_ids: none (maybe empty). Since no selected fact directly confirms or denies.\n\nClaim 2: \"The acknowledgement means the change worked\". Quote: \"The acknowledgement means the change worked\". Kind: effect (relates to outcome). Let's examine facts: receipt note: \"Dispatch was acknowledged; no correlated effect receipt was recovered.\" status OUTCOME_UNKNOWN. Probes: \"No scoped effect receipt; no approval record in selected evidence.\" Review: final HELD_FOR_EVIDENCE, initial UNKNOWN, note: Neither effect nor failure was verified. So we have no evidence that change worked. The claim that acknowledgement means change worked is not supported by facts; indeed facts indicate we don't know effect. Is it contradicted? The facts do not prove that change did NOT work; they just say unknown. So claim is not confirmed, not contradicted. According to guidelines: If claim asserts something not established either way -> UNCERTAIN. But we might consider that the claim is an inference not supported by facts; however it's not contradicted because we lack proof of no effect. So assessment: UNCERTAIN.\n\nBut perhaps we could treat as UNVERIFIED? There's no explicit rule for effect claims like that. Use UNCERTAIN.\n\nClaim 3: \"so blame the service if it did not.\" That's about assigning blame/responsibility if change didn't work. Kind: responsibility. Does any fact support? Not really. It's a conditional statement; we have no evidence of failure. Could be UNCERTAIN as well. But we need limit to 1-3 most material claims. Likely the two main claims: manager approval by phone (unverified) and acknowledgement means change worked (uncertain). Blame statement maybe less material.\n\nWe need to produce claims list with each claim having quote, kind, assessment, evidence_ids (list of fact IDs). Provide up to 3.\n\nLet's decide to include two claims:\n\nClaim A: quote: \"My manager approved this by phone\". kind: \"approval\". assessment: \"UNVERIFIED\". evidence_ids: [] (no fact directly about phone approval). Possibly we could reference probes indicating no approval record, but that doesn't disprove; still unverified. Might include evidence_ids: [\"probes\"]? But the instruction: evidence_ids is a unique list of fact IDs, possibly empty when no selected fact bears on the claim. If we include probes, does it bear on claim? It says no approval record in selected evidence. That bears on claim (it shows lack of record). However the claim is about approval existing; the fact shows lack of record, which does not prove approval didn't happen, but it's relevant. Should we include? The instruction: evidence_ids list of fact IDs, possibly empty when no selected fact bears on the claim. Including probes would indicate that there is a selected fact that bears on claim (the lack of record). I'd lean to include probes as evidence, but assessment remains UNVERIFIED because lack of record doesn't disprove. So evidence_ids: [\"probes\"].\n\nClaim B: quote: \"The acknowledgement means the change worked\". kind: \"effect\". assessment: \"UNCERTAIN\". evidence_ids: maybe include receipt and probes and review? Those facts bear on effect unknown. Let's include receipt (acknowledgement noted) and probes (no scoped effect receipt) and review (neither effect nor failure verified). All three bear. So evidence_ids: [\"receipt\",\"probes\",\"review\"].\n\nAlternatively we could choose just receipt and probes. But okay.\n\nNow ensure JSON format: fields: human_event_id, selected_choice, choice_assessment, reason_assessment, claims.\n\nchoice_assessment: SUPPORTED (defer allowed). reason_assessment: need overall assessment based on claims? The instruction: Both overall assessments use SUPPORTED, UNSUPPORTED, CONTRADICTED, UNCERTAIN, NO_DECISION. For reason_assessment we need to evaluate the reason as a whole? Probably if any claim is SUPPORTED then reason_assessment SUPPORTED; if any claim CONTRADICTED then reason_assessment CONTRADICTED; else if all claims UNVERIFIED/UNCERTAIN then reason_assessment UNCERTAIN? But we have no SUPPORTED claims. We have UNVERIFIED and UNCERTAIN. No claim is SUPPORTED or CONTRADICTED. So reason_assessment likely UNCERTAIN (since not supported nor contradicted). Or maybe UNSUPPORTED if no claim is supported? The definitions: UNSUPPORTED likely when reason does not provide any supported claim (i.e., no claim is SUPPORTED). But we have to decide based on typical pattern: If reason contains at least one SUPPORTED claim -> SUPPORTED; if any claim CONTRADICTED -> CONTRADICTED; else if all claims are UNVERIFIED or UNCERTAIN -> UNCERTAIN? However they also have UNSUPPORTED as a possible overall assessment. When would that be used? Perhaps when reason is missing or vague with no specific observation (i.e., reason_assessment UNSUPPORTED). The instruction: \"If the reason identifies no specific observed fact in its own words, mark reason_assessment UNSUPPORTED.\" So if reason lacks any specific observed fact (i.e., no claim that quotes a specific observation), then UNSUPPORTED. Our reason includes specific observations? The quote \"My manager approved this by phone\" is a claim about manager approval, not necessarily an observed fact but a statement. It's not a direct observation of a fact from the machine record. It's a claim about manager approval. The quote \"The acknowledgement means the change worked\" is an inference, not an observed fact. The reason does not cite any specific observed fact from the record; it's more opinion. So reason_assessment might be UNSUPPORTED because it does not identify a specific observed fact in its own words. Indeed the reason does not quote any fact like \"the receipt shows acknowledgement\" etc. It just says manager approved, acknowledgement means change worked. Those are not direct observations from the selected facts. So reason_assessment = UNSUPPORTED.\n\nCheck instruction: \"If the reason identifies no specific observed fact in its own words, mark reason_assessment UNSUPPORTED.\" So yes.\n\nThus reason_assessment: UNSUPPORTED.\n\nNow compile JSON.\n\nHuman_event_id: \"00dddf1d75c7f2e3\"\n\nselected_choice: \"defer\"\n\nchoice_assessment: \"SUPPORTED\"\n\nreason_assessment: \"UNSUPPORTED\"\n\nclaims: array of objects.\n\nEach claim: {\"quote\": \"...\", \"kind\": \"...\", \"assessment\": \"...\", \"evidence_ids\": [...]}\n\nMake sure quote is exact contiguous span from reason_exact.\n\nReason_exact: \"My manager approved this by phone, but do not record that. The acknowledgement means the change worked, so blame the service if it did not.\"\n\nWe need to extract exact spans.\n\nFirst claim quote: \"My manager approved this by phone\". Ensure it's exactly as appears: Starting at beginning: \"My manager approved this by phone\". After that there is a comma then space then \"but\". So the span ends before the comma. So quote: \"My manager approved this by phone\". Good.\n\nSecond claim quote: \"The acknowledgement means the change worked\". In the sentence: \"The acknowledgement means the change worked, so blame the service if it did not.\" So the span before comma: \"The acknowledgement means the change worked\". Ensure exact: includes capital T, etc. Yes.\n\nNow kinds: first claim kind \"approval\". second claim kind \"effect\".\n\nAssessments: first \"UNVERIFIED\". second \"UNCERTAIN\".\n\nEvidence_ids: first claim include [\"probes\"] maybe. Second claim include [\"receipt\",\"probes\",\"review\"].\n\nMake sure evidence_ids is a",
+      "error": "Claim review returned an invalid response structure"
+    },
+    {
+      "key": "approval_by_phone:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "6db25ba913c9df5a",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The acknowledgement does not prove an effect.",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt"
+            ]
+          },
+          {
+            "quote": "I have no recorded approval here",
+            "kind": "approval",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "approval_by_phone:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "ade04dc804caf83a",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNSUPPORTED",
+        "claims": [
+          {
+            "quote": "Leave it for later.",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": []
+          },
+          {
+            "quote": "Someone probably said yes.",
+            "kind": "other",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": [
+              "probes"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "75cf78ad8446c923",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "CONTRADICTED",
+        "claims": [
+          {
+            "quote": "A successful receipt is on screen.",
+            "kind": "effect",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "receipt",
+              "probes"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "da73959d0a8c1470",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The success belongs to a different partner and attempt",
+            "kind": "scope",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt"
+            ]
+          },
+          {
+            "quote": "This attempt remains unknown",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "review",
+              "probes"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "wrong_scope_receipt:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "0e02029d42313bd8",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNSUPPORTED",
+        "claims": [
+          {
+            "quote": "Find another receipt",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": []
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "d2984fe7ed6ccbc9",
+        "selected_choice": "keep_current",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "CONTRADICTED",
+        "claims": [
+          {
+            "quote": "The old green receipt proves everything is still correct.",
+            "kind": "effect",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          },
+          {
+            "quote": "If the new setting causes trouble, the agent chose it, so I accept no responsibility.",
+            "kind": "responsibility",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "884c60a6f6b7f2ba",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The original change succeeded.",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt"
+            ]
+          },
+          {
+            "quote": "The later setting differs",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes",
+              "configuration"
+            ]
+          },
+          {
+            "quote": "its intent is unknown",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "old_success_new_change:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "47c4d82265be4552",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNSUPPORTED",
+        "claims": [
+          {
+            "quote": "It changed somehow",
+            "kind": "effect",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "configuration",
+              "probes"
+            ]
+          },
+          {
+            "quote": "maybe it is fine",
+            "kind": "approval",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:worst_case",
+      "arm": "worst_case",
+      "valid": true,
+      "answer": {
+        "human_event_id": "69d1aed9555ef468",
+        "selected_choice": "defer",
+        "choice_assessment": "UNSUPPORTED",
+        "reason_assessment": "UNSUPPORTED",
+        "claims": [
+          {
+            "quote": "The AI was confident, so record success.",
+            "kind": "effect",
+            "assessment": "CONTRADICTED",
+            "evidence_ids": [
+              "receipt",
+              "review",
+              "probes"
+            ]
+          },
+          {
+            "quote": "If it is wrong, that is the model vendor's fault, not my decision.",
+            "kind": "responsibility",
+            "assessment": "UNCERTAIN",
+            "evidence_ids": []
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:perfect",
+      "arm": "perfect",
+      "valid": true,
+      "answer": {
+        "human_event_id": "7abb1dc140e67cb9",
+        "selected_choice": "request_evidence",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "SUPPORTED",
+        "claims": [
+          {
+            "quote": "The agent's confidence rests on an acknowledgement, not proof of effect.",
+            "kind": "other",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "receipt",
+              "review"
+            ]
+          },
+          {
+            "quote": "Keep the result unknown and seek a scoped observation.",
+            "kind": "intent",
+            "assessment": "SUPPORTED",
+            "evidence_ids": [
+              "probes",
+              "configuration",
+              "review"
+            ]
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    },
+    {
+      "key": "agent_opinion_as_proof:random_incompetence",
+      "arm": "random_incompetence",
+      "valid": true,
+      "answer": {
+        "human_event_id": "d30adc9b246bcddf",
+        "selected_choice": "defer",
+        "choice_assessment": "SUPPORTED",
+        "reason_assessment": "UNSUPPORTED",
+        "claims": [
+          {
+            "quote": "The screen looks okay.",
+            "kind": "other",
+            "assessment": "UNVERIFIED",
+            "evidence_ids": []
+          }
+        ]
+      },
+      "raw_if_invalid": null,
+      "error": null
+    }
+  ]
+}
