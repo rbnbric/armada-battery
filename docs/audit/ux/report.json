@@ -54,6 +54,30 @@
       "passed": true
     },
     {
+      "name": "320: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "320: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "320: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "320: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "320: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "320: comparison citation retains observation time",
+      "passed": true
+    },
+    {
       "name": "320: receipt route",
       "passed": true
     },
@@ -159,6 +183,30 @@
     },
     {
       "name": "360: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "360: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "360: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "360: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "360: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "360: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "360: comparison citation retains observation time",
       "passed": true
     },
     {
@@ -274,6 +322,30 @@
       "passed": true
     },
     {
+      "name": "390: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "390: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "390: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "390: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "390: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "390: comparison citation retains observation time",
+      "passed": true
+    },
+    {
       "name": "390: receipt route",
       "passed": true
     },
@@ -382,6 +454,30 @@
       "passed": true
     },
     {
+      "name": "768: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "768: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "768: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "768: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "768: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "768: comparison citation retains observation time",
+      "passed": true
+    },
+    {
       "name": "768: receipt route",
       "passed": true
     },
@@ -487,6 +583,30 @@
     },
     {
       "name": "1440: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "1440: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "1440: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "1440: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "1440: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "1440: comparison citation retains observation time",
       "passed": true
     },
     {
@@ -670,6 +790,22 @@
       "passed": true
     },
     {
+      "name": "AI sources use labels rather than raw identifiers",
+      "passed": true
+    },
+    {
+      "name": "AI attribution accurately covers the whole explanation",
+      "passed": true
+    },
+    {
+      "name": "AI source reveals matching fact",
+      "passed": true
+    },
+    {
+      "name": "citations leave operation and model calls untouched",
+      "passed": true
+    },
+    {
       "name": "receipt failure keeps review and exposes gap",
       "passed": true
     },
@@ -748,8 +884,50 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 255.625,
+          "h": 58
         },
         {
           "tag": "INPUT",
@@ -852,8 +1030,50 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
         },
         {
           "tag": "INPUT",
@@ -956,8 +1176,50 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
         },
         {
           "tag": "INPUT",
@@ -1060,8 +1322,50 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
         },
         {
           "tag": "INPUT",
@@ -1230,8 +1534,50 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
         },
         {
           "tag": "INPUT",
@@ -1301,8 +1647,8 @@
   "browser_errors": [],
   "source_sha256": {
     "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "fad68e57221a3e3e23bf4641a28e0a078cffbc45b3cd9d0156b143dcfc8db5a4",
-    "static/app.css": "d84e5ff9fffecf3cfdddfe4237e63e470cc19c4c31282b510f3dfd040eb19414",
+    "static/app.js": "0350cd6e2775006925e7fac57e4350fc0dd2fcc72dca2333a901687e4d435443",
+    "static/app.css": "274fab7ff9f2a70e6122392f76833eb94cb177468dc2effcdc8d7e3fabd328e7",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"

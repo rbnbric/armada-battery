@@ -1352,9 +1352,48 @@ async function submitNativeCase(receiptId, parentId = "") {
     announce(`Case admission not confirmed: ${error.message}. Retrying this review keeps its request key and does not repeat the operation.`, true);
   }
 }
+function sourceNote(label, target, context = "") {
+  const note = node("div", undefined, "source-note");
+  const link = button(label, () => {
+    for (let parent = target; parent; parent = parent.parentElement)
+      if (parent.tagName === "DETAILS") parent.open = true;
+    const focus = target.querySelector?.("summary") || target;
+    if (focus.tagName !== "SUMMARY") focus.setAttribute("tabindex", "-1");
+    focus.focus?.({preventScroll:true});
+    focus.scrollIntoView?.({block:"nearest"});
+  });
+  link.className = "source-link";
+  if (target.id) link.setAttribute("aria-controls", target.id);
+  note.append(node("span", "Source: "), link);
+  if (context) note.append(node("span", context, "source-context"));
+  return note;
+}
+function sourceTime(value) {
+  if (!value) return "time not recorded";
+  if (/(Z|[+-]\d{2}:\d{2})$/.test(value) && Number.isFinite(Date.parse(value)))
+    return new Date(value).toISOString().replace("T", " ").replace(/\.\d{3}Z$/, " UTC");
+  return String(value);
+}
+function briefSourceContext(fact, brief) {
+  if (fact.id === "configuration") return `Compared ${sourceTime(brief.read_at)}`;
+  if (fact.observed_at) return `Review updated ${fact.observed_at} (IRIS time)`;
+  return brief.scope === "synthetic" ? "Simulated operation" : "IRIS operation";
+}
 function renderDecisionBrief(c) {
   const b = c.brief;
+  const evidence = node("details"), factViews = new Map();
+  evidence.append(node("summary", "Why is Battery showing this?"));
+  for (const fact of b.facts) {
+    const item = section(fact.label, fields(fact.value));
+    item.id = `decision-fact-${fact.id}`;
+    item.append(node("p", briefSourceContext(fact, b), "quiet"));
+    factViews.set(fact.id, item); evidence.append(item);
+  }
+  evidence.append(node("p", `Configuration read: ${b.read_at}. ${b.history_note}`));
   const box = section(b.question, node("p", b.summary));
+  const sources = node("div", undefined, "brief-sources");
+  for (const fact of b.facts) sources.append(sourceNote(fact.label, factViews.get(fact.id), briefSourceContext(fact, b)));
+  box.append(sources);
   box.className += " decision-brief";
   box.dataset.kind = b.kind;
   box.prepend(node("p", b.choices.length ? "Your next decision" : "Current task", "eyebrow"));
@@ -1364,22 +1403,15 @@ function renderDecisionBrief(c) {
   if (b.differences.length) box.append(table(["What changed", "Retained with receipt", "Current value"], b.differences.map(d => [d.field, JSON.stringify(d.retained), JSON.stringify(d.current)])));
   if (b.differences_omitted) box.append(node("p", `${b.differences_omitted} additional changed fields omitted. Inspect the target before deciding.`));
   for (const unknown of b.unknowns) box.append(node("p", unknown, "brief-limit"));
-  const evidence = node("details");
-  evidence.append(node("summary", "Why is Battery showing this?"));
-  for (const fact of b.facts) {
-    const item = section(fact.label, fields(fact.value));
-    item.id = `decision-fact-${fact.id}`;
-    evidence.append(item);
-  }
-  evidence.append(node("p", `Configuration read: ${b.read_at}. ${b.history_note}`));
   const help = node("details"); help.append(node("summary", "More explanation"), evidence);
   if (c.explanation?.status === "ready") {
     const e = c.explanation.content;
     const explanation = section("AI explanation — interpretation of the evidence", node("p", e.summary), node("p", e.meaning), node("p", e.missing));
+    explanation.append(node("p", "Sources cited for this explanation as a whole:", "quiet"));
     for (const id of e.evidence_ids) {
-      const link = node("a", `Evidence: ${id}`); link.href = `#decision-fact-${id}`;
-      link.addEventListener("click", event => { event.preventDefault(); evidence.open = true; const fact = byId(`decision-fact-${id}`); fact?.scrollIntoView({block:"center"}); });
-      explanation.append(link, node("span", " "));
+      const fact = b.facts.find(f => f.id === id);
+      if (fact) explanation.append(sourceNote(fact.label, factViews.get(id), briefSourceContext(fact, b)));
+      else explanation.append(node("p", "A cited source is unavailable in this review.", "brief-limit"));
     }
     help.append(explanation);
   } else if (c.explanation) help.append(node("p", c.explanation.detail));
@@ -1489,7 +1521,9 @@ function renderCaseReceipt(c) {
   if (r.explanation) box.append(node("p", r.explanation));
   if (r.finished_at || r.started_at) box.append(node("p", `${r.finished_at ? "Finished" : "Started"} (UTC): ${r.finished_at || r.started_at}`, "quiet"));
   if (r.status === "VERIFIED_SUCCESS") box.append(node("p", "This verifies the recorded configuration or task history. It does not by itself prove that a downstream service works.", "brief-limit"));
-  const properties = node("details"); properties.append(node("summary", "Receipt details"), fields(r));
+  const properties = node("details"); properties.id = "receipt-source";
+  properties.append(node("summary", "Receipt details"), fields(r));
+  box.append(sourceNote("Saved operation receipt", properties, r.finished_at ? `Finished ${sourceTime(r.finished_at)}` : "Completion time not recorded"));
   const observations = node("details"); observations.append(node("summary", "Receipt evidence"));
   for (const o of packet.evidence || []) observations.append(details(`${o.source || "Observation"} · ${o.captured_at || "time not recorded"}`, o));
   if (!packet.evidence?.length) observations.append(node("p", "Supporting observations are unavailable in this response."));
@@ -1501,7 +1535,10 @@ function renderCaseStory(c) {
   const steps = node("ol", undefined, "case-story");
   const add = (title, text, label, record) => {
     const step = node("li"); step.append(node("h3", title), node("p", text));
-    if (record) step.append(details(label, record));
+    const supporting = details(label, record);
+    const sourceLabels = {"Earlier review details":"Review history", "Evidence check details":"Evidence check record", "Review conclusion details":"Recorded review result"};
+    supporting.id = `story-source-${steps.children.length}`;
+    step.append(sourceNote(sourceLabels[label], supporting, `Review updated ${c.updated_at || "at an unrecorded time"}${c.updated_at ? " (IRIS time)" : ""}`), supporting);
     steps.append(step);
   };
   const history = Array.isArray(r.ReviewHistoryJSON) ? r.ReviewHistoryJSON : [];
@@ -1511,10 +1548,10 @@ function renderCaseStory(c) {
     assessment = first.verdict === "NO" ? "The first review did not support the rule’s assertion." : first.verdict === "YES" ? "The first review supported the rule’s assertion." : "The first review left the rule’s assertion unresolved.";
     assessment += first.output === "PASS" ? " It reported that the result passed." : first.output === "FAIL" ? " It reported that the result failed." : " It could not establish whether the result passed.";
   }
-  add("The initial review", assessment, "Earlier review details", history.length ? history : null);
+  add("The initial review", assessment, "Earlier review details", {case_id:c.id, initial_assessment:first || null, review_history:history});
   const probe = ({CHECK_EFFECT_RECEIPT:"Battery checked the saved receipt for this operation.", READ_CURRENT_TARGET:"Battery read the target’s current settings."})[r.executed_probe];
-  add("The evidence check", probe || (r.executed_probe ? "Battery recorded an additional evidence check." : "No separate investigation step is recorded here."), "Evidence check details", r.ProbeHistoryJSON || (r.executed_probe ? {executed_probe:r.executed_probe} : null));
-  add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON});
+  add("The evidence check", probe || (r.executed_probe ? "Battery recorded an additional evidence check." : "No separate investigation step is recorded here."), "Evidence check details", {case_id:c.id, executed_probe:r.executed_probe || null, evidence_reads:r.ProbeHistoryJSON || null});
+  add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {case_id:c.id, state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON});
   story.append(steps); return story;
 }
 function renderNativeCases(root) {

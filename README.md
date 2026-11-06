@@ -13,9 +13,10 @@ The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49
 **UX update:** Cases opens the latest review with its receipt and a plain-language
 “What happened” sequence, followed by the current task and the
 next useful action. The Battery logo anchors the refreshed dark theme; history
-and technical evidence expand beneath the summary. Case/receipt navigation keeps
+and technical evidence expand beneath the summary. Named source references open
+the supporting record directly. Case/receipt navigation keeps
 your draft and reading position, and explicit links survive sign-in. Verified:
-126 public Python tests, 13 UI handler tests, 177 browser assertions and 15 installed HTTP
+126 public Python tests, 13 UI handler tests, 211 browser assertions and 15 installed HTTP
 checks. [Screenshots, delivery proof and limits](docs/UX_REFINEMENT_EVIDENCE.md).
 
 **Earlier decision-brief qualification:** Cases now starts with a readable summary and a

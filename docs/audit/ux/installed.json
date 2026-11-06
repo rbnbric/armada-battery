@@ -64,8 +64,8 @@
   ],
   "hashes": {
     "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "fad68e57221a3e3e23bf4641a28e0a078cffbc45b3cd9d0156b143dcfc8db5a4",
-    "static/app.css": "d84e5ff9fffecf3cfdddfe4237e63e470cc19c4c31282b510f3dfd040eb19414",
+    "static/app.js": "0350cd6e2775006925e7fac57e4350fc0dd2fcc72dca2333a901687e4d435443",
+    "static/app.css": "274fab7ff9f2a70e6122392f76833eb94cb177468dc2effcdc8d7e3fabd328e7",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "app.py": "f724bccdac79a0905fa2d5e24de52b07bfd1556b21955eae809600b9d723abea"
   },

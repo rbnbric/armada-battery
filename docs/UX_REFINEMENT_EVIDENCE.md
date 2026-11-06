@@ -31,7 +31,7 @@ history, optional explanation and technical records expand beneath each section.
 | --- | --- | --- |
 | Python suite | 126 public-checkout tests and both source-tree HTTP asset tests passed; earlier full source-tree qualification passed 128 tests | Engine/API/session/ledger regressions plus exact HTTP logo and asset routes |
 | UI handler suite | 13 passed | Existing preparation, expiry, response loss and identity behaviors; recovery fixture updated to select its explicit case route |
-| Chromium journeys | 177 passed; no browser exceptions | 320, 360, 390, 768, 1440px, 200% root text, keyboard, browser history, focus/selection/scroll, contrast, stale decisions, double click, expired identity, failed explanation, search, long/hostile data and shuffled navigation across 12 screens |
+| Chromium journeys | 211 passed; no browser exceptions | 320, 360, 390, 768, 1440px, 200% root text, keyboard, browser history, focus/selection/scroll, contrast, stale decisions, double click, expired identity, failed explanation, search, long/hostile data and shuffled navigation across 12 screens |
 | Installed HTTP checks | 15 passed | Served source hashes, CSP, logo MIME, sign-in, retained case/brief/history and linked receipt |
 | Installed/source comparison | 5 of 5 exact matches | app.py, HTML, CSS, JavaScript and logo |
 
@@ -134,3 +134,35 @@ it reconnected, the Docker update completed with exit code 0. All 15 installed
 HTTP checks passed and all five served/installed source hashes matched the
 qualified source and public checkout. The retained application, IRIS production
 and data were reused.
+
+## Readable evidence citations — 2026-11-06
+
+The receipt, each What happened step and the current-task brief now carry named
+source references beneath their assertions. These identify the saved operation
+receipt, review history, evidence-check record, review result and current
+configuration comparison. Source captions show their recorded time or explicitly
+say when it is unavailable. Review update times are labelled as review updates;
+they are not presented as observation times for individual probes.
+
+Activating a reference reveals its supporting detail, including nested closed
+sections, and moves keyboard focus to the record. Full identifiers and original
+values remain in those details. An absent review step cites the available record
+showing the missing field; it never fabricates an earlier assessment.
+
+The optional AI explanation uses the readable labels of the fact IDs it actually
+cited. Its existing contract supplies a shared evidence list, so the UI explicitly
+labels these as sources for the whole explanation. It does not invent a mapping
+from individual model sentences to evidence. Citation presence does not establish
+that a model's interpretation is correct.
+
+Qualification: 211 real-browser assertions and 13 UI handler tests passed. New
+checks cover citation destinations, nested disclosure, keyboard focus, observation
+time display, model-source labels and preservation of the no-operation/no-model
+side effect boundary when reading sources.
+
+Delivery: JavaScript and CSS were transferred to the existing Work folder and
+applied to the web container. The command acknowledgement was lost; the completed
+verification report was recovered from the Work folder without replaying the
+command. It reports all 15 HTTP checks passed, and all five recorded hashes match
+the current tested source and public checkout. No native production restart or
+model inference was requested.
