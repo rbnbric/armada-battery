@@ -4,26 +4,45 @@
 
 ## Version 1.0.3 — interoperability agent preview for contest 49
 
-**[Read the illustrated community guide: An AI agent can be wrong and still be useful](docs/community/2026-11-05/)** — the investigation, REST repairs, screenshots and measured results. [Copyable article Markdown](docs/community/2026-11-05/article.md).
+### The reply was lost. The change was not.
 
-The current repository connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
+A request can reach IRIS, change a configuration, and lose its reply on the way
+back. Battery keeps the original attempt answerable: it saves the receipt,
+checks fresh evidence, and does not turn silence into permission to send the
+change again. The current application adds native IRIS AI Hub review of that
+record, followed by deeper investigation when the first answer is uncertain or
+contradictory.
 
-**Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
+**[Try the first-run walkthrough](https://rbnbric.github.io/armada-battery/)**
+· **[Read the illustrated investigation](docs/community/2026-11-05/)**
+· **[Run the connected AI Hub workflow](docs/NATIVE_CASE_WORKFLOW.md)**
 
-**Current case journey:** Cases opens the latest review with one plain-language,
-source-linked summary and the question that needs a person. Three stages then
-show the current task, what happened, and the supporting records. Swipe between
-them on a phone or use the arrows on desktop. A five-step, credential-free
-practice case opens on first visit, even before sign-in. Visitors choose how to
-handle a lost reply, inspect a saved receipt and fresh task history, compare an
-agent's initial answer with its corrected review, and decide whether to rerun.
-It is scripted synthetic practice: no IRIS request or AI call is sent. Finishing
-the practice opens a short tour of the actual case, source links, report stage
-and request procedure; when no case is accessible, the tour starts at Overview.
-The corner help button replays the practice. The header keeps Cases, Overview and New request close, with
-other records and settings in one menu. The case screen uses warm paper, graphite
-and brass from the Battery mark, with a centered ultrawide reading canvas.
-[UX tests and limits](docs/UX_REFINEMENT_EVIDENCE.md).
+![Battery's current case view: a sourced summary and a question for the operator](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-1440.png)
+
+The case view now starts with what happened in plain language, where the answer
+came from, and what still needs a person. The task, investigation, and supporting
+records follow in three swipeable stages on phones or arrow-controlled stages on
+desktop. The first visit offers a five-step practice case about a lost reply,
+the saved receipt, fresh history, and an agent that corrects its first answer.
+The practice and hosted tour use synthetic records: **they make no IRIS request
+and run no AI Hub agent**. Connected AI Hub use requires the separately obtained
+EAP image and configured model access. [See the UI evidence and limits](docs/UX_REFINEMENT_EVIDENCE.md).
+
+**Connected demonstration:** a temporary REST application was created on real
+IRIS, its receipt recovered after the client closed the response, and its
+configuration reviewed through AI Hub. Reusing the execution key returned the
+same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and
+qualification account were removed. This proved one configuration workflow. A
+[subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the
+configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed
+after fixing two native defects. These checks do not qualify all four
+administration workflows.
+
+Battery's native workflow includes receipt submission, durable cases, small-agent
+review, larger-agent investigation, authenticated evidence tools, bounded
+follow-up, and deterministic outcome checks. The
+[community article](docs/community/2026-11-05/article.md) shows the initial
+wrong answer alongside the corrected conclusion.
 
 **Earlier decision-brief qualification:** Cases now starts with a readable summary and a
 focused question when intent is unresolved. Human answers are bound to the evidence
@@ -144,11 +163,11 @@ result.
 
 ## Screenshots
 
-![Battery operations console](docs/screenshots/battery-console-desktop.png)
-![Battery mobile console](docs/screenshots/battery-console-mobile.png)
+![Battery case and operator decision on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
+![First-run practice case on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
 
-These show the bundled **synthetic adapter**, rendered at 1440px and 390px.
-Synthetic values are demonstration fixtures, not measurements of an IRIS instance.
+These show the current case and practice screens at 390px. Their synthetic values
+are demonstration fixtures, not measurements of an IRIS instance.
 
 ## Current qualification and limits
 
