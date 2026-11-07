@@ -5,12 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Armada Battery · Operations</title>
     <link rel="icon" href="/static/battery-logo.png" />
-    <link rel="stylesheet" href="/static/app.css" />
+    <link rel="stylesheet" href="/static/app.css?v=7cd8aec24669" />
   </head>
   <body>
     <a class="skip" href="#workspace">Skip to workspace</a>
     <header class="status-bar">
       <a class="brand" href="#cases" aria-label="Armada Battery — Cases"><img src="/static/battery-logo.png" width="48" height="48" alt="" /><span><strong class="wordmark">Armada Battery</strong><small>Understand. Decide. Continue.</small></span></a>
+      <nav aria-label="Management areas" id="navigation">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-items">Menu · <span id="nav-current">Cases</span></button>
+        <div id="nav-items">
+          <button data-page="cases" aria-current="page">Cases</button>
+          <button data-page="overview">Overview</button>
+          <button data-page="request">New request</button>
+          <details class="nav-more">
+            <summary>Records &amp; settings</summary>
+            <div class="nav-more-items">
+              <button data-page="tasks">Tasks <span data-quality="tasks"></span></button>
+              <button data-page="webapps">Web applications <span data-quality="web_apps"></span></button>
+              <button data-page="receipts">Receipts</button>
+              <button data-page="rest">REST API coverage <span class="quiet">Capability notes</span></button>
+              <button data-page="permissions">Permissions <span data-quality="users"></span></button>
+              <button data-page="security">Security <span data-quality="tls"></span></button>
+              <button data-page="os">Operating system <span data-quality="system"></span></button>
+              <button data-page="logs">Logs &amp; audit <span data-quality="audit"></span></button>
+              <button data-page="ledger">Evidence ledger</button>
+              <button data-page="rules">Rules</button>
+            </div>
+          </details>
+        </div>
+      </nav>
       <span id="adapter" class="badge unknown">Connecting…</span>
       <span id="authority" class="badge unknown">Authority unknown</span>
       <details class="instance-detail">
@@ -25,45 +48,6 @@
       </details>
     </header>
     <div class="shell">
-      <nav aria-label="Management areas" id="navigation">
-        <button
-          class="nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="nav-items"
-        >
-          Menu · <span id="nav-current">Cases</span>
-        </button>
-        <div id="nav-items">
-          <p>Workspace</p><button data-page="cases" aria-current="page">Cases</button><button data-page="overview">Overview</button>
-          <p>Manage</p>
-          <button data-page="tasks">
-            Tasks <span data-quality="tasks"></span>
-          </button>
-          <button data-page="webapps">
-            Web applications <span data-quality="web_apps"></span>
-          </button>
-          <button data-page="rest">
-            REST API coverage <span class="quiet">Capability notes</span>
-          </button>
-          <button data-page="permissions">
-            Permissions <span data-quality="users"></span>
-          </button>
-          <button data-page="security">
-            Security <span data-quality="tls"></span>
-          </button>
-          <button data-page="os">
-            Operating system <span data-quality="system"></span>
-          </button>
-          <button data-page="logs">
-            Logs &amp; audit <span data-quality="audit"></span>
-          </button>
-          <p>Evidence</p>
-          <button data-page="receipts">Receipts</button>
-          <button data-page="ledger">Evidence ledger</button>
-          <button data-page="rules">Rules</button>
-        </div>
-      </nav>
       <main id="workspace" tabindex="-1">
         <div class="page-heading">
           <h1 id="page-title">Cases</h1>
@@ -195,6 +179,14 @@
         </section>
       </main>
     </div>
-    <script src="/static/app.js"></script>
+    <button id="help-launcher" type="button" aria-label="Open Battery guide" title="Battery guide">?</button>
+    <dialog id="help-dialog" aria-labelledby="help-title">
+      <div class="help-head"><img src="/static/battery-logo.png" width="42" height="42" alt="" /><div><p class="eyebrow">Armada Battery guide</p><h2 id="help-title">Start with what needs your judgment</h2></div></div>
+      <p id="help-progress" class="quiet"></p>
+      <div id="help-body"></div>
+      <div id="help-try-slot"></div>
+      <div class="help-actions"><button id="help-dismiss" type="button">Skip guide</button><button id="help-back" type="button">Back</button><button id="help-next" type="button" class="primary">Next</button></div>
+    </dialog>
+    <script src="/static/app.js?v=cd145846c967"></script>
   </body>
 </html>

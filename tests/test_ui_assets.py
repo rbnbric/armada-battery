@@ -22,4 +22,7 @@ class UIAssetsTests(unittest.TestCase):
             for asset in ['/static/app.js','/static/app.css','/static/battery-logo.png']:
                 self.assertIn(asset,response.text)
                 self.assertEqual(client.get(asset).status_code,200)
+            for name in ['app.js','app.css']:
+                digest=hashlib.sha256((Path(__file__).resolve().parents[1]/'static'/name).read_bytes()).hexdigest()[:12]
+                self.assertIn(f'/static/{name}?v={digest}',response.text)
             self.assertIn('id="nav-current">Cases',response.text)

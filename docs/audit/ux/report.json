@@ -30,7 +30,23 @@
       "passed": true
     },
     {
-      "name": "320: status, record, evidence, decision order",
+      "name": "320: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "320: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "320: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "320: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "320: full review citation opens receipt",
       "passed": true
     },
     {
@@ -47,6 +63,26 @@
     },
     {
       "name": "320: scope visible",
+      "passed": true
+    },
+    {
+      "name": "320: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "320: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "320: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "320: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "320: horizontal scroll returns to task",
       "passed": true
     },
     {
@@ -170,7 +206,23 @@
       "passed": true
     },
     {
-      "name": "360: status, record, evidence, decision order",
+      "name": "360: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "360: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "360: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "360: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "360: full review citation opens receipt",
       "passed": true
     },
     {
@@ -187,6 +239,26 @@
     },
     {
       "name": "360: scope visible",
+      "passed": true
+    },
+    {
+      "name": "360: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "360: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "360: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "360: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "360: horizontal scroll returns to task",
       "passed": true
     },
     {
@@ -314,7 +386,23 @@
       "passed": true
     },
     {
-      "name": "390: status, record, evidence, decision order",
+      "name": "390: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "390: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "390: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "390: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "390: full review citation opens receipt",
       "passed": true
     },
     {
@@ -331,6 +419,26 @@
     },
     {
       "name": "390: scope visible",
+      "passed": true
+    },
+    {
+      "name": "390: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "390: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "390: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "390: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "390: horizontal scroll returns to task",
       "passed": true
     },
     {
@@ -454,7 +562,23 @@
       "passed": true
     },
     {
-      "name": "768: status, record, evidence, decision order",
+      "name": "768: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "768: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "768: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "768: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "768: full review citation opens receipt",
       "passed": true
     },
     {
@@ -471,6 +595,26 @@
     },
     {
       "name": "768: scope visible",
+      "passed": true
+    },
+    {
+      "name": "768: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "768: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "768: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "768: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "768: horizontal scroll returns to task",
       "passed": true
     },
     {
@@ -594,7 +738,23 @@
       "passed": true
     },
     {
-      "name": "1440: status, record, evidence, decision order",
+      "name": "1440: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "1440: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "1440: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "1440: full review citation opens receipt",
       "passed": true
     },
     {
@@ -611,6 +771,26 @@
     },
     {
       "name": "1440: scope visible",
+      "passed": true
+    },
+    {
+      "name": "1440: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "1440: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "1440: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "1440: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "1440: horizontal scroll returns to task",
       "passed": true
     },
     {
@@ -706,6 +886,382 @@
       "passed": true
     },
     {
+      "name": "2560: cases first",
+      "passed": true
+    },
+    {
+      "name": "2560: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "2560: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "2560: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "2560: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "2560: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "2560: receipt and story reading order",
+      "passed": true
+    },
+    {
+      "name": "2560: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "2560: case uses the available canvas",
+      "passed": true
+    },
+    {
+      "name": "2560: question and explanation share the top row",
+      "passed": true
+    },
+    {
+      "name": "2560: focused case stage is centered",
+      "passed": true
+    },
+    {
+      "name": "2560: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "2560: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "2560: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "2560: full review citation opens receipt",
+      "passed": true
+    },
+    {
+      "name": "2560: original operation and current settings distinguished",
+      "passed": true
+    },
+    {
+      "name": "2560: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "2560: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "2560: scope visible",
+      "passed": true
+    },
+    {
+      "name": "2560: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "2560: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "2560: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "2560: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "2560: horizontal scroll returns to task",
+      "passed": true
+    },
+    {
+      "name": "2560: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "2560: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "2560: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "2560: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "2560: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "2560: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "2560: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "2560: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "2560: comparison citation retains observation time",
+      "passed": true
+    },
+    {
+      "name": "2560: receipt route",
+      "passed": true
+    },
+    {
+      "name": "2560: draft retained",
+      "passed": true
+    },
+    {
+      "name": "2560: choice retained",
+      "passed": true
+    },
+    {
+      "name": "2560: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "2560: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "2560: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "2560: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "2560: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "2560: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "2560: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "2560: one decision request",
+      "passed": true
+    },
+    {
+      "name": "2560: search empty state",
+      "passed": true
+    },
+    {
+      "name": "2560: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "2560: explanation failure retains summary",
+      "passed": true
+    },
+    {
+      "name": "3440: cases first",
+      "passed": true
+    },
+    {
+      "name": "3440: logo loaded",
+      "passed": true
+    },
+    {
+      "name": "3440: latest review opens directly",
+      "passed": true
+    },
+    {
+      "name": "3440: linked receipt visible",
+      "passed": true
+    },
+    {
+      "name": "3440: what happened visible",
+      "passed": true
+    },
+    {
+      "name": "3440: receipt details closed",
+      "passed": true
+    },
+    {
+      "name": "3440: receipt and story reading order",
+      "passed": true
+    },
+    {
+      "name": "3440: answer and decision precede detailed evidence",
+      "passed": true
+    },
+    {
+      "name": "3440: case uses the available canvas",
+      "passed": true
+    },
+    {
+      "name": "3440: question and explanation share the top row",
+      "passed": true
+    },
+    {
+      "name": "3440: focused case stage is centered",
+      "passed": true
+    },
+    {
+      "name": "3440: receipt uses the paper surface",
+      "passed": true
+    },
+    {
+      "name": "3440: full review is opt in",
+      "passed": true
+    },
+    {
+      "name": "3440: bounded review uses one explicit request",
+      "passed": true
+    },
+    {
+      "name": "3440: full review citation opens receipt",
+      "passed": true
+    },
+    {
+      "name": "3440: original operation and current settings distinguished",
+      "passed": true
+    },
+    {
+      "name": "3440: choices not preselected",
+      "passed": true
+    },
+    {
+      "name": "3440: technical initially closed",
+      "passed": true
+    },
+    {
+      "name": "3440: scope visible",
+      "passed": true
+    },
+    {
+      "name": "3440: current task is first stage",
+      "passed": true
+    },
+    {
+      "name": "3440: arrow opens report",
+      "passed": true
+    },
+    {
+      "name": "3440: arrow opens sources",
+      "passed": true
+    },
+    {
+      "name": "3440: arrow returns to report",
+      "passed": true
+    },
+    {
+      "name": "3440: horizontal scroll returns to task",
+      "passed": true
+    },
+    {
+      "name": "3440: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "3440: 44px working controls",
+      "passed": true
+    },
+    {
+      "name": "3440: palette contrast",
+      "passed": true
+    },
+    {
+      "name": "3440: every story assertion has a named source",
+      "passed": true
+    },
+    {
+      "name": "3440: readable source type and timestamp",
+      "passed": true
+    },
+    {
+      "name": "3440: receipt citation opens exact record",
+      "passed": true
+    },
+    {
+      "name": "3440: keyboard citation opens the conclusion",
+      "passed": true
+    },
+    {
+      "name": "3440: nested citation reveals source and focus",
+      "passed": true
+    },
+    {
+      "name": "3440: comparison citation retains observation time",
+      "passed": true
+    },
+    {
+      "name": "3440: receipt route",
+      "passed": true
+    },
+    {
+      "name": "3440: draft retained",
+      "passed": true
+    },
+    {
+      "name": "3440: choice retained",
+      "passed": true
+    },
+    {
+      "name": "3440: history disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "3440: technical disclosure retained",
+      "passed": true
+    },
+    {
+      "name": "3440: no carried receipt success",
+      "passed": true
+    },
+    {
+      "name": "3440: browser history restores case",
+      "passed": true
+    },
+    {
+      "name": "3440: keyboard disclosure works",
+      "passed": true
+    },
+    {
+      "name": "3440: focused draft survives refresh",
+      "passed": true
+    },
+    {
+      "name": "3440: scroll survives refresh",
+      "passed": true
+    },
+    {
+      "name": "3440: one decision request",
+      "passed": true
+    },
+    {
+      "name": "3440: search empty state",
+      "passed": true
+    },
+    {
+      "name": "3440: completed review has no choices",
+      "passed": true
+    },
+    {
+      "name": "3440: explanation failure retains summary",
+      "passed": true
+    },
+    {
       "name": "login returns to requested case",
       "passed": true
     },
@@ -723,6 +1279,30 @@
     },
     {
       "name": "expiry clears draft memory",
+      "passed": true
+    },
+    {
+      "name": "first visit offers the rules guide",
+      "passed": true
+    },
+    {
+      "name": "guide actions remain visible on phone",
+      "passed": true
+    },
+    {
+      "name": "guide example action remains visible on phone",
+      "passed": true
+    },
+    {
+      "name": "guide advances",
+      "passed": true
+    },
+    {
+      "name": "guide dismissal is remembered",
+      "passed": true
+    },
+    {
+      "name": "corner help reopens guide",
       "passed": true
     },
     {
@@ -862,6 +1442,10 @@
       "passed": true
     },
     {
+      "name": "unknown receipt has its own visible treatment",
+      "passed": true
+    },
+    {
       "name": "reading does not submit reviews or operations",
       "passed": true
     },
@@ -894,20 +1478,20 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 142.40625,
+          "w": 137.1875,
+          "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144,
           "h": 62.78125
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 292.8125,
+          "w": 296,
           "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 288,
-          "h": 46.765625
         },
         {
           "tag": "BUTTON",
@@ -932,6 +1516,66 @@
           "type": "button",
           "w": 119.125,
           "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 247.65625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 247.65625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 247.65625,
+          "h": 45.171875
         },
         {
           "tag": "BUTTON",
@@ -978,56 +1622,38 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 273.609375,
-          "h": 44
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "TEXTAREA",
-          "type": "textarea",
-          "w": 255.625,
-          "h": 101.15625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 255.625,
-          "h": 45.171875
+          "w": 242.84375,
+          "h": 58
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 255.625,
-          "h": 45.171875
+          "w": 252.4375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 252.4375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 252.4375,
+          "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
         }
       ],
       "fonts": [
@@ -1035,10 +1661,10 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.990117593342424,
-        "secondary": 9.197936812464311,
-        "input": 4.388325094388485,
-        "focus": 9.5043256471059
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
       }
     },
     {
@@ -1048,20 +1674,20 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 162.40625,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 332.8125,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 328,
+          "w": 137.1875,
           "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 164,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 336,
+          "h": 44
         },
         {
           "tag": "BUTTON",
@@ -1086,6 +1712,66 @@
           "type": "button",
           "w": 119.125,
           "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 286.84375,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 286.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 286.84375,
+          "h": 45.171875
         },
         {
           "tag": "BUTTON",
@@ -1136,52 +1822,34 @@
           "h": 44
         },
         {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "TEXTAREA",
-          "type": "textarea",
-          "w": 295.625,
-          "h": 101.15625
-        },
-        {
           "tag": "BUTTON",
-          "type": "submit",
-          "w": 295.625,
-          "h": 45.171875
+          "type": "button",
+          "w": 291.625,
+          "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 295.625,
-          "h": 45.171875
+          "w": 291.625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 291.625,
+          "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
         }
       ],
       "fonts": [
@@ -1189,10 +1857,10 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.990117593342424,
-        "secondary": 9.197936812464311,
-        "input": 4.388325094388485,
-        "focus": 9.5043256471059
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
       }
     },
     {
@@ -1202,20 +1870,20 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 115.609375,
-          "h": 62.78125
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 115.609375,
-          "h": 62.78125
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 358,
+          "w": 137.1875,
           "h": 46.765625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 116.671875,
+          "h": 62.78125
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 116.671875,
+          "h": 62.78125
         },
         {
           "tag": "BUTTON",
@@ -1240,6 +1908,66 @@
           "type": "button",
           "w": 119.125,
           "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 316.25,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 316.25,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 316.25,
+          "h": 45.171875
         },
         {
           "tag": "BUTTON",
@@ -1290,52 +2018,34 @@
           "h": 44
         },
         {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "TEXTAREA",
-          "type": "textarea",
-          "w": 325.625,
-          "h": 101.15625
-        },
-        {
           "tag": "BUTTON",
-          "type": "submit",
-          "w": 325.625,
-          "h": 45.171875
+          "type": "button",
+          "w": 321.03125,
+          "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 325.625,
-          "h": 45.171875
+          "w": 321.03125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 321.03125,
+          "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
         }
       ],
       "fonts": [
@@ -1343,10 +2053,10 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.990117593342424,
-        "secondary": 9.197936812464311,
-        "input": 4.388325094388485,
-        "focus": 9.5043256471059
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
       }
     },
     {
@@ -1356,157 +2066,9 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 134.8125,
-          "h": 45.171875
+          "w": 131.25,
+          "h": 46.765625
         },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 100.1875,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 736,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 144.203125,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 144.625,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 141.34375,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 119.125,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 196.578125,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 123.328125,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 183.515625,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 189.703125,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 138.640625,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 149.1875,
-          "h": 44
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 273.609375,
-          "h": 44
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "INPUT",
-          "type": "radio",
-          "w": 24,
-          "h": 24
-        },
-        {
-          "tag": "TEXTAREA",
-          "type": "textarea",
-          "w": 673.875,
-          "h": 101.15625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 177.234375,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 204.484375,
-          "h": 45.171875
-        },
-        {
-          "tag": "BUTTON",
-          "type": "button",
-          "w": 234.84375,
-          "h": 45.171875
-        }
-      ],
-      "fonts": [
-        "16.8px",
-        "14px"
-      ],
-      "contrast": {
-        "text": 14.990117593342424,
-        "secondary": 9.197936812464311,
-        "input": 4.388325094388485,
-        "focus": 9.5043256471059
-      }
-    },
-    {
-      "width": 1440,
-      "scrollWidth": 1440,
-      "controls": [
         {
           "tag": "BUTTON",
           "type": "button",
@@ -1521,78 +2083,6 @@
         },
         {
           "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 46.765625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 46.765625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 66.359375
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 46.765625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 46.765625
-        },
-        {
-          "tag": "BUTTON",
-          "type": "submit",
-          "w": 197.40625,
-          "h": 46.765625
-        },
-        {
-          "tag": "BUTTON",
           "type": "button",
           "w": 144.203125,
           "h": 45.171875
@@ -1614,6 +2104,66 @@
           "type": "button",
           "w": 119.125,
           "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 670.65625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 177.234375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 204.484375,
+          "h": 45.171875
         },
         {
           "tag": "BUTTON",
@@ -1664,6 +2214,124 @@
           "h": 44
         },
         {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 232.265625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "14px"
+      ],
+      "contrast": {
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
+      }
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 65.09375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 92.140625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 115.046875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 55.359375,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48.03125,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
           "tag": "INPUT",
           "type": "radio",
           "w": 24,
@@ -1690,7 +2358,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 1047.625,
+          "w": 1028.40625,
           "h": 101.15625
         },
         {
@@ -1708,8 +2376,80 @@
         {
           "tag": "BUTTON",
           "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
           "w": 234.84375,
           "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 232.265625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 52,
+          "h": 52
         }
       ],
       "fonts": [
@@ -1717,20 +2457,436 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.990117593342424,
-        "secondary": 9.197936812464311,
-        "input": 4.388325094388485,
-        "focus": 9.5043256471059
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
+      }
+    },
+    {
+      "width": 2560,
+      "scrollWidth": 2560,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 65.09375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 92.140625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 115.046875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 55.359375,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48.03125,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 1028.40625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 177.234375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 204.484375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 232.265625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 52,
+          "h": 52
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "14px"
+      ],
+      "contrast": {
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
+      }
+    },
+    {
+      "width": 3440,
+      "scrollWidth": 3440,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 65.09375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 92.140625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 115.046875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 55.359375,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48.03125,
+          "h": 179.515625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.203125,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 144.625,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 141.34375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 119.125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 176.53125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 48,
+          "h": 48
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "INPUT",
+          "type": "radio",
+          "w": 24,
+          "h": 24
+        },
+        {
+          "tag": "TEXTAREA",
+          "type": "textarea",
+          "w": 1028.40625,
+          "h": 101.15625
+        },
+        {
+          "tag": "BUTTON",
+          "type": "submit",
+          "w": 177.234375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 204.484375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 123.328125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 183.515625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 189.703125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 149.1875,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 273.609375,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 196.578125,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 138.640625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 232.265625,
+          "h": 44
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 234.84375,
+          "h": 45.171875
+        },
+        {
+          "tag": "BUTTON",
+          "type": "button",
+          "w": 52,
+          "h": 52
+        }
+      ],
+      "fonts": [
+        "16.8px",
+        "14px"
+      ],
+      "contrast": {
+        "text": 14.719754753809813,
+        "secondary": 9.32652274840595,
+        "input": 5.345966426464763,
+        "focus": 10.56517112143058
       }
     }
   ],
   "browser_errors": [],
   "source_sha256": {
-    "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "fd868abfa3b77b79aea8ef8b855b762738d9d70b0423def5398c19bde19dfe65",
-    "static/app.css": "1f09cb8dcf4b97048228770ea18ac35c6eb8e8be850fda719069026719db4067",
+    "static/index.html": "c829b138a03c85d0928d5563eee4330efda7d72522da0b197d5b3b56331c3215",
+    "static/app.js": "cd145846c9678e275920e2a97f0d7963256665571cfeec3ead8825083b381964",
+    "static/app.css": "7cd8aec2466940e1d407c1bd5ec5b40d69e56d9cc057391a677dffa18868d316",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
-    "tests/fixtures/demo-api.js": "4eba96fcda947a28e4b1965974136a008292b71dd6af4c954f3a0cb080f065fa"
+    "tests/fixtures/demo-api.js": "1d61d97ab416153a9ce839e9471b0a1e2af331fb9f8a705c3d7343ae80aa14b6"
   }
 }

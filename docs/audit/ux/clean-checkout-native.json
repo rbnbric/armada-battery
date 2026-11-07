@@ -1,0 +1,24 @@
+{
+  "date_utc": "2026-11-07",
+  "source": "fresh clone of public contest-49-wip at d53db4f; separate Docker Compose project",
+  "image": "IRIS AI Hub EAP build 109",
+  "environment": "Windows Work; private credential file outside clone; synthetic management target; real IRIS AI Hub HTTP, queues, and model calls",
+  "setup_marker": true,
+  "native_marker": true,
+  "exit_code": 0,
+  "receipt_status": "VERIFIED_SUCCESS",
+  "case_state": "VERIFIED_MATCH",
+  "transitions": [
+    "RUNNING",
+    "VERIFIED_MATCH"
+  ],
+  "elapsed_seconds": 14.087,
+  "duplicate_operation_same_receipt": true,
+  "duplicate_review_same_case": true,
+  "assertion": "YES",
+  "output": "PASS",
+  "executed_probe": "CHECK_EFFECT_RECEIPT",
+  "response_recorded": true,
+  "evidence_tool_reads": 3,
+  "limit": "One synthetic management operation; this does not test live business mutations or all administration workflows."
+}

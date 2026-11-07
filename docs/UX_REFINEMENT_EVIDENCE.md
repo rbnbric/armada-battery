@@ -1,6 +1,6 @@
 # Battery UX refinement — delivery and evidence
 
-Updated: 2026-11-06. All four product directions were approved. The existing Battery
+Updated: 2026-11-07. All four product directions were approved. The existing Battery
 logo now anchors a warm dark visual system, with readable type, shared spacing,
 blue actions and labelled semantic states. The receipt and a plain-language account share the case view; supporting
 history, optional explanation and technical records expand beneath each section.
@@ -23,20 +23,27 @@ history, optional explanation and technical records expand beneath each section.
 - Notices are cleared on a different route. Session expiry clears private case
   content and draft memory. A failed explanation leaves the factual summary usable.
 - The header is compact on phones; working forms, menus and evidence reflow.
-  Existing management, receipt, ledger and rule destinations remain accessible.
+  Cases, Overview and New request are the primary destinations. Records and
+  settings contains the other management views. The case opens with one sourced
+  plain-language report. Current task, What happened and Sources and detail form
+  a three-stage carousel with phone swipes and desktop arrows. The first-run
+  guide explains rule and outcome judgments, the four-step operation procedure,
+  and recovery after a lost reply. Corner help reopens it.
 
 ## Executed checks
 
 | Check | Result | Scope |
 | --- | --- | --- |
-| Python suite | 126 public-checkout tests and both source-tree HTTP asset tests passed; earlier full source-tree qualification passed 128 tests | Engine/API/session/ledger regressions plus exact HTTP logo and asset routes |
+| Python suite | 135 public-checkout tests and 37 subtests passed; source-tree HTTP asset tests passed | Engine/API/session/ledger regressions plus exact HTTP logo and asset routes |
 | UI handler suite | 13 passed | Existing preparation, expiry, response loss and identity behaviors; recovery fixture updated to select its explicit case route |
-| Chromium journeys | 211 passed; no browser exceptions | 320, 360, 390, 768, 1440px, 200% root text, keyboard, browser history, focus/selection/scroll, contrast, stale decisions, double click, expired identity, failed explanation, search, long/hostile data and shuffled navigation across 12 screens |
+| Chromium journeys | 367 passed; no browser exceptions | 320, 360, 390, 768, 1440, 2560 and 3440px, 200% root text, first-run guide and visible phone controls, carousel arrows and swipe, sourced report, keyboard, browser history, focus/selection/scroll, contrast, stale decisions, double click, expired identity, failed explanation, search and long/hostile data |
 | Installed HTTP checks | 15 passed | Served source hashes, CSP, logo MIME, sign-in, retained case/brief/history and linked receipt |
 | Installed/source comparison | 5 of 5 exact matches | app.py, HTML, CSS, JavaScript and logo |
+| Clean checkout with AI Hub build 109 | Setup and native integration passed | Public `contest-49-wip` at `d53db4f`, separate Compose project, real AI Hub review of one synthetic operation. Same-key operation and review requests reused their records; case reached `VERIFIED_MATCH` in 14.087 seconds. |
 
 [Browser assertions and hashes](audit/ux/report.json) ·
 [Installed assertions and hashes](audit/ux/installed.json) ·
+[Clean-checkout native summary](audit/ux/clean-checkout-native.json) ·
 [Source-tree Python output](audit/ux/python.log) · [Public Python output](audit/ux/public-python.log) · [UI output](audit/ux/ui.log).
 
 The browser journeys use the actual shipped UI with explicit synthetic API
@@ -54,6 +61,8 @@ includes an intentionally failed explanation, demonstrating the usable fallback.
 ![Current task and explanation fallback on phone](audit/ux/complete-390.png)
 
 ![Context decision on desktop](audit/ux/decision-1440.png)
+
+![First-run guide on phone](audit/ux/first-run-guide-390.png)
 
 [Phone decision](audit/ux/decision-390.png) ·
 [Desktop completed case](audit/ux/complete-1440.png).

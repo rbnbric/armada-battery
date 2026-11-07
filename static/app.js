@@ -10,6 +10,7 @@ const state = {
   nativeDetail: null,
   nativeError: "",
   decisionDrafts: {},
+  caseStages: {},
   revision: 0,
   plan: null,
   certificate: null,
@@ -346,6 +347,7 @@ function navigate(page, focus = true, id = "", historyMode = "push") {
   });
   byId("navigation").dataset.open = "false";
   document.querySelector(".nav-toggle").setAttribute("aria-expanded", "false");
+  document.querySelector(".nav-more").open = false;
   paintedView = "";
   renderPage();
   if (!state.views[viewKey()] && focus) { byId("workspace").focus({preventScroll:true}); window.scrollTo?.(0,0); }
@@ -726,6 +728,7 @@ function renderPage() {
 function renderPageContent() {
   const root = byId("page-content");
   root.replaceChildren();
+  root.dataset.view = state.page;
   byId("page-state").textContent =
     state.page === "request"
       ? "Prepare → authorize → execute → verify"
@@ -751,15 +754,13 @@ function renderPageContent() {
     );
     observationDisclosure.open =
       !window.matchMedia("(max-width: 600px)").matches;
-    root.append(
-      findingCard(),
-      assuranceProof(),
-      section("Operational evidence", summary, observationDisclosure),
-      section("Recent attempts", receiptTable(state.receipts.slice(0, 5))),
-      empty(
-        "The checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
-      ),
-    );
+    const primary = node("div", undefined, "overview-column");
+    const secondary = node("div", undefined, "overview-column");
+    primary.append(findingCard(), assuranceProof());
+    secondary.append(section("Operational evidence", summary, observationDisclosure), section("Recent attempts", receiptTable(state.receipts.slice(0, 5))));
+    root.append(primary, secondary, empty(
+      "The checks above qualify the synthetic engine only. Live IRIS remains read-only by default; readiness, capacity and scheduled assurance obligations are outside this release.",
+    ));
   } else if (state.page === "tasks") {
     const c = collection("tasks");
     if (c.notice) root.append(empty(c.notice));
@@ -1353,8 +1354,11 @@ async function submitNativeCase(receiptId, parentId = "") {
   }
 }
 function sourceNote(label, target, context = "") {
+  if (!target) return node("span", `${label}: source record unavailable`, "source-note brief-limit");
   const note = node("div", undefined, "source-note");
   const link = button(label, () => {
+    const slide = target?.closest?.(".case-slide");
+    if (slide) setCaseStage(slide.closest(".case-carousel"), Number(slide.dataset.stage));
     for (let parent = target; parent; parent = parent.parentElement)
       if (parent.tagName === "DETAILS") parent.open = true;
     const focus = target.querySelector?.("summary") || target;
@@ -1367,6 +1371,48 @@ function sourceNote(label, target, context = "") {
   note.append(node("span", "Source: "), link);
   if (context) note.append(node("span", context, "source-context"));
   return note;
+}
+function setCaseStage(carousel, index, move = true) {
+  if (!carousel) return;
+  const track = carousel.querySelector(".case-track"), slides = [...track.children];
+  index = Math.max(0, Math.min(slides.length - 1, index));
+  carousel.dataset.stage = String(index);
+  carousel.querySelector(".case-stage-label").textContent = `${index + 1} of ${slides.length} · ${slides[index].dataset.label}`;
+  carousel.querySelector(".case-prev").disabled = index === 0;
+  carousel.querySelector(".case-next").disabled = index === slides.length - 1;
+  if (state.caseId) state.caseStages[state.caseId] = index;
+  if (move) track.scrollTo({left: track.clientWidth * index, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
+}
+function caseCarousel(stages) {
+  const carousel = node("section", undefined, "case-carousel");
+  carousel.setAttribute("aria-label", "Case journey");
+  const controls = node("div", undefined, "case-stage-controls");
+  const previous = button("←", () => setCaseStage(carousel, Number(carousel.dataset.stage || 0) - 1));
+  previous.className = "case-prev"; previous.setAttribute("aria-label", "Previous case stage");
+  const current = node("strong", "", "case-stage-label"); current.setAttribute("aria-live", "polite");
+  const next = button("→", () => setCaseStage(carousel, Number(carousel.dataset.stage || 0) + 1));
+  next.className = "case-next"; next.setAttribute("aria-label", "Next case stage");
+  controls.append(previous, current, next);
+  const track = node("div", undefined, "case-track");
+  stages.forEach(([label, content], index) => {
+    const slide = node("div", undefined, "case-slide");
+    slide.dataset.stage = index; slide.dataset.label = label;
+    slide.setAttribute("aria-label", `${label} · stage ${index + 1} of ${stages.length}`);
+    slide.append(content); track.append(slide);
+  });
+  carousel.append(controls, track);
+  let scrollSettled;
+  track.addEventListener("scroll", () => {
+    clearTimeout(scrollSettled);
+    scrollSettled = setTimeout(() => {
+      const index = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      if (Number(carousel.dataset.stage) !== index) setCaseStage(carousel, index, false);
+    }, 120);
+  }, {passive:true});
+  const stage = state.caseStages[state.caseId] || 0;
+  carousel.dataset.stage = stage;
+  if (typeof requestAnimationFrame === "function") requestAnimationFrame(() => setCaseStage(carousel, stage));
+  return carousel;
 }
 function sourceTime(value) {
   if (!value) return "time not recorded";
@@ -1527,7 +1573,9 @@ function renderCaseReceipt(c) {
   }
   const outcome = ({VERIFIED_SUCCESS:"The requested result was verified.", VERIFIED_FAILURE:"The result did not meet the request.", OUTCOME_UNKNOWN:"We do not yet know whether the operation completed.", EXECUTED_UNVERIFIED:"The operation ran; its result has not been verified.", BLOCKED_BEFORE_EXECUTION:"The operation was blocked before it ran.", CANCELLED:"The operation was cancelled."})[r.status] || "The operation outcome needs inspection.";
   const action = ({"task.run-once":"Run the task once", "web-app.create":"Create a web application"})[r.action_id] || r.action_id || "Action not recorded";
-  box.append(node("h3", targetName(r.target)), node("p", action), node("p", outcome, "receipt-verdict"));
+  const verdict = node("p", outcome, "receipt-verdict");
+  verdict.dataset.outcome = r.status || "UNKNOWN";
+  box.append(node("h3", targetName(r.target)), node("p", action), verdict);
   if (r.explanation) box.append(node("p", r.explanation));
   if (r.finished_at || r.started_at) box.append(node("p", `${r.finished_at ? "Finished" : "Started"} (UTC): ${r.finished_at || r.started_at}`, "quiet"));
   if (r.status === "VERIFIED_SUCCESS") box.append(node("p", "This verifies the recorded configuration or task history. It does not by itself prove that a downstream service works.", "brief-limit"));
@@ -1565,31 +1613,27 @@ function renderCaseStory(c) {
   add("The recorded conclusion", caseLabel(c.state) + ".", "Review conclusion details", {case_id:c.id, state:c.state, assertion:r.assertion, output:r.output, proof:r.ProofJSON}, {"Case ID":c.id, State:c.state, Assertion:r.assertion, Output:r.output, "Proof verdict":r.ProofJSON?.verdict, "Proof reason":r.ProofJSON?.reason});
   story.append(steps); return story;
 }
-function renderCaseOverview(c, receipt, story, context) {
+function renderCaseOverview(c, receipt, story, context, decision) {
   const b = c.brief;
   const box = node("section", undefined, "case-overview");
   box.append(node("p", c.source_scope === "synthetic" ? "Simulated case" : "IRIS case", "eyebrow"));
   box.append(node("h2", b?.question || caseLabel(c.state)));
   if (b) box.append(node("p", b.summary, "case-overview-summary"));
   else if (c.recovery_reason) box.append(node("p", c.recovery_reason, "case-overview-summary"));
-  const rail = node("div", undefined, "case-outcome-rail");
-  const item = (label, value, sourceLabel, source, caption) => {
-    const cell = node("div", undefined, "case-outcome-cell");
-    cell.append(node("span", label, "case-outcome-label"), node("strong", value));
-    if (source) cell.append(sourceNote(sourceLabel, source, caption));
-    rail.append(cell);
-  };
   const packet = state.nativeReceipt, operation = packet?.receipt;
   const receiptMatches = operation?.id === c.receipt_id && operation?.target === c.target;
-  const operationText = !receiptMatches ? "Receipt unavailable" : ({VERIFIED_SUCCESS:"Verified result", VERIFIED_FAILURE:"Result failed", OUTCOME_UNKNOWN:"Outcome unknown", EXECUTED_UNVERIFIED:"Result unverified", BLOCKED_BEFORE_EXECUTION:"Blocked before execution", CANCELLED:"Cancelled"})[operation.status] || "Inspect receipt";
-  item("Original operation", operationText, "Operation record", receipt.querySelector?.("#receipt-source"), receiptMatches ? `Receipt ${c.receipt_id}` : "Receipt could not be verified");
-  item("Agent review", caseLabel(c.state), "Review record", story.querySelector?.("#story-source-2"), c.updated_at ? `Updated ${c.updated_at} (IRIS time)` : "Review time not recorded");
-  if (b) {
-    const comparison = b.facts.find(f => f.id === "configuration")?.value;
-    const currentText = !comparison ? "Not compared" : comparison.read_error ? "Read unavailable" : comparison.changed === true ? "Different now" : comparison.changed === false ? "Matches saved request" : "Not compared";
-    item("Current settings", currentText, "Current settings read", context.querySelector?.("#decision-fact-configuration"), `Compared ${sourceTime(b.read_at)}`);
-  }
-  box.append(rail);
+  const logic = node("div", undefined, "case-logic");
+  const saved = !receiptMatches ? "The operation receipt is unavailable, so its result remains unproven here." : (({VERIFIED_SUCCESS:"The saved receipt verifies the recorded request.", VERIFIED_FAILURE:"The saved receipt says the request failed.", OUTCOME_UNKNOWN:"The saved receipt leaves the operation outcome unknown."})[operation?.status] || "The saved receipt needs further inspection.");
+  const reviewed = `The recorded review result is ${caseLabel(c.state).toLowerCase()}.`;
+  const current = b?.facts.find(f => f.id === "configuration")?.value;
+  const now = !current ? "" : current.read_error ? "The current settings could not be read." : current.changed === true ? "A later read shows different settings; the reason for that change is not established." : current.changed === false ? "A later read shows settings matching the saved request." : "The later settings comparison is unresolved.";
+  logic.append(node("p", `${saved} ${reviewed} ${now}`.trim()));
+  const citations = node("div", undefined, "case-logic-sources");
+  if (receiptMatches) citations.append(sourceNote("Operation record", receipt.querySelector?.("#receipt-source")));
+  citations.append(sourceNote("Review record", story.querySelector?.("#story-source-2")));
+  if (current) citations.append(sourceNote("Current settings read", decision.querySelector("#decision-fact-configuration"), `Compared ${sourceTime(b.read_at)}`));
+  logic.append(citations);
+  box.append(logic);
   if (b?.next_step) box.append(node("p", b.next_step, "case-next-step"));
   return box;
 }
@@ -1643,7 +1687,11 @@ function renderFullCaseReview(c, receipt, story, context, decision) {
 }
 function renderNativeCases(root) {
   const toolbar = node("div", undefined, "case-toolbar");
-  if (state.caseId) toolbar.append(button("Back to cases", () => navigate("cases", true, "all")));
+  if (state.caseId) {
+    toolbar.append(button("Back to cases", () => navigate("cases", true, "all")));
+    const selected = state.nativeDetail?.id === state.caseId ? state.nativeDetail : null;
+    toolbar.append(node("span", selected ? targetName(selected.target) : "Opening case…", "case-target"));
+  }
   else toolbar.append(node("p", "Understand the result. Find the next useful step.", "page-intro"));
   toolbar.append(button("Refresh cases", () => loadNativeCases(state.caseId)));
   root.append(toolbar);
@@ -1678,18 +1726,20 @@ function renderNativeCases(root) {
   }
   const c = state.nativeDetail?.id === state.caseId ? state.nativeDetail : null;
   if (!c) { root.append(empty(state.nativeError ? "This case could not be opened. Return to cases or refresh." : "Loading the selected case…")); return; }
-  root.append(node("p", targetName(c.target), "case-target"));
   const r = c.result || {};
   const brief = c.brief ? renderDecisionBrief(c) : null;
   const layout = node("div", undefined, "receipt-review");
   const receipt = renderCaseReceipt(c), story = renderCaseStory(c);
-  layout.append(receipt);
-  const explanation = node("div", undefined, "review-explanation");
-  explanation.append(story);
-  layout.append(explanation);
-  root.append(renderCaseOverview(c, receipt, story, brief?.context), layout);
-  if (brief) root.append(brief.context, renderFullCaseReview(c, receipt, story, brief.context, brief.box), brief.box);
-  else root.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
+  layout.append(receipt, story);
+  root.append(renderCaseOverview(c, receipt, story, brief?.context, brief?.box));
+  const action = node("div", undefined, "case-action");
+  const evidenceColumn = node("div", undefined, "case-evidence");
+  if (brief) {
+    action.append(brief.box);
+    evidenceColumn.append(brief.context, renderFullCaseReview(c, receipt, story, brief.context, brief.box));
+  } else {
+    action.append(section("Review status", node("p", caseLabel(c.state)), node("p", c.recovery_reason || "A readable summary is not available yet. Expand the technical evidence for the recorded details.")));
+  }
   const box = section("Technical case details", fields({Case: c.id, State: c.state, "Source scope": c.source_scope, Target: c.target, "Parent revision": c.parent_id, "Rule assertion": r.assertion, "Measured output": r.output, "Reviewer assertion": r.reviewer_assertion, "Reviewer output": r.reviewer_output, Reason: c.recovery_reason || r.explanation, "Proposed probe": r.proposed_probe, "Executed probe": r.executed_probe, "Native response ID": r.response_id}));
   if (["QUEUED", "RUNNING"].includes(c.state)) box.append(empty("The native production is working. Refresh cases for its current state; another click does not start a duplicate review."));
   if (c.receipt_id) box.append(button("Inspect operation receipt", () => openReceipt(c.receipt_id)));
@@ -1702,7 +1752,8 @@ function renderNativeCases(root) {
   const technical = node("details");
   if (list.budget) box.append(node("p", `Reviews admitted today: ${list.budget.operator_daily_used} / ${list.budget.operator_daily_limit}.`, "quiet"));
   technical.append(node("summary", "Technical details and full evidence"), box);
-  root.append(technical);
+  evidenceColumn.append(technical);
+  root.append(caseCarousel([["Current task", action], ["What happened", layout], ["Sources and detail", evidenceColumn]]));
 }
 
 byId("intent-form").addEventListener("input", () => invalidate());
@@ -1756,6 +1807,53 @@ byId("login-form").addEventListener("submit", async (event) => {
     announce(error.message, true);
   }
 });
+const guideSteps = [
+  ["Start with the current case", "Cases opens on the latest review. Its first card states what Battery knows, what remains uncertain, and what needs your judgment. A simulated case is labeled as simulated.", "Show the current case", "case", ["Read the short answer first: did the operation's result match the request?", "Look for the source links beside the answer. They lead to the saved receipt, review, or fresh comparison.", "If Battery asks for a human decision, choose a path only after checking what it knows and what it cannot know."]],
+  ["Read the three stages", "Current task comes first. Use the arrows, or swipe on a phone, to see What happened and Sources and detail. You can always move back without losing a draft.", "Show what happened", "report", ["Current task: the answer and any decision you need to make.", "What happened: the operation receipt and the review's sequence in ordinary language.", "Sources and detail: the exact records and technical fields, expandable when you need them."]],
+  ["Separate the two questions", "Battery asks whether the rule's assertion fits the evidence and whether the observed result passed. Those answers can differ. Each claim has a source link to the record behind it.", "Inspect the sources", "sources", ["A rule can correctly predict a failed result: accurate assertion, failed output.", "An acceptable output can coexist with a rule that was out of context: passed output, inaccurate assertion.", "Unknown means the available observations cannot settle the question. It is a reason to investigate, not a green check."]],
+  ["Follow the operation procedure", "A new change follows Prepare, Authorize, Execute, Verify. Preparation checks the target and prerequisites. Authorization is short lived and single use. Agent review cannot approve or repeat the operation.", "Open the request procedure", "request", ["Prepare the exact target and intended outcome; inspect the proposed action and blockers.", "Authorize only that prepared action. Execute once with its recorded key.", "Verify using a fresh observation and the saved receipt. A new change needs a new preparation."]],
+  ["Keep uncertainty visible", "If the reply is lost or evidence conflicts, inspect the receipt and fresh readback. Battery holds an unknown result instead of guessing or dispatching again. Record your own context when the facts cannot settle intent.", "Return to the case", "case", ["A lost reply does not prove the change failed; check the original attempt before doing anything else.", "Compare the receipt with a fresh read and inspect any conflicting evidence.", "If intent remains ambiguous, record your reason and choose an explicit human path. The prior evidence stays available for later review."]],
+];
+let guideStep = 0;
+function paintGuide() {
+  const [title, description, tryLabel, tryRoute, lessons] = guideSteps[guideStep];
+  byId("help-title").textContent = title;
+  byId("help-progress").textContent = `Step ${guideStep + 1} of ${guideSteps.length}`;
+  const body = byId("help-body");
+  const tryButton = button(tryLabel, async () => {
+    finishGuide();
+    if (tryRoute === "request") startRequest();
+    else {
+      if (state.page !== "cases") navigate("cases");
+      if (tryRoute !== "case") {
+        if (!document.querySelector(".case-carousel")) await loadNativeCases(state.caseId);
+        setCaseStage(document.querySelector(".case-carousel"), tryRoute === "report" ? 1 : 2);
+      }
+    }
+  });
+  tryButton.className = "help-try";
+  const list = node("ol", undefined, "help-lessons");
+  lessons.forEach((lesson) => list.append(node("li", lesson)));
+  body.replaceChildren(node("p", description), list);
+  byId("help-try-slot").replaceChildren(tryButton);
+  byId("help-back").disabled = guideStep === 0;
+  byId("help-next").textContent = guideStep === guideSteps.length - 1 ? "Start using Battery" : "Next";
+}
+function finishGuide() {
+  try { localStorage.setItem("battery-guide-seen-v1", "1"); } catch { /* The guide remains available from Help. */ }
+  byId("help-dialog").close();
+  byId("help-launcher").focus({preventScroll:true});
+}
+function openGuide(start = 0) {
+  const dialog = byId("help-dialog");
+  if (!dialog || typeof dialog.showModal !== "function") return;
+  guideStep = start; paintGuide();
+  if (!dialog.open) dialog.showModal();
+}
+byId("help-launcher").addEventListener("click", () => openGuide());
+byId("help-back").addEventListener("click", () => { if (guideStep > 0) { guideStep--; paintGuide(); } });
+byId("help-next").addEventListener("click", () => { if (guideStep === guideSteps.length - 1) finishGuide(); else { guideStep++; paintGuide(); } });
+byId("help-dismiss").addEventListener("click", finishGuide);
 try {
   const pending = JSON.parse(
     sessionStorage.getItem("battery-pending") || "null",
@@ -1766,4 +1864,8 @@ try {
 }
 initializeRoute();
 setInterval(tick, 1000);
-load().catch((error) => announce(error.message, true));
+load().catch((error) => announce(error.message, true)).finally(() => {
+  let seen = false;
+  try { seen = localStorage.getItem("battery-guide-seen-v1") === "1"; } catch { /* Optional browser preference. */ }
+  if (!seen && !requiresSignIn) openGuide();
+});

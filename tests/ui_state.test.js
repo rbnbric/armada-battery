@@ -124,10 +124,7 @@ function harness() {
   });
   const source = fs
     .readFileSync(path.join(__dirname, "../static/app.js"), "utf8")
-    .replace(
-      /load\(\)\.catch\(\(error\) => announce\(error.message, true\)\);\s*$/,
-      "",
-    );
+    .replace(/initializeRoute\(\);\s*setInterval\(tick, 1000\);\s*load\(\)[\s\S]*$/, "");
   vm.runInContext(source, context);
   return {
     get,

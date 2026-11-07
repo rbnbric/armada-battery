@@ -9,6 +9,7 @@ import base64
 import functools
 import hashlib
 import json
+import re
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -51,7 +52,7 @@ class Handler(SimpleHTTPRequestHandler):
         if self.path.split('?')[0] == '/':
             html=(ROOT/'static/index.html').read_text()
             scripts='<script>'+(ROOT/'tests/fixtures/demo-api.js').read_text()+'\n'+FIXTURE+'</script>'
-            html=html.replace('<script src="/static/app.js"></script>',scripts+'<script src="/static/app.js"></script>')
+            html=re.sub(r'(<script src="/static/app\.js(?:\?[^\"]*)?"></script>)',lambda match:scripts+match.group(1),html)
             raw=html.encode();self.send_response(200);self.send_header('Content-Type','text/html');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
         else: super().do_GET()
 
@@ -67,8 +68,9 @@ def run(out):
     try:
         with sync_playwright() as pw:
             browser=pw.chromium.launch(headless=True)
-            for width in [320,360,390,768,1440]:
+            for width in [320,360,390,768,1440,2560,3440]:
                 context=browser.new_context(viewport={'width':width,'height':900},reduced_motion='reduce')
+                context.add_init_script("localStorage.setItem('battery-guide-seen-v1','1')")
                 page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
                 page.goto(origin);page.locator('.case-receipt').wait_for()
                 check(f'{width}: cases first',page.locator('#page-title').inner_text()=='Cases')
@@ -78,11 +80,18 @@ def run(out):
                 check(f'{width}: what happened visible',page.get_by_role('heading',name='What happened',exact=True).is_visible())
                 check(f'{width}: receipt details closed',not page.get_by_text('Receipt details',exact=True).evaluate('(e)=>e.parentElement.open'))
                 positions=page.evaluate('''()=>{const a=document.querySelector('.case-receipt').getBoundingClientRect(),b=document.querySelector('.review-story').getBoundingClientRect();return {left:a.x,right:b.x,top:a.y,next:b.y,bottom:a.bottom}}''')
-                check(f'{width}: receipt and story reading order',positions['right']>positions['left'] if width>900 else positions['next']>=positions['bottom'])
+                check(f'{width}: receipt and story reading order',positions['next']>=positions['bottom'] or (positions['right']>positions['left'] and abs(positions['next']-positions['top'])<2))
                 page.get_by_role('button',name='Back to cases',exact=True).click()
                 page.locator('[data-case-id="case-context"]').click();page.locator('#decision-reason').wait_for()
                 order=page.evaluate('''() => [...document.querySelectorAll('.case-overview,.receipt-review,.brief-context,.full-case-review,.decision-brief')].map(e=>['case-overview','receipt-review','brief-context','full-case-review','decision-brief'].find(name=>e.classList.contains(name)))''')
-                check(f'{width}: status, record, evidence, optional review, decision order',order==['case-overview','receipt-review','brief-context','full-case-review','decision-brief'])
+                check(f'{width}: answer and decision precede detailed evidence',order==['case-overview','decision-brief','receipt-review','brief-context','full-case-review'])
+                if width >= 2560:
+                    canvas=page.evaluate('''()=>{const rect=s=>document.querySelector(s).getBoundingClientRect();const main=rect('main'),overview=rect('.case-overview'),question=rect('.case-overview h2'),logic=rect('.case-logic');return {mainRight:main.right,used:overview.width/main.width,logicBeside:logic.left>question.right}}''')
+                    check(f'{width}: case uses the available canvas',canvas['mainRight']>=width-1 and canvas['used']>.85)
+                    check(f'{width}: question and explanation share the top row',canvas['logicBeside'])
+                    check(f'{width}: focused case stage is centered',page.evaluate('''()=>{const r=document.querySelector('.case-slide .case-action').getBoundingClientRect(),m=document.querySelector('main').getBoundingClientRect();return Math.abs((r.left+r.right)/2-(m.left+m.right)/2)<3}'''))
+                check(f'{width}: receipt uses the paper surface',page.locator('.case-receipt').evaluate('(e)=>getComputedStyle(e).backgroundImage.includes("gradient") && getComputedStyle(e).getPropertyValue("--paper").trim()==="#f2eadb"'))
+                page.wait_for_function("document.querySelector('.case-stage-label')?.textContent.startsWith('1 of 3')")
                 check(f'{width}: full review is opt in',page.evaluate('uxTest.posts.filter(p=>p.path.endsWith("/full-review")).length')==0)
                 page.get_by_role('button',name='Review full case with AI Hub',exact=True).click()
                 page.locator('.full-case-review').get_by_text('The author and purpose of the later change are unknown.',exact=True).wait_for()
@@ -90,10 +99,22 @@ def run(out):
                 page.locator('.full-case-review').get_by_role('button',name='Saved operation receipt',exact=True).click()
                 check(f'{width}: full review citation opens receipt',page.locator('#receipt-source').evaluate('(e)=>e.open'))
                 page.get_by_text('Receipt details',exact=True).click()
-                check(f'{width}: original operation and current settings distinguished','Verified result' in page.locator('.case-outcome-rail').inner_text() and 'Different now' in page.locator('.case-outcome-rail').inner_text())
+                check(f'{width}: original operation and current settings distinguished','saved receipt verifies' in page.locator('.case-logic').inner_text() and 'later read shows different settings' in page.locator('.case-logic').inner_text())
                 check(f'{width}: choices not preselected',page.locator('input[name=decision-choice]:checked').count()==0)
                 check(f'{width}: technical initially closed',not page.get_by_text('Technical details and full evidence',exact=True).evaluate('(e)=>e.parentElement.open'))
                 check(f'{width}: scope visible','Simulated operation' in page.locator('.decision-brief').inner_text())
+                page.evaluate("setCaseStage(document.querySelector('.case-carousel'),0)")
+                page.wait_for_function("document.querySelector('.case-stage-label')?.textContent.startsWith('1 of 3')")
+                check(f'{width}: current task is first stage',page.locator('.case-stage-label').inner_text().startswith('1 of 3'))
+                page.get_by_role('button',name='Next case stage').click()
+                check(f'{width}: arrow opens report',page.locator('.case-stage-label').inner_text().startswith('2 of 3'))
+                page.get_by_role('button',name='Next case stage').click()
+                check(f'{width}: arrow opens sources',page.locator('.case-stage-label').inner_text().startswith('3 of 3'))
+                page.get_by_role('button',name='Previous case stage').click()
+                check(f'{width}: arrow returns to report',page.locator('.case-stage-label').inner_text().startswith('2 of 3'))
+                page.locator('.case-track').evaluate('(e)=>{e.scrollLeft=0}')
+                page.wait_for_timeout(180)
+                check(f'{width}: horizontal scroll returns to task',page.locator('.case-stage-label').inner_text().startswith('1 of 3'))
                 m=page.evaluate('''() => ({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('button,input,select,textarea')].filter(e=>e.getClientRects().length).map(e=>({tag:e.tagName,type:e.type,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:[...document.querySelectorAll('.decision-brief > p')].map(e=>getComputedStyle(e).fontSize)})''')
                 views.append(m);check(f'{width}: no horizontal overflow',m['scrollWidth']<=width)
                 check(f'{width}: 44px working controls',all(c['h']>=44 for c in m['controls'] if c['type'] not in ['radio','checkbox']))
@@ -107,7 +128,7 @@ def run(out):
                 check(f'{width}: palette contrast',contrast['text']>=4.5 and contrast['secondary']>=4.5 and contrast['input']>=3 and contrast['focus']>=3)
                 check(f'{width}: every story assertion has a named source',page.locator('.case-story > li .source-link').count()==3)
                 check(f'{width}: readable source type and timestamp','Review updated' in page.locator('.case-story .source-note').first.inner_text())
-                page.get_by_role('button',name='Saved operation receipt',exact=True).click()
+                page.locator('.case-receipt').get_by_role('button',name='Saved operation receipt',exact=True).click()
                 check(f'{width}: receipt citation opens exact record',page.locator('#receipt-source').evaluate('(e)=>e.open && e.querySelector("summary")===document.activeElement') and CASES['changed']['receipt_id'] in page.locator('#receipt-source').inner_text())
                 page.get_by_text('Receipt details',exact=True).click()
                 page.get_by_role('button',name='Recorded review result',exact=True).focus()
@@ -169,8 +190,9 @@ def run(out):
                     page.screenshot(path=str(out/'complete-text200.png'),full_page=True)
                 context.close()
             # Explicit protected destination survives login reload.
-            context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+            context=browser.new_context(viewport={'width':390,'height':844});context.add_init_script("localStorage.setItem('battery-guide-seen-v1','1')");page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
             page.goto(origin+'/?login#cases/case-context');page.locator('#login-panel').wait_for(state='visible')
+            if page.locator('#help-dialog').evaluate('(e)=>e.open'): page.get_by_role('button',name='Skip guide').click()
             page.locator('#access-key').fill('fixture-key');page.get_by_role('button',name='Sign in',exact=True).click()
             page.locator('#decision-reason').wait_for();check('login returns to requested case',page.url.endswith('#cases/case-context'))
             # Stale submission preserves draft and refreshes the actual evidence revision.
@@ -184,14 +206,30 @@ def run(out):
             check('expiry removes case data',page.locator('#page-content').inner_text()=='')
             check('expiry clears draft memory',page.evaluate('Object.keys(state.decisionDrafts).length')==0)
             context.close()
+            # First-run guide remains optional and can always be reopened.
+            context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page()
+            page.goto(origin);page.locator('#help-dialog').wait_for(state='visible')
+            page.screenshot(path=str(out/'first-run-guide-390.png'))
+            check('first visit offers the rules guide',page.locator('#help-progress').inner_text()=='Step 1 of 5')
+            check('guide actions remain visible on phone',page.locator('#help-next').evaluate('(e)=>{const r=e.getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight && r.width>=44}') )
+            check('guide example action remains visible on phone',page.locator('#help-try-slot button').evaluate('(e)=>{const r=e.getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight && r.height>=44}'))
+            page.get_by_role('button',name='Next',exact=True).click()
+            check('guide advances',page.locator('#help-progress').inner_text()=='Step 2 of 5')
+            page.get_by_role('button',name='Skip guide').click()
+            check('guide dismissal is remembered',page.evaluate("localStorage.getItem('battery-guide-seen-v1')")=='1')
+            page.get_by_role('button',name='Open Battery guide').click()
+            check('corner help reopens guide',page.locator('#help-dialog').evaluate('(e)=>e.open'))
+            page.get_by_role('button',name='Skip guide').click();context.close()
             # Repeated switching across the actual app screens, including unavailable coverage.
-            context=browser.new_context(viewport={'width':390,'height':844});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+            context=browser.new_context(viewport={'width':390,'height':844});context.add_init_script("localStorage.setItem('battery-guide-seen-v1','1')");page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
             page.goto(origin);page.locator('.case-receipt').wait_for()
             import random
             names=['overview','tasks','webapps','rest','permissions','security','os','logs','receipts','ledger','rules','cases']
             random.Random(49).shuffle(names)
             for name in names:
                 page.locator('.nav-toggle').click()
+                if name in {'tasks','webapps','receipts','rest','permissions','security','os','logs','ledger','rules'}:
+                    page.locator('.nav-more summary').click()
                 page.locator(f'[data-page={name}]').click()
                 check(f'navigation: {name}',(page.url.endswith('#'+name) or name=='cases' and '#cases/' in page.url) and page.locator('#page-title').inner_text())
                 check(f'navigation reflow: {name}',page.evaluate('document.documentElement.scrollWidth<=innerWidth'))
@@ -218,6 +256,7 @@ def run(out):
             page.evaluate('uxTest.wrongReceipt=false;uxTest.receiptStatus="OUTCOME_UNKNOWN";loadNativeCases(state.caseId)')
             page.get_by_text('We do not yet know whether the operation completed.',exact=True).wait_for()
             check('operation uncertainty distinct from review match',page.locator('.review-story').get_by_text('Evidence matched the request.',exact=True).is_visible())
+            check('unknown receipt has its own visible treatment',page.locator('.receipt-verdict[data-outcome="OUTCOME_UNKNOWN"]').count()==1)
             check('reading does not submit reviews or operations',page.evaluate('uxTest.posts.length')==0)
             page.goto(origin+'/#cases/all');page.locator('#case-search').wait_for()
             check('explicit case list survives reload',page.url.endswith('#cases/all'))

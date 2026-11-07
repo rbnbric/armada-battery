@@ -63,11 +63,11 @@
     }
   ],
   "hashes": {
-    "static/index.html": "034c872f551879105f6fa9df1033e3d31b292871f8ff2116f958090f24d95ea3",
-    "static/app.js": "fd868abfa3b77b79aea8ef8b855b762738d9d70b0423def5398c19bde19dfe65",
-    "static/app.css": "1f09cb8dcf4b97048228770ea18ac35c6eb8e8be850fda719069026719db4067",
+    "static/index.html": "c829b138a03c85d0928d5563eee4330efda7d72522da0b197d5b3b56331c3215",
+    "static/app.js": "cd145846c9678e275920e2a97f0d7963256665571cfeec3ead8825083b381964",
+    "static/app.css": "7cd8aec2466940e1d407c1bd5ec5b40d69e56d9cc057391a677dffa18868d316",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
-    "app.py": "f724bccdac79a0905fa2d5e24de52b07bfd1556b21955eae809600b9d723abea"
+    "app.py": "2e861a950d9b20975f0cd2d7ff9289232f6647aaac7b260897c64a26b17199c7"
   },
   "case_id": "case-471eabcdf036b41aaa07c9ca12d07156",
   "passed": true
