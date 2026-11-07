@@ -1133,3 +1133,156 @@ main { width: 100%; padding-top: clamp(.85rem, 1.3vw, 1.5rem); }
   .case-next-step { grid-column: 2; grid-row: 3; }
 }
 @media (prefers-reduced-motion: reduce) { .case-track { scroll-behavior: auto; } }
+
+/* Battery fieldbook: warm paper for reading, graphite for navigation, brass from the mark. */
+:root {
+  color-scheme: light;
+  --bg: #f2eee5;
+  --surface: #fffdfa;
+  --raised: #eae4d8;
+  --rule: #b9b5aa;
+  --text: #20302f;
+  --text-2: #53615f;
+  --brand: #855820;
+  --verify: #155f75;
+  --focus: #a66b16;
+  --safe: #236a48;
+  --watch: #875a13;
+  --act: #a33f38;
+  --blocked: #8f416c;
+  --unknown: #52605d;
+  --control-border: #928f84;
+}
+body { background: var(--bg); }
+h1, h2, h3 { color: var(--text); }
+button, input, select, textarea { border-radius: 7px; }
+button { background: var(--surface); border-color: var(--control-border); }
+button:hover:not(:disabled), .decision-brief button:hover:not(:disabled) { background: #eee5d3; border-color: #776d58; }
+button:disabled { background: #e9e4d9; color: #5c6763; }
+button.primary { color: #fffaf0; background: #245c64; border-color: #245c64; }
+button.primary:hover:not(:disabled) { color: #fff; background: #174952; border-color: #174952; }
+input, select, textarea, .decision-brief textarea { background: #fffdfa; color: var(--text); }
+input[type=radio], input[type=checkbox] { accent-color: #245c64; }
+pre { background: #21302f; color: #f2f0e8; border-color: #4b605a; }
+.status-bar {
+  --surface: #1c2b29;
+  --raised: #314440;
+  --rule: #51635b;
+  --text: #faf5eb;
+  --text-2: #c7d4cf;
+  --brand: #e0b763;
+  --verify: #b0dfeb;
+  --safe: #a6e0b7;
+  --watch: #f3d493;
+  --act: #ffbeb4;
+  --blocked: #f1bade;
+  background: #1c2b29;
+  color: var(--text);
+  border-bottom: 3px solid #bd8d3d;
+  box-shadow: 0 8px 20px #19282020;
+}
+.status-bar .brand { color: #faf5eb; }
+.status-bar .wordmark { font-weight: 740; letter-spacing: -.025em; }
+.status-bar .brand img { box-shadow: 0 0 0 1px #d3ad674d; }
+.status-bar button, .status-bar .nav-more-items { color: var(--text); }
+.status-bar button { background: transparent; border-color: transparent; }
+.status-bar button:hover:not(:disabled), #navigation .nav-more summary:hover { background: #314440; border-color: transparent; }
+#navigation [aria-current="page"] { color: #fff7e7; background: #4a4839; border-bottom-color: #e0b763; }
+#navigation .nav-more[open] summary, #navigation .nav-more:has([aria-current="page"]) summary { background: #314440; }
+.status-bar .instance-detail[open] { border-top: 1px solid #51635b; }
+main { max-width: 132rem; margin-inline: auto; padding-bottom: clamp(3rem, 6vw, 6rem); }
+.page-heading { padding-bottom: .65rem; border-bottom: 1px solid #d1c9b9; }
+.page-heading h1 { font-family: Georgia, "Iowan Old Style", serif; font-size: clamp(1.7rem, 2vw, 2.35rem); font-weight: 600; }
+.page-heading > span { color: #5e6963; }
+.eyebrow { color: var(--brand); text-transform: uppercase; letter-spacing: .12em; font-size: .73rem; font-weight: 750; }
+.case-toolbar { padding: .2rem 0 .25rem; }
+.case-toolbar .case-target { color: #53615f; }
+.case-card, .case-filters, .finding-card, .receipt-document, #login-panel, #page-content > details { background: #fffdfa; box-shadow: 0 4px 14px #3c34240b; }
+.case-card { border-top: 3px solid #b4853c; }
+.case-card button { color: #155f75; }
+.case-overview {
+  background: #fffaf0;
+  color: #20302f;
+  border: 1px solid #d1b97e;
+  border-left: 7px solid #b18436;
+  border-top: 1px solid #d1b97e;
+  border-radius: 4px 15px 15px 4px;
+  box-shadow: 0 15px 38px #6a57331a;
+  padding: clamp(1.4rem, 2.5vw, 2.7rem);
+}
+.case-overview > .eyebrow { color: #855820; }
+.case-overview h2 { font-family: Georgia, "Iowan Old Style", serif; font-weight: 600; font-size: clamp(2.05rem, 3.5vw, 3.45rem); line-height: 1.06; letter-spacing: -.045em; }
+.case-overview-summary { max-width: 53ch; font-size: clamp(1.05rem, 1.25vw, 1.25rem); line-height: 1.58; color: #35433e; }
+.case-logic { padding-top: 1rem; border-top: 1px solid #d8cbb2; color: #344441; }
+.case-logic > p { max-width: 65ch; }
+.case-logic-sources { padding-top: .3rem; }
+.case-sources-label { flex-basis: 100%; color: #6c6658; font-size: .7rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.case-logic-sources .source-note { margin: 0; }
+.case-next-step { max-width: 62ch; padding: .8rem 1rem; border-left: 4px solid #245c64; background: #e8f0ed; border-radius: 0 8px 8px 0; font-weight: 650; }
+.case-stage-controls { margin: 1.15rem auto .75rem; }
+.case-stage-label { color: #344441; font-weight: 700; letter-spacing: .015em; }
+.case-stage-controls button { background: #fffdfa; border-color: #8e9c93; color: #245c64; box-shadow: 0 3px 9px #20302f14; }
+.case-stage-controls button:hover:not(:disabled) { background: #e9f1ee; border-color: #245c64; }
+.case-stage-controls button:disabled { color: #6c7772; box-shadow: none; }
+.case-slide .case-action { max-width: 96rem; }
+.case-action .decision-brief {
+  background: #fffdfa;
+  border: 1px solid #d4cfc3;
+  border-left: 5px solid #b18436;
+  border-top: 1px solid #d4cfc3;
+  border-radius: 5px 13px 13px 5px;
+  box-shadow: 0 12px 30px #60543d14;
+  padding: clamp(1.3rem, 2.5vw, 2.6rem);
+}
+.decision-brief > h2 { font-family: Georgia, "Iowan Old Style", serif; font-weight: 600; font-size: clamp(1.9rem, 2.7vw, 2.55rem); }
+.decision-brief .brief-meta { color: #5a6864; }
+.decision-form legend { font-size: 1.13rem; color: #20302f; }
+.decision-option { background: #faf7f0; border-color: #b6b2a7; min-height: 6.5rem; }
+.decision-option:hover { border-color: #8c6a31; background: #f6efdf; }
+.decision-option:has(input:checked) { background: #e7f1ed; border-color: #245c64; box-shadow: inset 4px 0 #245c64; }
+.decision-option span span { color: #53615f; line-height: 1.5; }
+.decision-brief textarea { background: #fffdfa; }
+.decision-next { color: #24483f; background: #e8f0ed; border-left-color: #245c64; }
+.case-receipt { border-color: #cbb990; border-top-color: #b18436; background: #f9f0de; box-shadow: 0 10px 25px #55432a16; }
+.case-receipt h2, .review-story h2 { font-family: Georgia, "Iowan Old Style", serif; font-weight: 600; }
+.review-story, .full-case-review, .case-slide .brief-context { background: #fffdfa; border-color: #d4cfc3; box-shadow: 0 7px 22px #4c403016; }
+.review-story { border-top: 3px solid #245c64; }
+.case-story li { border-left-color: #c7d0c8; }
+.case-story li::before { background: #e7eee9; color: #245c64; border-color: #a6b8ad; }
+.case-slide .brief-context { border-top: 3px solid #245c64; }
+.full-case-review { border-top: 3px solid #b18436; }
+.brief-evidence-summary { background: transparent; }
+.full-review-ratings p { background: #f5f0e7; }
+.proof-result {
+  --rule: #526960; --raised: #304a43; --text: #faf5e9; --text-2: #d2ddd5;
+  --safe: #a5dfb8; --verify: #b0dfeb;
+  color: var(--text); background: #203832; border-color: #526960; border-top-color: #d5aa5c;
+}
+.proof-result h2 { color: #faf5e9; }
+.proof-result .eyebrow { color: #e5bd73; }
+.proof-result .proof-lede { color: #dce7df; }
+.proof-result button { color: #f8f3e8; }
+.proof-result button:hover:not(:disabled) { color: #fff; background: #315c58; }
+#help-launcher { color: #fff9eb; background: #245c64; border-color: #c29b53; box-shadow: 0 8px 20px #19312b45; }
+#help-launcher:hover:not(:disabled) { color: #fff; background: #174952; }
+#help-dialog { background: #fffdfa; border-color: #c7b891; border-top-color: #b18436; box-shadow: 0 25px 80px #17262370; }
+#help-dialog::backdrop { background: #182522b5; }
+#help-dialog .help-head h2 { color: #20302f; }
+#help-try-slot button { background: #eef3ee; border-color: #9caeaa; color: #245c64; font-weight: 650; }
+@container (min-width: 72rem) {
+  .case-logic { margin: 0; padding: .15rem 0 .15rem clamp(1.5rem, 3vw, 3rem); border-top: 0; border-left: 1px solid #d8cbb2; }
+}
+@media (min-width: 1000px) {
+  .decision-form fieldset { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .15rem .85rem; }
+  .decision-form legend { margin-bottom: .8rem; }
+  .decision-option { margin: .35rem 0; }
+}
+@media (max-width: 600px) {
+  main { padding: .95rem .75rem 3rem; }
+  .page-heading h1 { font-size: 1.8rem; }
+  .case-overview { padding: 1.25rem 1.05rem; border-left-width: 5px; }
+  .case-overview h2 { font-size: clamp(2rem, 9vw, 2.4rem); }
+  .case-overview-summary { font-size: 1rem; }
+  .case-next-step { margin-top: 1rem; }
+  .decision-option { min-height: 0; }
+}

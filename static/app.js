@@ -1353,7 +1353,7 @@ async function submitNativeCase(receiptId, parentId = "") {
     announce(`Case admission not confirmed: ${error.message}. Retrying this review keeps its request key and does not repeat the operation.`, true);
   }
 }
-function sourceNote(label, target, context = "") {
+function sourceNote(label, target, context = "", showPrefix = true) {
   if (!target) return node("span", `${label}: source record unavailable`, "source-note brief-limit");
   const note = node("div", undefined, "source-note");
   const link = button(label, () => {
@@ -1368,7 +1368,8 @@ function sourceNote(label, target, context = "") {
   });
   link.className = "source-link";
   if (target.id) link.setAttribute("aria-controls", target.id);
-  note.append(node("span", "Source: "), link);
+  if (showPrefix) note.append(node("span", "Source: "));
+  note.append(link);
   if (context) note.append(node("span", context, "source-context"));
   return note;
 }
@@ -1629,9 +1630,10 @@ function renderCaseOverview(c, receipt, story, context, decision) {
   const now = !current ? "" : current.read_error ? "The current settings could not be read." : current.changed === true ? "A later read shows different settings; the reason for that change is not established." : current.changed === false ? "A later read shows settings matching the saved request." : "The later settings comparison is unresolved.";
   logic.append(node("p", `${saved} ${reviewed} ${now}`.trim()));
   const citations = node("div", undefined, "case-logic-sources");
-  if (receiptMatches) citations.append(sourceNote("Operation record", receipt.querySelector?.("#receipt-source")));
-  citations.append(sourceNote("Review record", story.querySelector?.("#story-source-2")));
-  if (current) citations.append(sourceNote("Current settings read", decision.querySelector("#decision-fact-configuration"), `Compared ${sourceTime(b.read_at)}`));
+  citations.append(node("span", "Source records", "case-sources-label"));
+  if (receiptMatches) citations.append(sourceNote("Operation record", receipt.querySelector?.("#receipt-source"), "", false));
+  citations.append(sourceNote("Review record", story.querySelector?.("#story-source-2"), "", false));
+  if (current) citations.append(sourceNote("Current settings read", decision.querySelector("#decision-fact-configuration"), `Compared ${sourceTime(b.read_at)}`, false));
   logic.append(citations);
   box.append(logic);
   if (b?.next_step) box.append(node("p", b.next_step, "case-next-step"));
@@ -1849,6 +1851,7 @@ function openGuide(start = 0) {
   if (!dialog || typeof dialog.showModal !== "function") return;
   guideStep = start; paintGuide();
   if (!dialog.open) dialog.showModal();
+  byId("help-try-slot").querySelector("button")?.focus({preventScroll:true});
 }
 byId("help-launcher").addEventListener("click", () => openGuide());
 byId("help-back").addEventListener("click", () => { if (guideStep > 0) { guideStep--; paintGuide(); } });

@@ -34,7 +34,7 @@
       "passed": true
     },
     {
-      "name": "320: receipt uses the paper surface",
+      "name": "320: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -210,7 +210,7 @@
       "passed": true
     },
     {
-      "name": "360: receipt uses the paper surface",
+      "name": "360: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -390,7 +390,7 @@
       "passed": true
     },
     {
-      "name": "390: receipt uses the paper surface",
+      "name": "390: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -566,7 +566,7 @@
       "passed": true
     },
     {
-      "name": "768: receipt uses the paper surface",
+      "name": "768: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -742,7 +742,7 @@
       "passed": true
     },
     {
-      "name": "1440: receipt uses the paper surface",
+      "name": "1440: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -918,7 +918,7 @@
       "passed": true
     },
     {
-      "name": "2560: case uses the available canvas",
+      "name": "2560: case uses a balanced working canvas",
       "passed": true
     },
     {
@@ -930,7 +930,7 @@
       "passed": true
     },
     {
-      "name": "2560: receipt uses the paper surface",
+      "name": "2560: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -983,6 +983,10 @@
     },
     {
       "name": "2560: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "2560: working canvas stays centered",
       "passed": true
     },
     {
@@ -1106,7 +1110,7 @@
       "passed": true
     },
     {
-      "name": "3440: case uses the available canvas",
+      "name": "3440: case uses a balanced working canvas",
       "passed": true
     },
     {
@@ -1118,7 +1122,7 @@
       "passed": true
     },
     {
-      "name": "3440: receipt uses the paper surface",
+      "name": "3440: receipt uses a distinct paper surface",
       "passed": true
     },
     {
@@ -1171,6 +1175,10 @@
     },
     {
       "name": "3440: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "3440: working canvas stays centered",
       "passed": true
     },
     {
@@ -1562,19 +1570,19 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 247.65625,
+          "w": 242.03125,
           "h": 101.15625
         },
         {
           "tag": "BUTTON",
           "type": "submit",
-          "w": 247.65625,
+          "w": 242.03125,
           "h": 45.171875
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 247.65625,
+          "w": 242.03125,
           "h": 45.171875
         },
         {
@@ -1622,25 +1630,25 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 242.84375,
+          "w": 246.03125,
           "h": 58
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 252.4375,
+          "w": 255.625,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 252.4375,
+          "w": 255.625,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 252.4375,
+          "w": 255.625,
           "h": 44
         },
         {
@@ -1661,10 +1669,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -1758,19 +1767,19 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 286.84375,
+          "w": 281.21875,
           "h": 101.15625
         },
         {
           "tag": "BUTTON",
           "type": "submit",
-          "w": 286.84375,
+          "w": 281.21875,
           "h": 45.171875
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 286.84375,
+          "w": 281.21875,
           "h": 45.171875
         },
         {
@@ -1824,19 +1833,19 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 291.625,
+          "w": 294.8125,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 291.625,
+          "w": 294.8125,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 291.625,
+          "w": 294.8125,
           "h": 44
         },
         {
@@ -1857,10 +1866,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -1954,19 +1964,19 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 316.25,
+          "w": 310.625,
           "h": 101.15625
         },
         {
           "tag": "BUTTON",
           "type": "submit",
-          "w": 316.25,
+          "w": 310.625,
           "h": 45.171875
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 316.25,
+          "w": 310.625,
           "h": 45.171875
         },
         {
@@ -2020,19 +2030,19 @@
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 321.03125,
+          "w": 324.21875,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 321.03125,
+          "w": 324.21875,
           "h": 44
         },
         {
           "tag": "BUTTON",
           "type": "button",
-          "w": 321.03125,
+          "w": 324.21875,
           "h": 44
         },
         {
@@ -2053,10 +2063,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -2150,7 +2161,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 670.65625,
+          "w": 665.0625,
           "h": 101.15625
         },
         {
@@ -2249,10 +2260,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -2358,7 +2370,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 1028.40625,
+          "w": 1275.625,
           "h": 101.15625
         },
         {
@@ -2457,10 +2469,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -2566,7 +2579,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 1028.40625,
+          "w": 1446.8125,
           "h": 101.15625
         },
         {
@@ -2665,10 +2678,11 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     },
     {
@@ -2774,7 +2788,7 @@
         {
           "tag": "TEXTAREA",
           "type": "textarea",
-          "w": 1028.40625,
+          "w": 1446.8125,
           "h": 101.15625
         },
         {
@@ -2873,18 +2887,19 @@
         "14px"
       ],
       "contrast": {
-        "text": 14.719754753809813,
-        "secondary": 9.32652274840595,
-        "input": 5.345966426464763,
-        "focus": 10.56517112143058
+        "text": 13.560155456860116,
+        "secondary": 6.377746786331366,
+        "input": 3.1895979266896743,
+        "focus": 4.367032917849932,
+        "headerSafe": 9.788350787929105
       }
     }
   ],
   "browser_errors": [],
   "source_sha256": {
-    "static/index.html": "c829b138a03c85d0928d5563eee4330efda7d72522da0b197d5b3b56331c3215",
-    "static/app.js": "cd145846c9678e275920e2a97f0d7963256665571cfeec3ead8825083b381964",
-    "static/app.css": "7cd8aec2466940e1d407c1bd5ec5b40d69e56d9cc057391a677dffa18868d316",
+    "static/index.html": "8120fc73029358c00f6fc73c805f245bda6906e2bdb6cfe7bd4c49251b8d1503",
+    "static/app.js": "0238aa95de22c2aac041c240ca1a02d37ba150bbf3640093624ae98134669402",
+    "static/app.css": "029996c6eddbf332b34059d32ef44403b4bd79b53da5395523bef2e8d93e4c8f",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "1d61d97ab416153a9ce839e9471b0a1e2af331fb9f8a705c3d7343ae80aa14b6"

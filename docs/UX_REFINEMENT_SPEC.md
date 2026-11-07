@@ -1,6 +1,6 @@
 # Battery UX refinement: understand, decide, continue
 
-Status: approved by Robin, 2026-11-05; implementation qualified and installed. See [UX evidence](UX_REFINEMENT_EVIDENCE.md).
+Status: approved by Robin, 2026-11-05; visual direction revised by Robin, 2026-11-07. See [UX evidence](UX_REFINEMENT_EVIDENCE.md).
 Routine design and engineering decisions are delegated. This document records the agreed direction; the evidence report identifies delivered behavior and remaining limits.
 
 ## Outcome
@@ -30,12 +30,13 @@ audit findings must be reconciled with current source before becoming new work.
 | --- | --- | --- |
 | A | Make **Cases** the first-visit home, with a visible Needs your decision filter and all cases available. Restore the last valid location on later visits; explicit links always win. | Keep Overview as first-visit home; preserves the administration emphasis but adds a step to review work. |
 | B | Use **Summary → What happened → Technical evidence** within one case. Summary is the default; remember opened detail per case within the signed-in session. | Start with expanded technical detail; faster for regular auditors, heavier reading for everyone else. |
-| C | Refine the existing dark Battery identity: readable type, restrained blue action accents, semantic status colors and a balanced workspace. | Develop a light-first identity; a larger visual change with additional palette work. |
+| C | Use a warm paper-and-graphite identity drawn from the black-and-gold Battery mark: clear reading surfaces, an editorial case heading, restrained teal actions and semantic status colors. | The initial dark treatment was functional but felt drab and generic; Robin requested a more distinct, welcoming direction on 2026-11-07. |
 | D | Present a focused human decision only when context is unresolved. Put the question, material difference, known facts, unknowns and available choices together. | Use an always-present decision form; consistent placement but creates unnecessary prompts on settled cases. |
 
 Approval selects these product directions. Detailed spacing, copy, components,
 responsive behavior, accessibility and test implementation are delegated.
-All four recommended directions were approved; routine details remain delegated.
+The initial four directions were approved. The visual choice above records Robin's
+later correction; routine details remain delegated.
 
 ## Screen structure
 
@@ -59,8 +60,11 @@ such as the currently labelled unimplemented REST API page, belongs in a clearly
 marked capability explanation rather than posing as an available workflow.
 No UI relabeling promises newly implemented adapter functionality.
 
-On desktop, use a stable navigation rail and a flexible stage. The case list may
-sit beside the selected case when both fit at readable sizes. Text paragraphs
+Use a compact header with Cases, Overview and New request immediately available;
+put records and settings in one labelled menu. Center the working canvas on
+ultrawide screens. The selected case is a three-stage journey with visible
+desktop arrows and optional phone swipes; every stage remains reachable without
+gestures. Text paragraphs
 stay within roughly 60–75 characters per line; comparisons may use wider space.
 On phones, use one full-width working view, a labelled menu, and a visible Back
 to cases action. Browser Back and Forward work. No mandatory swipe gestures or
@@ -131,8 +135,11 @@ Mark generated interpretation and offer evidence references. A model response
 cannot replace contradictory facts or create an action.
 
 Brief inline definitions explain receipt, review, rule and evidence when needed.
-Show help at the point of use; avoid a compulsory tour. Broader tutorial mode,
-automatic lifecycle narration and similar-case retrieval are later work.
+A skippable five-step guide opens on first sign-in and remains available from a
+corner help button. It explains the case stages, rule-versus-outcome judgment,
+prepare/authorize/execute/verify, and response-loss recovery, with links into
+the relevant working view. Automatic lifecycle narration and similar-case
+retrieval are later work.
 
 ## Continuity and feedback
 
@@ -156,7 +163,9 @@ automatic lifecycle narration and similar-case retrieval are later work.
 ## Delegated visual and accessibility details
 
 Use shared semantic tokens for surfaces, text, borders, action, success, warning,
-error and focus. One system sans-serif family; monospace for code and IDs only.
+error and focus. System sans-serif carries controls and body text; a restrained
+serif display face marks case questions and section headings. Monospace remains
+for code and IDs only.
 Use a small spacing scale and restrained borders. Target 16px reading text,
 14px secondary text, and 44px phone controls. These are product design choices.
 Reduce secondary content before shrinking working controls.

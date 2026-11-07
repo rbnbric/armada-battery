@@ -86,11 +86,11 @@ def run(out):
                 order=page.evaluate('''() => [...document.querySelectorAll('.case-overview,.receipt-review,.brief-context,.full-case-review,.decision-brief')].map(e=>['case-overview','receipt-review','brief-context','full-case-review','decision-brief'].find(name=>e.classList.contains(name)))''')
                 check(f'{width}: answer and decision precede detailed evidence',order==['case-overview','decision-brief','receipt-review','brief-context','full-case-review'])
                 if width >= 2560:
-                    canvas=page.evaluate('''()=>{const rect=s=>document.querySelector(s).getBoundingClientRect();const main=rect('main'),overview=rect('.case-overview'),question=rect('.case-overview h2'),logic=rect('.case-logic');return {mainRight:main.right,used:overview.width/main.width,logicBeside:logic.left>question.right}}''')
-                    check(f'{width}: case uses the available canvas',canvas['mainRight']>=width-1 and canvas['used']>.85)
+                    canvas=page.evaluate('''()=>{const rect=s=>document.querySelector(s).getBoundingClientRect();const main=rect('main'),overview=rect('.case-overview'),question=rect('.case-overview h2'),logic=rect('.case-logic');return {mainLeft:main.left,mainRight:main.right,mainWidth:main.width,used:overview.width/main.width,logicBeside:logic.left>question.right}}''')
+                    check(f'{width}: case uses a balanced working canvas',abs(canvas['mainLeft']-(width-canvas['mainRight']))<3 and canvas['mainWidth']>=1900 and canvas['used']>.85)
                     check(f'{width}: question and explanation share the top row',canvas['logicBeside'])
                     check(f'{width}: focused case stage is centered',page.evaluate('''()=>{const r=document.querySelector('.case-slide .case-action').getBoundingClientRect(),m=document.querySelector('main').getBoundingClientRect();return Math.abs((r.left+r.right)/2-(m.left+m.right)/2)<3}'''))
-                check(f'{width}: receipt uses the paper surface',page.locator('.case-receipt').evaluate('(e)=>getComputedStyle(e).backgroundImage.includes("gradient") && getComputedStyle(e).getPropertyValue("--paper").trim()==="#f2eadb"'))
+                check(f'{width}: receipt uses a distinct paper surface',page.locator('.case-receipt').evaluate('(e)=>getComputedStyle(e).backgroundColor!==getComputedStyle(document.querySelector(".review-story")).backgroundColor && getComputedStyle(e).getPropertyValue("--paper").trim()==="#f2eadb"'))
                 page.wait_for_function("document.querySelector('.case-stage-label')?.textContent.startsWith('1 of 3')")
                 check(f'{width}: full review is opt in',page.evaluate('uxTest.posts.filter(p=>p.path.endsWith("/full-review")).length')==0)
                 page.get_by_role('button',name='Review full case with AI Hub',exact=True).click()
@@ -117,15 +117,18 @@ def run(out):
                 check(f'{width}: horizontal scroll returns to task',page.locator('.case-stage-label').inner_text().startswith('1 of 3'))
                 m=page.evaluate('''() => ({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,controls:[...document.querySelectorAll('button,input,select,textarea')].filter(e=>e.getClientRects().length).map(e=>({tag:e.tagName,type:e.type,w:e.getBoundingClientRect().width,h:e.getBoundingClientRect().height})),fonts:[...document.querySelectorAll('.decision-brief > p')].map(e=>getComputedStyle(e).fontSize)})''')
                 views.append(m);check(f'{width}: no horizontal overflow',m['scrollWidth']<=width)
+                if width>=2000:
+                    check(f'{width}: working canvas stays centered',page.locator('main').evaluate('(e)=>{const r=e.getBoundingClientRect();return Math.abs(r.left-(innerWidth-r.right))<3}'))
                 check(f'{width}: 44px working controls',all(c['h']>=44 for c in m['controls'] if c['type'] not in ['radio','checkbox']))
                 contrast=page.evaluate("""() => {
                   const vars=getComputedStyle(document.documentElement);
                   const lum=color=>{const a=color.trim().match(/[a-f0-9]{2}/gi).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return .2126*a[0]+.7152*a[1]+.0722*a[2]};
                   const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
-                  return {text:ratio(vars.getPropertyValue('--text'),vars.getPropertyValue('--surface')),secondary:ratio(vars.getPropertyValue('--text-2'),vars.getPropertyValue('--surface')),input:ratio(vars.getPropertyValue('--control-border'),vars.getPropertyValue('--surface')),focus:ratio(vars.getPropertyValue('--focus'),vars.getPropertyValue('--surface'))};
+                  const bar=getComputedStyle(document.querySelector('.status-bar'));
+                  return {text:ratio(vars.getPropertyValue('--text'),vars.getPropertyValue('--surface')),secondary:ratio(vars.getPropertyValue('--text-2'),vars.getPropertyValue('--surface')),input:ratio(vars.getPropertyValue('--control-border'),vars.getPropertyValue('--surface')),focus:ratio(vars.getPropertyValue('--focus'),vars.getPropertyValue('--surface')),headerSafe:ratio(bar.getPropertyValue('--safe'),bar.getPropertyValue('--surface'))};
                 }""")
                 m['contrast']=contrast
-                check(f'{width}: palette contrast',contrast['text']>=4.5 and contrast['secondary']>=4.5 and contrast['input']>=3 and contrast['focus']>=3)
+                check(f'{width}: palette contrast',contrast['text']>=4.5 and contrast['secondary']>=4.5 and contrast['input']>=3 and contrast['focus']>=3 and contrast['headerSafe']>=4.5)
                 check(f'{width}: every story assertion has a named source',page.locator('.case-story > li .source-link').count()==3)
                 check(f'{width}: readable source type and timestamp','Review updated' in page.locator('.case-story .source-note').first.inner_text())
                 page.locator('.case-receipt').get_by_role('button',name='Saved operation receipt',exact=True).click()

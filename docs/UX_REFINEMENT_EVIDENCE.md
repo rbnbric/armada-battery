@@ -1,8 +1,8 @@
 # Battery UX refinement — delivery and evidence
 
-Updated: 2026-11-07. All four product directions were approved. The existing Battery
-logo now anchors a warm dark visual system, with readable type, shared spacing,
-blue actions and labelled semantic states. The receipt and a plain-language account share the case view; supporting
+Updated: 2026-11-07. The Battery logo now anchors a warm paper-and-graphite
+visual system, with restrained brass accents, teal actions, readable type and
+labelled semantic states. The receipt and a plain-language account share the case view; supporting
 history, optional explanation and technical records expand beneath each section.
 
 ## Delivered
@@ -36,7 +36,7 @@ history, optional explanation and technical records expand beneath each section.
 | --- | --- | --- |
 | Python suite | 135 public-checkout tests and 37 subtests passed; source-tree HTTP asset tests passed | Engine/API/session/ledger regressions plus exact HTTP logo and asset routes |
 | UI handler suite | 13 passed | Existing preparation, expiry, response loss and identity behaviors; recovery fixture updated to select its explicit case route |
-| Chromium journeys | 367 passed; no browser exceptions | 320, 360, 390, 768, 1440, 2560 and 3440px, 200% root text, first-run guide and visible phone controls, carousel arrows and swipe, sourced report, keyboard, browser history, focus/selection/scroll, contrast, stale decisions, double click, expired identity, failed explanation, search and long/hostile data |
+| Chromium journeys | 369 passed; no browser exceptions | 320, 360, 390, 768, 1440, 2560 and 3440px, 200% root text, first-run guide and visible phone controls, centered ultrawide canvas, carousel arrows and swipe, sourced report, keyboard, browser history, focus/selection/scroll, palette and header contrast, stale decisions, double click, expired identity, failed explanation, search and long/hostile data |
 | Installed HTTP checks | 15 passed | Served source hashes, CSP, logo MIME, sign-in, retained case/brief/history and linked receipt |
 | Installed/source comparison | 5 of 5 exact matches | app.py, HTML, CSS, JavaScript and logo |
 | Clean checkout with AI Hub build 109 | Setup and native integration passed | Public `contest-49-wip` at `d53db4f`, separate Compose project, real AI Hub review of one synthetic operation. Same-key operation and review requests reused their records; case reached `VERIFIED_MATCH` in 14.087 seconds. |
@@ -214,3 +214,24 @@ An owner comprehension test remains: open the retained case on phone, say what
 the original operation did, whether the current settings match it, and what
 you would do next. The machine checks cannot establish whether that explanation
 is understandable without prompting.
+
+## Fieldbook visual pass — 2026-11-07
+
+Robin rejected the previous uniform dark dashboard as drab and generic. The
+revised direction uses the logo's graphite and brass with warm paper reading
+surfaces and teal actions. Display serif headings distinguish the case question
+from controls and evidence. The summary groups its source links under one clear
+label. Decision choices form a compact two-column set where space allows, and
+the reading canvas stays centered on ultrawide monitors. The first-run guide
+uses the same surfaces and keeps its controls visible on phones.
+
+By-eye inspection covered the current-decision and completed-case renders at
+390px and 1440px, the centered 3440px case, the first-run guide at 390px, and
+the Overview and New request routes at phone and desktop widths. The native
+operation and agent logic did not change in this pass. The Chromium fixture
+reported **369/369 checks** with no browser exception; the 13 UI handler tests
+and focused HTTP asset test passed. The installed HTTP result is recorded above.
+
+This visual pass is a design judgment supported by screenshots and functional
+checks, not a measured preference study. The owner can inspect the same case
+on phone and ultrawide and request another visual iteration.

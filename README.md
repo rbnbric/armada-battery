@@ -16,7 +16,8 @@ show the current task, what happened, and the supporting records. Swipe between
 them on a phone or use the arrows on desktop. A first-run guide explains the
 rules and the prepare → authorize → execute → verify procedure; the corner help
 button reopens it. The header keeps Cases, Overview and New request close, with
-other records and settings in one menu. The guide and synthetic walkthrough do
+other records and settings in one menu. The case screen uses warm paper, graphite
+and brass from the Battery mark, with a centered ultrawide reading canvas. The guide and synthetic walkthrough do
 not authorize a business operation. [UX tests and limits](docs/UX_REFINEMENT_EVIDENCE.md).
 
 **Earlier decision-brief qualification:** Cases now starts with a readable summary and a
