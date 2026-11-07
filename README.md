@@ -19,14 +19,49 @@ contradictory.
 
 ![Battery's current case view: a sourced summary and a question for the operator](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-1440.png)
 
-The case view now starts with what happened in plain language, where the answer
-came from, and what still needs a person. The task, investigation, and supporting
-records follow in three swipeable stages on phones or arrow-controlled stages on
-desktop. The first visit offers a five-step practice case about a lost reply,
-the saved receipt, fresh history, and an agent that corrects its first answer.
-The practice and hosted tour use synthetic records: **they make no IRIS request
-and run no AI Hub agent**. Connected AI Hub use requires the separately obtained
-EAP image and configured model access. [See the UI evidence and limits](docs/UX_REFINEMENT_EVIDENCE.md).
+### How Battery reaches an answer
+
+1. **Record the attempt once.** The original request gets a durable receipt and
+   execution key. A lost reply leaves its outcome uncertain; it does not cause
+   another dispatch.
+2. **Ask two separate questions.** A small native AI Hub reviewer checks whether
+   the selected rule's assertion is supported, then whether the observed result
+   meets the acceptance criterion. A sound rule can describe a failed result;
+   a passing result does not prove the rule was sound.
+3. **Investigate disagreement.** If the answers conflict or evidence is missing,
+   a larger agent can ask bounded, read-only questions about the saved receipt
+   and current target. The first answer, rejected answers, evidence reads and
+   later revisions remain inspectable.
+4. **Check the conclusion against records.** Deterministic checks confirm the
+   receipt's scope, freshness and measured result before Battery reports a
+   verified match. An agent's explanation cannot turn missing evidence into a
+   pass or authorize a repeat operation.
+5. **Show the person the decision point.** The case starts with a source-linked
+   summary and a clear question when judgment is needed. A recorded human answer
+   is bound to the evidence shown; any corrective change still uses the
+   prepare, authorize, execute and verify procedure.
+
+This is a bounded review of an operation receipt, not an automatic repair of
+every interoperability problem. The implemented receipt profile and its limits
+are in the [native workflow guide](docs/NATIVE_CASE_WORKFLOW.md) and
+[architecture map](docs/INTEROP_AGENT_ARCHITECTURE.md).
+
+### What a visitor sees
+
+The current case view puts the plain-language result and source records first.
+The task, investigation and supporting evidence follow in three stages: swipe
+on a phone or use the arrows on desktop. The first visit offers a five-step
+practice case about a lost reply, the saved receipt, fresh history and an agent
+that corrects its first answer. The corner help button replays it.
+
+![First-run practice case on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
+
+![Sourced case summary and the operator's next decision on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
+
+These screenshots use **synthetic records**. The hosted practice and tour make
+no IRIS request and run no AI Hub agent. Connected AI Hub use requires the
+separately obtained EAP image and configured model access.
+[See the UI evidence and limits](docs/UX_REFINEMENT_EVIDENCE.md).
 
 **Connected demonstration:** a temporary REST application was created on real
 IRIS, its receipt recovered after the client closed the response, and its
@@ -160,14 +195,6 @@ system resources, processes, databases, license usage, audit configuration,
 journals, TLS configuration metadata, and wallet collection metadata. A denied
 area stays visible as `FORBIDDEN`; it is never presented as an empty healthy
 result.
-
-## Screenshots
-
-![Battery case and operator decision on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
-![First-run practice case on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
-
-These show the current case and practice screens at 390px. Their synthetic values
-are demonstration fixtures, not measurements of an IRIS instance.
 
 ## Current qualification and limits
 

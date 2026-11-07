@@ -7,14 +7,14 @@ not accept browser-authored proof.
 
 ## Run locally
 
-Start from the branch containing the agent implementation:
+Start from the current default branch:
 
 ```sh
-git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
+git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 ```
 
-The default branch and hosted walkthrough contain the earlier management release.
+The hosted walkthrough uses synthetic records and does not run AI Hub agents.
 The original 1.0.3 code snapshot is
 `f3f438a177b27f834aa022ebb7fc810acd8a4b15`. Use the current branch head for the
 subsequent functional REST fixes; the original commit is for reproducing the
@@ -61,7 +61,7 @@ connecting AI Hub does not convert a synthetic operation into a live one.
 
 1. Prepare and execute a demonstration task through the existing UI.
 2. Open its receipt and select **Review this receipt with AI Hub**.
-3. Open **Agent cases** and refresh to follow admission, execution and completion.
+3. Open **Cases** and refresh to follow admission, execution and completion.
 4. Inspect rule assertion and measured output separately. Expand the reviews for
    raw responses, rejected answers and usage; expand tool reads for the source.
 5. If held, correct or reconcile the underlying evidence before requesting a new
