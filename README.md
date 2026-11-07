@@ -6,7 +6,7 @@
 
 **[Read the illustrated community guide: An AI agent can be wrong and still be useful](docs/community/2026-11-05/)** — the investigation, REST repairs, screenshots and measured results. [Copyable article Markdown](docs/community/2026-11-05/article.md).
 
-The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49-wip) branch connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
+The current repository connects the management application to native IRIS AI Hub: receipt submission, durable cases, small-agent review, larger-agent investigation, authenticated evidence tools, bounded follow-up, and deterministic outcome checks.
 
 **Connected demonstration:** a temporary REST application was created on real IRIS, its receipt recovered after the client closed the response, and its configuration reviewed through AI Hub. Reusing the execution key returned the same receipt. The native case reached `VERIFIED_MATCH`; the temporary app and qualification account were removed. This run proved one configuration workflow. A [subsequent functional REST check](docs/REST_SERVICE_EVIDENCE.md) exercised the configured CaseAPI service: 22 HTTP checks and 19 native lifecycle checks passed after fixing two native defects. These checks do not qualify all four administration workflows.
 
@@ -60,9 +60,9 @@ with fresh evidence, and never turns an uncertain transport outcome into permiss
 to resend the change. Unresolved outcomes stay visible until reconciliation.
 
 **[Open the credential-free walkthrough](https://rbnbric.github.io/armada-battery/)**
-— the earlier management walkthrough, clearly labeled synthetic and sending no
-request to IRIS. It does not include the native Agent cases screen. Use the
-[local EAP setup](docs/NATIVE_CASE_WORKFLOW.md) for the new agent workflow.
+— a scripted practice case followed by a tour of the synthetic application.
+It sends no request to IRIS and does not run AI Hub agents. Use the
+[local EAP setup](docs/NATIVE_CASE_WORKFLOW.md) for the connected agent workflow.
 
 **[Watch the public reviewer-feedback update](https://www.youtube.com/watch?v=GbEMgSDRCZk)**
 — a before/after walkthrough of the faster judge path and the new synthetic
@@ -113,16 +113,17 @@ requires fresh readback before reporting verified success.
 ## Judge fast path
 
 No IRIS instance is required for the deterministic evaluation path. Open the
-[hosted synthetic walkthrough](https://rbnbric.github.io/armada-battery/), select
-**Review this task** on the observed finding, review the demonstration task, prepare it, and
-choose **Run and verify**. The resulting receipt shows the original ambiguous
-dispatch reconciled without resend; returning to Overview shows the finding resolved.
+[hosted synthetic walkthrough](https://rbnbric.github.io/armada-battery/) and
+complete the first-run practice case. It shows a lost reply, the original
+receipt, a fresh observation, and a corrected review. The following tour points
+to the case summary, its sources, the report, and the request procedure. The
+hosted page uses labeled synthetic fixtures and sends no request to IRIS.
 
 No installation, account, credentials, IRIS download, or local Python is required.
 The same proof can run entirely inside Docker:
 
 ```bash
-git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
+git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 docker compose up -d
 docker compose run --rm proof
@@ -182,7 +183,7 @@ path. Copy `.env.example` to `.env`, replace the sample password, and start the
 IRIS overlay:
 
 ```bash
-git clone --branch contest-49-wip https://github.com/rbnbric/armada-battery.git
+git clone https://github.com/rbnbric/armada-battery.git
 cd armada-battery
 cp .env.example .env
 # Set IRIS_PASSWORD in .env to a unique 8–32 character local demo password.
@@ -264,9 +265,7 @@ Battery began with the [Build Your Own Management Portal contest](https://openex
 Version 1.0.3 adds the native AI Hub workflow for
 [AI Agents in Interoperability Workflows](https://openexchange.intersystems.com/contest/49).
 
-The new implementation is on `contest-49-wip`; the default `main` branch and
-hosted Pages walkthrough retain the earlier management release. Clone the explicit
-branch as shown above. The 1.0.3 tested code snapshot is
+The current implementation is on the default `main` branch. The 1.0.3 tested code snapshot is
 [`f3f438a`](https://github.com/rbnbric/armada-battery/commit/f3f438a177b27f834aa022ebb7fc810acd8a4b15).
 That commit preserves the original published measurement baseline. The current
 branch also contains the subsequent native REST fixes and their

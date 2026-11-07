@@ -23,22 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Build static walkthrough
-        run: |
-          mkdir -p _site/static
-          cp static/app.css static/app.js _site/static/
-          cp static/index.html _site/index.html
-          cp docs/demo-api.js _site/static/demo-api.js
-          sed -i 's|href="/static/app.css"|href="./static/app.css"|' _site/index.html
-          sed -i 's|<script src="/static/app.js"></script>|<script src="./static/demo-api.js"></script><script src="./static/app.js"></script>|' _site/index.html
-          cat >> _site/static/app.css <<'CSS'
-          .demo-banner {
-            padding: .8rem 1.25rem;
-            color: #132229;
-            background: linear-gradient(90deg, #f6b64a, #ffd98a);
-            border-bottom: 1px solid #b97519;
-            font-size: .92rem;
-          }
-          CSS
+        run: python scripts/build_pages_demo.py --out _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
