@@ -141,9 +141,11 @@ choose how to handle a lost reply, inspect a saved receipt and fresh task
 history, compare an agent's first answer with its corrected review, and decide
 whether a verified task should run again. Wrong choices explain their effect.
 The practice uses only local synthetic records and does not call IRIS, AI Hub,
-or an action endpoint. Completing it enters the signed-in app or leaves the
-visitor at sign-in; it does not mark a case reviewed. The actual case stages and
-prepare/authorize/execute/verify controls remain in the working view.
+or an action endpoint. Completing it begins an in-app tour of the actual case
+question, source links, report stage and request procedure; if no case is
+accessible, it tours Overview and the request procedure. On a protected
+installation the tour resumes after sign-in. Neither phase marks a case
+reviewed or presses the prepare/authorize/execute/verify controls.
 Automatic lifecycle narration and similar-case retrieval are later work.
 
 ## Continuity and feedback

@@ -17,8 +17,10 @@ them on a phone or use the arrows on desktop. A five-step, credential-free
 practice case opens on first visit, even before sign-in. Visitors choose how to
 handle a lost reply, inspect a saved receipt and fresh task history, compare an
 agent's initial answer with its corrected review, and decide whether to rerun.
-It is scripted synthetic practice: no IRIS request or AI call is sent. The
-corner help button replays it. The header keeps Cases, Overview and New request close, with
+It is scripted synthetic practice: no IRIS request or AI call is sent. Finishing
+the practice opens a short tour of the actual case, source links, report stage
+and request procedure; when no case is accessible, the tour starts at Overview.
+The corner help button replays the practice. The header keeps Cases, Overview and New request close, with
 other records and settings in one menu. The case screen uses warm paper, graphite
 and brass from the Battery mark, with a centered ultrawide reading canvas.
 [UX tests and limits](docs/UX_REFINEMENT_EVIDENCE.md).

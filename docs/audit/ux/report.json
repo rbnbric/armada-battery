@@ -1338,6 +1338,30 @@
       "passed": true
     },
     {
+      "name": "320: working tour opens real case",
+      "passed": true
+    },
+    {
+      "name": "320: working tour points to source links",
+      "passed": true
+    },
+    {
+      "name": "320: working tour opens report stage",
+      "passed": true
+    },
+    {
+      "name": "320: working tour opens request procedure",
+      "passed": true
+    },
+    {
+      "name": "320: working tour never posts",
+      "passed": true
+    },
+    {
+      "name": "320: working tour clears highlight",
+      "passed": true
+    },
+    {
       "name": "320: corner help replays practice",
       "passed": true
     },
@@ -1398,6 +1422,30 @@
       "passed": true
     },
     {
+      "name": "390: working tour opens real case",
+      "passed": true
+    },
+    {
+      "name": "390: working tour points to source links",
+      "passed": true
+    },
+    {
+      "name": "390: working tour opens report stage",
+      "passed": true
+    },
+    {
+      "name": "390: working tour opens request procedure",
+      "passed": true
+    },
+    {
+      "name": "390: working tour never posts",
+      "passed": true
+    },
+    {
+      "name": "390: working tour clears highlight",
+      "passed": true
+    },
+    {
       "name": "390: corner help replays practice",
       "passed": true
     },
@@ -1450,11 +1498,51 @@
       "passed": true
     },
     {
+      "name": "1440: working tour opens real case",
+      "passed": true
+    },
+    {
+      "name": "1440: working tour points to source links",
+      "passed": true
+    },
+    {
+      "name": "1440: working tour opens report stage",
+      "passed": true
+    },
+    {
+      "name": "1440: working tour opens request procedure",
+      "passed": true
+    },
+    {
+      "name": "1440: working tour never posts",
+      "passed": true
+    },
+    {
+      "name": "1440: working tour clears highlight",
+      "passed": true
+    },
+    {
       "name": "1440: corner help replays practice",
       "passed": true
     },
     {
       "name": "signed-out visitor can practice",
+      "passed": true
+    },
+    {
+      "name": "working tour waits for sign-in",
+      "passed": true
+    },
+    {
+      "name": "working tour resumes after sign-in",
+      "passed": true
+    },
+    {
+      "name": "no-case tour starts at Overview",
+      "passed": true
+    },
+    {
+      "name": "no-case tour still reaches request procedure",
       "passed": true
     },
     {
@@ -3041,9 +3129,9 @@
   ],
   "browser_errors": [],
   "source_sha256": {
-    "static/index.html": "c28fbbbb86b88422189c3a69167a5dd7241ff7a318b8a9c81b9947b63d3dcf7d",
-    "static/app.js": "60f0e975335fe4c22b491c13f064a06371b21d4e01a98c8ef144f722f7f000eb",
-    "static/app.css": "76207b6d993417122f7215843f764498e340c90d09a345611fd7b3f6e8ce6b91",
+    "static/index.html": "94fb5caa9fa8223633d19d3d4e8814636203a0e7e0a52c78760db8f2980c4c06",
+    "static/app.js": "bb69e3592216c3b538160080495119f4b7598c47237ddcaafc4ca8e3d94c3e4b",
+    "static/app.css": "63d1d6dd4208018396d547d9676256f1942cb5bc8e619e2c460fe7e4af5db4f0",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "1d61d97ab416153a9ce839e9471b0a1e2af331fb9f8a705c3d7343ae80aa14b6"

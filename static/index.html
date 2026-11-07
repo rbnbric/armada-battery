@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Armada Battery · Operations</title>
     <link rel="icon" href="/static/battery-logo.png" />
-    <link rel="stylesheet" href="/static/app.css?v=76207b6d9934" />
+    <link rel="stylesheet" href="/static/app.css?v=63d1d6dd4208" />
   </head>
   <body>
     <a class="skip" href="#workspace">Skip to workspace</a>
@@ -189,6 +189,12 @@
       <p class="help-boundary">Scripted practice only. No IRIS request or AI call is sent.</p>
       <div class="help-actions"><button id="help-dismiss" type="button">Skip practice</button><button id="help-back" type="button">Back</button><button id="help-next" type="button" class="primary">Next</button></div>
     </dialog>
-    <script src="/static/app.js?v=60f0e975335f"></script>
+    <aside id="app-tour" aria-labelledby="app-tour-title" hidden>
+      <p id="app-tour-progress" class="eyebrow"></p>
+      <h2 id="app-tour-title"></h2>
+      <p id="app-tour-copy"></p>
+      <div class="app-tour-actions"><button id="app-tour-stop" type="button">End tour</button><button id="app-tour-back" type="button">Back</button><button id="app-tour-next" type="button" class="primary">Next</button></div>
+    </aside>
+    <script src="/static/app.js?v=bb69e3592216"></script>
   </body>
 </html>

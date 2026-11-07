@@ -2,6 +2,8 @@
 let nativeLoadEpoch = 0;
 let sessionEpoch = 0;
 let requiresSignIn = false;
+let appTourActive = false;
+let appTourMoving = false;
 const state = {
   page: "cases",
   caseId: "", caseBrowse: false, nativeReceipt: null, receiptError: "", receiptId: "", caseFilter: "all", caseSearch: "",
@@ -198,6 +200,7 @@ function evidenceQuality(value) {
   return value?.quality || "UNKNOWN";
 }
 function clearOperatorView() {
+  if (appTourActive) stopAppTour();
   requiresSignIn = true;
   sessionEpoch++;
   loadEpoch++;
@@ -230,7 +233,9 @@ function clearOperatorView() {
   for (const name of ["localStorage", "sessionStorage"]) {
     try {
       const storage = globalThis[name];
-      for (const key of Object.keys(storage)) if (key.startsWith("battery")) storage.removeItem(key);
+      for (const key of Object.keys(storage))
+        if (key.startsWith("battery") && key !== "battery-guide-seen-v2" && key !== "battery-tour-pending")
+          storage.removeItem(key);
     } catch { /* Blocked storage never grants access or prevents sign-out. */ }
   }
 }
@@ -328,6 +333,7 @@ function parseRoute(hash) {
 }
 function routeHash() { return `#${viewKey().replace(/\/$/, "")}`; }
 function navigate(page, focus = true, id = "", historyMode = "push") {
+  if (appTourActive && !appTourMoving) stopAppTour();
   if (!LABELS[page]) page = "cases";
   rememberView();
   const previous = viewKey();
@@ -1858,6 +1864,62 @@ const guideSteps = [
 ];
 let guideStep = 0;
 const guideResponses = Array(guideSteps.length).fill(null);
+let appTourSteps = [];
+let appTourIndex = 0;
+let appTourCaseId = "";
+function stopAppTour() {
+  appTourActive = false;
+  document.querySelectorAll(".app-tour-target").forEach(el => el.classList.remove("app-tour-target"));
+  byId("app-tour").hidden = true;
+  try { sessionStorage.removeItem("battery-tour-pending"); } catch { /* No persistent tour state is required. */ }
+}
+async function showAppTour(index) {
+  if (!appTourActive) return;
+  appTourMoving = true;
+  byId("app-tour-next").disabled = true;
+  byId("app-tour-back").disabled = true;
+  try {
+    appTourIndex = index;
+    const step = appTourSteps[index];
+    if (state.page !== step.page || (step.page === "cases" && state.caseId !== appTourCaseId))
+      navigate(step.page, false, step.page === "cases" ? appTourCaseId : "");
+    if (step.page === "cases") {
+      await loadNativeCases(appTourCaseId);
+      if (!appTourActive) return;
+      setCaseStage(document.querySelector(".case-carousel"), step.stage);
+    }
+    document.querySelectorAll(".app-tour-target").forEach(el => el.classList.remove("app-tour-target"));
+    const target = document.querySelector(step.target);
+    if (!target) { stopAppTour(); announce("This walkthrough area is unavailable. Refresh its evidence and try again.", true); return; }
+    target.classList.add("app-tour-target"); target.scrollIntoView({block:"start", behavior:"instant"});
+    byId("app-tour-progress").textContent = `Working app · ${index + 1} of ${appTourSteps.length}`;
+    byId("app-tour-title").textContent = step.title;
+    byId("app-tour-copy").textContent = step.copy;
+    byId("app-tour-back").disabled = index === 0;
+    byId("app-tour-next").disabled = false;
+    byId("app-tour-next").textContent = index === appTourSteps.length - 1 ? "Finish tour" : "Next";
+    byId("app-tour-next").focus({preventScroll:true});
+  } finally { appTourMoving = false; }
+}
+async function startAppTour() {
+  if (requiresSignIn) return;
+  if (!state.nativeCases) {
+    try { state.nativeCases = await api("/api/cases"); } catch { /* Overview remains available. */ }
+  }
+  appTourCaseId = state.nativeCases?.items?.[0]?.id || "";
+  appTourSteps = appTourCaseId ? [
+    {page:"cases", stage:0, target:".case-overview", title:"Start with the question", copy:"This is the current case. Read what Battery knows and what still needs a person. The practice case was scripted; these records belong to this installation."},
+    {page:"cases", stage:0, target:".case-logic-sources", title:"Open the source records", copy:"These links take you to the receipt, review and current observation behind the plain-language answer. The source is where you check a claim."},
+    {page:"cases", stage:1, target:".review-story", title:"Follow what happened", copy:"This stage shows the operation receipt beside the review history. Use the carousel arrows or swipe on a phone. Expand details only when you need them."},
+    {page:"request", target:"#lifecycle", title:"A new request starts here", copy:"Prepare, Authorize, Execute and Verify are separate steps. This tour does not press any of them or submit an operation."},
+  ] : [
+    {page:"overview", target:".proof-result", title:"Begin at Overview", copy:"This installation has no accessible case to tour. Overview shows its current observations and the synthetic one-dispatch proof when available."},
+    {page:"request", target:"#lifecycle", title:"A new request starts here", copy:"Prepare, Authorize, Execute and Verify are separate steps. This tour does not press any of them or submit an operation."},
+  ];
+  appTourActive = true;
+  byId("app-tour").hidden = false;
+  await showAppTour(0);
+}
 function paintGuide() {
   const step = guideSteps[guideStep], response = guideResponses[guideStep];
   byId("help-title").textContent = step.title;
@@ -1908,12 +1970,20 @@ byId("help-next").addEventListener("click", () => {
   if (guideResponses[guideStep] === null) return;
   if (guideStep === guideSteps.length - 1) {
     finishGuide();
+    try { sessionStorage.setItem("battery-tour-pending", "1"); } catch { /* The tour can still start now. */ }
     if (requiresSignIn) byId("access-key").focus();
-    else navigate(state.nativeCases?.items?.length ? "cases" : "overview");
+    else startAppTour().catch(error => { stopAppTour(); announce(`Walkthrough could not open the working view: ${error.message}`, true); });
   } else { guideStep++; paintGuide(); byId("help-try-slot").querySelector("button")?.focus({preventScroll:true}); }
 });
 byId("help-dismiss").addEventListener("click", finishGuide);
 byId("help-dialog").addEventListener("cancel", event => { event.preventDefault(); finishGuide(); });
+byId("app-tour-stop").addEventListener("click", stopAppTour);
+byId("app-tour-back").addEventListener("click", () => { if (!appTourMoving) showAppTour(appTourIndex - 1); });
+byId("app-tour-next").addEventListener("click", () => {
+  if (appTourMoving) return;
+  if (appTourIndex === appTourSteps.length - 1) stopAppTour();
+  else showAppTour(appTourIndex + 1);
+});
 try {
   const pending = JSON.parse(
     sessionStorage.getItem("battery-pending") || "null",
@@ -1928,4 +1998,9 @@ load().catch((error) => announce(error.message, true)).finally(() => {
   let seen = false;
   try { seen = localStorage.getItem("battery-guide-seen-v2") === "1"; } catch { /* Optional browser preference. */ }
   if (!seen) openGuide();
+  else if (!requiresSignIn) {
+    let pendingTour = false;
+    try { pendingTour = sessionStorage.getItem("battery-tour-pending") === "1"; } catch {}
+    if (pendingTour) startAppTour().catch(error => { stopAppTour(); announce(`Walkthrough could not open the working view: ${error.message}`, true); });
+  }
 });

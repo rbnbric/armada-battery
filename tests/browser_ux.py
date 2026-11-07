@@ -29,7 +29,7 @@ window.fetch = async (input, options={}) => {
  if(path==='/api/session/logout') { cfg.signedIn=false;return response({ok:true}); }
  if(new URL(location.href).searchParams.has('login') && sessionStorage.getItem('ux-auth')!=='yes') cfg.signedIn=false;
  if(!cfg.signedIn) return response({detail:'Operator sign-in required.'},401);
- if(path==='/api/cases') return response({available:true,items:Object.values(fixtureCases),budget:{operator_daily_used:1,operator_daily_limit:20,operator_active_limit:2}});
+ if(path==='/api/cases') return response({available:true,items:new URL(location.href).searchParams.has('no-cases')?[]:Object.values(fixtureCases),budget:{operator_daily_used:1,operator_daily_limit:20,operator_active_limit:2}});
  if(path.endsWith('/full-review')) { cfg.posts.push({path,body:JSON.parse(options.body)}); return response({status:'ready',content:{what_happened:'The saved receipt says the original request succeeded; a later read shows different settings.',where_judgment_changed:'The historical review remains recorded, while the current settings need separate interpretation.',human_path:'No human decision is recorded.',unresolved:'The author and purpose of the later change are unknown.',human_choice_assessment:'NO_DECISION',human_reason_assessment:'NO_DECISION',evidence_ids:['receipt','review','configuration']}}); }
  if(path.endsWith('/explain')) { cfg.posts.push({path,body:JSON.parse(options.body)}); return response({status:'unavailable',detail:'Model unavailable. Your evidence summary remains usable.'}); }
  if(path.endsWith('/decision')) {
@@ -238,6 +238,22 @@ def run(out):
                 page.get_by_role('button',name='Enter Battery').click()
                 check(f'{width}: completion remembered',page.evaluate("localStorage.getItem('battery-guide-seen-v2')")=='1')
                 check(f'{width}: practice closes',not page.locator('#help-dialog').evaluate('(e)=>e.open'))
+                page.locator('.case-overview.app-tour-target').wait_for(state='visible')
+                check(f'{width}: working tour opens real case',page.locator('.case-overview.app-tour-target').count()==1)
+                if width in [390,1440]: page.screenshot(path=str(out/f'app-tour-case-{width}.png'))
+                page.get_by_role('button',name='Next',exact=True).click()
+                page.locator('.case-logic-sources.app-tour-target').wait_for(state='visible')
+                check(f'{width}: working tour points to source links',page.locator('.case-logic-sources.app-tour-target').count()==1)
+                page.get_by_role('button',name='Next',exact=True).click()
+                page.locator('.review-story.app-tour-target').wait_for(state='visible')
+                check(f'{width}: working tour opens report stage',page.locator('.case-stage-label').inner_text().startswith('2 of 3') and page.locator('.review-story.app-tour-target').count()==1)
+                page.get_by_role('button',name='Next',exact=True).click()
+                page.locator('#lifecycle.app-tour-target').wait_for(state='visible')
+                check(f'{width}: working tour opens request procedure',page.locator('#lifecycle.app-tour-target').count()==1 and page.url.endswith('#request'))
+                if width==390: page.screenshot(path=str(out/'app-tour-request-390.png'))
+                check(f'{width}: working tour never posts',page.evaluate('uxTest.posts.length')==0)
+                page.get_by_role('button',name='Finish tour').click()
+                check(f'{width}: working tour clears highlight',page.locator('.app-tour-target').count()==0 and page.locator('#app-tour').is_hidden())
                 page.get_by_role('button',name='Open practice walkthrough').click()
                 check(f'{width}: corner help replays practice',page.locator('#help-progress').inner_text()=='Practice case · step 1 of 5')
                 if width==320:
@@ -251,6 +267,21 @@ def run(out):
             page.goto(origin+'/?login#cases/case-context');page.locator('#login-panel').wait_for(state='visible');page.locator('#help-dialog').wait_for(state='visible')
             check('signed-out visitor can practice',page.get_by_role('button',name='Check the original attempt').is_visible())
             page.get_by_role('button',name='Skip practice').click();context.close()
+            context=browser.new_context(viewport={'width':390,'height':844})
+            page=context.new_page();page.goto(origin);page.evaluate("localStorage.setItem('battery-guide-seen-v2','1');sessionStorage.setItem('battery-tour-pending','1')")
+            page.goto(origin+'/?login#cases/case-context');page.locator('#login-panel').wait_for(state='visible')
+            check('working tour waits for sign-in',page.locator('#app-tour').is_hidden())
+            page.locator('#access-key').fill('fixture-key');page.get_by_role('button',name='Sign in',exact=True).click()
+            page.locator('.case-overview.app-tour-target').wait_for(state='visible')
+            check('working tour resumes after sign-in',page.locator('#app-tour').is_visible())
+            page.get_by_role('button',name='End tour').click();context.close()
+            context=browser.new_context(viewport={'width':390,'height':844})
+            page=context.new_page();page.goto(origin);page.evaluate("localStorage.setItem('battery-guide-seen-v2','1');sessionStorage.setItem('battery-tour-pending','1')")
+            page.goto(origin+'/?no-cases#overview');page.locator('.proof-result.app-tour-target').wait_for(state='visible')
+            check('no-case tour starts at Overview',page.locator('#app-tour-title').inner_text()=='Begin at Overview')
+            page.get_by_role('button',name='Next',exact=True).click();page.locator('#lifecycle.app-tour-target').wait_for(state='visible')
+            check('no-case tour still reaches request procedure',page.url.endswith('#request'))
+            page.get_by_role('button',name='Finish tour').click();context.close()
             # Repeated switching across the actual app screens, including unavailable coverage.
             context=browser.new_context(viewport={'width':390,'height':844});context.add_init_script("localStorage.setItem('battery-guide-seen-v2','1')");page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
             page.goto(origin);page.locator('.case-receipt').wait_for()
