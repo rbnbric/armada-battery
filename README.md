@@ -13,12 +13,15 @@ The [`contest-49-wip`](https://github.com/rbnbric/armada-battery/tree/contest-49
 **Current case journey:** Cases opens the latest review with one plain-language,
 source-linked summary and the question that needs a person. Three stages then
 show the current task, what happened, and the supporting records. Swipe between
-them on a phone or use the arrows on desktop. A first-run guide explains the
-rules and the prepare → authorize → execute → verify procedure; the corner help
-button reopens it. The header keeps Cases, Overview and New request close, with
+them on a phone or use the arrows on desktop. A five-step, credential-free
+practice case opens on first visit, even before sign-in. Visitors choose how to
+handle a lost reply, inspect a saved receipt and fresh task history, compare an
+agent's initial answer with its corrected review, and decide whether to rerun.
+It is scripted synthetic practice: no IRIS request or AI call is sent. The
+corner help button replays it. The header keeps Cases, Overview and New request close, with
 other records and settings in one menu. The case screen uses warm paper, graphite
-and brass from the Battery mark, with a centered ultrawide reading canvas. The guide and synthetic walkthrough do
-not authorize a business operation. [UX tests and limits](docs/UX_REFINEMENT_EVIDENCE.md).
+and brass from the Battery mark, with a centered ultrawide reading canvas.
+[UX tests and limits](docs/UX_REFINEMENT_EVIDENCE.md).
 
 **Earlier decision-brief qualification:** Cases now starts with a readable summary and a
 focused question when intent is unresolved. Human answers are bound to the evidence

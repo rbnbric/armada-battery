@@ -1290,27 +1290,171 @@
       "passed": true
     },
     {
-      "name": "first visit offers the rules guide",
+      "name": "320: first visit offers practice",
       "passed": true
     },
     {
-      "name": "guide actions remain visible on phone",
+      "name": "320: next waits for participation",
       "passed": true
     },
     {
-      "name": "guide example action remains visible on phone",
+      "name": "320: practice choices visible",
       "passed": true
     },
     {
-      "name": "guide advances",
+      "name": "320: guide controls fit viewport",
       "passed": true
     },
     {
-      "name": "guide dismissal is remembered",
+      "name": "320: unsafe choice explains duplicate risk",
       "passed": true
     },
     {
-      "name": "corner help reopens guide",
+      "name": "320: receipt initially concealed",
+      "passed": true
+    },
+    {
+      "name": "320: saved receipt revealed",
+      "passed": true
+    },
+    {
+      "name": "320: fresh observation revealed",
+      "passed": true
+    },
+    {
+      "name": "320: first agent error corrected",
+      "passed": true
+    },
+    {
+      "name": "320: full practice stays read only",
+      "passed": true
+    },
+    {
+      "name": "320: completion remembered",
+      "passed": true
+    },
+    {
+      "name": "320: practice closes",
+      "passed": true
+    },
+    {
+      "name": "320: corner help replays practice",
+      "passed": true
+    },
+    {
+      "name": "practice at 200% text has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "practice controls reachable at 200% text",
+      "passed": true
+    },
+    {
+      "name": "390: first visit offers practice",
+      "passed": true
+    },
+    {
+      "name": "390: next waits for participation",
+      "passed": true
+    },
+    {
+      "name": "390: practice choices visible",
+      "passed": true
+    },
+    {
+      "name": "390: guide controls fit viewport",
+      "passed": true
+    },
+    {
+      "name": "390: unsafe choice explains duplicate risk",
+      "passed": true
+    },
+    {
+      "name": "390: receipt initially concealed",
+      "passed": true
+    },
+    {
+      "name": "390: saved receipt revealed",
+      "passed": true
+    },
+    {
+      "name": "390: fresh observation revealed",
+      "passed": true
+    },
+    {
+      "name": "390: first agent error corrected",
+      "passed": true
+    },
+    {
+      "name": "390: full practice stays read only",
+      "passed": true
+    },
+    {
+      "name": "390: completion remembered",
+      "passed": true
+    },
+    {
+      "name": "390: practice closes",
+      "passed": true
+    },
+    {
+      "name": "390: corner help replays practice",
+      "passed": true
+    },
+    {
+      "name": "1440: first visit offers practice",
+      "passed": true
+    },
+    {
+      "name": "1440: next waits for participation",
+      "passed": true
+    },
+    {
+      "name": "1440: practice choices visible",
+      "passed": true
+    },
+    {
+      "name": "1440: guide controls fit viewport",
+      "passed": true
+    },
+    {
+      "name": "1440: unsafe choice explains duplicate risk",
+      "passed": true
+    },
+    {
+      "name": "1440: receipt initially concealed",
+      "passed": true
+    },
+    {
+      "name": "1440: saved receipt revealed",
+      "passed": true
+    },
+    {
+      "name": "1440: fresh observation revealed",
+      "passed": true
+    },
+    {
+      "name": "1440: first agent error corrected",
+      "passed": true
+    },
+    {
+      "name": "1440: full practice stays read only",
+      "passed": true
+    },
+    {
+      "name": "1440: completion remembered",
+      "passed": true
+    },
+    {
+      "name": "1440: practice closes",
+      "passed": true
+    },
+    {
+      "name": "1440: corner help replays practice",
+      "passed": true
+    },
+    {
+      "name": "signed-out visitor can practice",
       "passed": true
     },
     {
@@ -2897,9 +3041,9 @@
   ],
   "browser_errors": [],
   "source_sha256": {
-    "static/index.html": "8120fc73029358c00f6fc73c805f245bda6906e2bdb6cfe7bd4c49251b8d1503",
-    "static/app.js": "0238aa95de22c2aac041c240ca1a02d37ba150bbf3640093624ae98134669402",
-    "static/app.css": "029996c6eddbf332b34059d32ef44403b4bd79b53da5395523bef2e8d93e4c8f",
+    "static/index.html": "c28fbbbb86b88422189c3a69167a5dd7241ff7a318b8a9c81b9947b63d3dcf7d",
+    "static/app.js": "60f0e975335fe4c22b491c13f064a06371b21d4e01a98c8ef144f722f7f000eb",
+    "static/app.css": "76207b6d993417122f7215843f764498e340c90d09a345611fd7b3f6e8ce6b91",
     "static/battery-logo.png": "fa7fec86c9daeab5327010487c5ac0928d2d83702838029c3791b0f292fd709a",
     "tests/fixtures/ux_cases.json": "531ca098a65260b9e0737e67378291835c575094226f32b6189ada65b0dcb102",
     "tests/fixtures/demo-api.js": "1d61d97ab416153a9ce839e9471b0a1e2af331fb9f8a705c3d7343ae80aa14b6"

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Armada Battery · Operations</title>
     <link rel="icon" href="/static/battery-logo.png" />
-    <link rel="stylesheet" href="/static/app.css?v=029996c6eddb" />
+    <link rel="stylesheet" href="/static/app.css?v=76207b6d9934" />
   </head>
   <body>
     <a class="skip" href="#workspace">Skip to workspace</a>
@@ -179,14 +179,16 @@
         </section>
       </main>
     </div>
-    <button id="help-launcher" type="button" aria-label="Open Battery guide" title="Battery guide">?</button>
+    <button id="help-launcher" type="button" aria-label="Open practice walkthrough" title="Practice walkthrough">?</button>
     <dialog id="help-dialog" aria-labelledby="help-title">
-      <div class="help-head"><img src="/static/battery-logo.png" width="42" height="42" alt="" /><div><p class="eyebrow">Armada Battery guide</p><h2 id="help-title">Start with what needs your judgment</h2></div></div>
+      <div class="help-head"><img src="/static/battery-logo.png" width="42" height="42" alt="" /><div><p class="eyebrow">Practice walkthrough · simulated records</p><h2 id="help-title">A reply goes missing</h2></div></div>
       <p id="help-progress" class="quiet"></p>
       <div id="help-body"></div>
+      <div id="help-feedback" role="status" aria-live="polite"></div>
       <div id="help-try-slot"></div>
-      <div class="help-actions"><button id="help-dismiss" type="button">Skip guide</button><button id="help-back" type="button">Back</button><button id="help-next" type="button" class="primary">Next</button></div>
+      <p class="help-boundary">Scripted practice only. No IRIS request or AI call is sent.</p>
+      <div class="help-actions"><button id="help-dismiss" type="button">Skip practice</button><button id="help-back" type="button">Back</button><button id="help-next" type="button" class="primary">Next</button></div>
     </dialog>
-    <script src="/static/app.js?v=0238aa95de22"></script>
+    <script src="/static/app.js?v=60f0e975335f"></script>
   </body>
 </html>

@@ -1809,54 +1809,111 @@ byId("login-form").addEventListener("submit", async (event) => {
     announce(error.message, true);
   }
 });
+// A complete, credential-free practice case. It never calls an API or submits a change.
 const guideSteps = [
-  ["Start with the current case", "Cases opens on the latest review. Its first card states what Battery knows, what remains uncertain, and what needs your judgment. A simulated case is labeled as simulated.", "Show the current case", "case", ["Read the short answer first: did the operation's result match the request?", "Look for the source links beside the answer. They lead to the saved receipt, review, or fresh comparison.", "If Battery asks for a human decision, choose a path only after checking what it knows and what it cannot know."]],
-  ["Read the three stages", "Current task comes first. Use the arrows, or swipe on a phone, to see What happened and Sources and detail. You can always move back without losing a draft.", "Show what happened", "report", ["Current task: the answer and any decision you need to make.", "What happened: the operation receipt and the review's sequence in ordinary language.", "Sources and detail: the exact records and technical fields, expandable when you need them."]],
-  ["Separate the two questions", "Battery asks whether the rule's assertion fits the evidence and whether the observed result passed. Those answers can differ. Each claim has a source link to the record behind it.", "Inspect the sources", "sources", ["A rule can correctly predict a failed result: accurate assertion, failed output.", "An acceptable output can coexist with a rule that was out of context: passed output, inaccurate assertion.", "Unknown means the available observations cannot settle the question. It is a reason to investigate, not a green check."]],
-  ["Follow the operation procedure", "A new change follows Prepare, Authorize, Execute, Verify. Preparation checks the target and prerequisites. Authorization is short lived and single use. Agent review cannot approve or repeat the operation.", "Open the request procedure", "request", ["Prepare the exact target and intended outcome; inspect the proposed action and blockers.", "Authorize only that prepared action. Execute once with its recorded key.", "Verify using a fresh observation and the saved receipt. A new change needs a new preparation."]],
-  ["Keep uncertainty visible", "If the reply is lost or evidence conflicts, inspect the receipt and fresh readback. Battery holds an unknown result instead of guessing or dispatching again. Record your own context when the facts cannot settle intent.", "Return to the case", "case", ["A lost reply does not prove the change failed; check the original attempt before doing anything else.", "Compare the receipt with a fresh read and inspect any conflicting evidence.", "If intent remains ambiguous, record your reason and choose an explicit human path. The prior evidence stays available for later review."]],
+  {
+    title: "The reply went missing",
+    description: "You asked Battery to run a task once. The connection closed before you saw a reply. Did the task fail, succeed, or remain unknown?",
+    record: ["Practice request", "Run task 17 once · response not received"],
+    prompt: "What should you do first?",
+    choices: [
+      ["Check the original attempt", "The missing reply leaves the outcome unknown. Check its saved receipt before considering another request.", true],
+      ["Send the task again", "That could run the task twice. First check the original attempt's receipt and fresh evidence.", false],
+    ],
+  },
+  {
+    title: "Open the saved receipt",
+    description: "Battery gave the original request one execution key. Open its practice receipt to see what was recorded.",
+    reveal: "Inspect practice receipt",
+    record: ["Practice receipt · task:17", "One dispatch recorded · verified success · no automatic retry"],
+    feedback: "The receipt belongs to the original request. It says one attempt was verified; the lost browser reply did not cause a second dispatch.",
+  },
+  {
+    title: "Check a fresh observation",
+    description: "A receipt is important, but Battery also reads the task history again. Compare the saved request with that later observation.",
+    reveal: "Compare practice history",
+    record: ["Practice task history · task:17", "One new Success row after the request · no second run"],
+    feedback: "The fresh history supports the recorded result. This establishes this task run, not the health of every service on the installation.",
+  },
+  {
+    title: "An agent can correct itself",
+    description: "The first review treated the missing reply as a failure. The later review checked the receipt and task history. Which answer should you rely on?",
+    record: ["Practice review history", "First answer: failure · after evidence: assertion supported, output passed"],
+    prompt: "Which conclusion is supported?",
+    choices: [
+      ["The evidence-backed later review", "Yes. The earlier wrong answer stays in the record; the receipt and fresh history support the later result.", true],
+      ["The first confident answer", "Confidence is not evidence. The first answer missed the original receipt and was corrected after the fresh read.", false],
+    ],
+  },
+  {
+    title: "Make the next decision",
+    description: "The task run is verified. You still own any new request. What is the sensible next step for this practice case?",
+    record: ["Practice case outcome", "Requested run verified · assertion supported · measured output passed"],
+    prompt: "Choose a path.",
+    choices: [
+      ["Keep the receipt; do not rerun", "Right. Preserve the evidence and continue. A different change needs its own Prepare, Authorize, Execute, Verify cycle.", true],
+      ["Rerun to make sure", "The original run is already verified. A new run would be a separate operation and needs a new request and authorization.", false],
+    ],
+  },
 ];
 let guideStep = 0;
+const guideResponses = Array(guideSteps.length).fill(null);
 function paintGuide() {
-  const [title, description, tryLabel, tryRoute, lessons] = guideSteps[guideStep];
-  byId("help-title").textContent = title;
-  byId("help-progress").textContent = `Step ${guideStep + 1} of ${guideSteps.length}`;
-  const body = byId("help-body");
-  const tryButton = button(tryLabel, async () => {
-    finishGuide();
-    if (tryRoute === "request") startRequest();
-    else {
-      if (state.page !== "cases") navigate("cases");
-      if (tryRoute !== "case") {
-        if (!document.querySelector(".case-carousel")) await loadNativeCases(state.caseId);
-        setCaseStage(document.querySelector(".case-carousel"), tryRoute === "report" ? 1 : 2);
-      }
+  const step = guideSteps[guideStep], response = guideResponses[guideStep];
+  byId("help-title").textContent = step.title;
+  byId("help-progress").textContent = `Practice case · step ${guideStep + 1} of ${guideSteps.length}`;
+  const body = byId("help-body"), record = node("div", undefined, "help-record");
+  record.append(node("strong", step.record[0]), node("p", step.record[1]));
+  if (step.reveal && response === null) record.hidden = true;
+  body.replaceChildren(node("p", step.description), record);
+  if (step.prompt) body.append(node("h3", step.prompt));
+  const actions = byId("help-try-slot"); actions.replaceChildren();
+  if (step.choices) {
+    for (const [label, explanation, correct] of step.choices) {
+      const choice = button(label, () => {
+        guideResponses[guideStep] = {label, explanation, correct};
+        paintGuide();
+        [...actions.querySelectorAll("button")].find(b => b.textContent === label)?.focus({preventScroll:true});
+      });
+      choice.setAttribute("aria-pressed", String(response?.label === label));
+      actions.append(choice);
     }
-  });
-  tryButton.className = "help-try";
-  const list = node("ol", undefined, "help-lessons");
-  lessons.forEach((lesson) => list.append(node("li", lesson)));
-  body.replaceChildren(node("p", description), list);
-  byId("help-try-slot").replaceChildren(tryButton);
+  } else if (step.reveal && response === null) {
+    actions.append(button(step.reveal, () => { guideResponses[guideStep] = {explanation:step.feedback}; paintGuide(); byId("help-next").focus({preventScroll:true}); }));
+  }
+  const feedback = byId("help-feedback");
+  feedback.textContent = response?.explanation || "";
+  feedback.dataset.result = response ? (response.correct === false ? "reconsider" : "observed") : "";
   byId("help-back").disabled = guideStep === 0;
-  byId("help-next").textContent = guideStep === guideSteps.length - 1 ? "Start using Battery" : "Next";
+  byId("help-next").disabled = response === null;
+  byId("help-next").textContent = guideStep === guideSteps.length - 1 ? "Enter Battery" : "Next";
 }
 function finishGuide() {
-  try { localStorage.setItem("battery-guide-seen-v1", "1"); } catch { /* The guide remains available from Help. */ }
+  try { localStorage.setItem("battery-guide-seen-v2", "1"); } catch { /* Practice can be reopened from Help. */ }
   byId("help-dialog").close();
   byId("help-launcher").focus({preventScroll:true});
 }
 function openGuide(start = 0) {
   const dialog = byId("help-dialog");
   if (!dialog || typeof dialog.showModal !== "function") return;
-  guideStep = start; paintGuide();
+  guideStep = start;
+  guideResponses.fill(null);
+  paintGuide();
   if (!dialog.open) dialog.showModal();
   byId("help-try-slot").querySelector("button")?.focus({preventScroll:true});
 }
 byId("help-launcher").addEventListener("click", () => openGuide());
 byId("help-back").addEventListener("click", () => { if (guideStep > 0) { guideStep--; paintGuide(); } });
-byId("help-next").addEventListener("click", () => { if (guideStep === guideSteps.length - 1) finishGuide(); else { guideStep++; paintGuide(); } });
+byId("help-next").addEventListener("click", () => {
+  if (guideResponses[guideStep] === null) return;
+  if (guideStep === guideSteps.length - 1) {
+    finishGuide();
+    if (requiresSignIn) byId("access-key").focus();
+    else navigate(state.nativeCases?.items?.length ? "cases" : "overview");
+  } else { guideStep++; paintGuide(); byId("help-try-slot").querySelector("button")?.focus({preventScroll:true}); }
+});
 byId("help-dismiss").addEventListener("click", finishGuide);
+byId("help-dialog").addEventListener("cancel", event => { event.preventDefault(); finishGuide(); });
 try {
   const pending = JSON.parse(
     sessionStorage.getItem("battery-pending") || "null",
@@ -1869,6 +1926,6 @@ initializeRoute();
 setInterval(tick, 1000);
 load().catch((error) => announce(error.message, true)).finally(() => {
   let seen = false;
-  try { seen = localStorage.getItem("battery-guide-seen-v1") === "1"; } catch { /* Optional browser preference. */ }
-  if (!seen && !requiresSignIn) openGuide();
+  try { seen = localStorage.getItem("battery-guide-seen-v2") === "1"; } catch { /* Optional browser preference. */ }
+  if (!seen) openGuide();
 });

@@ -135,11 +135,16 @@ Mark generated interpretation and offer evidence references. A model response
 cannot replace contradictory facts or create an action.
 
 Brief inline definitions explain receipt, review, rule and evidence when needed.
-A skippable five-step guide opens on first sign-in and remains available from a
-corner help button. It explains the case stages, rule-versus-outcome judgment,
-prepare/authorize/execute/verify, and response-loss recovery, with links into
-the relevant working view. Automatic lifecycle narration and similar-case
-retrieval are later work.
+A skippable five-step scripted practice case opens on first visit, including
+before sign-in, and remains available from corner help. It has the visitor
+choose how to handle a lost reply, inspect a saved receipt and fresh task
+history, compare an agent's first answer with its corrected review, and decide
+whether a verified task should run again. Wrong choices explain their effect.
+The practice uses only local synthetic records and does not call IRIS, AI Hub,
+or an action endpoint. Completing it enters the signed-in app or leaves the
+visitor at sign-in; it does not mark a case reviewed. The actual case stages and
+prepare/authorize/execute/verify controls remain in the working view.
+Automatic lifecycle narration and similar-case retrieval are later work.
 
 ## Continuity and feedback
 

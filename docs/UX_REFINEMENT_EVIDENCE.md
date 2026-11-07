@@ -27,8 +27,8 @@ history, optional explanation and technical records expand beneath each section.
   settings contains the other management views. The case opens with one sourced
   plain-language report. Current task, What happened and Sources and detail form
   a three-stage carousel with phone swipes and desktop arrows. The first-run
-  guide explains rule and outcome judgments, the four-step operation procedure,
-  and recovery after a lost reply. Corner help reopens it.
+  scripted practice case lets anyone work through a lost reply, receipt,
+  readback, corrected review and next decision. Corner help replays it.
 
 ## Executed checks
 
@@ -36,7 +36,7 @@ history, optional explanation and technical records expand beneath each section.
 | --- | --- | --- |
 | Python suite | 135 public-checkout tests and 37 subtests passed; source-tree HTTP asset tests passed | Engine/API/session/ledger regressions plus exact HTTP logo and asset routes |
 | UI handler suite | 13 passed | Existing preparation, expiry, response loss and identity behaviors; recovery fixture updated to select its explicit case route |
-| Chromium journeys | 369 passed; no browser exceptions | 320, 360, 390, 768, 1440, 2560 and 3440px, 200% root text, first-run guide and visible phone controls, centered ultrawide canvas, carousel arrows and swipe, sourced report, keyboard, browser history, focus/selection/scroll, palette and header contrast, stale decisions, double click, expired identity, failed explanation, search and long/hostile data |
+| Chromium journeys | 405 passed; no browser exceptions | 320, 360, 390, 768, 1440, 2560 and 3440px, 200% root text, first-run practice before and after sign-in, wrong and correct choices, no API posts, centered ultrawide canvas, carousel arrows and swipe, sourced report, keyboard, browser history, focus/selection/scroll, palette and header contrast, stale decisions, double click, expired identity, failed explanation, search and long/hostile data |
 | Installed HTTP checks | 15 passed | Served source hashes, CSP, logo MIME, sign-in, retained case/brief/history and linked receipt |
 | Installed/source comparison | 5 of 5 exact matches | app.py, HTML, CSS, JavaScript and logo |
 | Clean checkout with AI Hub build 109 | Setup and native integration passed | Public `contest-49-wip` at `d53db4f`, separate Compose project, real AI Hub review of one synthetic operation. Same-key operation and review requests reused their records; case reached `VERIFIED_MATCH` in 14.087 seconds. |
@@ -62,7 +62,7 @@ includes an intentionally failed explanation, demonstrating the usable fallback.
 
 ![Context decision on desktop](audit/ux/decision-1440.png)
 
-![First-run guide on phone](audit/ux/first-run-guide-390.png)
+![First-run practice case on phone](audit/ux/first-run-guide-390.png)
 
 [Phone decision](audit/ux/decision-390.png) ·
 [Desktop completed case](audit/ux/complete-1440.png).
@@ -235,3 +235,30 @@ and focused HTTP asset test passed. The installed HTTP result is recorded above.
 This visual pass is a design judgment supported by screenshots and functional
 checks, not a measured preference study. The owner can inspect the same case
 on phone and ultrawide and request another visual iteration.
+
+## First-run practice walkthrough — 2026-11-07
+
+The former five-step reading modal is now a complete scripted practice case.
+It opens on a first visit before any sign-in and can be replayed with corner
+help. A visitor chooses whether to inspect or repeat a request after its reply
+is lost, opens the saved practice receipt, compares fresh task history, weighs
+an agent's corrected review against its first answer, and chooses the next
+human path. Each wrong choice gives specific feedback. The last step enters the
+working app or returns the visitor to sign-in. Skip and Escape are available at
+every step, and progress is remembered locally only after leaving the practice.
+
+All practice records are hard-coded synthetic examples and plainly labelled.
+The walkthrough sends no API request, model call or management action. It does
+not report a case as reviewed or authorize a new operation. Cases and the real
+Prepare → Authorize → Execute → Verify controls remain separate.
+
+The final Chromium run passed **405/405 checks** with no browser exception,
+including complete practice journeys at 320px, 390px and 1440px, protected
+sign-in, error choices, replay, no submitted requests, and reachable controls
+at 200% root text. Thirteen UI handler tests and the focused source asset gate
+passed. The updated HTML, CSS and JavaScript were copied into the existing
+Windows Work container. Its 15 installed HTTP checks passed, including exact
+served-file hashes; [the installed receipt](audit/ux/installed.json) records
+those hashes. The [browser report](audit/ux/report.json) and
+[phone screenshot](audit/ux/first-run-guide-390.png) record the local fixture
+run. No live IRIS operation or AI review was requested for this UI update.
