@@ -143,7 +143,7 @@
       history: [],
       certificate: reviewed
         ? {
-            token: "pages-demo-single-use-certificate",
+            token: "demo-1",
             intent_id: "demo-intent-0001",
             action_id: "task.run-once",
             target: "task:17",
@@ -308,7 +308,7 @@
     banner.className = "demo-banner";
     banner.setAttribute("role", "note");
     banner.innerHTML =
-      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Select <b>Try the one-dispatch proof</b>, review the demonstration task, then prepare and execute it once.';
+      '<strong>Credential-free practice and synthetic app tour.</strong> No IRIS request or AI Hub call is made here. Start with the practice case, then follow the highlights into Cases.';
     document.body.prepend(banner);
     document.querySelectorAll("#workflow option:not([value='run'])").forEach((option) => {
       option.disabled = true;

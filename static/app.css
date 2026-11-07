@@ -1284,6 +1284,8 @@ main { max-width: 132rem; margin-inline: auto; padding-bottom: clamp(3rem, 6vw, 
 .app-tour-target { outline: 4px solid #b18436; outline-offset: 4px; scroll-margin-top: 1.5rem; }
 #app-tour { position: fixed; right: 1rem; bottom: 1rem; z-index: 35; width: min(23rem, calc(100vw - 2rem)); max-height: min(80vh, 28rem); overflow-y: auto; padding: 1.15rem; border: 1px solid #bd9a5f; border-top: 5px solid #b18436; border-radius: 12px; background: #fffdfa; color: #20302f; box-shadow: 0 16px 50px #192a2860; }
 #app-tour[hidden] { display: none; }
+.demo-banner { padding: .65rem clamp(.75rem, 2vw, 1.5rem); color: #233633; background: #f7ebce; border-bottom: 2px solid #b98935; font-size: .9rem; line-height: 1.4; }
+.demo-banner strong { font-weight: 800; }
 #app-tour h2 { margin: .25rem 0 .5rem; font-family: Georgia, "Iowan Old Style", serif; font-size: 1.5rem; }
 #app-tour p { line-height: 1.5; }
 #app-tour .eyebrow { margin: 0; color: #855820; }

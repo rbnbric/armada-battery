@@ -326,7 +326,7 @@
     banner.className = "demo-banner";
     banner.setAttribute("role", "note");
     banner.innerHTML =
-      '<strong>Credential-free synthetic walkthrough.</strong> No IRIS request is sent. Open the observed task finding, review its definition, then prepare and execute it once.';
+      '<strong>Credential-free practice and synthetic app tour.</strong> No IRIS request or AI Hub call is made here. Start with the practice case, then follow the highlights into Cases.';
     document.body.prepend(banner);
     document.querySelectorAll("#workflow option:not([value='run'])").forEach((option) => {
       option.disabled = true;
