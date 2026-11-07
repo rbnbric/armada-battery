@@ -61,13 +61,13 @@ includes an intentionally failed explanation, demonstrating the usable fallback.
 
 ![Current task and explanation fallback on phone](audit/ux/complete-390.png)
 
-![Context decision on desktop](audit/ux/decision-1440.png)
+![Context decision on desktop](audit/ux/original-decision-1440.png)
 
-![First-run practice case on phone](audit/ux/first-run-guide-390.png)
+![First-run practice case on phone](audit/ux/original-first-run-guide-390.png)
 
 ![Working-app tour on phone](audit/ux/app-tour-case-390.png)
 
-[Phone decision](audit/ux/decision-390.png) ·
+[Phone decision](audit/ux/original-decision-390.png) ·
 [Desktop completed case](audit/ux/complete-1440.png).
 
 ## Findings retained during development
@@ -208,8 +208,8 @@ or repeat an operation.
 
 [Final browser report](audit/ux/report.json) ·
 [Installed check](audit/ux/installed.json) ·
-[Phone decision](audit/ux/decision-390.png) ·
-[Desktop decision](audit/ux/decision-1440.png) ·
+[Phone decision](audit/ux/original-decision-390.png) ·
+[Desktop decision](audit/ux/original-decision-1440.png) ·
 [Phone completed case](audit/ux/complete-390.png) ·
 [Desktop completed case](audit/ux/complete-1440.png).
 
@@ -266,5 +266,5 @@ passed. The updated HTML, CSS and JavaScript were copied into the existing
 Windows Work container. Its 15 installed HTTP checks passed, including exact
 served-file hashes; [the installed receipt](audit/ux/installed.json) records
 those hashes. The [browser report](audit/ux/report.json) and
-[phone screenshot](audit/ux/first-run-guide-390.png) record the local fixture
+[phone screenshot](audit/ux/original-first-run-guide-390.png) record the local fixture
 run. No live IRIS operation or AI review was requested for this UI update.

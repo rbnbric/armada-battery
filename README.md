@@ -54,9 +54,9 @@ on a phone or use the arrows on desktop. The first visit offers a five-step
 practice case about a lost reply, the saved receipt, fresh history and an agent
 that corrects its first answer. The corner help button replays it.
 
-![First-run practice case on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
+![First-run practice question](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
 
-![Sourced case summary and the operator's next decision on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
+![The operator's available decision paths](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
 
 These screenshots use **synthetic records**. The hosted practice and tour make
 no IRIS request and run no AI Hub agent. Connected AI Hub use requires the
