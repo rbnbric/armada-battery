@@ -33,6 +33,7 @@ def build(out: Path) -> None:
     assert app_tag in html
     html = html.replace(app_tag, '<script src="./static/demo-api.js"></script>\n    <script src="./static/ux-api.js"></script>\n    ' + app_tag, 1)
     (out / "index.html").write_text(html)
+    shutil.copytree(ROOT / "docs/video", out / "video", dirs_exist_ok=True)
 
 
 if __name__ == "__main__":

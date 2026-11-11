@@ -1,0 +1,177 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.238
+You ask Iris to run a task once.
+
+00:00:03.238 --> 00:00:05.634
+The connection closes before the reply arrives.
+
+00:00:05.634 --> 00:00:07.687
+Can you safely send it again?
+
+00:00:08.767 --> 00:00:10.566
+Start with the practice case.
+
+00:00:10.846 --> 00:00:12.793
+Check the original attempt.
+
+00:00:13.073 --> 00:00:15.339
+Then open its saved receipt.
+
+00:00:15.619 --> 00:00:20.397
+Here, one dispatch was recorded, and no automatic retry occurred.
+
+00:00:21.467 --> 00:00:24.847
+Next, compare the receipt with fresh task history.
+
+00:00:25.127 --> 00:00:27.685
+A missing reply leaves a question.
+
+00:00:27.965 --> 00:00:33.024
+The saved record and the later observation give you something
+concrete to check.
+
+00:00:34.100 --> 00:00:38.756
+The practice agent corrects its earlier answer after checking the
+evidence.
+
+00:00:39.036 --> 00:00:41.413
+You can see why its judgment changed.
+
+00:00:41.693 --> 00:00:43.939
+Keep the receipt and continue.
+
+00:00:45.000 --> 00:00:50.990
+This update brings the question, the evidence, and your next
+decision into one readable case.
+
+00:00:50.990 --> 00:00:52.587
+Start with the result.
+
+00:00:52.587 --> 00:00:55.782
+Open the supporting records whenever you need them.
+
+00:00:56.833 --> 00:00:59.996
+The case now leads with a plain-language report.
+
+00:00:59.996 --> 00:01:04.739
+Three stages organize the current task, what happened, and the
+supporting detail.
+
+00:01:04.739 --> 00:01:09.087
+The practice walkthrough makes that path usable on a first visit.
+
+00:01:10.167 --> 00:01:15.566
+Here, an agent is a language model assigned a job and a limited set
+of tools.
+
+00:01:15.846 --> 00:01:19.458
+Battery's reviewer checks a claim against the evidence.
+
+00:01:19.738 --> 00:01:25.443
+Its investigator chooses a permitted follow-up, such as reading an
+operation receipt.
+
+00:01:25.723 --> 00:01:28.872
+Their answers and evidence stay with the case.
+
+00:01:28.872 --> 00:01:31.627
+You decide whether another operation should run.
+
+00:01:32.700 --> 00:01:36.055
+Here is a retained native run on real Iris.
+
+00:01:36.335 --> 00:01:39.944
+The small reviewer wrongly marked the outcome as failed.
+
+00:01:40.224 --> 00:01:43.751
+A larger investigator selected a receipt check.
+
+00:01:44.031 --> 00:01:47.323
+The evidence supported a later passing review.
+
+00:01:48.400 --> 00:01:56.646
+Battery keeps two judgments separate: whether the rule's assertion
+is supported, and whether the observed result meets the check.
+
+00:01:56.646 --> 00:02:00.119
+A persuasive explanation cannot supply a missing receipt.
+
+00:02:01.200 --> 00:02:05.221
+In the interface, source links open the record behind a claim.
+
+00:02:05.501 --> 00:02:11.393
+The technical view retains earlier answers, evidence reads, and the
+recorded conclusion.
+
+00:02:11.673 --> 00:02:15.014
+You can inspect the details without losing the case.
+
+00:02:16.067 --> 00:02:18.162
+Now consider a different case.
+
+00:02:18.162 --> 00:02:22.770
+The original receipt passed, but a later read shows different settings.
+
+00:02:22.770 --> 00:02:25.703
+Battery asks whether that change was intentional.
+
+00:02:25.703 --> 00:02:28.636
+Historical success does not answer that question.
+
+00:02:29.700 --> 00:02:37.134
+An optional full-case review brings the saved receipt, review history,
+current settings, and human choice together.
+
+00:02:37.414 --> 00:02:43.872
+Its interpretation stays separate from the recorded result and the
+controls that authorize changes.
+
+00:02:44.933 --> 00:02:47.378
+Here, choose to keep the current settings.
+
+00:02:47.658 --> 00:02:50.546
+Write the reason, then record the decision.
+
+00:02:50.826 --> 00:02:54.868
+Recording that intention does not change the configuration.
+
+00:02:55.148 --> 00:02:59.775
+A new operation still needs its own preparation and authorization.
+
+00:03:00.833 --> 00:03:03.357
+The same case works on a phone.
+
+00:03:03.357 --> 00:03:07.323
+Swipe between stages, open a source, and return to the question.
+
+00:03:07.323 --> 00:03:10.567
+The interface keeps the evidence close to the decision.
+
+00:03:11.633 --> 00:03:17.942
+A separate connected test recovered a real Iris configuration receipt
+after a lost reply.
+
+00:03:17.942 --> 00:03:21.096
+Reusing the execution key returned that receipt.
+
+00:03:21.096 --> 00:03:26.053
+The published report includes the first wrong review and its
+correction.
+
+00:03:27.133 --> 00:03:30.019
+The browser walkthrough uses simulated records.
+
+00:03:30.019 --> 00:03:34.828
+The native workflow runs inside Iris with configured model access.
+
+00:03:34.828 --> 00:03:43.003
+These checks cover specific operations and failure cases; they do
+not establish that every downstream service works.
+
+00:03:44.067 --> 00:03:48.966
+Try the practice case, then inspect the source and the native setup.
+
+00:03:48.966 --> 00:03:53.865
+Armada Battery keeps the attempt, the evidence, and the person's
+decision connected.

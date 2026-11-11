@@ -19,6 +19,16 @@ contradictory.
 
 ![Battery's current case view: a sourced summary and a question for the operator](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-1440.png)
 
+### Watch the current walkthrough
+
+[![Watch the Armada Battery walkthrough: the current case interface](docs/video/poster.jpg)](https://rbnbric.github.io/armada-battery/video/)
+
+**[Watch the video — 3:55](https://rbnbric.github.io/armada-battery/video/)** · **[Download the MP4](https://github.com/rbnbric/armada-battery/releases/download/media-2026-11-11-v3/armada-battery-current-v3.mp4)** · [Release and captions](https://github.com/rbnbric/armada-battery/releases/tag/media-2026-11-11-v3)
+
+The current interface, reviewer and investigator roles, and the operator's decision
+path. Practice scenes use synthetic records; the native investigation replays the
+retained 5 November evidence in today's interface.
+
 ### How Battery reaches an answer
 
 1. **Record the attempt once.** The original request gets a durable receipt and
