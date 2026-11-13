@@ -1,0 +1,1055 @@
+
+Node: 7e8e965ed2b3, Instance: IRIS
+
+USER>
+
+BATTERY>
+PROOF_BEGIN
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-0-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-1-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-0-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-2-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-1-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-0-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-1-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-1-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-1-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-2-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-1-2-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-2-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-0-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-2-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-1-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-0-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-0-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-0-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-0-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-1-v1-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-1-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-1-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-1-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-2-v1-COMPLETE","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-2-v1-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-2-v2-COMPLETE","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-2-2-2-v2-REJECTED","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-partner-B","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation scope mismatch: partner"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-attempt-other","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation scope mismatch: attempt"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-target-other","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation scope mismatch: target"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-version-v2","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation scope mismatch: version"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-count--1","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-count-0.5","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-count-1","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-count-True","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-count-1000001","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-observed_at-1000001","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation is from the future"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-observed_at-996400","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Observation expired"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-observed_at-1000000","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-available-true","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-source-   ","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observation-result-None","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-profile-other","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-max_age-0","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-max_age-3601","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-max_age-3600","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-expected_count-True","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-expected_count--1","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-accepted_count-0.5","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-partner-","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"contract-expected_result-{'text': 'COMPLETE'}","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"unavailable-is-unknown","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Outcome not observed"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"unavailable-claim-pass","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Outcome not observed"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"missing-observation","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"extra-contract-key","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"UNKNOWN","usable":false,"reason":"Invalid measurement contract"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"extra-observation-key","passed":1,"result":{"verdict":"NO","output":"UNKNOWN","applicability":"APPLICABLE","usable":false,"reason":"Missing or malformed observation"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"last-fresh-second","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"observed-zero","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v1-COMPLETE-reordered","passed":1,"result":{"verdict":"YES","output":"PASS","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v1-REJECTED-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v2-COMPLETE-reordered","passed":1,"result":{"verdict":"NO","output":"PASS","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-0-v2-REJECTED-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v1-COMPLETE-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v1-REJECTED-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v2-COMPLETE-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-1-v2-REJECTED-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"INAPPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v1-COMPLETE-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+PROOF_CHECK={"name":"matrix-0-0-2-v1-REJECTED-reordered","passed":1,"result":{"verdict":"NO","output":"FAIL","applicability":"APPLICABLE","usable":true,"reason":"Fresh scoped receipt measurement"}}
+
+BATTERY>
+PROOF_END
+
+BATTERY>

@@ -1,0 +1,13 @@
+zn "BATTERY"
+set sessionId=$SYSTEM.Util.GetEnviron("BATTERY_TRACE_SESSION")
+if sessionId'?1.N { write "TRACE_ERROR=Set BATTERY_TRACE_SESSION to the printed session number",! halt }
+set stmt=##class(%SQL.Statement).%New()
+set sc=stmt.%Prepare("SELECT ID,SessionId,SourceConfigName,TargetConfigName,MessageBodyClassName,MessageBodyId FROM Ens.MessageHeader WHERE SessionId=? ORDER BY ID")
+if $SYSTEM.Status.IsError(sc) { write "TRACE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set rs=stmt.%Execute(sessionId)
+if rs.%SQLCODE<0 { write "TRACE_ERROR=",rs.%Message,! halt }
+set count=0
+while rs.%Next() { set cls=rs.%Get("MessageBodyClassName"),id=rs.%Get("MessageBodyId"),row={"header_id":(rs.%Get("ID")),"session_id":(sessionId),"source":(rs.%Get("SourceConfigName")),"target":(rs.%Get("TargetConfigName")),"class":(cls),"body_id":(id)},body=$CLASSMETHOD(cls,"%OpenId",id) if $IsObject(body) { if cls="Battery.Interop.EvidenceRequest" { do row.%Set("phase",body.Phase),row.%Set("case_id",body.CaseId),row.%Set("case_json",body.CaseJSON) } if cls="Battery.Interop.CaseRequest" { do row.%Set("case_json",body.CaseJSON) } if cls="Battery.Interop.AgentRequest" { do row.%Set("role",body.Role),row.%Set("case_json",body.CaseJSON),row.%Set("repair_json",body.RepairJSON) } if cls="Battery.Interop.AgentResponse" { do row.%Set("content",body.Content),row.%Set("usage_json",body.UsageJSON) } } write "TRACE_BODY=",row.%ToJSON(),! set count=count+1 }
+write "TRACE_BODY_COUNT=",count,!
+write "TRACE_INSPECTION_FINISHED",!
+halt

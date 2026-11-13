@@ -1,0 +1,12 @@
+zn "BATTERY"
+write "BONUS_RUNTIME=",$ZVERSION,!
+set sc=##class(Ens.Director).StopProduction()
+if $SYSTEM.Status.IsError(sc) { write "BONUS_STOP_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/bonus/Battery","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "BONUS_COMPILE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.Load("/home/irisowner/dev/bonus/tests/BonusSuite.cls","ck")
+if $SYSTEM.Status.IsError(sc) { write "BONUS_COMPILE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.BonusSuite).Run()
+if $SYSTEM.Status.IsError(sc) { write "BONUS_QUALIFICATION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "BONUS_QUALIFICATION_OK",!
+halt

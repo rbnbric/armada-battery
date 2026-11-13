@@ -2,7 +2,7 @@
 
 <p align="center"><img src="docs/armada-battery-logo.png" width="192" height="192" alt="Armada Battery industrial battery icon"></p>
 
-## Version 1.0.3 — interoperability agent preview for contest 49
+## Interoperability agent preview for contest 49
 
 ### The reply was lost. The change was not.
 
@@ -28,6 +28,21 @@ contradictory.
 The current interface, reviewer and investigator roles, and the operator's decision
 path. Practice scenes use synthetic records; the native investigation replays the
 retained 5 November evidence in today's interface.
+
+### 13 November: native evidence adapter and trace preservation
+
+Management evidence reads now use a native outbound adapter and an Embedded
+Python validator inside IRIS. Each probe and review has its own saved message
+body, so later reads cannot overwrite what an earlier trace entry shows.
+[Implementation and native qualification](docs/BONUS_IMPLEMENTATION.md).
+
+This implements the LLM traceability use case in
+[Community Idea DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689).
+The [Visual Trace guide](docs/TRACEABILITY.md) maps agent inputs, answers,
+evidence reads and usage counters to native messages and provides a reproducible
+example. Qualification used the currently offered Community build 109; acceptance
+against the contest's stated build 154 requirement needs organizer confirmation.
+[Bonus evidence and remaining work](docs/CONTEST_49_BONUSES.md).
 
 ### How Battery reaches an answer
 
@@ -64,9 +79,9 @@ on a phone or use the arrows on desktop. The first visit offers a five-step
 practice case about a lost reply, the saved receipt, fresh history and an agent
 that corrects its first answer. The corner help button replays it.
 
-![First-run practice question](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
+![First-run practice case on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/first-run-guide-390.png)
 
-![The operator's available decision paths](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
+![Sourced case summary and the operator's next decision on a phone](https://raw.githubusercontent.com/rbnbric/armada-battery/main/docs/audit/ux/decision-390.png)
 
 These screenshots use **synthetic records**. The hosted practice and tour make
 no IRIS request and run no AI Hub agent. Connected AI Hub use requires the

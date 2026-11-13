@@ -1,0 +1,3798 @@
+{
+  "date": "2026-11-13",
+  "runtime": "IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2027.1.0AI (Build 109U) Fri Oct 30 2026 16:31:24 EDT",
+  "required_contest_build": "2026.3.0AI.154.0",
+  "build_154_tested": false,
+  "scope": "Native IRIS, Embedded Python, real loopback HTTP, native production queues; synthetic provider faults in regression; no model calls in this suite.",
+  "summary": {
+    "passed": 247,
+    "failed": 0,
+    "groups": {
+      "envelopes": 24,
+      "integration": 13,
+      "solver": 32,
+      "agent_faults": 26,
+      "trace": 3,
+      "proof": 149
+    }
+  },
+  "envelopes": [
+    {
+      "name": "valid",
+      "passed": true,
+      "reason": "Authenticated management evidence read"
+    },
+    {
+      "name": "changed_partner_str",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "changed_attempt_str",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "changed_version_str",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "changed_expected_count_bool",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "changed_expected_count_str",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "array_contract",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "array_observation",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "array_tool",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "changed_tool_tool",
+      "passed": true,
+      "reason": "Tool result scope mismatch"
+    },
+    {
+      "name": "changed_tool_receipt_id",
+      "passed": true,
+      "reason": "Tool result scope mismatch"
+    },
+    {
+      "name": "extra_contract_field",
+      "passed": true,
+      "reason": "Management contract changed"
+    },
+    {
+      "name": "number_equivalence",
+      "passed": true,
+      "reason": "Authenticated management evidence read"
+    },
+    {
+      "name": "unicode",
+      "passed": true,
+      "reason": "Authenticated management evidence read"
+    },
+    {
+      "name": "bad_json",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "array_root",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "missing_fields",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "bad_binding",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "duplicate",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "nan",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "overflow",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "depth",
+      "passed": true,
+      "reason": "Malformed management evidence"
+    },
+    {
+      "name": "oversize",
+      "passed": true,
+      "reason": "Management evidence exceeds budget"
+    },
+    {
+      "name": "unadmitted_phase",
+      "passed": true,
+      "reason": "Unsupported read-only probe"
+    }
+  ],
+  "integration": [
+    {
+      "name": "real_http_read",
+      "passed": 1
+    },
+    {
+      "name": "http_to_embedded_python",
+      "passed": "1"
+    },
+    {
+      "name": "http_utf8_preserved",
+      "passed": 1
+    },
+    {
+      "name": "phase_blocked_before_http",
+      "passed": 1
+    },
+    {
+      "name": "http_401_held",
+      "passed": 1
+    },
+    {
+      "name": "http_not_retried",
+      "passed": 1
+    },
+    {
+      "name": "http_size_budget",
+      "passed": 1
+    },
+    {
+      "name": "queued_native_adapter",
+      "passed": 1
+    },
+    {
+      "name": "queued_envelope_accepted",
+      "passed": 1
+    },
+    {
+      "name": "queued_utf8_preserved",
+      "passed": 1
+    },
+    {
+      "name": "queued_cross_scope_held",
+      "passed": 1
+    },
+    {
+      "name": "queued_duplicate_json_held",
+      "passed": 1
+    },
+    {
+      "name": "refused_connection_is_error",
+      "passed": 1
+    }
+  ],
+  "solver": [
+    {
+      "case_id": "solver4-fault-match-1",
+      "mode": "match",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"423\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449989}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449989}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "427"
+    },
+    {
+      "case_id": "solver4-fault-missing-1",
+      "mode": "missing",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Outcome not observed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"433\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "439"
+    },
+    {
+      "case_id": "solver4-fault-recovered-1",
+      "mode": "recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"445\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"451\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449990}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449990}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "455"
+    },
+    {
+      "case_id": "solver4-fault-wrong_partner-1",
+      "mode": "wrong_partner",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: partner",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"461\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"B\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "467"
+    },
+    {
+      "case_id": "solver4-fault-wrong_attempt-1",
+      "mode": "wrong_attempt",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: attempt",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"473\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-other\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "479"
+    },
+    {
+      "case_id": "solver4-fault-wrong_target-1",
+      "mode": "wrong_target",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: target",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"485\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-other\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449991}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "491"
+    },
+    {
+      "case_id": "solver4-fault-wrong_version-1",
+      "mode": "wrong_version",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation scope mismatch: version",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"497\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v2\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "503"
+    },
+    {
+      "case_id": "solver4-fault-stale-1",
+      "mode": "stale",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_FRESH_READBACK",
+      "explanation": "Observation expired",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"509\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865446392}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_FRESH_READBACK",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865446392}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865446392}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "515"
+    },
+    {
+      "case_id": "solver4-fault-future-1",
+      "mode": "future",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Observation is from the future",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"521\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865450292}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865450292}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865450292}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "527"
+    },
+    {
+      "case_id": "solver4-fault-string_count-1",
+      "mode": "string_count",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Missing or malformed observation",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"533\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":\"1\",\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449992}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "539"
+    },
+    {
+      "case_id": "solver4-fault-zero-1",
+      "mode": "zero",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"545\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":0,\"expected_result\":\"NONE\",\"accepted_count\":0,\"accepted_result\":\"NONE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":0,\"result\":\"NONE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":0,\"expected_result\":\"NONE\",\"accepted_count\":0,\"accepted_result\":\"NONE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":0,\"result\":\"NONE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "549"
+    },
+    {
+      "case_id": "solver4-fault-wrong_rule-1",
+      "mode": "wrong_rule",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "NO",
+      "gate_output": "PASS",
+      "expected_verdict": "NO",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"555\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v0\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "561"
+    },
+    {
+      "case_id": "solver4-fault-duplicate-1",
+      "mode": "duplicate",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "NO",
+      "gate_output": "FAIL",
+      "expected_verdict": "NO",
+      "expected_output": "FAIL",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"567\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "573"
+    },
+    {
+      "case_id": "solver4-fault-accurate_bad_output-1",
+      "mode": "accurate_bad_output",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MISMATCH",
+      "expected_state": "VERIFIED_MISMATCH",
+      "gate_verdict": "YES",
+      "gate_output": "FAIL",
+      "expected_verdict": "YES",
+      "expected_output": "FAIL",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"579\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":2,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449993}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "585"
+    },
+    {
+      "case_id": "solver4-fault-invalid_contract-1",
+      "mode": "invalid_contract",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Invalid adapter measurement contract",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449994}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "589"
+    },
+    {
+      "case_id": "solver4-fault-unbound-1",
+      "mode": "unbound",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "No adapter-owned evidence binding",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "No adapter-owned evidence binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "593"
+    },
+    {
+      "case_id": "solver4-fault-input_tamper-1",
+      "mode": "input_tamper",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_EVIDENCE",
+      "expected_state": "HELD_FOR_EVIDENCE",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Case differs from adapter-owned binding",
+      "reviews": [],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "Case differs from adapter-owned binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "597"
+    },
+    {
+      "case_id": "solver4-fault-provider_error-1",
+      "mode": "provider_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer call failed",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer call failed",
+          "reviewer_usage": "",
+          "investigator_usage": "",
+          "agent_calls": ""
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449994}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "604"
+    },
+    {
+      "case_id": "solver4-fault-invalid_model-1",
+      "mode": "invalid_model",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer repair rejected: evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer repair rejected: evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"610\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"invented\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"611\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"invented\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449994}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "613"
+    },
+    {
+      "case_id": "solver4-fault-changed_contract-1",
+      "mode": "changed_contract",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"619\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449995}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":2,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449995}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "623"
+    },
+    {
+      "case_id": "solver4-fault-changed_case-1",
+      "mode": "changed_case",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"629\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449995}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": "",
+          "contract": "",
+          "observation": "",
+          "reason": "Case differs from adapter-owned binding",
+          "tool": ""
+        }
+      ],
+      "response_id": "633"
+    },
+    {
+      "case_id": "solver4-fault-changed_observation-1",
+      "mode": "changed_observation",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Evidence changed after reasoning; resubmit against new snapshot",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"639\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449995}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":2,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449995}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "643"
+    },
+    {
+      "case_id": "solver4-fault-initial_read_error-1",
+      "mode": "initial_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial evidence read failed",
+      "reviews": [],
+      "reads": [],
+      "response_id": "646"
+    },
+    {
+      "case_id": "solver4-fault-probe_read_error-1",
+      "mode": "probe_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Evidence probe failed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"652\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "655"
+    },
+    {
+      "case_id": "solver4-fault-final_read_error-1",
+      "mode": "final_read_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Final evidence read failed",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"661\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449996}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "664"
+    },
+    {
+      "case_id": "solver4-fault-investigator_bad_recovered-1",
+      "mode": "investigator_bad_recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Invalid investigator JSON",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "{}",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"670\",\"content\":\"{\\\"verdict\\\":\\\"NO\\\",\\\"output_result\\\":\\\"UNKNOWN\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"},{\"role\":\"investigator\",\"attempt\":1,\"response_id\":\"672\",\"content\":\"{\",\"validation_error\":\"Invalid investigator JSON\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"678\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449996}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449996}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "682"
+    },
+    {
+      "case_id": "solver4-fault-investigator_error_recovered-1",
+      "mode": "investigator_error_recovered",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "NO",
+          "output": "UNKNOWN",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Investigator call failed after escalation",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"688\",\"content\":\"{\\\"verdict\\\":\\\"NO\\\",\\\"output_result\\\":\\\"UNKNOWN\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"695\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "699"
+    },
+    {
+      "case_id": "solver4-fault-repair_ids-1",
+      "mode": "repair_ids",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"705\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"receipt-review\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"706\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "710"
+    },
+    {
+      "case_id": "solver4-fault-repair_json-1",
+      "mode": "repair_json",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"716\",\"content\":\"{\",\"validation_error\":\"Expected one complete JSON object\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"717\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "721"
+    },
+    {
+      "case_id": "solver4-fault-repair_extra-1",
+      "mode": "repair_extra",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"727\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"],\\\"execute\\\":\\\"SEND_NOW\\\"}\",\"validation_error\":\"Required keys: verdict, output_result, applicability, evidence_ids, summary; no extra keys\",\"usage\":\"{}\"},{\"role\":\"reviewer\",\"attempt\":2,\"response_id\":\"728\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449997}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "732"
+    },
+    {
+      "case_id": "solver4-fault-repair_error-1",
+      "mode": "repair_error",
+      "round": 1,
+      "live": 0,
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "gate_verdict": "NO",
+      "gate_output": "UNKNOWN",
+      "expected_verdict": "NO",
+      "expected_output": "UNKNOWN",
+      "raw_verdict": "",
+      "raw_output": "",
+      "executed_probe": "",
+      "explanation": "Initial model review held: Reviewer call failed",
+      "reviews": [
+        {
+          "state": "HELD_FOR_REVIEW",
+          "verdict": "",
+          "output": "",
+          "applicability": "",
+          "probe": "",
+          "explanation": "Reviewer call failed",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"738\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"receipt-review\\\"]}\",\"validation_error\":\"evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865449998}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "740"
+    },
+    {
+      "case_id": "solver4-fault-recovered-5865450011",
+      "mode": "recovered",
+      "round": 5865450011,
+      "live": 0,
+      "passed": 1,
+      "state": "VERIFIED_MATCH",
+      "expected_state": "VERIFIED_MATCH",
+      "gate_verdict": "YES",
+      "gate_output": "PASS",
+      "expected_verdict": "YES",
+      "expected_output": "PASS",
+      "raw_verdict": "YES",
+      "raw_output": "PASS",
+      "executed_probe": "CHECK_EFFECT_RECEIPT",
+      "explanation": "Fresh scoped receipt measurement",
+      "reviews": [
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"869\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        },
+        {
+          "state": "AGREED_PENDING_GATE",
+          "verdict": "YES",
+          "output": "PASS",
+          "applicability": "APPLICABLE",
+          "probe": "",
+          "explanation": "Deliberately overconfident test reviewer",
+          "reviewer_usage": "{\"total_interactions\":0,\"total_prompt_tokens\":0,\"total_completion_tokens\":0,\"total_reasoning_tokens\":0,\"total_llm_duration_ms\":0,\"total_tool_calls\":0,\"total_tool_duration_ms\":0,\"total_cache_creation_tokens\":0,\"total_cache_read_tokens\":0}",
+          "investigator_usage": "",
+          "agent_calls": "[{\"role\":\"reviewer\",\"attempt\":1,\"response_id\":\"875\",\"content\":\"{\\\"verdict\\\":\\\"YES\\\",\\\"output_result\\\":\\\"PASS\\\",\\\"applicability\\\":\\\"APPLICABLE\\\",\\\"summary\\\":\\\"Deliberately overconfident test reviewer\\\",\\\"evidence_ids\\\":[\\\"B_OBSERVATION\\\"]}\",\"validation_error\":\"\",\"usage\":\"{}\"}]"
+        }
+      ],
+      "reads": [
+        {
+          "phase": "INITIAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":false}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "CHECK_EFFECT_RECEIPT",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865450011}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        },
+        {
+          "phase": "FINAL",
+          "found": 1,
+          "contract": "{\"profile\":\"receipt-v1\",\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"rule_version\":\"v1\",\"expected_count\":1,\"expected_result\":\"COMPLETE\",\"accepted_count\":1,\"accepted_result\":\"COMPLETE\",\"max_age\":3600}",
+          "observation": "{\"available\":true,\"partner\":\"A\",\"attempt\":\"attempt-1\",\"target\":\"target-1\",\"version\":\"v1\",\"count\":1,\"result\":\"COMPLETE\",\"source\":\"synthetic-test-adapter\",\"observed_at\":5865450011}",
+          "reason": "Read persisted adapter snapshot",
+          "tool": ""
+        }
+      ],
+      "response_id": "879"
+    }
+  ],
+  "agent_faults": [
+    {
+      "mode": "agree",
+      "passed": 1,
+      "state": "AGREED_PENDING_GATE",
+      "expected_state": "AGREED_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Injected review"
+    },
+    {
+      "mode": "yes_fail",
+      "passed": 1,
+      "state": "INVESTIGATION_PENDING_GATE",
+      "expected_state": "INVESTIGATION_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Inspect supplied evidence"
+    },
+    {
+      "mode": "no_pass",
+      "passed": 1,
+      "state": "INVESTIGATION_PENDING_GATE",
+      "expected_state": "INVESTIGATION_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Inspect supplied evidence"
+    },
+    {
+      "mode": "unknown",
+      "passed": 1,
+      "state": "INVESTIGATION_PENDING_GATE",
+      "expected_state": "INVESTIGATION_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Inspect supplied evidence"
+    },
+    {
+      "mode": "reviewer_error",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer call failed"
+    },
+    {
+      "mode": "reviewer_noresponse",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer returned no response"
+    },
+    {
+      "mode": "reviewer_empty",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 2,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer repair rejected: Expected one complete JSON object"
+    },
+    {
+      "mode": "reviewer_malformed",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 2,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer repair rejected: Expected one complete JSON object"
+    },
+    {
+      "mode": "reviewer_array",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 2,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer repair rejected: Expected one complete JSON object"
+    },
+    {
+      "mode": "reviewer_fabricated",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 2,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer repair rejected: evidence_ids must be a nonempty unique list of supplied fact IDs, not the case id"
+    },
+    {
+      "mode": "reviewer_extra",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 2,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer repair rejected: Required keys: verdict, output_result, applicability, evidence_ids, summary; no extra keys"
+    },
+    {
+      "mode": "reviewer_timeout",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Reviewer returned no response"
+    },
+    {
+      "mode": "investigator_error",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator call failed after escalation"
+    },
+    {
+      "mode": "investigator_noresponse",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator returned no response"
+    },
+    {
+      "mode": "investigator_empty",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Invalid investigator JSON"
+    },
+    {
+      "mode": "investigator_malformed",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Invalid investigator JSON"
+    },
+    {
+      "mode": "investigator_array",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Invalid investigator JSON"
+    },
+    {
+      "mode": "investigator_fabricated",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator output failed contract validation"
+    },
+    {
+      "mode": "investigator_extra",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator output failed contract validation"
+    },
+    {
+      "mode": "investigator_probe",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator output failed contract validation"
+    },
+    {
+      "mode": "investigator_timeout",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 1,
+      "investigator_calls": 1,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Investigator returned no response"
+    },
+    {
+      "mode": "invalid_case",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 0,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Invalid case: ERROR #5035: General exception Name 'Premature end of data' Code '12' Data ''"
+    },
+    {
+      "mode": "oversize_case",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 0,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Case exceeds 65536 characters"
+    },
+    {
+      "mode": "bad_case_types",
+      "passed": 1,
+      "state": "HELD_FOR_REVIEW",
+      "expected_state": "HELD_FOR_REVIEW",
+      "reviewer_calls": 0,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Case failed field, type, or size validation"
+    },
+    {
+      "mode": "agree",
+      "passed": 1,
+      "state": "AGREED_PENDING_GATE",
+      "expected_state": "AGREED_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Injected review"
+    },
+    {
+      "mode": "agree",
+      "passed": 1,
+      "state": "AGREED_PENDING_GATE",
+      "expected_state": "AGREED_PENDING_GATE",
+      "reviewer_calls": 1,
+      "investigator_calls": 0,
+      "handoff_preserved": 1,
+      "late_response_kept_hold": 1,
+      "explanation": "Injected review"
+    }
+  ],
+  "trace": [
+    {
+      "name": "original_probe_phases_survive",
+      "passed": 1
+    },
+    {
+      "name": "distinct_evidence_message_bodies",
+      "passed": 1
+    },
+    {
+      "name": "distinct_review_snapshots",
+      "passed": 1
+    }
+  ],
+  "proof": [
+    {
+      "name": "matrix-0-0-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-1-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-2-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-0-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-1-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-1-2-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-0-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-1-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-0-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-0-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-0-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-0-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-1-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-1-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-1-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-1-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-2-v1-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-2-v1-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-2-v2-COMPLETE",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-2-2-2-v2-REJECTED",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "observation-partner-B",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation scope mismatch: partner"
+      }
+    },
+    {
+      "name": "observation-attempt-other",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation scope mismatch: attempt"
+      }
+    },
+    {
+      "name": "observation-target-other",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation scope mismatch: target"
+      }
+    },
+    {
+      "name": "observation-version-v2",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation scope mismatch: version"
+      }
+    },
+    {
+      "name": "observation-count--1",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-count-0.5",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-count-1",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-count-True",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-count-1000001",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-observed_at-1000001",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation is from the future"
+      }
+    },
+    {
+      "name": "observation-observed_at-996400",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Observation expired"
+      }
+    },
+    {
+      "name": "observation-observed_at-1000000",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-available-true",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-source-   ",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "observation-result-None",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "contract-profile-other",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-max_age-0",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-max_age-3601",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-max_age-3600",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-expected_count-True",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-expected_count--1",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-accepted_count-0.5",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-partner-",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "contract-expected_result-{'text': 'COMPLETE'}",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "unavailable-is-unknown",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Outcome not observed"
+      }
+    },
+    {
+      "name": "unavailable-claim-pass",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Outcome not observed"
+      }
+    },
+    {
+      "name": "missing-observation",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "extra-contract-key",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "UNKNOWN",
+        "usable": false,
+        "reason": "Invalid measurement contract"
+      }
+    },
+    {
+      "name": "extra-observation-key",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "UNKNOWN",
+        "applicability": "APPLICABLE",
+        "usable": false,
+        "reason": "Missing or malformed observation"
+      }
+    },
+    {
+      "name": "last-fresh-second",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "observed-zero",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v1-COMPLETE-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "YES",
+        "output": "PASS",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v1-REJECTED-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v2-COMPLETE-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "PASS",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-0-v2-REJECTED-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v1-COMPLETE-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v1-REJECTED-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v2-COMPLETE-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-1-v2-REJECTED-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "INAPPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v1-COMPLETE-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    },
+    {
+      "name": "matrix-0-0-2-v1-REJECTED-reordered",
+      "passed": 1,
+      "result": {
+        "verdict": "NO",
+        "output": "FAIL",
+        "applicability": "APPLICABLE",
+        "usable": true,
+        "reason": "Fresh scoped receipt measurement"
+      }
+    }
+  ],
+  "source_sha256": {
+    "interop/Battery/Interop/AgentOperation.cls": "0654009eef17a10afc8e4341e3b26204126c3a41870243c60b36b2eb2656a056",
+    "interop/Battery/Interop/AgentRequest.cls": "726881fda85ee24b596bb6f410dcd04686904e46e418f17cc612a3f7cd7663b0",
+    "interop/Battery/Interop/AgentResponse.cls": "a0a161c63a11ecfdcd938734c05f5dbbf33be74363a854e9a2744de0d7b8d456",
+    "interop/Battery/Interop/CaseAPI.cls": "a3ac7789aa798d90e835cbfc3fc95b1cd36787a9b189ed11f2199e5d35dfd281",
+    "interop/Battery/Interop/CaseProcess.cls": "e66ef25c859c7dec0008d66281342cce4038135362201c7b9fb5224fffc7c09f",
+    "interop/Battery/Interop/CaseRecord.cls": "e5057c6bc8d13e584dc8b1ec0258401c2ecfe790e15fdc2ae4c5591041aea5e5",
+    "interop/Battery/Interop/CaseRequest.cls": "0287bc6a57c1e35adc7538185a6d97303be15acacfaabeff440ff144c9ecddcd",
+    "interop/Battery/Interop/CaseResponse.cls": "2cd3db1a1801380c60beb7ceabc3c95a5c60b6090a81dcece0b6d3e5e0c1b73e",
+    "interop/Battery/Interop/Demo.cls": "f13c4ff6e1f41cc9552fba5a9f770b3ccb7d40506498a95d445911cc99604705",
+    "interop/Battery/Interop/EvidenceAdapter.cls": "838579d726fcee25d0863fe7115b579847d8efc2d771565d7c07f97b186a8618",
+    "interop/Battery/Interop/EvidenceBinding.cls": "0dabb2ade12f0242cdf17a74ea7ceb2cd51260ba929af5eb5c582420f3617cf7",
+    "interop/Battery/Interop/EvidenceEnvelope.cls": "db079d2c8b7a7c958af5532c230fac4cab0386da0d3310a1f33917595993a966",
+    "interop/Battery/Interop/EvidenceOperation.cls": "89af924af2d6ba5bd8ed6421b1b68ff351cce410aa7376823b62e5dee9a54ac7",
+    "interop/Battery/Interop/EvidenceRequest.cls": "4d985e611f4800f3b7c13be0e9b0774760fcf52f539bf317b2fb5688e786b780",
+    "interop/Battery/Interop/EvidenceResponse.cls": "08d7b5a793a6b37b8b6eecf99297a0104bc93152af65148286f46576186c783a",
+    "interop/Battery/Interop/IntakeService.cls": "4c05c846bcac4891c81e42bf37b66b615271a375d016cb21adb5f9a901f5d905",
+    "interop/Battery/Interop/OutcomeProof.cls": "b00484fa38f80c9b6c317cc4d93e8f964fc4502c36e43c41d467c4f37fea1455",
+    "interop/Battery/Interop/Production.cls": "0fd708c00ec924809a29e7da637bcbac26ac69b8101d9a7f6f18070aeb15c3f9",
+    "interop/Battery/Interop/SolverProcess.cls": "db642778fe69f1c4ae464886199eb4bd8c33762d1bcf0424d545946e96287abc",
+    "interop/tests/BonusSuite.cls": "cc0824e310442fea438986542cf2c5d4ba48999c54b1ec910054779ae71c9b87",
+    "interop/tests/FaultOperation.cls": "8915387281d2a75f8cdf95eb68ab034e007b3bdb228795a8b3c2208582d0c635",
+    "interop/tests/FaultProcess.cls": "64dc776e31a6f06bc2a2c36c963649fefe060e2b6aeca5ad7beebdbedcf8443e",
+    "interop/tests/FaultProduction.cls": "a924673d77591a0572f95fafc6d13402fda5ef116a78e95f82572911c94987ff",
+    "interop/tests/FaultSuite.cls": "477fd58b05fa738736d06966658963e6dfba04da1b36a5bb1ebb71cd1235944d",
+    "interop/tests/LifecycleSuite.cls": "007cfe8e033e093008abafca5d06eb2d7ac453c28fcf22aae25a16495187a1e5",
+    "interop/tests/SolverAgent.cls": "175a5c4b85292ccba033f787c8a1b27e5512721adc90637db9afd6a1e111862c",
+    "interop/tests/SolverEvidence.cls": "c34171839c614e439360a6052614518cb62f3c4aacd89711eaecfc0da0a2c1eb",
+    "interop/tests/SolverProduction.cls": "6874922a545a377a7ac2d903fb1b2e74753f404b0a66dceac58f763f36fff3fd",
+    "interop/tests/SolverSuite.cls": "aa56dac5dddcc458bc937f3fa3bf9cd6476b5ffa4f19bb0eb158461c623f402e",
+    "interop/tests/TraceSuite.cls": "bdc6b92ed77e3ac796c2ded6cac5ff1579dc2a186fe051a072770a0652609365",
+    "interop/tests/bonus-http-fixture.py": "4a4e77600c9b5f4d3200c313a3ef46640a5abec443dc70739d0bb22acbf65506",
+    "interop/tests/bonus-qualification.script": "d946d7e6d98fdeb608a1c4c7c646b57cbd867eb6b451bfde303a31feb4271ab1",
+    "interop/tests/bonus-regression.script": "b9aab4fa4e7bc7492766f9ae0cbfc2072c6b8300cda1adc08255dac875fa1270",
+    "interop/tests/proof-contracts.script": "b0b0d6655cea9e86df34dfbcf23f3b455d59812f3dec4d6f656fe5cb3efd750a",
+    "interop/tests/verify_bonus_results.py": "1c31acbe7c3638647fd54917437fcd031ff04639d3b5d1fe3fcf860f998216c5"
+  },
+  "logs": {
+    "qualification": {
+      "path": "interop/results/bonus-qualification-109.log",
+      "sha256": "152d39a0b5546823af8cfd619dfed6d16404a37afeddffae0cf01d4a97f69252",
+      "normalization": "LF"
+    },
+    "regression": {
+      "path": "interop/results/bonus-regression-109.log",
+      "sha256": "e40753ce136cf8b2a8708bc65e513b3757b3f0d090502e38085e9fce84c36b43",
+      "normalization": "LF"
+    },
+    "proof": {
+      "path": "interop/results/bonus-proof-109.log",
+      "sha256": "e9efd16932849a45ff218f225148f98211bbfdbcc296188dcb3f431150112666",
+      "normalization": "LF"
+    }
+  },
+  "version_note": "On 2026-11-13 the participant supplied an EAP portal screenshot offering Community 2027.1.0AI.109.0, while the contest announcement still specified 2026.3.0AI.154.0. Organizer clarification remains pending."
+}

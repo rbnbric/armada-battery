@@ -1,0 +1,13 @@
+zn "BATTERY"
+set sc=##class(Ens.Director).StopProduction()
+if $SYSTEM.Status.IsError(sc) { write "BONUS_REGRESSION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=$SYSTEM.OBJ.LoadDir("/home/irisowner/dev/bonus/tests","ck",,1)
+if $SYSTEM.Status.IsError(sc) { write "BONUS_REGRESSION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.SolverSuite).Run(0,1)
+if $SYSTEM.Status.IsError(sc) { write "BONUS_REGRESSION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.FaultSuite).Run()
+if $SYSTEM.Status.IsError(sc) { write "BONUS_REGRESSION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set sc=##class(Battery.Test.TraceSuite).Run()
+if $SYSTEM.Status.IsError(sc) { write "BONUS_REGRESSION_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+write "BONUS_REGRESSION_FINISHED",!
+halt

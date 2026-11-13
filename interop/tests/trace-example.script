@@ -1,0 +1,24 @@
+zn "BATTERY"
+write "TRACE_RUNTIME=",$ZVERSION,!
+set sc=$SYSTEM.OBJ.Load("/home/irisowner/dev/interop/tests/SolverSuite.cls","ck")
+if $SYSTEM.Status.IsError(sc) { write "TRACE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set round=##class(Battery.Interop.OutcomeProof).Now()
+set caseId="solver4-live-recovered-"_round
+write "TRACE_CASE=",caseId,!
+do ##class(Battery.Test.SolverSuite).Check("recovered",round,1)
+set stmt=##class(%SQL.Statement).%New()
+set sc=stmt.%Prepare("SELECT TOP 1 h.SessionId FROM Ens.MessageHeader h JOIN Battery_Interop.CaseResponse r ON h.MessageBodyId=r.ID WHERE h.MessageBodyClassName='Battery.Interop.CaseResponse' AND r.CaseId=? ORDER BY h.ID DESC")
+if $SYSTEM.Status.IsError(sc) { write "TRACE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set rs=stmt.%Execute(caseId)
+if rs.%SQLCODE<0 { write "TRACE_ERROR=",rs.%Message,! halt }
+if 'rs.%Next() { write "TRACE_ERROR=No saved case response",! halt }
+write "VISUAL_TRACE_SESSION=",rs.%Get("SessionId"),!
+set sessionId=rs.%Get("SessionId")
+set stmt=##class(%SQL.Statement).%New()
+set sc=stmt.%Prepare("SELECT ID,SessionId,SourceConfigName,TargetConfigName,MessageBodyClassName,MessageBodyId,Status FROM Ens.MessageHeader WHERE SessionId=? ORDER BY ID")
+if $SYSTEM.Status.IsError(sc) { write "TRACE_ERROR=",$SYSTEM.Status.GetErrorText(sc),! halt }
+set rs=stmt.%Execute(sessionId)
+if rs.%SQLCODE<0 { write "TRACE_ERROR=",rs.%Message,! halt }
+while rs.%Next() { set row={"ID":(rs.%Get("ID")),"SessionId":(rs.%Get("SessionId")),"SourceConfigName":(rs.%Get("SourceConfigName")),"TargetConfigName":(rs.%Get("TargetConfigName")),"MessageBodyClassName":(rs.%Get("MessageBodyClassName")),"MessageBodyId":(rs.%Get("MessageBodyId")),"Status":(rs.%Get("Status"))} write "TRACE_HEADER=",row.%ToJSON(),! }
+write "TRACE_EXAMPLE_FINISHED",!
+halt

@@ -1,9 +1,11 @@
 Include %occStatus
 
-/// Read-only, traced adapter for persisted receipt snapshots. No SQL from models.
+/// Traced evidence reads, with a native outbound adapter and strict envelope validation.
 Class Battery.Interop.EvidenceOperation Extends Ens.BusinessOperation
 {
 Parameter INVOCATION = "Queue";
+Parameter ADAPTER = "Battery.Interop.EvidenceAdapter";
+Property Adapter As Battery.Interop.EvidenceAdapter;
 Method Read(pRequest As Battery.Interop.EvidenceRequest, Output pResponse As Battery.Interop.EvidenceResponse) As %Status
 {
     Set pResponse=##class(Battery.Interop.EvidenceResponse).%New()
@@ -26,27 +28,13 @@ Method Management(request As Battery.Interop.EvidenceRequest, binding As Battery
 {
     Set response=##class(Battery.Interop.EvidenceResponse).%New()
     Try {
-        Set host=$SYSTEM.Util.GetEnviron("BATTERY_MANAGEMENT_HOST"),key=$SYSTEM.Util.GetEnviron("BATTERY_ADAPTER_KEY")
-        If (host="")||($LENGTH(key)<32) { Set response.Reason="Management evidence adapter is not configured" Return $$$OK }
-        Set http=##class(%Net.HttpRequest).%New(),http.Server=host,http.Port=8080,http.Timeout=5,http.OpenTimeout=3
-        Do http.SetHeader("X-Battery-Adapter",key)
         Set scope=##class(%DynamicObject).%FromJSON(binding.ContractJSON)
-        Do http.SetHeader("X-Battery-Operator",scope.partner)
-        Set path="/api/native-evidence/"_##class(%CSP.Page).EscapeURL(request.CaseId)_"?phase="_request.Phase
-        Set sc=http.Get(path)
+        Set sc=..Adapter.ReadEvidence(request.CaseId,request.Phase,scope.partner,.raw,.reason)
         If $$$ISERR(sc) { Return sc }
-        If http.HttpResponse.StatusCode'=200 { Set response.Reason="Management evidence read was not accepted" Return $$$OK }
-        If http.HttpResponse.Data.Size>65536 { Set response.Reason="Management evidence exceeds budget" Return $$$OK }
-        Set body=##class(%DynamicObject).%FromJSON(http.HttpResponse.Data)
-        Set contract=body.%Get("contract"),observation=body.%Get("observation"),tool=body.%Get("tool")
-        If ('$IsObject(contract))||('$IsObject(observation))||('$IsObject(tool)) { Set response.Reason="Malformed management evidence" Return $$$OK }
-        Set expected=##class(%DynamicObject).%FromJSON(binding.ContractJSON),it=expected.%GetIterator()
-        If contract.%Size()'=expected.%Size() { Set response.Reason="Management contract changed" Return $$$OK }
-        While it.%GetNext(.k,.v) {
-            If (contract.%GetTypeOf(k)'=expected.%GetTypeOf(k))||(contract.%Get(k)'=v) { Set response.Reason="Management contract changed" Return $$$OK }
-        }
-        If (tool.%Get("tool")'=request.Phase)||(tool.%Get("receipt_id")'=expected.attempt) { Set response.Reason="Tool result scope mismatch" Return $$$OK }
-        Set response.Found=1,response.ContractJSON=binding.ContractJSON,response.ObservationJSON=observation.%ToJSON(),response.ToolJSON=tool.%ToJSON(),response.Reason="Authenticated management evidence read"
+        If reason'="" { Set response.Reason=reason Return $$$OK }
+        Set checked=##class(%DynamicObject).%FromJSON(##class(Battery.Interop.EvidenceEnvelope).Validate(raw,binding.ContractJSON,request.Phase))
+        If 'checked.accepted { Set response.Reason=checked.reason Return $$$OK }
+        Set response.Found=1,response.ContractJSON=binding.ContractJSON,response.ObservationJSON=checked.observation.%ToJSON(),response.ToolJSON=checked.tool.%ToJSON(),response.Reason=checked.reason
         Return $$$OK
     } Catch ex { Return ex.AsStatus() }
 }

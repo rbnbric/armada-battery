@@ -54,6 +54,8 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
         Set selected=initial
         If (proof.verdict'="YES")||(proof.output'="PASS")||(review.State'="AGREED_PENDING_GATE") {
             // A receipt profile has a defined next observation. Never execute arbitrary model text.
+            // Each send owns its message body; reusing one rewrites earlier Visual Trace entries.
+            Set er=##class(Battery.Interop.EvidenceRequest).%New(),er.CaseId=case.id,er.CaseJSON=pRequest.CaseJSON
             Set er.Phase=$SELECT(proof.reason="Observation expired":"CHECK_FRESH_READBACK",1:"CHECK_EFFECT_RECEIPT")
             If pRequest.RunId'="" {
                 Set proposed=review.InvestigatorProbe
@@ -74,6 +76,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
             Set selected=probed
             Set proof=##class(Battery.Interop.OutcomeProof).Assess(probed.ContractJSON,probed.ObservationJSON)
             If proof.usable&&(probed.ObservationJSON'=initial.ObservationJSON) {
+                Set rr=##class(Battery.Interop.CaseRequest).%New(),rr.RunId=pRequest.RunId,rr.Lease=pRequest.Lease
                 Set rr.CaseJSON=..Enrich(case,probed.ContractJSON,probed.ObservationJSON)
                 If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
                 Set sc=..SendRequestSync("Battery.Review",rr,.followup,..#REVIEWTIMEOUT)
@@ -84,7 +87,7 @@ Method Solve(pRequest As Battery.Interop.CaseRequest, Output pResponse As Batter
                 If (followup.State="HELD_FOR_REVIEW")&&(followup.ReviewerVerdict="") { Set pResponse.Explanation="Follow-up model review held: "_followup.Explanation Return $$$OK }
             }
         }
-        Set er.Phase="FINAL"
+        Set er=##class(Battery.Interop.EvidenceRequest).%New(),er.CaseId=case.id,er.CaseJSON=pRequest.CaseJSON,er.Phase="FINAL"
         If '##class(Battery.Interop.CaseRecord).Current(pRequest.RunId,pRequest.Lease) { Set pResponse.Explanation="Case lease expired; no further work dispatched" Return $$$OK }
         Set sc=..SendRequestSync("Battery.Evidence",er,.fresh,10)
         If $$$ISERR(sc) { Set pResponse.Explanation="Final evidence read failed" Return $$$OK }

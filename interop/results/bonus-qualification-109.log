@@ -1,0 +1,149 @@
+
+Node: 7e8e965ed2b3, Instance: IRIS
+
+USER>
+
+BATTERY>
+BONUS_RUNTIME=IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2027.1.0AI (Build 109U) Fri Oct 30 2026 16:31:24 EDT
+
+BATTERY>
+
+BATTERY>
+
+BATTERY>
+
+Load of directory started on 11/13/2026 03:34:21
+Loading file /home/irisowner/dev/bonus/Battery/Interop/AgentResponse.cls as cls
+Imported class: Battery.Interop.AgentResponse
+Loading file /home/irisowner/dev/bonus/Battery/Interop/CaseRequest.cls as cls
+Imported class: Battery.Interop.CaseRequest
+Loading file /home/irisowner/dev/bonus/Battery/Interop/AgentOperation.cls as cls
+Imported class: Battery.Interop.AgentOperation
+Loading file /home/irisowner/dev/bonus/Battery/Interop/CaseResponse.cls as cls
+Imported class: Battery.Interop.CaseResponse
+Loading file /home/irisowner/dev/bonus/Battery/Interop/CaseAPI.cls as cls
+Imported class: Battery.Interop.CaseAPI
+Loading file /home/irisowner/dev/bonus/Battery/Interop/AgentRequest.cls as cls
+Imported class: Battery.Interop.AgentRequest
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceEnvelope.cls as cls
+Imported class: Battery.Interop.EvidenceEnvelope
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceAdapter.cls as cls
+Imported class: Battery.Interop.EvidenceAdapter
+Loading file /home/irisowner/dev/bonus/Battery/Interop/CaseProcess.cls as cls
+Imported class: Battery.Interop.CaseProcess
+Loading file /home/irisowner/dev/bonus/Battery/Interop/CaseRecord.cls as cls
+Imported class: Battery.Interop.CaseRecord
+Loading file /home/irisowner/dev/bonus/Battery/Interop/Demo.cls as cls
+Imported class: Battery.Interop.Demo
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceBinding.cls as cls
+Imported class: Battery.Interop.EvidenceBinding
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceOperation.cls as cls
+Imported class: Battery.Interop.EvidenceOperation
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceRequest.cls as cls
+Imported class: Battery.Interop.EvidenceRequest
+Loading file /home/irisowner/dev/bonus/Battery/Interop/IntakeService.cls as cls
+Imported class: Battery.Interop.IntakeService
+Loading file /home/irisowner/dev/bonus/Battery/Interop/Production.cls as cls
+Imported class: Battery.Interop.Production
+Loading file /home/irisowner/dev/bonus/Battery/Interop/SolverProcess.cls as cls
+Imported class: Battery.Interop.SolverProcess
+Loading file /home/irisowner/dev/bonus/Battery/Interop/OutcomeProof.cls as cls
+Imported class: Battery.Interop.OutcomeProof
+Loading file /home/irisowner/dev/bonus/Battery/Interop/EvidenceResponse.cls as cls
+Imported class: Battery.Interop.EvidenceResponse
+Compiling 19 classes
+Compiling class Battery.Interop.AgentResponse
+Compiling class Battery.Interop.Demo
+Compiling class Battery.Interop.CaseRequest
+Compiling class Battery.Interop.AgentRequest
+Compiling class Battery.Interop.EvidenceEnvelope
+Compiling class Battery.Interop.CaseRecord
+Compiling class Battery.Interop.EvidenceAdapter
+Compiling class Battery.Interop.AgentOperation
+Compiling class Battery.Interop.EvidenceBinding
+Compiling class Battery.Interop.CaseResponse
+Compiling class Battery.Interop.OutcomeProof
+Compiling class Battery.Interop.CaseAPI
+Compiling class Battery.Interop.Production
+Compiling class Battery.Interop.EvidenceResponse
+Compiling class Battery.Interop.EvidenceRequest
+Compiling class Battery.Interop.EvidenceOperation
+Compiling class Battery.Interop.IntakeService
+Compiling class Battery.Interop.CaseProcess
+Compiling class Battery.Interop.SolverProcess
+Compiling table Battery_Interop.CaseRequest
+Compiling table Battery_Interop.AgentResponse
+Compiling table Battery_Interop.CaseProcess_MessagesSent
+Compiling table Battery_Interop.CaseProcess_MessagesReceived
+Compiling table Battery_Interop.AgentRequest
+Compiling table Battery_Interop.CaseRecord
+Compiling table Battery_Interop.EvidenceRequest
+Compiling table Battery_Interop.EvidenceBinding
+Compiling table Battery_Interop.EvidenceResponse
+Compiling table Battery_Interop.SolverProcess_MessagesReceived
+Compiling table Battery_Interop.CaseResponse
+Compiling table Battery_Interop.CaseProcess
+Compiling table Battery_Interop.SolverProcess_MessagesSent
+Compiling table Battery_Interop.SolverProcess
+Compiling routine Battery.Interop.CaseAPI.1
+Compiling routine Battery.Interop.AgentOperation.1
+Compiling routine Battery.Interop.CaseProcessMessagesReceived.1
+Compiling routine Battery.Interop.Demo.1
+Compiling routine Battery.Interop.CaseProcessMessagesSent.1
+Compiling routine Battery.Interop.CaseRecord.1
+Compiling routine Battery.Interop.EvidenceAdapter.1
+Compiling routine Battery.Interop.AgentRequest.1
+Compiling routine Battery.Interop.AgentResponse.1
+Compiling routine Battery.Interop.CaseRequest.1
+Compiling routine Battery.Interop.EvidenceOperation.1
+Compiling routine Battery.Interop.OutcomeProof.1
+Compiling routine Battery.Interop.EvidenceBinding.1
+Compiling routine Battery.Interop.CaseProcess.1
+Compiling routine Battery.Interop.Production.1
+Compiling routine Battery.Interop.IntakeService.1
+Compiling routine Battery.Interop.CaseResponse.1
+Compiling routine Battery.Interop.EvidenceResponse.1
+Compiling routine Battery.Interop.EvidenceRequest.1
+Compiling routine Battery.Interop.SolverProcessMessagesReceived.1
+Compiling routine Battery.Interop.SolverProcessMessagesSent.1
+Compiling routine Battery.Interop.SolverProcess.1
+Load finished successfully.
+
+BATTERY>
+
+BATTERY>
+
+Load started on 11/13/2026 03:34:23
+Loading file /home/irisowner/dev/bonus/tests/BonusSuite.cls as udl
+Compiling class Battery.Test.BonusSuite
+Compiling routine Battery.Test.BonusSuite.1
+Load finished successfully.
+
+BATTERY>
+
+BATTERY>
+BONUS_ENVELOPES={"scope":"Embedded Python in IRIS","tests":[{"name":"valid","passed":true,"reason":"Authenticated management evidence read"},{"name":"changed_partner_str","passed":true,"reason":"Management contract changed"},{"name":"changed_attempt_str","passed":true,"reason":"Management contract changed"},{"name":"changed_version_str","passed":true,"reason":"Management contract changed"},{"name":"changed_expected_count_bool","passed":true,"reason":"Management contract changed"},{"name":"changed_expected_count_str","passed":true,"reason":"Management contract changed"},{"name":"array_contract","passed":true,"reason":"Malformed management evidence"},{"name":"array_observation","passed":true,"reason":"Malformed management evidence"},{"name":"array_tool","passed":true,"reason":"Malformed management evidence"},{"name":"changed_tool_tool","passed":true,"reason":"Tool result scope mismatch"},{"name":"changed_tool_receipt_id","passed":true,"reason":"Tool result scope mismatch"},{"name":"extra_contract_field","passed":true,"reason":"Management contract changed"},{"name":"number_equivalence","passed":true,"reason":"Authenticated management evidence read"},{"name":"unicode","passed":true,"reason":"Authenticated management evidence read"},{"name":"bad_json","passed":true,"reason":"Malformed management evidence"},{"name":"array_root","passed":true,"reason":"Malformed management evidence"},{"name":"missing_fields","passed":true,"reason":"Malformed management evidence"},{"name":"bad_binding","passed":true,"reason":"Malformed management evidence"},{"name":"duplicate","passed":true,"reason":"Malformed management evidence"},{"name":"nan","passed":true,"reason":"Malformed management evidence"},{"name":"overflow","passed":true,"reason":"Malformed management evidence"},{"name":"depth","passed":true,"reason":"Malformed management evidence"},{"name":"oversize","passed":true,"reason":"Management evidence exceeds budget"},{"name":"unadmitted_phase","passed":true,"reason":"Unsupported read-only probe"}],"passed":24,"total":24}
+BONUS_CHECK={"name":"all_envelopes","passed":1}
+BONUS_CHECK={"name":"real_http_read","passed":1}
+BONUS_CHECK={"name":"http_to_embedded_python","passed":"1"}
+BONUS_CHECK={"name":"http_utf8_preserved","passed":1}
+BONUS_CHECK={"name":"phase_blocked_before_http","passed":1}
+BONUS_CHECK={"name":"http_401_held","passed":1}
+BONUS_CHECK={"name":"http_not_retried","passed":1}
+BONUS_CHECK={"name":"http_size_budget","passed":1}
+
+03:34:23.797:Ens.Director: Production 'Battery.Interop.Production' starting...
+03:34:23.950:Ens.Director: Production 'Battery.Interop.Production' started.BONUS_CHECK={"name":"queued_native_adapter","passed":1}
+BONUS_CHECK={"name":"queued_envelope_accepted","passed":1}
+BONUS_CHECK={"name":"queued_utf8_preserved","passed":1}
+BONUS_CHECK={"name":"queued_cross_scope_held","passed":1}
+BONUS_CHECK={"name":"queued_duplicate_json_held","passed":1}
+BONUS_CHECK={"name":"refused_connection_is_error","passed":1}
+BONUS_SUITE_OK
+
+BATTERY>
+
+BATTERY>
+BONUS_QUALIFICATION_OK
+
+BATTERY>
